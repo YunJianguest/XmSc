@@ -3,7 +3,7 @@
         "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
 	<constant name="struts.convention.default.parent.package" value="acrud-default" />
-	<constant name="struts.convention.package.locators" value="web" />
+	<constant name="struts.convention.package.locators" value="web,mobile" />
 	 <!-- 指定允许上传的文件最大字节数,默认值是2097152(2M),使用struts常量扩大默认上传文件大小 -->  
     <constant name="struts.multipart.maxSize" value="804857600"></constant> 
 
