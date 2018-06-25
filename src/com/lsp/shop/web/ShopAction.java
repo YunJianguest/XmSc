@@ -3,6 +3,7 @@ package com.lsp.shop.web;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -346,9 +347,10 @@ public class ShopAction extends GeneralAction {
 		Long comid=0L;
 		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("comid"))){
 			comid=Long.parseLong(Struts2Utils.getParameter("comid"));//14
-		}
+		} 
+		String nums =Struts2Utils.getParameter("num");
 		//数量
-		int num=Integer.parseInt(Struts2Utils.getParameter("num"));
+		int num=Integer.parseInt(nums);
 		Long proid=0L;
 		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("proid"))){
 			proid=Long.parseLong(Struts2Utils.getParameter("proid"));//14
@@ -387,7 +389,8 @@ public class ShopAction extends GeneralAction {
 				Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 				return;
 			}
-		}  
+		}
+		
 		String orderno = DateFormat.getDate() + strRandom+mongoSequence.currval("orderno");
 		 	OrderForm entity=new OrderForm();
    		    entity.set_id(orderno);
@@ -417,9 +420,55 @@ public class ShopAction extends GeneralAction {
     		if(StringUtils.isNotEmpty(jffh)){
     			entity.setJffh(Float.parseFloat(jffh));
     		}
+    		String zfmoneys ="";
+    		String cost = "";
+    		String profit = "";
+    		if(pro.get("price")!=null){
+    			//支付的价格
+    			zfmoneys = BaseDecimal.multiplication(pro.get("price").toString(), nums);
+    			entity.setZfmoney(Float.parseFloat(zfmoneys));
+    			//总价
+    			entity.setTotal(entity.getZfmoney());
+    			if(pro.get("cost")!=null){
+    				//成本
+    				cost = BaseDecimal.multiplication(pro.get("cost").toString(), nums);
+    				entity.setCost(Float.parseFloat(cost));
+    				//收益
+    				profit = BaseDecimal.subtract(zfmoneys, cost);
+    				entity.setProfit(Float.parseFloat(profit));
+        		}
+    		}
+    		
     		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
     		
-    		
+    		if(pro.get("goodstype")!=null){
+    			if(pro.get("goodstype").toString().equals("3")){//大众区商品返还币种二
+    				
+    			}
+    			if(pro.get("goodstype").toString().equals("4")){//特约区商品返还币种一
+    				//店铺地址
+    				DBObject db =wwzService.getCustUser(fromUserid);
+    				
+    				//下单人信息
+    				DBObject user =wwzService.getCustUser(fromUserid);
+    				if(db!=null){
+    					if(db.get("").toString().equals(address)){
+    						//省代
+    						BaseDecimal.multiplication(profit, "0.02");
+    	    				//市代
+    						BaseDecimal.multiplication(profit, "0.03");
+    	    				//县代
+    						BaseDecimal.multiplication(profit, "0.05");
+    						
+    						//运营部
+    						
+    					}else{//跨区域
+    						
+    					}
+    				}
+    				
+    			}
+    		}
     		
     		DBObject com=baseDao.getMessage(PubConstants.SHOP_SHOPMB,comid,backMap);
     		//JmsService.permessageMessage(custid, fromUserid, "订单信息", "用户:"+wwzService.getWxUsertype(fromUserid, "nickname")+"有一条新订单",null,pro.get("picurl").toString(),"shop-nopay","3", com.get("title").toString(),orderno,pro.get("ptitle").toString(), num+"", "0");
@@ -690,6 +739,9 @@ public class ShopAction extends GeneralAction {
 		    		entity.setIds(recordid);  
 		    		entity.setRemark(remark);
 		    		
+		    		String cost = "";
+		    		String zfmoney = "";
+		    		
 		    		String[] ids=recordid.split(",");
 		    		String[]nums=num.split(","); 
 		    		String[]specs=spec.split(",");
@@ -720,7 +772,26 @@ public class ShopAction extends GeneralAction {
 									Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 									return;
 								}
-							} 
+							}
+							
+							if(pro.get("price")!=null){
+								String zfmoneys = zfmoney;
+								System.out.println("赋值的钱数---》"+zfmoneys);
+				    			//商品价格
+				    			zfmoney = BaseDecimal.multiplication(pro.get("price").toString(), nums[i]);
+                                System.out.println("当前商品的价格---》"+zfmoney);
+				    			zfmoney = BaseDecimal.add(zfmoney, zfmoneys);
+				    			 System.out.println("当前商品的价格1---》"+zfmoney);
+				    			if(pro.get("cost")!=null){
+				    				String costs = cost;
+				    				System.out.println("赋值的成本---》"+costs);
+				    				//成本
+				    				cost = BaseDecimal.multiplication(pro.get("cost").toString(), nums[i]);
+				    				System.out.println("当前商品的成本---》"+cost);
+				    				cost = BaseDecimal.add(cost, costs);
+				    				System.out.println("当前商品的成本1---》"+cost);
+				        		}
+				    		}
 							
 							//生成信息
 							if(pro!=null){
@@ -742,6 +813,12 @@ public class ShopAction extends GeneralAction {
 							
 						}
 					}
+		 entity.setZfmoney(Float.valueOf(zfmoney));
+		 System.out.println("支付最后结果---"+entity.getZfmoney());
+		 entity.setCost(Float.valueOf(cost));
+		 System.out.println("成本最后结果---"+entity.getCost());
+		 entity.setProfit(Float.valueOf(BaseDecimal.subtract(zfmoney, cost)));
+		 System.out.println("收益最后结果---"+entity.getProfit());
 		 entity.setJffh(jffh);
 		 baseDao.insert(PubConstants.WX_ORDERFORM, entity);
 		 
@@ -2974,6 +3051,21 @@ public class ShopAction extends GeneralAction {
 		UserInfo  user=(UserInfo) UniObject.DBObjectToObject(dbObject, UserInfo.class);
 		baseDao.insert("user_info", user);
 	 }
+   }
+   /**
+    * 确认收货  
+    * @throws Exception
+    */
+   public void delivery() throws Exception{
+	   String oid = Struts2Utils.getParameter("oid");
+	   DBObject  dbObject=baseDao.getMessage(PubConstants.WX_ORDERFORM,oid);
+	   if(dbObject!=null){
+		   OrderForm  order=(OrderForm) UniObject.DBObjectToObject(dbObject, OrderForm.class);
+		   order.setState(4);//确认收货
+		   
+		   DBObject pro=baseDao.getMessage(PubConstants.DATA_PRODUCT,order.getRecordid());
+           
+	   }
    }
      
 }

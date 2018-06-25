@@ -92,7 +92,7 @@ public class OrderForm extends ReflectionDBObject{
 	private String remind;
 	/**
 	 * 状态
-	 * 0 购物车 1订单  2 确认 3 发货 4收货 5退货 6 取消
+	 * 0 购物车 1订单  2 确认 3 发货 4收货 5退货 6 取消 
 	 */	
 	private int state;
 	/**
@@ -116,6 +116,10 @@ public class OrderForm extends ReflectionDBObject{
 	 * 是否显示（0显示1不显示）
 	 */
 	private int    isxs;
+	
+	private float cost;//成本价格
+	private float profit;//利润
+	private Long deptCode;//部门编号
 	
 	public int getIsxs() {
 		return isxs;
@@ -331,6 +335,24 @@ public class OrderForm extends ReflectionDBObject{
 	}
 	public void setJffh(float jffh) {
 		this.jffh = jffh;
+	}
+	public float getCost() {
+		return cost;
+	}
+	public void setCost(float cost) {
+		this.cost = cost;
+	}
+	public float getProfit() {
+		return profit;
+	}
+	public void setProfit(float profit) {
+		this.profit = profit;
+	}
+	public Long getDeptCode() {
+		return deptCode;
+	}
+	public void setDeptCode(Long deptCode) {
+		this.deptCode = deptCode;
 	}
 	 
 }

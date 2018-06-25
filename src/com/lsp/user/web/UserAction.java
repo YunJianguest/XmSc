@@ -2,6 +2,7 @@ package com.lsp.user.web;
 
 import com.lsp.email.entity.Email; 
 import com.lsp.email.util.EmailUtils;
+import com.lsp.integral.entity.InteProstore;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Fromusermb;
@@ -15,6 +16,7 @@ import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
+import com.lsp.pub.util.UserUtil;
 import com.lsp.pub.web.GeneralAction; 
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
@@ -227,6 +229,7 @@ public class UserAction extends GeneralAction<UserInfo>
   public void  ajaxsave(){
 		
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		HashMap<String,Object>whereMap = new HashMap<>();
 		try {
 			String  id=Struts2Utils.getParameter("id");
 			String  account=Struts2Utils.getParameter("account");
@@ -240,10 +243,27 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  area=Struts2Utils.getParameter("area");
 			String  province=Struts2Utils.getParameter("province");
 			String  city=Struts2Utils.getParameter("city");
+			String  agentLevel=Struts2Utils.getParameter("agentLevel");
+			String  number=Struts2Utils.getParameter("number");
+			String  renumber=Struts2Utils.getParameter("renumber");
+			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
 				id=UUID.randomUUID().toString();
+				if(StringUtils.isNotEmpty(renumber)){
+					user.setRenumber(Long.parseLong(renumber));
+					whereMap.put("renumber", Long.parseLong(renumber));
+					DBObject dbObject = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					if(dbObject!=null){
+						if(dbObject.get("upIds")!=null){
+							user.setUpIds(dbObject.get("upIds").toString()+","+dbObject.get("custid").toString());
+							System.out.println("====>"+user.getUpIds());
+						}
+					}
+				}
+			}else{
+				user.setUpIds(renumber);
 			}
-			UserInfo  user=new UserInfo();
+			
 			user.set_id(id);
 			user.setAccount(account);
 			user.setPassword(password);
@@ -259,6 +279,12 @@ public class UserAction extends GeneralAction<UserInfo>
 			if(org.apache.commons.lang3.StringUtils.isNotEmpty(type)){
 				user.setType(Integer.parseInt(type));	
 			}
+			if(number == null||number.equals("")){
+				user.setNumber(Long.parseLong(getVipNo()));
+			}else{
+				user.setNumber(Long.parseLong(number));
+			}
+			
 			user.setCreatedate(new Date());
 			basedao.insert(PubConstants.USER_INFO, user);
 			List<DBObject>list=new ArrayList<DBObject>();
@@ -617,6 +643,75 @@ public class UserAction extends GeneralAction<UserInfo>
 			Struts2Utils.getRequest().setAttribute("id", db.get("_id"));
 		} 
 		return "register"; 
+	}
+	/**
+	 * 生成会员编号
+	 * @return
+	 */
+	public  String  getVipNo(){
+		String vipno=null;
+		Long  count=basedao.getCount(PubConstants.USER_INFO);
+		while (true) { 
+			if(count.toString().length()>=5&&Double.parseDouble(count.toString())>=Math.pow(10,Double.parseDouble(count.toString())+1)-10000){
+				vipno=UserUtil.createVipNo(count.toString().length()+1);
+			}else{
+				vipno=UserUtil.createVipNo(5);
+			}
+			//鎺掓煡棣栦綅涓�0锛�
+			if(!vipno.startsWith("0")){
+				//妫�鏌ユ槸鍚﹀敮涓�
+				HashMap<String, Object>whereMap=new HashMap<String, Object>();
+				whereMap.put("no", vipno);
+				Long num=basedao.getCount(PubConstants.USER_INFO,whereMap);
+				if(num==0){
+					break;
+				} 
+			}
+		}
+		return vipno;
+	}
+	
+	/**
+	 * 开通代理商账号  
+	 * @param type 角色类型
+	 * @param custid 用户ID
+	 * @param number 用户编号
+	 * @throws Exception
+	 */
+	public void commend(int type,String custid,Long number) throws Exception{
+		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		if(db!=null){
+			//预付
+			InteProstore info = new InteProstore();
+			//推荐收益
+		    
+			
+			info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+			info.setType("ps_account");//开通账户
+			info.setCreatedate(new Date());
+			info.setCustid(custid);
+			info.setState(0);
+			//1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
+			if(type == 1){
+				if(db.get("returnProvince")!=null){
+					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnProvince").toString())*3));
+				}
+			}else if(type == 2){
+				if(db.get("returnCity")!=null){
+					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnCity").toString())*3));
+				}
+			}else if(type == 3){
+				if(db.get("returnCounty")!=null){
+					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnCounty").toString())*3));
+				}
+			}else if(type == 4){
+				if(db.get("returnDept")!=null){
+					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnDept").toString())*3));
+				}
+			}
+			basedao.insert(PubConstants.INTEGRAL_PROSTORE, info);
+		}
+		
 	}
 	 
 }

@@ -6,8 +6,10 @@ package com.lsp.pub.entity;
  */
 public class PubConstants
 {
-  public static String INTEGRAL_INTESETTING = "integral_intesetting";
-	
+  public static String INTEGRAL_INTESETTING = "integral_intesetting";//设置
+  public static String INTEGRAL_INTECURRENCY = "integral_intecurrency";//货币设置
+  public static String INTEGRAL_INTEACCOUNT = "integral_inteaccount";//账户
+  public static String INTEGRAL_PROSTORE = "integral_prostore";//预付账单
 	
   public static String EMAIL_EMALIINFO = "email_emailinfo";
   public static String EMAIL_EMALIOUTINFO = "email_emaioutlinfo";

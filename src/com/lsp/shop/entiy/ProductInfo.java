@@ -41,6 +41,10 @@ public class ProductInfo extends ReflectionDBObject{
 	 */															
 	private Double oldprice;
 	/**
+	 * 成本价格
+	 */															
+	private Double cost;
+	/**
 	 * 图片。  
 	 */
 	private String logo;
@@ -153,10 +157,16 @@ public class ProductInfo extends ReflectionDBObject{
 	 * 代理price
 	 */
 	private double   dlprice;
-	/**
-	 * 返值百分比
+	
+	 /**
+     * 提成 百分比
+     * */
+    private double percent;
+    /**
+	 * 商品类型 3-大众区商品  4-特约区商品
 	 */
-	private double percent;
+    private int    goodstype;
+    
 	public String getPtitle() {
 		return ptitle;
 	}
@@ -390,6 +400,18 @@ public class ProductInfo extends ReflectionDBObject{
 	}
 	public void setPercent(double percent) {
 		this.percent = percent;
+	}
+	public Double getCost() {
+		return cost;
+	}
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
+	public int getGoodstype() {
+		return goodstype;
+	}
+	public void setGoodstype(int goodstype) {
+		this.goodstype = goodstype;
 	}
 	
 	 

@@ -13,6 +13,8 @@ import com.lsp.jwt.config.Constant;
 import com.lsp.jwt.config.ResponseMsg;
 import com.lsp.jwt.config.TokenTool;
 import com.lsp.jwt.util.JsonUtil;
+import com.lsp.pub.util.Struts2Utils;
+
 import io.jsonwebtoken.Claims; 
  
 public class SignFilter{
@@ -23,21 +25,21 @@ public class SignFilter{
   * @return
   * @throws IOException
   */
-	public static Claims checkSign(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String tokenStr=request.getParameter("token");
+	public static Claims checkSign() throws IOException {
+		String tokenStr=Struts2Utils.getRequest().getParameter("token");
     	CheckResult checkResult = TokenTool.validateJWT(tokenStr);
     	if (checkResult.isSuccess()) {  
     		return checkResult.getClaims();
 		}else{
 			switch (checkResult.getErrCode()) { 
 			case Constant.JWT_ERRCODE_EXPIRE:
-				PrintWriter printWriter = response.getWriter();
+				PrintWriter printWriter = Struts2Utils.getResponse().getWriter();
 				printWriter.print(ResponseMsg.loginExpire());
 				printWriter.flush();
 				printWriter.close();
 				break; 
 			case Constant.JWT_ERRCODE_FAIL:
-				PrintWriter printWriter2 = response.getWriter();
+				PrintWriter printWriter2 = Struts2Utils.getResponse().getWriter();
 				printWriter2.print(ResponseMsg.noAuth());
 				printWriter2.flush();
 				printWriter2.close();
@@ -126,7 +128,7 @@ public class SignFilter{
 	 * 
 	 * @throws IOException
 	 */
-	public static void printNoCheck(Object data) throws IOException {
+	public static void printNoCheck1(Object data) throws IOException {
 		
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
 				.getRequest();
@@ -144,9 +146,9 @@ public class SignFilter{
 	 * 
 	 * @throws IOException
 	 */
-	public static void printNoCheck(HttpServletRequest request, HttpServletResponse response,Object data) throws IOException {
+	public static void printNoCheck(Object data) throws IOException {
 		
-		PrintWriter printWriter2 = response.getWriter();
+		PrintWriter printWriter2 = Struts2Utils.getResponse().getWriter();
 		
 		printWriter2.print(ResponseMsg.successWithData(data));
 		printWriter2.flush();

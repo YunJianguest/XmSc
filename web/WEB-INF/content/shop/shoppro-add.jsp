@@ -198,6 +198,7 @@
                                         </select>
                                     </div>
                                 </div>
+  
                                 <div class="col-2 pl-10">
                                     <div class="size14  weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         模板
@@ -243,7 +244,20 @@
                             </div>
 
                             <div class="pt-25 clear">
-                                <div class="col-2">
+                               <div class="col-2 pl-10">
+                                    <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
+                 成本价格      
+                                    </div>
+                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
+                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
+                                               type="text"
+                                               id="cost"
+                                               value="<s:property value='cost'/>"
+                                               name="cost"
+                                               placeholder="成本价格 ">
+                                    </div>
+                                </div>
+                                <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         销售价格
                                     </div>
@@ -311,7 +325,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-2 pl-10">
                                     <div class=" size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         折扣选择
                                     </div>
@@ -452,6 +466,19 @@
                                                type="text"
                                                id="ppice" value="${entity.ppice}" name="ppice"
                                                placeholder="请输入团购价格">
+                                    </div>
+                                </div>
+                                
+                <div class="col-2 pl-10">
+                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
+                                         style="padding-left: 2px;">
+                                       提成百分比(%)
+                                    </div>
+                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
+                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
+                                               type="text"
+                                               id="percent" value="${entity.percent}" name="percent"
+                                               placeholder="请输入提成百分比">
                                     </div>
                                 </div>
                             </div> 

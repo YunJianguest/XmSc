@@ -43,6 +43,5 @@ public class InteCurrency extends ReflectionDBObject {
 		this.createdate = createdate;
 	}
 	
-	
 	 
 }

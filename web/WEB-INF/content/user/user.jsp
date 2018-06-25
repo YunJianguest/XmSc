@@ -21,6 +21,9 @@
             $('#nickname').val('');
             $('#toUser').val('');
             $('#area').val('');
+            $('#number').val('');
+            //$('#renumber').val('');
+            $('#renumber').attr('disabled',false);
             $('#inszc').modal({
                 show: true
             });
@@ -40,6 +43,11 @@
                         $('#type').val(json.type); 
                         $('#province').val(json.province);
                         $('#city').val(json.city);
+                        $('#agentLevel').val(json.agentLevel).trigger("change");
+                        $('#number').val(json.number);
+                        $('#renumber').attr('disabled',true);
+                        //$('#renumber').val(json.renumber);
+                       
                         var funcs = json.funclist;
                         $('.ch_type').each(function () {
                             $(this).removeClass("gx-xz-dj");
@@ -67,6 +75,9 @@
                 city: $('#city').val(),
                 nickname: $('#nickname').val(),
                 mb: $('#mb').val(),
+                agentLevel: $('#agentLevel').val(),
+                number: $('#number').val(),
+                renumber: $('#renumber').val()
             };
             $.post('${ctx}/user/user!ajaxsave.action', submitData,
                     function (json) {
@@ -103,6 +114,14 @@
                     }
             );
             $("#funcs").val(str);
+        }
+        function selrole(){
+        	var type = $("#type").val();
+        	if(type == '1'){
+        		$("#agentLevel_show").show();
+        	}else if(type == '2'){
+        		$("#agentLevel_show").hide();
+        	}
         }
     </script>
     <style>
@@ -188,8 +207,10 @@
                                     <th class="th8">密码</th>
                                     <th class="th8">创建时间</th>
                                     <th class="th8">角色</th>
+                                    <th class="th8">代理商等级</th>
+                                    <th class="th8">会员编号</th>
                                     <th class="th8">创建者</th>
-                                    <th class="th5">操作</th>
+                                    <th class="th8">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -201,6 +222,17 @@
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm'
                                                             value='${bean.createdate}'/></td>
                                         <td>${bean.roleid}</td>
+                                        <td>
+                                        <c:choose>
+										   <c:when test="${bean.agentLevel==1}">省级代理商</c:when>
+										   <c:when test="${bean.agentLevel==2}">市级代理商</c:when>
+										   <c:when test="${bean.agentLevel==3}">县级代理商</c:when>
+										   <c:when test="${bean.agentLevel==4}">部门代理商</c:when>
+										   <c:when test="${bean.agentLevel==5 || bean.agentLevel==6}">会员</c:when>
+										   <c:otherwise>管理员</c:otherwise>
+										</c:choose>
+										</td>
+										<th class="th8">${bean.number}</th>
                                         <td>${bean.custid}</td>
                                         <td class="table-action">
                                             <div class="btn-group1">
@@ -246,7 +278,8 @@
                 <form id="inscxForm" action="${ctx}/user/user!save.action" class="form-horizontal" method="post">
                     <input type="hidden" id="_id" name="_id"/>
                     <input type="hidden" id="funcs" name="funcs"/>
-
+                    <input type="hidden" id="number" name="number"/>
+                    <input type="hidden" id="renumber" name="renumber"/>
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group-20">
@@ -280,7 +313,7 @@
                             <div class="form-group-20">
                                 <label class="control-label">角色:</label>
                                 <select id="roleid" class="select2 form-control" style="line-height: 28px!important;"
-                                        required data-placeholder="县域管理员">
+                                        required data-placeholder="县域管理员" >
                                     <c:forEach items="${rolelist}" var="bean">
                                         <option value="${bean._id }">${bean.rolename }</option>
                                     </c:forEach>
@@ -294,11 +327,24 @@
                             <div class="form-group-20">
                                 <label class="control-label">类型:</label>
                                 <select id="type" class="select2 form-control" style="line-height: 28px!important;"
-                                        required data-placeholder="管理员">
+                                        required data-placeholder="管理员" onchange="selrole()">
                                     <option value="1">普通用户</option>
                                     <option value="2">管理员</option>
                                 </select>
                                 <label class="error" for="type"></label>
+                            </div>
+                        </div>
+                         <div class="col-sm-2" id="agentLevel_show">
+                            <div class="form-group-20">
+                                <label class="control-label">代理类型:</label>
+                                <select id="agentLevel" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="代理类型">
+                                    <option value="1">省</option>
+                                    <option value="2">市</option>
+                                    <option value="3">县</option>
+                                    <option value="4">部门</option>
+                                </select>
+                                <label class="error" for="agentLevel"></label>
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -341,9 +387,15 @@
                                 <label class="error" for="type"></label>
                             </div>
                         </div>
+                           <div class="col-md-2"> 
+                             <div class="form-group-20">
+                                <label class="control-label">推荐码:</label>
+                                <input type="text" id="renumber" name="renumber"
+                                       class="form-control" placeholder="请输入"/>
+                                <label class="error" for="renumber"></label>
+                            </div>
+                        </div>
                     </div> 
-                      
-                     
                 </form>
                 <div class="panel-footer">
                     <button class="btn btn-primary col-sm-2" onclick="submint()" style="padding: 9px 15px;">提交</button>

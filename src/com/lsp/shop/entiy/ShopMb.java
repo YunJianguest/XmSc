@@ -62,12 +62,12 @@ public class ShopMb  extends ReflectionDBObject{
 	 */
 	private String gm2;
 	/**
-	 * 网店类型，0为普通网店，1为官方网店
+	 * 网店类型，0为普通网店，1为官方网店  
 	 */
 	private int    lx;
 	private String searchcolor;
 	/**
-	 * 网店类型，0为普通网店，1为积分商城
+	 * 网店类型，0为普通网店，1为积分商城  3-大众区  4-特约区
 	 */
 	private int    type;
 	/**
@@ -86,6 +86,10 @@ public class ShopMb  extends ReflectionDBObject{
      * 日销售额
      */
     private  double  daysales;
+    /**
+     * 提成 百分比
+     * */
+    private double percent;
     
 	 
 	public String getName() {
@@ -219,6 +223,12 @@ public class ShopMb  extends ReflectionDBObject{
 	}
 	public void setDaysales(double daysales) {
 		this.daysales = daysales;
+	}
+	public double getPercent() {
+		return percent;
+	}
+	public void setPercent(double percent) {
+		this.percent = percent;
 	}
 	
   	

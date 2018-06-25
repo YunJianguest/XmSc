@@ -66,7 +66,13 @@ public class UserInfo extends ReflectionDBObject {
 	 */
 	private int agentLevel;
 	
-	private String code;
+	private Long number;
+	//推荐人编号
+	private Long renumber;
+	//推荐部门编号
+	private Long deptnumber;
+	//上级编号
+	private String upIds;
 
 	public Long getOrgid() {
 		return this.orgid;
@@ -468,13 +474,36 @@ public class UserInfo extends ReflectionDBObject {
 		this.agentLevel = agentLevel;
 	}
 
-	public String getCode() {
-		return code;
+	public Long getNumber() {
+		return number;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setNumber(Long number) {
+		this.number = number;
 	}
-	
+
+	public Long getRenumber() {
+		return renumber;
+	}
+
+	public void setRenumber(Long renumber) {
+		this.renumber = renumber;
+	}
+
+	public Long getDeptnumber() {
+		return deptnumber;
+	}
+
+	public void setDeptnumber(Long deptnumber) {
+		this.deptnumber = deptnumber;
+	}
+
+	public String getUpIds() {
+		return upIds;
+	}
+
+	public void setUpIds(String upIds) {
+		this.upIds = upIds;
+	}
 
 }

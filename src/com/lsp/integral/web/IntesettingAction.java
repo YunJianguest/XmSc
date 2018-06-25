@@ -58,7 +58,7 @@ public class IntesettingAction extends GeneralAction<InteSetting> {
 	
 	@Override
 	public String save() throws Exception {
-		// 注册业务逻辑
+		
 		try {
 			if (_id == null || _id.equals("")) {
 				_id = SpringSecurityUtils.getCurrentUser().getId();
@@ -102,9 +102,5 @@ public class IntesettingAction extends GeneralAction<InteSetting> {
 			entity = new InteSetting();
 		}
 	}
-
-	
-
-	
 
 }

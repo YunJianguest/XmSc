@@ -1,6 +1,5 @@
 package com.lsp.integral.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -17,8 +16,9 @@ public class InteSetting extends ReflectionDBObject {
 	/**
 	 * 币种设置
 	 */
-	private String name;//名称 
+	private String name;//币种一设置
 	private String remark;//备注
+	private String names;//币种二设置
 	
 	/**
 	 * 提成设置
@@ -34,9 +34,10 @@ public class InteSetting extends ReflectionDBObject {
 	/**
 	 * 预返金额设置
 	 */
-	private BigDecimal returnProvince;//省级预返值
-	private BigDecimal returnCity;//市级预返值
-	private BigDecimal returnCounty;//县级预返值
+	private double returnProvince;//省级预返值
+	private double returnCity;//市级预返值
+	private double returnCounty;//县级预返值
+	private double returnDept;//县级预返值
 	
 	private Date createdate;
 	
@@ -100,23 +101,34 @@ public class InteSetting extends ReflectionDBObject {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public BigDecimal getReturnProvince() {
+	public double getReturnProvince() {
 		return returnProvince;
 	}
-	public void setReturnProvince(BigDecimal returnProvince) {
+	public void setReturnProvince(double returnProvince) {
 		this.returnProvince = returnProvince;
 	}
-	public BigDecimal getReturnCity() {
+	public double getReturnCity() {
 		return returnCity;
 	}
-	public void setReturnCity(BigDecimal returnCity) {
+	public void setReturnCity(double returnCity) {
 		this.returnCity = returnCity;
 	}
-	public BigDecimal getReturnCounty() {
+	public double getReturnCounty() {
 		return returnCounty;
 	}
-	public void setReturnCounty(BigDecimal returnCounty) {
+	public void setReturnCounty(double returnCounty) {
 		this.returnCounty = returnCounty;
 	}
-	 
+	public double getReturnDept() {
+		return returnDept;
+	}
+	public void setReturnDept(double returnDept) {
+		this.returnDept = returnDept;
+	}
+	public String getNames() {
+		return names;
+	}
+	public void setNames(String names) {
+		this.names = names;
+	}
 }

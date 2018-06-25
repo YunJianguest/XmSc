@@ -278,9 +278,11 @@
                                 <label class="control-label">类型：</label>
                                 <select id="type" name="type" class="select2 hang40"
                                          data-placeholder="请选择">
-                                    <option value="0">普通网店</option>
+                                    <!-- <option value="0">普通网店</option>
                                     <option value="1">积分商城</option>
-                                    <option value="2">商家店铺</option> 
+                                    <option value="2">商家店铺</option>  -->
+                                    <option value="3">大众区</option>
+                                    <option value="4">特约区</option>
                                 </select>
                                 <label class="error" for="color"></label>
                             </div>
