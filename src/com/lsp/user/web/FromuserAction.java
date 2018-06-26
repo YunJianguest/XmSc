@@ -272,7 +272,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		  if(share==null){
 			  share=new BasicDBObject();
 		  }
-		  share.put("fximg",GetAllFunc.wxTouser.get(custid).getLogo());
+		  if(GetAllFunc.wxTouser.get(custid)!=null){
+			  share.put("fximg",GetAllFunc.wxTouser.get(custid).getLogo());
+		  }
+		  
 		  share.put("fxurl",url);  
 		  Struts2Utils.getRequest().setAttribute("share", share);
 		  //加载佣金
@@ -523,5 +526,17 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		Struts2Utils.getRequest().setAttribute("custid",custid);
 		return "test";
 	} 
+	/**
+	 * 测试账号创建
+	 * @throws Exception
+	 */
+	public void ajaxsave() throws Exception{
+		/*String _id = UUID.randomUUID().toString();
+		WxUser user = new WxUser();
+		user.set_id(_id);
+		System.out.println("---->"+_id);
+		basedao.insert(PubConstants.DATA_WXUSER, user); */
+		System.err.println();
+	}
 	 
 }

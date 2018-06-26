@@ -74,7 +74,7 @@
     }
   }
 </script>
-<SCRIPT type="text/javascript"> 
+<script type="text/javascript"> 
 	        var setting = {
 	            async: {
 	                enable: true,//异步处理
@@ -138,7 +138,7 @@
 	             
 	        });
 	  
-	    </SCRIPT>
+	    </script>
 </head>
 
 <body>

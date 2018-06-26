@@ -227,7 +227,6 @@ public class UserAction extends GeneralAction<UserInfo>
  }
   
   public void  ajaxsave(){
-		
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
 		HashMap<String,Object>whereMap = new HashMap<>();
 		try {
@@ -249,21 +248,8 @@ public class UserAction extends GeneralAction<UserInfo>
 			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
 				id=UUID.randomUUID().toString();
-				if(StringUtils.isNotEmpty(renumber)){
-					user.setRenumber(Long.parseLong(renumber));
-					whereMap.put("renumber", Long.parseLong(renumber));
-					DBObject dbObject = basedao.getMessage(PubConstants.USER_INFO, whereMap);
-					if(dbObject!=null){
-						if(dbObject.get("upIds")!=null){
-							user.setUpIds(dbObject.get("upIds").toString()+","+dbObject.get("custid").toString());
-							System.out.println("====>"+user.getUpIds());
-						}
-					}
-				}
-			}else{
-				user.setUpIds(renumber);
+				
 			}
-			
 			user.set_id(id);
 			user.setAccount(account);
 			user.setPassword(password);
@@ -275,6 +261,17 @@ public class UserAction extends GeneralAction<UserInfo>
 			user.setCity(city);
 			if(StringUtils.isNotEmpty(roleid)){
 				user.setRoleid(Long.parseLong(roleid));	
+			}
+			if(StringUtils.isNotEmpty(renumber)){
+				user.setRenumber(Long.parseLong(renumber));
+				whereMap.put("number", Long.parseLong(renumber));
+				DBObject dbObject = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+				if(dbObject != null){
+					user.setParentId(dbObject.get("_id").toString());
+				}
+			}
+			if(StringUtils.isNotEmpty(agentLevel)){
+				user.setAgentLevel(Integer.parseInt(agentLevel));
 			}
 			if(org.apache.commons.lang3.StringUtils.isNotEmpty(type)){
 				user.setType(Integer.parseInt(type));	

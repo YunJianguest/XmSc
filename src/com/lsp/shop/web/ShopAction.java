@@ -128,8 +128,8 @@ public class ShopAction extends GeneralAction {
 		}  
 		whereMap.put("custid", custid);
 		DBObject shopmb=baseDao.getMessage(PubConstants.SHOP_SHOPMB,whereMap); 
-		if(StringUtils.isEmpty(agid)||agid.equals("null")){  
-			agid=wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid));
+		if(StringUtils.isEmpty(agid)||agid.equals("")){  
+			//agid=wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid));
 			 
 			if(StringUtils.isNotEmpty(agid)){
 				if(StringUtils.isNotEmpty(comid)){
@@ -141,13 +141,19 @@ public class ShopAction extends GeneralAction {
 			}
 			
 		}
-		wwzService.flow(custid, "shop-"+shopmb.get("_id"));
+		if(shopmb!=null){
+			wwzService.flow(custid, "shop-"+shopmb.get("_id"));
+		}
+		
 		wwzService.flow(custid, "shop");
 	    Struts2Utils.getRequest().setAttribute("entity",shopmb);
 	    //加载分类
 		whereMap.clear();
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
-		whereMap.put("parentid", Long.parseLong(shopmb.get("_id").toString())); 
+		if(shopmb!=null){
+			whereMap.put("parentid", Long.parseLong(shopmb.get("_id").toString())); 
+		}
+		
 		sortMap.put("sort", -1);
 		//加载滚动
 		Struts2Utils.getRequest().setAttribute("roll",wwzService.getRoll(custid, "shopmb-"+shopmb.get("_id").toString()));
@@ -447,7 +453,7 @@ public class ShopAction extends GeneralAction {
     			}
     			if(pro.get("goodstype").toString().equals("4")){//特约区商品返还币种一
     				//店铺地址
-    				DBObject db =wwzService.getCustUser(fromUserid);
+    				DBObject db =wwzService.getCustUser(custid);
     				
     				//下单人信息
     				DBObject user =wwzService.getCustUser(fromUserid);
@@ -3067,5 +3073,6 @@ public class ShopAction extends GeneralAction {
            
 	   }
    }
+
      
 }

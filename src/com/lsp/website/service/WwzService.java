@@ -2064,4 +2064,8 @@ public class WwzService {
     	
     }
     
+    public void profit(String custid){
+    	
+    }
+    
 }

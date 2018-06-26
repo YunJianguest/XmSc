@@ -11,10 +11,11 @@ import java.util.List;
  */
 public class UserInfo extends ReflectionDBObject {
 	private String custid;
+	private String parentId;
 	private String toUser;
 	private String fromUser;
 	private String openid;
-	private String account;
+	private String account; 
 	private String password;
 	private String nickname;
 	private String email;
@@ -71,8 +72,7 @@ public class UserInfo extends ReflectionDBObject {
 	private Long renumber;
 	//推荐部门编号
 	private Long deptnumber;
-	//上级编号
-	private String upIds;
+
 
 	public Long getOrgid() {
 		return this.orgid;
@@ -80,6 +80,14 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getOrgname() {
@@ -496,14 +504,6 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setDeptnumber(Long deptnumber) {
 		this.deptnumber = deptnumber;
-	}
-
-	public String getUpIds() {
-		return upIds;
-	}
-
-	public void setUpIds(String upIds) {
-		this.upIds = upIds;
 	}
 
 }

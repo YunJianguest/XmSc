@@ -48,7 +48,7 @@ public class CustInfoDao
     {
       cust.set_id("chongzi");
       cust.setAccount("虫吃江湖");
-      cust.setPassword("64110000o");
+      cust.setPassword("chongzi");
       cust.setNickname("超级管理员");
       cust.setToUser("chongchijianghu");
     }

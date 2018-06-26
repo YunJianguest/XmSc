@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 /**
  * 拦截器
  * @author lsp
@@ -32,6 +33,15 @@ public class URLFilter implements Filter{
 	        String serverName = request.getServerName().toLowerCase();
 	        String realURI = getRealRequestURI(serverName, requestURI);  
 	        	//request.getRequestDispatcher(realURI).forward(request, response);  
+	        
+	        if(requestURI.indexOf("/wap/")>0){
+	        	  HttpServletResponse response1 = (HttpServletResponse) response;
+	  	        response1.setContentType("text/json");
+	  	        response1.setHeader("Access-Control-Allow-Origin", "*");
+	  	        response1.setCharacterEncoding("UTF-8");
+	  	        response1.setHeader("Access-Control-Max-Age", "3600");
+	  	        response1.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token");
+	        } 
 	        filterChain.doFilter(servletRequest, response);
 	}
 

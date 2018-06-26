@@ -45,8 +45,10 @@
                         $('#city').val(json.city);
                         $('#agentLevel').val(json.agentLevel).trigger("change");
                         $('#number').val(json.number);
+                        //$('#number').val(json.number);
+                        $('#upIds').val(json.upIds);
                         $('#renumber').attr('disabled',true);
-                        //$('#renumber').val(json.renumber);
+                        $('#renumber').val(json.renumber);
                        
                         var funcs = json.funclist;
                         $('.ch_type').each(function () {
@@ -63,6 +65,7 @@
             });
         }
         function submint() {
+        	alert($('#renumber').val());
             var submitData = {
                 id: $('#_id').val(),
                 funcs: $('#funcs').val(),
@@ -77,7 +80,8 @@
                 mb: $('#mb').val(),
                 agentLevel: $('#agentLevel').val(),
                 number: $('#number').val(),
-                renumber: $('#renumber').val()
+                renumber: $('#renumber').val(),
+                upIds: $('#upIds').val()
             };
             $.post('${ctx}/user/user!ajaxsave.action', submitData,
                     function (json) {
@@ -229,7 +233,7 @@
 										   <c:when test="${bean.agentLevel==3}">县级代理商</c:when>
 										   <c:when test="${bean.agentLevel==4}">部门代理商</c:when>
 										   <c:when test="${bean.agentLevel==5 || bean.agentLevel==6}">会员</c:when>
-										   <c:otherwise>管理员</c:otherwise>
+										   <c:otherwise>${bean.agentLevel}管理员</c:otherwise>
 										</c:choose>
 										</td>
 										<th class="th8">${bean.number}</th>
@@ -279,7 +283,8 @@
                     <input type="hidden" id="_id" name="_id"/>
                     <input type="hidden" id="funcs" name="funcs"/>
                     <input type="hidden" id="number" name="number"/>
-                    <input type="hidden" id="renumber" name="renumber"/>
+                    
+                    <input type="hidden" id="upIds" name="upIds"/>
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="form-group-20">
