@@ -101,6 +101,7 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("token", WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest());
 		String url="";
+		
 		if(StringUtils.isNotEmpty(comid)){
 			url=SysConfig.getProperty("ip")+"/shop/shop!index.action?comid="+comid+"&custid="+custid+"&agid="+agid;
 		}else{
@@ -125,10 +126,13 @@ public class ShopAction extends GeneralAction {
 		if(StringUtils.isNotEmpty(comid)){
 			whereMap.put("_id",Long.parseLong(comid));	
 		}else{
-			whereMap.put("lx",1);	
+			//whereMap.put("lx",1);	
 		}  
+		System.out.println("comid--->"+comid);
 		whereMap.put("custid", custid);
+		System.out.println("custid--->"+custid);
 		DBObject shopmb=baseDao.getMessage(PubConstants.SHOP_SHOPMB,whereMap); 
+		System.out.println("shopmb--->"+shopmb);
 		if(StringUtils.isEmpty(agid)||agid.equals("")){  
 			//agid=wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid));
 			 

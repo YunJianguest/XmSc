@@ -1023,6 +1023,44 @@ public class WwzService {
 				info.setValue(Float.parseFloat(price));
 				info.setType(type);
 				info.setState(0);
+				info.setJfstate(1);//可使用积分
+				info.setCustid(custid);
+				baseDao.insert(PubConstants.INTEGRAL_INFO, info); 
+				if(changeJf(custid,fromUserid,Float.parseFloat(price),0)){
+					return true;	
+				}else{
+					return false;
+				}
+				
+			}
+			
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block 
+			e.printStackTrace(); 
+		}
+		return false;
+		
+		
+	}
+	/**
+	 * 预付
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param wxuser
+	 * @return
+	 */
+	public  boolean addjf1(String price,String fromUserid,String type,String custid,DBObject wxuser){
+		try {
+			if(Float.parseFloat(price)>0){
+				IntegralInfo  info=new IntegralInfo(); 
+				info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+				info.setCreatedate(new Date());
+				info.setFromUserid(fromUserid);
+				info.setValue(Float.parseFloat(price));
+				info.setType(type);
+				info.setState(0);
 				info.setCustid(custid);
 				baseDao.insert(PubConstants.INTEGRAL_INFO, info); 
 				if(changeJf(custid,fromUserid,Float.parseFloat(price),0)){
@@ -2063,8 +2101,12 @@ public class WwzService {
 		return false;
     	
     }
-    
-    public void profit(String custid){
+    /**
+     * 推荐开户人
+     * 积分增加
+     * @param custid
+     */
+    public void profit(String price,String fromUserid,String type,String custid,DBObject wxuser){
     	
     }
     

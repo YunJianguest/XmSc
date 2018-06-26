@@ -17,6 +17,9 @@ public class IntegralInfo extends ReflectionDBObject {
 	private String custid;
 	/**
 	 * 积分类型
+	 * ps_account 推荐账户
+	 * ps_recovery 回本后待返
+	 * ps_shop 商城收益
 	 */
 	private String type;
 	/**
@@ -30,6 +33,12 @@ public class IntegralInfo extends ReflectionDBObject {
      * 0为收入，1为支出
      */
     private int    state;
+    /**
+     * 0-待返积分
+     * 1-可使用积分
+     * 2-冻结积分
+     **/
+    private int  jfstate;
 	public String getToUser() {
 		return toUser;
 	}
@@ -98,9 +107,16 @@ public class IntegralInfo extends ReflectionDBObject {
 	public String getCustid() {
 		return custid;
 	}
-
 	public void setCustid(String custid) {
 		this.custid = custid;
+	}
+
+	public int getJfstate() {
+		return jfstate;
+	}
+
+	public void setJfstate(int jfstate) {
+		this.jfstate = jfstate;
 	}
 	
 
