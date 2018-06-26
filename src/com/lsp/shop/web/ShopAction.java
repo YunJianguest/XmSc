@@ -90,6 +90,7 @@ public class ShopAction extends GeneralAction {
 	 */
 	public String index() throws Exception {  
 		String  comid=Struts2Utils.getParameter("comid"); 
+		System.out.println("comid--->"+comid);
 		getLscode(); 
 		Struts2Utils.getRequest().setAttribute("custid",custid);  
 		WxToken token=GetAllFunc.wxtoken.get(custid); 
