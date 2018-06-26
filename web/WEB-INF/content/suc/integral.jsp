@@ -147,28 +147,33 @@ function share(url) {
                 <table class="table table-primary mb30" >
                     <thead>
                       <tr>
-                        <th>序号</th>
-                      	<th>类型</th>
+                        <th>id</th>
                       	<th>状态</th>
+                      	<th>类型</th>
                       	<th>时间</th>
-                  		 
+                      	<th>是否冻结</th>
 						<th>操作</th>
-						
-                      
                       </tr>
                     </thead>
                     <tbody>
                       <c:forEach items="${integralList}" var="bean">
                       <tr>
-                      	<td>${bean.sort}</td>
-                      	<td>${bean.type}</td>
-                      	<c:if test="${bean.value}>0"><td><span style="color: red;">+${bean.value}</span></td>
+                      	<td>${bean._id}</td>
+                      	<c:if test="${bean.value>0}"><td><span style="color: red;">+${bean.value}</span></td>
                       	</c:if>
-                      	<c:if test="${bean.value}<0"><td><span style="color:green;">-${bean.value}</span></td>
+                      	<c:if test="${bean.value<0}"><td><span style="color:green;">-${bean.value}</span></td>
                       	</c:if>
-                      	
+                      	<td>
+                      	<c:choose>
+                      	  <c:when test="${bean.type == 'ps_account'}">推荐收益</c:when>
+                      	  <c:otherwise>其他</c:otherwise>
+                      	</c:choose>
+                      	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
-					
+					    <td><c:choose>
+                      	  <c:when test="${bean.jfstate == 2}">冻结</c:when>
+                      	  <c:otherwise>无</c:otherwise>
+                      	</c:choose></td>
                         <td class="table-action">
                               
                               <div class="btn-group1">
