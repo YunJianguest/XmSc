@@ -82,7 +82,7 @@ public class IntecurrencyAction extends GeneralAction<InteCurrency> {
 		//查询不带分页的List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPMB,whereMap, sortMap);
 		//查询全部带分页的
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INTECURRENCY,whereMap,fypage,10,sortMap);
-		Struts2Utils.getRequest().setAttribute("List", list);
+		Struts2Utils.getRequest().setAttribute("list", list);
 		
 		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_INTECURRENCY,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
