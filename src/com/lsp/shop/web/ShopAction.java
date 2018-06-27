@@ -3215,8 +3215,10 @@ public class ShopAction extends GeneralAction {
   			//更新订单状态
   			entity.setState(2);
   			baseDao.insert(PubConstants.WX_ORDERFORM, entity);
-  		} 		
-	    params.put("state", 0); 
+  			 params.put("state", 0);
+  		}else {
+  			 params.put("state",2);
+  		} 	 
 	    params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
