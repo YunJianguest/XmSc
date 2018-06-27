@@ -3067,5 +3067,427 @@ public class ShopAction extends GeneralAction {
            
 	   }
    }
+	 
+	/**
+	 * 订单结算
+	 * @throws Exception
+	 */
+	public void orderpay() throws Exception{
+		SortedMap<Object,Object> params = new TreeMap<Object,Object>();
+		getLscode(); 
+		DBObject  wx=wwzService.getWxUser(fromUserid);
+		if(wx.get("_id").equals("notlogin")){
+			params.put("state", 3);
+			String json = JSONArray.fromObject(params).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			return; 
+		} 
+		 
+		//支付的价格
+		String price = Struts2Utils.getParameter("price");
+		//获取提交的商品名称
+		String remark = Struts2Utils.getParameter("remark");
+		//商品类型
+		int lx=Integer.parseInt(Struts2Utils.getParameter("lx")); 
+		//总金额
+		float total=Float.parseFloat(Struts2Utils.getParameter("total"));
+		 
+		Long recordid=0L;
+		//商品编号
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("recordid"))){
+			recordid=Long.parseLong(Struts2Utils.getParameter("recordid"));//14
+		}
+		float remoney=0f;
+		//商品价格
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("remoney"))){
+			remoney=Float.parseFloat(Struts2Utils.getParameter("remoney"));//14
+		}
+		//地址信息
+		String name=Struts2Utils.getParameter("name");
+		String tel=Struts2Utils.getParameter("tel");
+		String address=Struts2Utils.getParameter("address");
+		String no=Struts2Utils.getParameter("no");
+		//店铺编号
+		Long comid=0L;
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("comid"))){
+			comid=Long.parseLong(Struts2Utils.getParameter("comid"));//14
+		} 
+		String nums =Struts2Utils.getParameter("num");
+		//数量
+		int num=Integer.parseInt(nums);
+		Long proid=0L;
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("proid"))){
+			proid=Long.parseLong(Struts2Utils.getParameter("proid"));//14
+		}
+		//规格
+		String spec=Struts2Utils.getParameter("spec");
+		String  kjid=Struts2Utils.getParameter("kjid"); 
+		//四位随机数
+		String strRandom = TenpayUtil.buildRandom(4) + "";
+		//积分返还
+		String jffh="";
+		//积分兑换
+		String jfdh=Struts2Utils.getParameter("jfdh");
+		//10位序列号,可以自行调整。
+		//限购
+		HashMap<String, Object>backMap=new HashMap<String, Object>();
+		backMap.put("context", 0);
+		backMap.put("summary", 0);
+		DBObject pro=baseDao.getMessage(PubConstants.DATA_PRODUCT,recordid,backMap);
+		if(pro.get("gmcs")!=null&&Integer.parseInt(pro.get("gmcs").toString())>0){ 
+			HashMap<String, Object>whereMap=new HashMap<>();
+			whereMap.put("pid",Integer.parseInt(pro.get("_id").toString()));
+			whereMap.put("fromUserid",fromUserid);
+			int  ll=0;
+			List<DBObject>listdb=baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
+			for (DBObject dbObject : listdb) {
+				 DBObject  order=baseDao.getMessage(PubConstants.WX_ORDERFORM, dbObject.get("orderid").toString());
+				 if(order!=null&&Integer.parseInt(order.get("state").toString())!=1){
+					 ll+=Integer.parseInt(order.get("count").toString());
+				 }
+			}
+			if(ll>=Integer.parseInt(pro.get("gmcs").toString())){
+				//购买次数已完
+				params.put("state", 10);
+				String json = JSONArray.fromObject(params).toString();
+				Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+				return;
+			}
+		}
+		
+		String orderno = DateFormat.getDate() + strRandom+mongoSequence.currval("orderno");
+		 	OrderForm entity=new OrderForm();
+ 		    entity.set_id(orderno);
+  		entity.setState(1);
+  		entity.setNo(no);
+  		entity.setLx(lx);
+  		
+  		entity.setFromUserid(fromUserid); 
+  		entity.setCustid(custid);
+ 		    entity.setName(name);
+  		entity.setTel(tel);
+  		entity.setAddress(address);
+  		entity.setInsDate(new Date());
+  		
+  		entity.setComid(comid);//14
+  		entity.setCount(num);//15
+  		entity.setTotal(total);//6
+  		entity.setKjid(kjid);
+  		if(StringUtils.isNotEmpty(jfdh)){
+  			entity.setJfdh(Float.parseFloat(jfdh));	
+  		} 
+  		entity.setZfmoney(Float.parseFloat(price));//7 
+  		entity.setRecordid(recordid);
+  		entity.setRemoney(remoney);
+  		
+  		entity.setRemark(remark+"-"+spec);
+  		//验证
+  		if(StringUtils.isNotEmpty(jffh)){
+  			entity.setJffh(Float.parseFloat(jffh));
+  		}
+  		String zfmoneys ="";
+  		String cost = "";
+  		String profit = "";
+  		if(pro.get("price")!=null){
+  			//支付的价格
+  			zfmoneys = BaseDecimal.multiplication(pro.get("price").toString(), nums);
+  			entity.setZfmoney(Float.parseFloat(zfmoneys));
+  			//总价
+  			entity.setTotal(entity.getZfmoney());
+  			if(pro.get("cost")!=null){
+  				//成本
+  				cost = BaseDecimal.multiplication(pro.get("cost").toString(), nums);
+  				entity.setCost(Float.parseFloat(cost));
+  				//收益
+  				profit = BaseDecimal.subtract(zfmoneys, cost);
+  				entity.setProfit(Float.parseFloat(profit));
+      		}
+  		}
+  		
+  		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+  		
+  		if(pro.get("goodstype")!=null){
+  			if(pro.get("goodstype").toString().equals("3")){//大众区商品返还币种二
+  				
+  			}
+  			if(pro.get("goodstype").toString().equals("4")){//特约区商品返还币种一
+  				//店铺地址
+  				DBObject db =wwzService.getCustUser(fromUserid);
+  				
+  				//下单人信息
+  				DBObject user =wwzService.getCustUser(fromUserid);
+  				if(db!=null){
+  					if(db.get("").toString().equals(address)){
+  						//省代
+  						BaseDecimal.multiplication(profit, "0.02");
+  	    				//市代
+  						BaseDecimal.multiplication(profit, "0.03");
+  	    				//县代
+  						BaseDecimal.multiplication(profit, "0.05");
+  						
+  						//运营部
+  						
+  					}else{//跨区域
+  						
+  					}
+  				}
+  				
+  			}
+  		}
+  		
+  		DBObject com=baseDao.getMessage(PubConstants.SHOP_SHOPMB,comid,backMap);
+  		//JmsService.permessageMessage(custid, fromUserid, "订单信息", "用户:"+wwzService.getWxUsertype(fromUserid, "nickname")+"有一条新订单",null,pro.get("picurl").toString(),"shop-nopay","3", com.get("title").toString(),orderno,pro.get("ptitle").toString(), num+"", "0");
+  		if(pro!=null){
+  			OrderFormpro o=new OrderFormpro();
+  			o.set_id(mongoSequence.currval(PubConstants.SHOP_ODERFORMPRO));
+  			o.setCount(num);
+  			o.setOrderid(orderno);
+  			o.setPro(pro);
+  			o.setSpec(spec);
+  			o.setFromUserid(fromUserid);
+  			o.setPid(Long.parseLong(pro.get("_id").toString())); 
+  			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, o);  
+  		} 
+	    params.put("state", 0); 
+	    params.put("orderno", orderno);
+		String json = JSONArray.fromObject(params).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	/**
+	 * 购物车结算
+	 * @throws Exception
+	 */
+	public void carpay() throws Exception{
+		SortedMap<Object,Object> params = new TreeMap<Object,Object>();
+		getLscode();
+		DBObject  wx=wwzService.getWxUser(fromUserid);
+		if(wx.get("_id").equals("notlogin")){
+			params.put("state", 3);
+			String json = JSONArray.fromObject(params).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			return; 
+		}
+		String comtoUser=toUser;
+		WxToken wxtoken=GetAllFunc.wxtoken.get(custid);
+		WxPayConfig wxconfig=new WxPayConfig();
+		if(wxtoken.getQx()==0){
+			params.put("state", 1);
+			String json = JSONArray.fromObject(params).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			return;
+		}else if(wxtoken.getQx()==1){
+			wxconfig=GetAllFunc.wxPay.get(custid);
+		}else if(wxtoken.getQx()==2){//父类结算   
+			wxconfig=GetAllFunc.wxPay.get(wwzService.getparentcustid(custid));
+		}
+		
+		if(wxconfig==null||wxconfig.getAppid()==null){
+			params.put("state", 1);
+			String json = JSONArray.fromObject(params).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			return;
+		}
+		//支付的价格
+		String price = Struts2Utils.getParameter("price");
+		//获取提交的商品名称
+		String remark = Struts2Utils.getParameter("remark");
+		//商品类型
+		int lx=Integer.parseInt(Struts2Utils.getParameter("lx"));//0 商品 1选号 2扫码付3优惠劵4砍价
+		//总金额
+		float total=0f;
+		  
+		String recordid=null;
+		//商品编号
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("recordid"))){
+			recordid=Struts2Utils.getParameter("recordid");//14
+		}
+		String remoney=null;
+		//商品价格
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("remoney"))){
+			remoney=Struts2Utils.getParameter("remoney");//14
+		}
+		String spec=null;
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("spec"))){
+			spec=Struts2Utils.getParameter("spec");
+		}
+				
+		//地址信息
+		String name=Struts2Utils.getParameter("name");
+		String tel=Struts2Utils.getParameter("tel");
+		String address=Struts2Utils.getParameter("address");
+		String no=Struts2Utils.getParameter("no");
+		//店铺编号
+		Long comid=0L;
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("comid"))){
+			comid=Long.parseLong(Struts2Utils.getParameter("comid"));//14
+		}
+		//数量
+		String num=Struts2Utils.getParameter("num");
+		Long proid=0L;
+		if(org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("proid"))){
+			proid=Long.parseLong(Struts2Utils.getParameter("proid"));//14
+		}
+	 
+		//积分返还
+		float jffh=0; 
+	 
+				//四位随机数
+				String strRandom = TenpayUtil.buildRandom(4) + "";
+				//10位序列号,可以自行调整。
+				String orderno = DateFormat.getDate() + strRandom+mongoSequence.currval("orderno");
+				  
+				OrderForm entity=new OrderForm();
+		   		    entity.set_id(orderno);
+		    		entity.setState(1);
+		    		entity.setNo(no);
+		    		entity.setLx(lx);
+		    		
+		    		entity.setFromUserid(fromUserid); 
+		    		entity.setCustid(custid);
+		   		    entity.setName(name);
+		    		entity.setTel(tel);
+		    		entity.setAddress(address);
+		    		entity.setInsDate(new Date());
+		    		
+		    		entity.setComid(comid);//14
+		    		entity.setCounts(num);//15
+		    		entity.setTotal(total);//6
+		    		
+		    		
+		    		entity.setZfmoney(Float.parseFloat(price));//7 
+		    		entity.setIds(recordid);  
+		    		entity.setRemark(remark);
+		    		
+		    		String cost = "";
+		    		String zfmoney = "";
+		    		
+		    		String[] ids=recordid.split(",");
+		    		String[]nums=num.split(","); 
+		    		String[]specs=spec.split(",");
+		    		for (int i = 0; i < ids.length; i++) {
+						if(StringUtils.isNotEmpty(ids[i])){ 
+							DBObject  shop=baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
+							HashMap<String, Object>backMap=new HashMap<String, Object>();
+				    		backMap.put("context", 0);
+				    		backMap.put("summary", 0);
+							DBObject  pro=baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),backMap);
+							
+							if(pro.get("gmcs")!=null&&Integer.parseInt(pro.get("gmcs").toString())>0){
+								HashMap<String, Object>whereMap=new HashMap<>();
+								whereMap.put("pid",Integer.parseInt(pro.get("_id").toString()));
+								whereMap.put("fromUserid",fromUserid);
+								int  ll=0;
+								List<DBObject>listdb=baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
+								for (DBObject dbObject : listdb) {
+									 DBObject  order=baseDao.getMessage(PubConstants.WX_ORDERFORM, dbObject.get("orderid").toString());
+									 if(order!=null&&Integer.parseInt(order.get("state").toString())!=1){
+										 ll+=Integer.parseInt(order.get("count").toString());
+									 }
+								} 
+								if(ll>=Integer.parseInt(pro.get("gmcs").toString())){
+									//购买次数已完
+									params.put("state", 10);
+									String json = JSONArray.fromObject(params).toString();
+									Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+									return;
+								}
+							}
+							
+							if(pro.get("price")!=null){
+								String zfmoneys = zfmoney;
+								System.out.println("赋值的钱数---》"+zfmoneys);
+				    			//商品价格
+				    			zfmoney = BaseDecimal.multiplication(pro.get("price").toString(), nums[i]);
+                                System.out.println("当前商品的价格---》"+zfmoney);
+				    			zfmoney = BaseDecimal.add(zfmoney, zfmoneys);
+				    			 System.out.println("当前商品的价格1---》"+zfmoney);
+				    			if(pro.get("cost")!=null){
+				    				String costs = cost;
+				    				System.out.println("赋值的成本---》"+costs);
+				    				//成本
+				    				cost = BaseDecimal.multiplication(pro.get("cost").toString(), nums[i]);
+				    				System.out.println("当前商品的成本---》"+cost);
+				    				cost = BaseDecimal.add(cost, costs);
+				    				System.out.println("当前商品的成本1---》"+cost);
+				        		}
+				    		}
+							
+							//生成信息
+							if(pro!=null){
+								if(pro.get("jffh")!=null){
+									jffh=jffh+Float.parseFloat(pro.get("jffh").toString());
+								}
+								OrderFormpro ord=new OrderFormpro();
+								ord.set_id(mongoSequence.currval(PubConstants.SHOP_ODERFORMPRO));
+								
+								ord.setOrderid(orderno);
+								ord.setCount(Integer.parseInt(nums[i]));
+								ord.setPro(pro);
+								ord.setPid(Long.parseLong(pro.get("_id").toString()));
+								ord.setSpec(specs[i]);
+								baseDao.insert(PubConstants.SHOP_ODERFORMPRO, ord);  
+							}
+							
+
+							
+						}
+					}
+		 entity.setZfmoney(Float.valueOf(zfmoney));
+		 System.out.println("支付最后结果---"+entity.getZfmoney());
+		 entity.setCost(Float.valueOf(cost));
+		 System.out.println("成本最后结果---"+entity.getCost());
+		 entity.setProfit(Float.valueOf(BaseDecimal.subtract(zfmoney, cost)));
+		 System.out.println("收益最后结果---"+entity.getProfit());
+		 entity.setJffh(jffh);
+		 baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+		 
+		StringBuffer attach=new StringBuffer(orderno);//0
+		attach.append("&").append(custid);//
+		attach.append("&").append(jffh);//
+		attach.append("&").append(fromUserid);//
+		attach.append("&").append(agid);//
+	    
+		String nonce_str=PayCommonUtil.CreateNoncestr();
+		SortedMap<Object,Object> parameters = new TreeMap<Object,Object>();
+		parameters.put("appid", wxconfig.getAppid()); 
+		parameters.put("mch_id", wxconfig.getPartner());
+		parameters.put("nonce_str", nonce_str);
+		parameters.put("attach", attach.toString());
+		parameters.put("body", remark);
+		parameters.put("out_trade_no", orderno);
+		parameters.put("total_fee", BaseDecimal.round(BaseDecimal.multiplication(price, "100"),0));
+		parameters.put("spbill_create_ip",Struts2Utils.getRequest().getRemoteAddr());
+		parameters.put("notify_url", this.getCtxurl()+"/shop/shop!paycarok.action");
+		parameters.put("trade_type", "JSAPI");
+		parameters.put("openid", wwzService.getWxUser(fromUserid).get("fromUser").toString());
+
+
+		String sign = PayCommonUtil.createSign("UTF-8", parameters,wxconfig.getPartner_key());
+		parameters.put("sign", sign);
+		String requestXML = PayCommonUtil.getRequestXml(parameters);
+		
+		String result =CommonUtil.httpsRequest("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", requestXML);
+		 
+		Map<String, String> map = XMLUtil.doXMLParse(result);
+
+       
+	    params.put("appId", wxconfig.getAppid());
+	    params.put("timeStamp", Long.toString(new Date().getTime()));
+	    params.put("nonceStr",nonce_str);
+	    params.put("package", "prepay_id="+map.get("prepay_id"));
+	    params.put("signType", "MD5");
+	    String paySign =  PayCommonUtil.createSign("UTF-8", params,wxconfig.getPartner_key());
+	    params.put("packageValue", "prepay_id="+map.get("prepay_id"));    //这里用packageValue是预防package是关键字在js获取值出错
+	    params.put("paySign", paySign);
+	    if(jffh>0){
+	    	 params.put("jffh",jffh);	
+	    }//paySign的生成规则和Sign的生成规则一致 
+	    params.put("state", 0);
+	  
+	    params.put("orderno", orderno);
+		String json = JSONArray.fromObject(params).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
      
 }
