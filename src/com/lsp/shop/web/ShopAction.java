@@ -3332,7 +3332,97 @@ public class ShopAction extends GeneralAction {
 						}
 						 
 					}
-				} 
+				}
+				
+				//获取异地县域
+				whereMap.clear();
+				whereMap.put("county",user.get("county").toString());
+				user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+				if (user != null) {
+					
+					//县域存在 记录提成
+					wwzService.addjf("" + ((bl * sett.getDiffProvince()) / 100), user.get("_id").toString(), "shop_bmzt",
+							custid, null);
+					
+					// 县级存在，获取市级
+
+					whereMap.clear();
+					whereMap.put("_id", user.get("parentId").toString());
+					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+					if (user != null) {
+						// 记录提成
+						wwzService.addjf("" + ((bl * sett.getDiffCity()) / 100), user.get("_id").toString(), "shop_bmzt",
+								custid, null);
+						
+
+						// 县级存在，市级存在，获取省级 
+						whereMap.clear();
+						whereMap.put("_id", user.get("parentId").toString());
+						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+						if (user != null) {
+							// 记录提成
+							wwzService.addjf("" + ((bl * sett.getDiffProvince()) / 100), user.get("_id").toString(), "shop_bmzt",
+									custid, null);
+						}
+					}else {
+						
+						//县级存在，市级不存在， 获取省级
+
+						whereMap.clear();
+						whereMap.put("agentLevel", 1);
+						whereMap.put("province",user.get("province").toString());
+						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+						if (user != null) {
+							// 记录提成
+							wwzService.addjf("" + ((bl * sett.getDiffProvince()) / 100), user.get("_id").toString(), "shop_bmzt",
+									custid, null);
+							
+
+						}
+						
+					}
+					
+					
+				 
+				}else {
+					//县域不存在获取市级 
+					whereMap.clear();
+					whereMap.put("agentLevel", 2);
+					whereMap.put("county",user.get("county").toString());
+					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+					if (user != null) {
+						// 记录提成
+						wwzService.addjf("" + ((bl * sett.getDiffCity()) / 100), user.get("_id").toString(), "shop_bmzt",
+								custid, null);
+						
+
+						// 县级不存在， 市级存在，获取省级 
+						whereMap.clear();
+						whereMap.put("_id", user.get("parentId").toString());
+						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+						if (user != null) {
+							// 记录提成
+							wwzService.addjf("" + ((bl * sett.getDiffProvince()) / 100), user.get("_id").toString(), "shop_bmzt",
+									custid, null);
+						}
+					}else {
+						//县级不存在，市级不存在， 获取省级
+
+						whereMap.clear();
+						whereMap.put("agentLevel", 1);
+						whereMap.put("province",user.get("province").toString());
+						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+						if (user != null) {
+							// 记录提成
+							wwzService.addjf("" + ((bl * sett.getDiffProvince()) / 100), user.get("_id").toString(), "shop_bmzt",
+									custid, null);
+						 
+						}
+						
+					}
+					 
+				}
+				
 
 			}
 
