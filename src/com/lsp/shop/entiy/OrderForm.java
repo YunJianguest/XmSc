@@ -120,6 +120,10 @@ public class OrderForm extends ReflectionDBObject{
 	private float cost;//成本价格
 	private float profit;//利润
 	private Long deptCode;//部门编号
+	/**
+	 * 确认收货时间
+	 */
+	private Date deliveryDate;
 	
 	public int getIsxs() {
 		return isxs;
@@ -354,5 +358,12 @@ public class OrderForm extends ReflectionDBObject{
 	public void setDeptCode(Long deptCode) {
 		this.deptCode = deptCode;
 	}
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+	
 	 
 }

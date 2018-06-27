@@ -176,6 +176,26 @@ public class WxUser extends ReflectionDBObject{
 	 * 是否在线0不在线1在线
 	 */
 	private int     online;
+	/**
+	 * 推荐人NO
+	 */
+	private int    reno;
+	/**
+	 * 推荐类型（0默认1推荐id为管理员id）
+	 */
+	private int    tjlx; 
+	public int getReno() {
+		return reno;
+	}
+	public void setReno(int reno) {
+		this.reno = reno;
+	}
+	public int getTjlx() {
+		return tjlx;
+	}
+	public void setTjlx(int tjlx) {
+		this.tjlx = tjlx;
+	}
 	public int getNeedExperience() {
 		return needExperience;
 	}

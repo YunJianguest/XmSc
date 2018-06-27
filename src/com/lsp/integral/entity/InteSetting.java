@@ -27,6 +27,13 @@ public class InteSetting extends ReflectionDBObject {
 	private double direct;//直推
 	private double between;//二级推荐
 	
+
+	private double sameProvince;//同地推荐省级
+	private double sameCity;//同地推荐市级
+	private double sameCounty;//同地推荐县级
+	private double sameDepartment;//部门提成
+	
+	
 	private double diffProvince;//异地推荐省级
 	private double diffCity;//异地推荐市级
 	private double diffCounty;//异地推荐县级
@@ -131,4 +138,29 @@ public class InteSetting extends ReflectionDBObject {
 	public void setNames(String names) {
 		this.names = names;
 	}
+	public double getSameProvince() {
+		return sameProvince;
+	}
+	public void setSameProvince(double sameProvince) {
+		this.sameProvince = sameProvince;
+	}
+	public double getSameCity() {
+		return sameCity;
+	}
+	public void setSameCity(double sameCity) {
+		this.sameCity = sameCity;
+	}
+	public double getSameCounty() {
+		return sameCounty;
+	}
+	public void setSameCounty(double sameCounty) {
+		this.sameCounty = sameCounty;
+	}
+	public double getSameDepartment() {
+		return sameDepartment;
+	}
+	public void setSameDepartment(double sameDepartment) {
+		this.sameDepartment = sameDepartment;
+	}
+	
 }

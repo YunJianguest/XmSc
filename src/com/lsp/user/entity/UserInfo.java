@@ -61,6 +61,10 @@ public class UserInfo extends ReflectionDBObject {
 	private String province;
 	private String city;
 	/**
+	 * 用户所在县
+	 */
+	private String county;
+	/**
 	 * 代理商   类型
 	 * 1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
 	 * 2018/6/20
@@ -505,5 +509,14 @@ public class UserInfo extends ReflectionDBObject {
 	public void setDeptnumber(Long deptnumber) {
 		this.deptnumber = deptnumber;
 	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	
 
 }
