@@ -1013,6 +1013,15 @@ public class WwzService {
 		return false;
 		
 	}
+	/**
+	 * 增加积分
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param wxuser
+	 * @return
+	 */
 	public  boolean addjf(String price,String fromUserid,String type,String custid,DBObject wxuser){
 		try {
 			if(Float.parseFloat(price)>0){
@@ -1079,6 +1088,15 @@ public class WwzService {
 		
 		
 	}
+	/**
+	 * 减少积分
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param wxuser
+	 * @return
+	 */
 	public boolean deljf(String price,String fromUserid,String type,String custid,DBObject wxuser){
 		try {
 			if(Float.parseFloat(price)>0){ 

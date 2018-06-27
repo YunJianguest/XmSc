@@ -3195,59 +3195,8 @@ public class ShopAction extends GeneralAction {
   		//验证
   		if(StringUtils.isNotEmpty(jffh)){
   			entity.setJffh(Float.parseFloat(jffh));
-  		}
-  		String zfmoneys ="";
-  		String cost = "";
-  		String profit = "";
-  		if(pro.get("price")!=null){
-  			//支付的价格
-  			zfmoneys = BaseDecimal.multiplication(pro.get("price").toString(), nums);
-  			entity.setZfmoney(Float.parseFloat(zfmoneys));
-  			//总价
-  			entity.setTotal(entity.getZfmoney());
-  			if(pro.get("cost")!=null){
-  				//成本
-  				cost = BaseDecimal.multiplication(pro.get("cost").toString(), nums);
-  				entity.setCost(Float.parseFloat(cost));
-  				//收益
-  				profit = BaseDecimal.subtract(zfmoneys, cost);
-  				entity.setProfit(Float.parseFloat(profit));
-      		}
-  		}
-  		
-  		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
-  		
-  		if(pro.get("goodstype")!=null){
-  			if(pro.get("goodstype").toString().equals("3")){//大众区商品返还币种二
-  				
-  			}
-  			if(pro.get("goodstype").toString().equals("4")){//特约区商品返还币种一
-  				//店铺地址
-  				DBObject db =wwzService.getCustUser(fromUserid);
-  				
-  				//下单人信息
-  				DBObject user =wwzService.getCustUser(fromUserid);
-  				if(db!=null){
-  					if(db.get("").toString().equals(address)){
-  						//省代
-  						BaseDecimal.multiplication(profit, "0.02");
-  	    				//市代
-  						BaseDecimal.multiplication(profit, "0.03");
-  	    				//县代
-  						BaseDecimal.multiplication(profit, "0.05");
-  						
-  						//运营部
-  						
-  					}else{//跨区域
-  						
-  					}
-  				}
-  				
-  			}
-  		}
-  		
-  		DBObject com=baseDao.getMessage(PubConstants.SHOP_SHOPMB,comid,backMap);
-  		//JmsService.permessageMessage(custid, fromUserid, "订单信息", "用户:"+wwzService.getWxUsertype(fromUserid, "nickname")+"有一条新订单",null,pro.get("picurl").toString(),"shop-nopay","3", com.get("title").toString(),orderno,pro.get("ptitle").toString(), num+"", "0");
+  		} 
+  		baseDao.insert(PubConstants.WX_ORDERFORM, entity);  
   		if(pro!=null){
   			OrderFormpro o=new OrderFormpro();
   			o.set_id(mongoSequence.currval(PubConstants.SHOP_ODERFORMPRO));
@@ -3258,7 +3207,15 @@ public class ShopAction extends GeneralAction {
   			o.setFromUserid(fromUserid);
   			o.setPid(Long.parseLong(pro.get("_id").toString())); 
   			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, o);  
-  		} 
+  		}
+  		
+  		//订单支付
+  		
+  		if(wwzService.deljf(price, fromUserid, "shop_jfdh", custid, null)) {
+  			//更新订单状态
+  			entity.setState(2);
+  			baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+  		} 		
 	    params.put("state", 0); 
 	    params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
