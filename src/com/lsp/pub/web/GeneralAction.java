@@ -329,12 +329,15 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 				//加载用户
 				Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUser(fromUserid));
 				//积分验证 
-				if(com.getZsjf()>0){
-					if(wwzService.chekjf(custid, fromUserid, "sczs")){
-						wwzService.addjf(com.getZsjf()+"", fromUserid, "sczs", custid, null);
-						Struts2Utils.getRequest().setAttribute("sczs",1);  
-					}
-				} 
+				if(com!=null){
+					if(com.getZsjf()>0){
+						if(wwzService.chekjf(custid, fromUserid, "sczs")){
+							wwzService.addjf(com.getZsjf()+"", fromUserid, "sczs", custid, null);
+							Struts2Utils.getRequest().setAttribute("sczs",1);  
+						}
+					} 
+				}
+				
 		        wwzService.recordlogin(custid, fromUserid);
 		        
 		        

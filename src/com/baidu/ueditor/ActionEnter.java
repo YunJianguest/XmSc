@@ -20,6 +20,7 @@ public class ActionEnter {
 	
 	private HttpServletRequest request = null;
 	
+	
 	private String rootPath = null;
 	private String contextPath = null;
 	

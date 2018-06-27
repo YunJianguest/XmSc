@@ -10,6 +10,7 @@ import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.RoleInfo;
 import com.lsp.pub.util.BaseDate;
+import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.ListUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
@@ -25,6 +26,7 @@ import com.mongodb.DBObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +35,8 @@ import java.util.UUID;
 import java.util.regex.Pattern; 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import org.apache.activemq.store.jdbc.adapter.DB2JDBCAdapter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Results;
@@ -226,8 +230,7 @@ public class UserAction extends GeneralAction<UserInfo>
 		return "main";
  }
   
-  public void  ajaxsave(){
-		
+  public void  ajaxsave() throws Exception{
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
 		HashMap<String,Object>whereMap = new HashMap<>();
 		try {
@@ -249,21 +252,8 @@ public class UserAction extends GeneralAction<UserInfo>
 			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
 				id=UUID.randomUUID().toString();
-				if(StringUtils.isNotEmpty(renumber)){
-					user.setRenumber(Long.parseLong(renumber));
-					whereMap.put("renumber", Long.parseLong(renumber));
-					DBObject dbObject = basedao.getMessage(PubConstants.USER_INFO, whereMap);
-					if(dbObject!=null){
-						if(dbObject.get("upIds")!=null){
-							user.setUpIds(dbObject.get("upIds").toString()+","+dbObject.get("custid").toString());
-							System.out.println("====>"+user.getUpIds());
-						}
-					}
-				}
-			}else{
-				user.setUpIds(renumber);
+				
 			}
-			
 			user.set_id(id);
 			user.setAccount(account);
 			user.setPassword(password);
@@ -276,6 +266,17 @@ public class UserAction extends GeneralAction<UserInfo>
 			if(StringUtils.isNotEmpty(roleid)){
 				user.setRoleid(Long.parseLong(roleid));	
 			}
+			if(StringUtils.isNotEmpty(renumber)){
+				user.setRenumber(Long.parseLong(renumber));
+				whereMap.put("number", Long.parseLong(renumber));
+				DBObject dbObject = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+				if(dbObject != null){
+					user.setParentId(dbObject.get("_id").toString());
+				}
+			}
+			if(StringUtils.isNotEmpty(agentLevel)){
+				user.setAgentLevel(Integer.parseInt(agentLevel));
+			}
 			if(org.apache.commons.lang3.StringUtils.isNotEmpty(type)){
 				user.setType(Integer.parseInt(type));	
 			}
@@ -287,6 +288,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			
 			user.setCreatedate(new Date());
 			basedao.insert(PubConstants.USER_INFO, user);
+			this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), Long.parseLong(renumber));
 			List<DBObject>list=new ArrayList<DBObject>();
 			  if(StringUtils.isNotEmpty(funcs)){
 				  String[]lsfunc=funcs.split(",");
@@ -674,44 +676,88 @@ public class UserAction extends GeneralAction<UserInfo>
 	/**
 	 * 开通代理商账号  
 	 * @param type 角色类型
-	 * @param custid 用户ID
+	 * @param custid 当前用户id
 	 * @param number 用户编号
 	 * @throws Exception
 	 */
 	public void commend(int type,String custid,Long number) throws Exception{
+		HashMap<String,Object> whereMap = new HashMap<>();
+		whereMap.put("number", number);
+		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		System.out.println("custid---222->"+SysConfig.getProperty("custid"));
 		if(db!=null){
 			//预付
 			InteProstore info = new InteProstore();
-			//推荐收益
-		    
 			
 			info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
 			info.setType("ps_account");//开通账户
-			info.setCreatedate(new Date());
-			info.setCustid(custid);
+			Calendar calendar = Calendar.getInstance();
+	        Date date = new Date(System.currentTimeMillis());
+	        calendar.setTime(date);
+	        calendar.add(Calendar.YEAR, +1);
+	        date = calendar.getTime();
+	        info.setCreatedate(new Date());
+	        info.setEnddate(date);
+			info.setFromUserid(custid);
 			info.setState(0);
 			//1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
+			String any = "";
+			if(db.get("any")!=null){
+				any = BaseDecimal.division(db.get("any").toString(), "100", 2);
+			}
 			if(type == 1){
 				if(db.get("returnProvince")!=null){
-					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnProvince").toString())*3));
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnProvince").toString(), "3")));
+					if(user!=null){
+						//推荐收益
+						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
+						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+					}
 				}
 			}else if(type == 2){
 				if(db.get("returnCity")!=null){
-					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnCity").toString())*3));
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCity").toString(), "3")));
+					if(user!=null){
+						//推荐收益
+						String total = BaseDecimal.multiplication(db.get("returnCity").toString(), any);
+						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+					} 
 				}
 			}else if(type == 3){
 				if(db.get("returnCounty")!=null){
-					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnCounty").toString())*3));
+					info.setMoney(Float.valueOf(Long.parseLong(db.get("returnCounty").toString())*3));
+					if(user!=null){
+						//推荐收益
+						String total = BaseDecimal.multiplication(db.get("returnCounty").toString(), any);
+						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+					}
+					
 				}
 			}else if(type == 4){
 				if(db.get("returnDept")!=null){
-					info.setMoney(Double.valueOf(Long.parseLong(db.get("returnDept").toString())*3));
+					info.setMoney(Float.valueOf(Long.parseLong(db.get("returnDept").toString())*3));
+					if(user!=null){
+						//推荐收益
+						String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
+						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+					}
 				}
 			}
 			basedao.insert(PubConstants.INTEGRAL_PROSTORE, info);
 		}
 		
 	}
-	 
+	public void ceshi() throws Exception{
+		Calendar calendar = Calendar.getInstance();
+        Date date = new Date(System.currentTimeMillis());
+        calendar.setTime(date);
+//        calendar.add(Calendar.WEEK_OF_YEAR, -1);
+        calendar.add(Calendar.YEAR, +1);
+        date = calendar.getTime();
+        
+        System.out.println("date--->"+new Date());
+        System.out.println("date--一年后-->"+date);
+	}
+  
 }

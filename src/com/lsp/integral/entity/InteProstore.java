@@ -13,7 +13,7 @@ public class InteProstore extends ReflectionDBObject {
     
 	private String custid;
 	private String  fromUserid;  
-	private Double money;
+	private float money;
 	/**
 	 * 预存类型   
 	 * ps_account 开通账户
@@ -21,8 +21,13 @@ public class InteProstore extends ReflectionDBObject {
 	 * ps_shop 商城收益
 	 */
 	private String type;
+	/**
+	 * 0-返金额中
+	 * 1-已返完
+	 */
 	private int state;
 	private Date createdate;
+	private Date enddate;
 
 	public String getCustid() {
 		return custid;
@@ -36,10 +41,10 @@ public class InteProstore extends ReflectionDBObject {
 	public void setFromUserid(String fromUserid) {
 		this.fromUserid = fromUserid;
 	}
-	public Double getMoney() {
+	public float getMoney() {
 		return money;
 	}
-	public void setMoney(Double money) {
+	public void setMoney(float money) {
 		this.money = money;
 	}
 	public String getType() {
@@ -59,6 +64,12 @@ public class InteProstore extends ReflectionDBObject {
 	}
 	public void setCreatedate(Date createdate) {
 		this.createdate = createdate;
+	}
+	public Date getEnddate() {
+		return enddate;
+	}
+	public void setEnddate(Date enddate) {
+		this.enddate = enddate;
 	}
 	
 }

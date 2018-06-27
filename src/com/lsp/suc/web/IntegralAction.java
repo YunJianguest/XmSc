@@ -82,9 +82,11 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
 		
-		toUser=SpringSecurityUtils.getCurrentUser().getToUser();
-		sortMap.put("sort", -1); 
-		whereMap.put("toUser", toUser);
+		//toUser=SpringSecurityUtils.getCurrentUser().getToUser();
+		//sortMap.put("sort", -1); 
+		//whereMap.put("toUser", toUser);
+		System.out.println("进入这个方法");
+		//whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
 		String title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title)){
 			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
@@ -98,6 +100,7 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 		}
 		
 		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
+		System.out.println("---->"+list);
 		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		Struts2Utils.getRequest().setAttribute("toUser", toUser);

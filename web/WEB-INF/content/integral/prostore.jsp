@@ -111,7 +111,7 @@
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
                             <li> <a href="javascript:add();">
-                                 <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp; 添加账户</a>
+                                 <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp; 添加店铺</a>
                             </li>
                         </ul>
                     </div>
@@ -125,10 +125,16 @@
                             <table class="table table-striped table-action table-primary mb30 table-bordered">
                                 <thead>
                                 <tr>
-                                    <th class="table-action">账户名称</th>
-                                    <th class="table-action">币种</th>
-                                    <th class="table-action">备注</th>
+                                    <th class="table-action">账户</th>
+                                    <th class="table-action">预返
+                                 <c:choose>
+                                    <c:when test="${jfname!=null}">${jfname}</c:when>
+                                   <c:otherwise>金币</c:otherwise>
+                                 </c:choose>   
+                                                                                         数量</th>
+                                    <th class="table-action">预返状态</th>
                                     <th class="table-action">添加时间</th>
+                                    <th class="table-action">截止时间</th>
                                     <th class="table-action">操作</th>
                                 </tr>
                                 </thead>
@@ -136,23 +142,24 @@
                                 <c:forEach items="${list}" var="bean">
                                     <tr>
                                         <td>${bean.account}</td>
-                                        <td>${bean.cname}</td>
-                                        <td>${bean.remark}</td>
+                                        <td>${bean.money}</td>
+                                        <td>
+				                      	<c:choose>
+				                      	  <c:when test="${bean.state == 0}">返额中</c:when>
+				                      	  <c:otherwise>已返完</c:otherwise>
+				                      	</c:choose>
+				                      	</td>
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
+                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.enddate}'/></td>
                                         <td class="table-action">
                                             <div class="btn-group1">
                                                 <a data-toggle="dropdown" class="dropdown-toggle">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                                 <ul role="menu" class="dropdown-menu pull-right">
-                                                    <li><a href="javascript:upd('${bean._id}');">
-                                                        <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;修改</a>
-                                                    </li>
-                                                    
-                                                    <li><a href="javascript:del('${bean._id}');"><i
-                                                            class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
-                                                    </li>
-                                                    
+                                                    <li><a href="javascript:resure('${bean._id}');">
+                                                        <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;确定回本</a>
+                                                    </li> 
                                                 </ul>
                                             </div>
                                         </td>
@@ -175,7 +182,7 @@
             <div class=" bg-bai border-radius3 overflow-hidden">
                 <div class="overflow-hidden line-height40 bg-bai line-bottom">
                     <div class="hang50 pull-left zi-hui-tq">
-                        <i class="weight500 size14 pl-10 line-height50">账户管理</i>
+                        <i class="weight500 size14 pl-10 line-height50">店铺管理</i>
                     </div>
                     <a href="javascript:ps_hide('inszc')">
                         <div class="hang40 pull-right zi-hui-tq">
@@ -199,6 +206,14 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-20">
+                                <label class="control-label">备注：</label>
+                                <input type="text" id="remark" name="remark"
+                                       class="form-control hang40" placeholder="请输入"/>
+                            </div>
+                        </div>
+                       
+                        <div class="col-sm-6">
+                            <div class="mb-20">
                                 <label class="control-label">币种：</label>
                                 <select id="cid" name="cid" class="select2 hang40"
                                         data-placeholder="请选择">
@@ -207,15 +222,6 @@
                                 <label class="error" for="color"></label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="mb-20">
-                                <label class="control-label">备注：</label>
-                                <input type="text" id="remark" name="remark"
-                                       class="form-control hang40" placeholder="请输入"/>
-                            </div>
-                        </div>
-                       
-                        
                        
                     </div>
                     <div class="div-group-10 line-top" style="padding-left: 40px; padding-right: 40px;">

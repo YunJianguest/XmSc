@@ -61,7 +61,6 @@
 
             $("#custinfoForm").submit();
         }
-
     </script>
 </head>
 

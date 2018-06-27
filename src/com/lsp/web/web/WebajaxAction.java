@@ -501,7 +501,7 @@ public class WebajaxAction extends TotalAction {
 	 * @throws Exception 
 	 */
 	public void upimage() throws Exception {
-
+        
 		String baseurl=Struts2Utils.getParameter("baseurl"); 
 		String type=baseurl.substring(0,baseurl.indexOf(";"));
 		type=type.substring(type.indexOf("/")+1);

@@ -229,7 +229,10 @@ public class WeiXinUtil {
 			token.setSecret(token.getSecret());
 			token.setExpires_in(now);
 			token.setToUser(token.getToUser());
-			token.setAccess_token(obj.get("access_token").toString());
+			if(obj.get("access_token")!=null){
+				token.setAccess_token(obj.get("access_token").toString());
+			}
+			
 			
 			url1 ="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+token.getAccess_token()+"&type=jsapi";
 			String ret2=HttpClient.http(url1, null);

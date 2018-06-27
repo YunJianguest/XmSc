@@ -207,14 +207,5 @@
         <!-- 业界标准 用.do后缀来表示 controler -->
         <url-pattern>/afterlogin.do</url-pattern>
       </servlet-mapping>
- <!-- 前后端分离 -->
-     <filter>
-	  	<filter-name>CorsFilter</filter-name>
-	  	<filter-class>com.lsp.jwt.filter.CorsFilter</filter-class>
-  	</filter>
-  	<filter-mapping>
-	  	<filter-name>CorsFilter</filter-name>
-	  	<url-pattern>/wap/*</url-pattern>
-  	</filter-mapping>  
- 	
+
 </web-app>
