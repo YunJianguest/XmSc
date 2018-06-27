@@ -1,5 +1,6 @@
 package com.lsp.user.web;
 
+
 import com.lsp.email.entity.Email; 
 import com.lsp.email.util.EmailUtils;
 import com.lsp.integral.entity.InteProstore;
@@ -12,6 +13,7 @@ import com.lsp.pub.entity.RoleInfo;
 import com.lsp.pub.util.BaseDate;
 import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateFormat;
+import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.ListUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -252,7 +254,14 @@ public class UserAction extends GeneralAction<UserInfo>
 			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
 				id=UUID.randomUUID().toString();
-				
+				user.set_id(id);
+				if(StringUtils.isNotEmpty(agentLevel)){
+					if(StringUtils.isNotEmpty(renumber)){
+						this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), Long.parseLong(renumber));
+					}else{
+						this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), null);
+					}
+				}
 			}
 			user.set_id(id);
 			user.setAccount(account);
@@ -285,10 +294,11 @@ public class UserAction extends GeneralAction<UserInfo>
 			}else{
 				user.setNumber(Long.parseLong(number));
 			}
-			
 			user.setCreatedate(new Date());
+			
 			basedao.insert(PubConstants.USER_INFO, user);
-			this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), Long.parseLong(renumber));
+			
+			
 			List<DBObject>list=new ArrayList<DBObject>();
 			  if(StringUtils.isNotEmpty(funcs)){
 				  String[]lsfunc=funcs.split(",");
@@ -567,7 +577,7 @@ public class UserAction extends GeneralAction<UserInfo>
 	public  void   sendemail(String email,String id){
 		Email  emailInfo=new Email();
 		try {
-			emailInfo.setFromAddress(javax.mail.internet.MimeUtility.encodeText("邑联科技")+" "+SysConfig.getProperty("eaddress"));
+			emailInfo.setFromAddress(javax.mail.internet.MimeUtility.encodeText("熊猫商城")+" "+SysConfig.getProperty("eaddress"));
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -578,10 +588,10 @@ public class UserAction extends GeneralAction<UserInfo>
 		emailInfo.setType("text/html;charset=UTF-8");
 		emailInfo.setHost(SysConfig.getProperty("ehost"));
 		emailInfo.setHostType("smtp");
-		emailInfo.setSubject("恭喜您成为邑联科技的会员");
+		emailInfo.setSubject("恭喜您成为熊猫商城的会员");
 		String content="";
 		content+="<div style='padding: 20px;'><font size='3'><div>亲爱的用户"+id+":</div></font>" 
-		       +"<div style='padding-top: 10px;padding-bottom: 10px;'>您好！欢迎您加入邑联，请立即点击下列按钮（链接）激活您的帐号。</div>"
+		       +"<div style='padding-top: 10px;padding-bottom: 10px;'>您好！欢迎您加入熊猫，请立即点击下列按钮（链接）激活您的帐号。</div>"
 			   +"<a href='"+SysConfig.getProperty("ip")+"/user/user!activate.action?id="+id+"'><div style='padding-bottom: 10px;'>此处是验证连接</div></a>"
 		       +"<div style='padding-bottom: 10px;'>此信息由系统自动发送，请勿回复！</div></div>";
 		emailInfo.setContent(content);
@@ -685,7 +695,7 @@ public class UserAction extends GeneralAction<UserInfo>
 		whereMap.put("number", number);
 		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
-		System.out.println("custid---222->"+SysConfig.getProperty("custid"));
+
 		if(db!=null){
 			//预付
 			InteProstore info = new InteProstore();
@@ -712,7 +722,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
 					}
 				}
 			}else if(type == 2){
@@ -721,7 +731,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCity").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
 					} 
 				}
 			}else if(type == 3){
@@ -730,7 +740,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCounty").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
 					}
 					
 				}
@@ -740,7 +750,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "ps_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
 					}
 				}
 			}
@@ -748,16 +758,15 @@ public class UserAction extends GeneralAction<UserInfo>
 		}
 		
 	}
-	public void ceshi() throws Exception{
-		Calendar calendar = Calendar.getInstance();
-        Date date = new Date(System.currentTimeMillis());
-        calendar.setTime(date);
-//        calendar.add(Calendar.WEEK_OF_YEAR, -1);
-        calendar.add(Calendar.YEAR, +1);
-        date = calendar.getTime();
-        
-        System.out.println("date--->"+new Date());
-        System.out.println("date--一年后-->"+date);
+   
+	public void deleteall(){
+		basedao.delete(PubConstants.INTEGRAL_INFO);
+		
+		basedao.delete(PubConstants.INTEGRAL_PROSTORE);
 	}
-  
+	public void ceshi(){
+		System.out.println("---->"+DateUtil.getTimesnight());
+	}
+	
+	
 }

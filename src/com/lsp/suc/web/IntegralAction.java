@@ -86,7 +86,7 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 		//sortMap.put("sort", -1); 
 		//whereMap.put("toUser", toUser);
 		System.out.println("进入这个方法");
-		//whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
 		String title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title)){
 			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
@@ -100,7 +100,6 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 		}
 		
 		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
-		System.out.println("---->"+list);
 		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		Struts2Utils.getRequest().setAttribute("toUser", toUser);
@@ -492,7 +491,7 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 					 
 				} 
 			   if(value>0){
-				   wwzService.changeJf(custid, fromUserid, value,2);
+				   wwzService.changeJf(custid, fromUserid, value,2,0);
 				   submap.put("state", 0);
 			   }else{ 
 			   }

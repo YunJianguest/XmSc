@@ -10,7 +10,9 @@ import com.mongodb.ReflectionDBObject;
 public class IntegralRecord extends ReflectionDBObject {
 	private String  custid; 
 	private String  fromUserid;
-	private float   value;
+	private double   value;
+	private double   prostore;
+	private double   uservalue;
 	public String getCustid() {
 		return custid;
 	}
@@ -23,12 +25,25 @@ public class IntegralRecord extends ReflectionDBObject {
 	public void setFromUserid(String fromUserid) {
 		this.fromUserid = fromUserid;
 	}
-	public float getValue() {
+	public double getValue() {
 		return value;
 	}
-	public void setValue(float value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
+	public double getProstore() {
+		return prostore;
+	}
+	public void setProstore(double prostore) {
+		this.prostore = prostore;
+	}
+	public double getUservalue() {
+		return uservalue;
+	}
+	public void setUservalue(double uservalue) {
+		this.uservalue = uservalue;
+	}
+    
 	
 
 }

@@ -3204,7 +3204,7 @@ public class ShopAction extends GeneralAction {
 					} 
 
 					//获取间接推荐人员
-					tjuser=wwzService.getWXuserVipNo(wxuser.get("reno").toString());
+					tjuser=wwzService.getWXuserVipNo(tjuser.get("reno").toString());
 					if(tjuser!=null) {
 						//记录提成
 						wwzService.addjf("" + ((bl * sett.getBetween()) / 100), tjuser.get("_id").toString(),
@@ -3214,11 +3214,10 @@ public class ShopAction extends GeneralAction {
 					
 					
 				}else if(Integer.parseInt(wxuser.get("tjlx").toString())==1) {
-					//管理员推荐
-					//会员推荐
+					//管理员推荐 
 					whereMap.clear();
 					whereMap.put("number",Long.parseLong( wxuser.get("reno").toString()));
-					DBObject tjuser=wwzService.getWXuserVipNo(wxuser.get("reno").toString());
+					DBObject tjuser=baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if(tjuser!=null) {
 						//记录提成
 						wwzService.addjf("" + ((bl * sett.getDirect()) / 100), tjuser.get("_id").toString(),

@@ -25,7 +25,7 @@ public class IntegralInfo extends ReflectionDBObject {
 	/**
 	 * 积分
 	 */
-	private float value;
+	private double value;
 	 
     private Date createdate;
     private String summary;
@@ -39,6 +39,7 @@ public class IntegralInfo extends ReflectionDBObject {
      * 2-冻结积分
      **/
     private int  jfstate;
+    private String fid;
 	public String getToUser() {
 		return toUser;
 	}
@@ -63,9 +64,12 @@ public class IntegralInfo extends ReflectionDBObject {
 		this.type = type;
 	}
  
-
-	public float getValue() {
+	public double getValue() {
 		return value;
+	}
+
+	public void setValue(double value) {
+		this.value = value;
 	}
 
 	public void setValue(float value) {
@@ -117,6 +121,14 @@ public class IntegralInfo extends ReflectionDBObject {
 
 	public void setJfstate(int jfstate) {
 		this.jfstate = jfstate;
+	}
+
+	public String getFid() {
+		return fid;
+	}
+
+	public void setFid(String fid) {
+		this.fid = fid;
 	}
 	
 

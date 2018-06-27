@@ -1,6 +1,7 @@
 package com.lsp.pub.service;
 
  
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -9,15 +10,20 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
- 
+
+import com.lsp.integral.entity.InteProstore;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.UniObject;
+import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.ShopMb;
+import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.suc.entity.Ranking;
+import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -36,6 +42,9 @@ public class TimerService {
 	@Autowired
 	private BaseDao baseDao; 
 	private MongoSequence mongoSequence;	
+	@Autowired
+	private WwzService  wwzservice; 
+	 
 	@Autowired
 	public void setMongoSequence(MongoSequence mongoSequence) {
 		this.mongoSequence = mongoSequence;
@@ -190,5 +199,56 @@ public class TimerService {
 		}
 		 
 	}
-  
+	/**
+	 * 
+	 */
+	public synchronized void updProstore(){
+		HashMap<String, Object>sortMap=new HashMap<String, Object>();
+		HashMap<String, Object>whereMap=new HashMap<String, Object>();
+		sortMap.put("createdate", -1);
+		BasicDBObject dateCondition = new BasicDBObject();
+		dateCondition.append("$gte",new Date());
+		whereMap.put("enddate", dateCondition);
+		whereMap.put("state", 0);
+		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
+		for (DBObject dbObject : list) {
+			if(dbObject.get("money")!=null){
+				String price = BaseDecimal.division(dbObject.get("money").toString(), "365",6);
+				if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
+					if(dbObject.get("type").toString().equals("ps_account")){
+						//积分添加  添加积分类型为冻结
+						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,2,dbObject.get("_id").toString(), null);
+					}else{
+						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,1,dbObject.get("_id").toString(), null);
+					}
+					
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public synchronized void delProstore() throws Exception{
+		HashMap<String, Object>sortMap=new HashMap<String, Object>();
+		HashMap<String, Object>whereMap=new HashMap<String, Object>();
+		sortMap.put("createdate", -1);
+		BasicDBObject dateCondition = new BasicDBObject();
+		dateCondition.append("$lt",DateUtil.getTimesnight());
+		whereMap.put("createdate", dateCondition);
+		whereMap.put("state", 0);
+		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
+		for (DBObject dbObject : list) {
+			InteProstore prostore = (InteProstore)UniObject.DBObjectToObject(dbObject,InteProstore.class);
+			prostore.setState(1);//1-已返完
+			baseDao.insert(PubConstants.INTEGRAL_PROSTORE, prostore);
+			if(prostore.getType().equals("ps_account")){//如果预存类型为开户积分，所以状态为冻结，
+				if(dbObject.get("fromUserid")!=null){
+					wwzservice.changeFreezeJf(null, dbObject.get("fromUserid").toString());
+				}
+			}
+			
+		}
+	}
 }
