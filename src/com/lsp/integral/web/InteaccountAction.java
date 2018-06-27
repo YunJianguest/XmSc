@@ -92,7 +92,7 @@ public class InteaccountAction extends GeneralAction<InteAccount> {
 				}
 			}
 		}
-		Struts2Utils.getRequest().setAttribute("List", list);
+		Struts2Utils.getRequest().setAttribute("list", list);
 		System.out.println(list);
 		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_INTEACCOUNT,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));

@@ -66,7 +66,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject; 
  
 
-@Namespace("/shop")
+@Namespace("/wap/shop")
 @Results({ @org.apache.struts2.convention.annotation.Result(name = "reload", location = "shop.action",type = "redirect") })
 public class ShopAction extends GeneralAction {
 	private static final long serialVersionUID = -7868703949557549292L;
@@ -88,16 +88,21 @@ public class ShopAction extends GeneralAction {
 	 * @return
 	 * @throws Exception 
 	 */
-	public String index() throws Exception {  
+	
+	public void index() throws Exception {  
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		
 		String  comid=Struts2Utils.getParameter("comid"); 
 		getLscode(); 
-		Struts2Utils.getRequest().setAttribute("custid",custid);  
+		//Struts2Utils.getRequest().setAttribute("custid",custid);
+		sub_map.put("custid",custid);
 		WxToken token=GetAllFunc.wxtoken.get(custid); 
 		if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
 		}
 		
-		Struts2Utils.getRequest().setAttribute("token", WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		//Struts2Utils.getRequest().setAttribute("token", WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		sub_map.put("token", WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest());
 		String url="";
 		if(StringUtils.isNotEmpty(comid)){
@@ -107,19 +112,23 @@ public class ShopAction extends GeneralAction {
 		} 
 		if(StringUtils.isEmpty(fromUserid)){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
 		}else if(fromUserid.equals("register")){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
 		}  
-	    Struts2Utils.getRequest().setAttribute("cid", comid);
+	    //Struts2Utils.getRequest().setAttribute("cid", comid);
+	    sub_map.put("cid", comid);
 	    List<DBObject>list=wwzService.advertisement(custid, "shopmb-"+comid);
-	    Struts2Utils.getRequest().setAttribute("advertising",list);
+	    //Struts2Utils.getRequest().setAttribute("advertising",list);
+	    sub_map.put("advertising",list);
 	    List<DBObject>list1=wwzService.slide(custid, "shopmb-"+comid);
-	    Struts2Utils.getRequest().setAttribute("slide",list1);
-
+	    //Struts2Utils.getRequest().setAttribute("slide",list1);
+	    sub_map.put("slide",list1);
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		if(StringUtils.isNotEmpty(comid)){
 			whereMap.put("_id",Long.parseLong(comid));	
@@ -137,25 +146,31 @@ public class ShopAction extends GeneralAction {
 				}else{
 					url=SysConfig.getProperty("ip")+"/shop/shop!index.action?custid="+custid+"&agid="+agid;
 				} 
-				Struts2Utils.getRequest().setAttribute("agid",agid);
+				//Struts2Utils.getRequest().setAttribute("agid",agid);
+				sub_map.put("agid",agid);
 			}
 			
 		}
 		wwzService.flow(custid, "shop-"+shopmb.get("_id"));
 		wwzService.flow(custid, "shop");
-	    Struts2Utils.getRequest().setAttribute("entity",shopmb);
+	    //Struts2Utils.getRequest().setAttribute("entity",shopmb);
+	    sub_map.put("entity",shopmb);
 	    //加载分类
 		whereMap.clear();
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		whereMap.put("parentid", Long.parseLong(shopmb.get("_id").toString())); 
 		sortMap.put("sort", -1);
 		//加载滚动
-		Struts2Utils.getRequest().setAttribute("roll",wwzService.getRoll(custid, "shopmb-"+shopmb.get("_id").toString()));
+		//Struts2Utils.getRequest().setAttribute("roll",wwzService.getRoll(custid, "shopmb-"+shopmb.get("_id").toString()));
+		sub_map.put("roll",wwzService.getRoll(custid, "shopmb-"+shopmb.get("_id").toString()));
 		//加载广告
-		Struts2Utils.getRequest().setAttribute("slide",wwzService.getslide(custid, "shopmb-"+shopmb.get("_id").toString()));
+		//Struts2Utils.getRequest().setAttribute("slide",wwzService.getslide(custid, "shopmb-"+shopmb.get("_id").toString()));
+		sub_map.put("slide",wwzService.getslide(custid, "shopmb-"+shopmb.get("_id").toString()));
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("typelist",typelist);  
+		//Struts2Utils.getRequest().setAttribute("typelist",typelist);  
+		sub_map.put("typelist",typelist);
+		
 		DBObject  share=new BasicDBObject();
 		share.put("fxtitle",shopmb.get("name"));
 		share.put("fxsummary",shopmb.get("summary"));
@@ -173,23 +188,27 @@ public class ShopAction extends GeneralAction {
 			share.put("fximg",wwzService.getWxUsertype(agent.get("fromUserid").toString(), "headimgurl"));
 			agent.put("nickname",wwzService.getWxUsertype(agent.get("fromUserid").toString(),"nickname"));
 			agent.put("headimgurl",wwzService.getWxUsertype(agent.get("fromUserid").toString(), "headimgurl"));
-			Struts2Utils.getRequest().setAttribute("agent",agent);  
+			//Struts2Utils.getRequest().setAttribute("agent",agent); 
+			sub_map.put("agent",agent);
 		}
-		Struts2Utils.getRequest().setAttribute("share",share);
-		
+		//Struts2Utils.getRequest().setAttribute("share",share);
+		sub_map.put("share",share);
 		//检测代理 
 		if(wwzService.checkAgent(agid, custid, fromUserid)){
 			Struts2Utils.getRequest().setAttribute("isAgent","ok");
+			sub_map.put("isAgent","ok");
 		}
 		//检测全局代理 
 		if(wwzService.checkAgent(custid,fromUserid)){
 			 Struts2Utils.getRequest().setAttribute("isAgents","ok");
+			 sub_map.put("isAgents","ok");
 		}
 		//检测当前店铺
 		if(StringUtils.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(),wwzService.getVipNo(fromUserid)))){
 			Struts2Utils.getRequest().setAttribute("isAgentcom","ok");
+			sub_map.put("isAgentcom","ok");
 		}
-		if(shopmb!=null){
+		/*if(shopmb!=null){
 			 if(shopmb.get("type")!=null&&Integer.parseInt(shopmb.get("type").toString())==1){
 				 return "jfdh"+shopmb.get("mb");
 			 }else{
@@ -197,8 +216,9 @@ public class ShopAction extends GeneralAction {
 			 } 
 		}else{ 
 			return "index";
-		}
-		
+		}*/
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 主页面
@@ -245,18 +265,24 @@ public class ShopAction extends GeneralAction {
 	 * @return
 	 * @throws IOException 
 	 */
-	public String orderform() throws IOException{ 
+	
+	public void orderform() throws IOException{ 
 		getLscode();
-		Struts2Utils.getRequest().setAttribute("custid",custid);
-		Struts2Utils.getRequest().setAttribute("lscode",lscode); 
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		//Struts2Utils.getRequest().setAttribute("custid",custid);
+		//Struts2Utils.getRequest().setAttribute("lscode",lscode); 
+		sub_map.put("custid",custid);
+		sub_map.put("lscode",lscode);
 		//加载订单量
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		whereMap.put("fromUserid", fromUserid); 
 		whereMap.put("custid",custid);
-		Struts2Utils.getRequest().setAttribute("ordercount",baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));  
-		return "orderform";
+		//Struts2Utils.getRequest().setAttribute("ordercount",baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));  
+		sub_map.put("ordercount",baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	 
 
 	 
 	/**
@@ -264,7 +290,7 @@ public class ShopAction extends GeneralAction {
 	 * @return
 	 * @throws Exception 
 	 */
-	public String fahuo() throws Exception{
+	/*public String fahuo() throws Exception{
 		custid=getCustid();
 		lscode=getLscode();
 		List<DBObject> relist=new ArrayList<DBObject>();
@@ -279,19 +305,43 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		return "orderform";
+	}*/
+	public void fahuo() throws Exception{
+		custid=getCustid();
+		lscode=getLscode();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		List<DBObject> relist=new ArrayList<DBObject>();
+		Long _id=Long.parseLong(Struts2Utils.getParameter("_id"));
+		
+		DBObject order=baseDao.getMessage(PubConstants.WX_ORDERFORM, _id);
+		OrderForm entity = (OrderForm)UniObject.DBObjectToObject(order,OrderForm.class);
+		entity.set_id(_id);
+		entity.setState(3);
+		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+		orderform();
+		//Struts2Utils.getRequest().setAttribute("custid", custid);
+		//Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		sub_map.put("custid", custid);
+		sub_map.put("lscode", lscode);
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	 
 	/**
 	 * 确认货单
 	 * @return
 	 * @throws Exception 
 	 */
-	public String loginout() throws Exception{
-		Struts2Utils.getSession().setAttribute("fromLogin", null);
-		Struts2Utils.getRequest().setAttribute("method", "/wwz/wwz!fromuser.action");
-		return "refresh";
+	
+	public void loginout() throws Exception{
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		sub_map.put("fromLogin", null);
+		sub_map.put("method", "/wwz/wwz!fromuser.action");
+		//Struts2Utils.getSession().setAttribute("fromLogin", null);
+		//Struts2Utils.getRequest().setAttribute("method", "/wwz/wwz!fromuser.action");
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	 
 	 
 	/**
 	 * 微信支付
@@ -1157,7 +1207,7 @@ public class ShopAction extends GeneralAction {
 	 * 商品详情
 	 * @return
 	 */
-	public String  shopproduct(){
+	/*public String  shopproduct(){
 		getLscode();  
 		String  pid=Struts2Utils.getParameter("pid"); 
 		WxToken token=GetAllFunc.wxtoken.get(custid); 
@@ -1279,38 +1329,189 @@ public class ShopAction extends GeneralAction {
 		
 		return "productdetail"+db.get("bq");
 	 
+	}*/
+	public void  shopproduct(){
+		Map<String, Object> sub_map = new HashMap<String, Object>(); 
+		getLscode();  
+		String  pid=Struts2Utils.getParameter("pid"); 
+		WxToken token=GetAllFunc.wxtoken.get(custid); 
+		if(token.getSqlx()>0){
+			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
+		 }
+		//Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		sub_map.put("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
+		String  url=SysConfig.getProperty("ip")+"/shop/shop!shopproduct.action?custid="+custid+"&pid="+pid+"&agid="+agid;  
+		if(StringUtils.isEmpty(fromUserid)){ 
+			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
+		}else if(fromUserid.equals("register")){ 
+			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
+		}  
+		wwzService.flow(custid, "shop");
+		wwzService.flow(custid, "shop-pro-"+pid);
+		DBObject  db=baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(pid));  
+		HashMap<String, Object>whereMap=new HashMap<String, Object>(); 
+		whereMap.put("fromUserid", fromUserid);
+		whereMap.put("custid", custid);
+		Long count=baseDao.getCount(PubConstants.SUC_SHOPPINGCART,whereMap);
+		//Struts2Utils.getRequest().setAttribute("custid",custid);
+		//Struts2Utils.getRequest().setAttribute("entity",db);
+		sub_map.put("custid",custid);
+		sub_map.put("entity",db);
+		if(Integer.parseInt(db.get("bq").toString())==8){
+			double bl= Double.parseDouble(db.get("price").toString())/Double.parseDouble(db.get("oldprice").toString());   
+			//Struts2Utils.getRequest().setAttribute("bl",new java.text.DecimalFormat("#").format(bl*100)); 	
+			sub_map.put("bl",new java.text.DecimalFormat("#").format(bl*100));
+		}else if(Integer.parseInt(db.get("bq").toString())==9){
+			whereMap.clear();
+			whereMap.put("proid",Long.parseLong(pid));
+			Long   bcount=baseDao.getCount(PubConstants.SHOP_BULKYD, whereMap);
+			double bl= Double.parseDouble(bcount+"")/Double.parseDouble(db.get("pcount").toString());   
+			//Struts2Utils.getRequest().setAttribute("bl",new java.text.DecimalFormat("#").format(bl*100)); 	
+			//Struts2Utils.getRequest().setAttribute("needcount",Long.parseLong(db.get("pcount").toString())-bcount);
+			sub_map.put("bl",new java.text.DecimalFormat("#").format(bl*100));
+			sub_map.put("needcount",Long.parseLong(db.get("pcount").toString())-bcount);
+			whereMap.put("fromUserid", fromUserid);
+			bcount=baseDao.getCount(PubConstants.SHOP_BULKYD, whereMap);
+			if(bcount==1){
+				//Struts2Utils.getRequest().setAttribute("ispay",true);
+				sub_map.put("ispay",true);
+			}
+		}
+		if(StringUtils.isEmpty(agid)){
+			agid=wwzService.getAgid(db.get("comid").toString(), wwzService.getVipNo(fromUserid));
+			if(StringUtils.isNotEmpty(agid)){
+				//Struts2Utils.getRequest().setAttribute("agid",agid);
+				sub_map.put("agid",agid);
+			}
+		}
+		//Struts2Utils.getRequest().setAttribute("shopcount",count);
+		//Struts2Utils.getRequest().setAttribute("slide",wwzService.getslide(custid, "shoppro-"+pid));
+		sub_map.put("shopcount",count);
+		sub_map.put("slide",wwzService.getslide(custid, "shoppro-"+pid));
+		//加载地址信息
+		whereMap.clear();
+		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("lx", 1);
+		DBObject  address=baseDao.getMessage(PubConstants.SHOP_USERADDRESS, whereMap); 
+		Struts2Utils.getRequest().setAttribute("address",address); 
+		sub_map.put("address",address);
+		//加载商品规格
+		whereMap.clear();
+		whereMap.put("parentid",Long.parseLong(pid));
+		HashMap<String, Object>sortMap=new HashMap<String, Object>();
+		sortMap.put("sort",-1);
+		List<DBObject>spelist=baseDao.getList(PubConstants.SHOP_SPECIFICATION, whereMap, sortMap);
+		if(spelist.size()>0){
+			//Struts2Utils.getRequest().setAttribute("spelist", spelist);	
+			sub_map.put("spelist", spelist);
+		}
+		//加载用户积分
+		//Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(custid, fromUserid));
+		sub_map.put("jf", wwzService.getJf(custid, fromUserid));
+		DBObject  share=new BasicDBObject();
+		share.put("fxtitle",db.get("ptitle"));
+		share.put("fximg",db.get("logo"));
+		share.put("fxsummary",db.get("summary"));
+		share.put("fxurl",url);
+		//Struts2Utils.getRequest().setAttribute("share", share); 
+		sub_map.put("share", share);
+		//加载限购信息 
+		if(db.get("gmcs")!=null&&Integer.parseInt(db.get("gmcs").toString())>0){ 
+			whereMap.clear();
+			whereMap.put("pid", Long.parseLong(pid));
+			whereMap.put("fromUserid", fromUserid); 
+			int ll=0;
+			//预订库检测
+			List<DBObject> list=baseDao.getList(PubConstants.SHOP_ODERFORMPRO,whereMap,null); 
+			for (DBObject dbObject : list) {
+				 DBObject  order=baseDao.getMessage(PubConstants.WX_ORDERFORM, dbObject.get("orderid").toString());
+				 if(order!=null&&Integer.parseInt(order.get("state").toString())!=1){
+					 ll+=Integer.parseInt(order.get("count").toString());
+				 }
+			}
+			//购物车检测
+			whereMap.clear();
+			whereMap.put("pid", Long.parseLong(pid));
+			whereMap.put("fromUserid", fromUserid);
+			
+			List<DBObject>listgwc=baseDao.getList(PubConstants.SUC_SHOPPINGCART, whereMap,null);
+			for (DBObject dbObject : listgwc) {
+				ll+=Integer.parseInt(dbObject.get("count").toString());
+			} 
+			if(ll>=Integer.parseInt(db.get("gmcs").toString())){
+				//Struts2Utils.getRequest().setAttribute("gmcs",0);
+				sub_map.put("gmcs",0);
+			}else{
+				//Struts2Utils.getRequest().setAttribute("gmcs",Integer.parseInt(db.get("gmcs").toString())-ll);
+				sub_map.put("gmcs",Integer.parseInt(db.get("gmcs").toString())-ll);
+			}
+		}
+		    
+		    //检测代理 
+			if(wwzService.checkAgent(agid, custid, fromUserid)){
+				//Struts2Utils.getRequest().setAttribute("isAgent","ok");
+				sub_map.put("isAgent","ok");
+			}
+		    //检测全局代理 
+			if(wwzService.checkAgent(custid,fromUserid)){
+				//Struts2Utils.getRequest().setAttribute("isAgents","ok");
+				sub_map.put("isAgents","ok");
+			}
+			//检测当前店铺
+			if(StringUtils.isNotEmpty(wwzService.getAgid(db.get("comid").toString(),wwzService.getVipNo(fromUserid)))){
+				//Struts2Utils.getRequest().setAttribute("isAgentcom","ok");
+				sub_map.put("isAgentcom","ok");
+			}
+		
+		//return "productdetail"+db.get("bq");
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	
 	/**
 	 * 购物车详情
 	 * @return
 	 */
-	public String  shoppingcar(){
+	
+	public void  shoppingcar(){
+		Map<String, Object> sub_map = new HashMap<String, Object>();
 		getLscode();
-		Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUser(fromUserid));
+		//Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUser(fromUserid));
+		sub_map.put("user",wwzService.getWxUser(fromUserid));
 		String  pid=Struts2Utils.getParameter("pid");  
-		Struts2Utils.getRequest().setAttribute("custid",custid);
-		Struts2Utils.getRequest().setAttribute("pid",pid); 
+		//Struts2Utils.getRequest().setAttribute("custid",custid);
+		//Struts2Utils.getRequest().setAttribute("pid",pid); 
 		//加载地址信息
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		whereMap.put("fromUserid",fromUserid);
 		whereMap.put("lx", 1); 
 		DBObject  address=baseDao.getMessage(PubConstants.SHOP_USERADDRESS, whereMap); 
-		Struts2Utils.getRequest().setAttribute("address",address);
+		//Struts2Utils.getRequest().setAttribute("address",address);
+		sub_map.put("address",address);
 		whereMap.clear();
 		whereMap.put("custid", custid);
 		whereMap.put("lx", 1);
 		DBObject  entity=baseDao.getMessage(PubConstants.SHOP_SHOPMB, whereMap);
-		Struts2Utils.getRequest().setAttribute("entity",entity);
-		
-		return "shoppingcar";
-	 
+		//Struts2Utils.getRequest().setAttribute("entity",entity);
+		sub_map.put("entity",entity);
+		//return "shoppingcar";
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 订单确认
 	 * @return
 	 */
-	public String orderconfirmation(){
+	
+	
+	public void orderconfirmation(){
+		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		getLscode();
 		String  pid=Struts2Utils.getParameter("pid"); 
 		DBObject  db=baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(pid));
@@ -1319,7 +1520,7 @@ public class ShopAction extends GeneralAction {
 		whereMap.put("fromUserid",fromUserid);
 		whereMap.put("lx", 1);
 		DBObject  address=baseDao.getMessage(PubConstants.SHOP_USERADDRESS, whereMap); 
-		Struts2Utils.getRequest().setAttribute("address",address); 
+		/*Struts2Utils.getRequest().setAttribute("address",address); 
 		Struts2Utils.getRequest().setAttribute("custid",custid); 
 		Struts2Utils.getRequest().setAttribute("entity",db); 
 		Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUser(fromUserid));
@@ -1327,9 +1528,20 @@ public class ShopAction extends GeneralAction {
 		 
 		Struts2Utils.getRequest().setAttribute("count",Struts2Utils.getParameter("count"));
 		Struts2Utils.getRequest().setAttribute("byprice",baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(db.get("comid").toString())).get("byprice"));
-		Struts2Utils.getRequest().setAttribute("price",Struts2Utils.getParameter("price"));
-		return "orderconfirmation";
+		Struts2Utils.getRequest().setAttribute("price",Struts2Utils.getParameter("price"));*/
 		
+		sub_map.put("address",address);
+		sub_map.put("custid",custid);
+		sub_map.put("entity",db);
+		sub_map.put("user",wwzService.getWxUser(fromUserid));
+		sub_map.put("spec",Struts2Utils.getParameter("spec"));
+		
+		sub_map.put("count",Struts2Utils.getParameter("count"));
+		sub_map.put("byprice",baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(db.get("comid").toString())).get("byprice"));
+		sub_map.put("price",Struts2Utils.getParameter("price"));
+		//return "orderconfirmation";
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax删除地址
@@ -1417,12 +1629,18 @@ public class ShopAction extends GeneralAction {
 	/**
 	 * 订单列表
 	 */
-	public  String  orderfrom(){  
-		Struts2Utils.getRequest().setAttribute("custid",Struts2Utils.getParameter("custid"));
+	
+	public  void  orderfrom(){ 
+		Map<String, Object> sub_map = new HashMap<String, Object>(); 
+		sub_map.put("custid",Struts2Utils.getParameter("custid"));
+		sub_map.put("lscode",Struts2Utils.getParameter("lscode"));
+		/*Struts2Utils.getRequest().setAttribute("custid",Struts2Utils.getParameter("custid"));
 		Struts2Utils.getRequest().setAttribute("lscode",Struts2Utils.getParameter("lscode"));
-		return "orderfrom";
-		
+		return "orderfrom";*/
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
 	public void  ajaxdelorder(){ 
 		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
@@ -1576,39 +1794,62 @@ public class ShopAction extends GeneralAction {
 	/**
 	 * 用户地址管理
 	 */
-	public String  useraddress(){
+	
+	
+	public void  useraddress(){
+		Map<String, Object> sub_map = new HashMap<String, Object>();
 		getLscode(); 
-		Struts2Utils.getRequest().setAttribute("custid",custid);
+		/*Struts2Utils.getRequest().setAttribute("custid",custid);
 		Struts2Utils.getRequest().setAttribute("addressis", Struts2Utils.getParameter("addressis"));
 		Struts2Utils.getRequest().setAttribute("backurl", Struts2Utils.getParameter("backurl"));
 		Struts2Utils.getRequest().setAttribute("count", Struts2Utils.getParameter("count"));
 		Struts2Utils.getRequest().setAttribute("price", Struts2Utils.getParameter("price"));
-		Struts2Utils.getRequest().setAttribute("spec", Struts2Utils.getParameter("spec"));
+		Struts2Utils.getRequest().setAttribute("spec", Struts2Utils.getParameter("spec"));*/
+		sub_map.put("custid",custid);
+		sub_map.put("addressis", Struts2Utils.getParameter("addressis"));
+		sub_map.put("backurl", Struts2Utils.getParameter("backurl"));
+		sub_map.put("count", Struts2Utils.getParameter("count"));
+		sub_map.put("price", Struts2Utils.getParameter("price"));
+		sub_map.put("spec", Struts2Utils.getParameter("spec"));
 		 
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		whereMap.put("fromUserid",fromUserid);
 		whereMap.put("lx", 1);
 		DBObject  address=baseDao.getMessage(PubConstants.SHOP_USERADDRESS, whereMap);
 		Struts2Utils.getRequest().setAttribute("address",address); 
-		return "address";
-		
+		sub_map.put("address",address);
+		//return "address";
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 用户新增管理
 	 */
-	public String  useraddresssave(){
+	
+	public void  useraddresssave(){
+		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		getLscode(); 
-		Struts2Utils.getRequest().setAttribute("addressis", Struts2Utils.getParameter("addressis"));
+		/*Struts2Utils.getRequest().setAttribute("addressis", Struts2Utils.getParameter("addressis"));
 		 
 		Struts2Utils.getRequest().setAttribute("backurl", Struts2Utils.getParameter("backurl")); 
 		Struts2Utils.getRequest().setAttribute("count", Struts2Utils.getParameter("count"));
 		Struts2Utils.getRequest().setAttribute("price", Struts2Utils.getParameter("price"));
 		Struts2Utils.getRequest().setAttribute("spec", Struts2Utils.getParameter("spec"));
-		 
-		Struts2Utils.getRequest().setAttribute("custid",custid);
-		return "addresssave";
 		
+		Struts2Utils.getRequest().setAttribute("custid",custid);
+		return "addresssave";*/
+
+		sub_map.put("addressis", Struts2Utils.getParameter("addressis"));
+		sub_map.put("backurl", Struts2Utils.getParameter("backurl"));
+		sub_map.put("count", Struts2Utils.getParameter("count"));
+		sub_map.put("price", Struts2Utils.getParameter("price"));
+		sub_map.put("spec", Struts2Utils.getParameter("spec"));
+		
+		sub_map.put("custid",custid);
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
 	/**
 	 * ajax获取用户地址
 	 */
@@ -1716,16 +1957,24 @@ public class ShopAction extends GeneralAction {
 	/**
 	 * ajax删除地址
 	 */
-	public  String   useraddressdel(){
-     getLscode();
-     HashMap<String, Object>whereMap=new HashMap<String, Object>();
-	 String  id=Struts2Utils.getParameter("id");
-	 whereMap.put("fromUserid", fromUserid);
-	 whereMap.put("_id",Long.parseLong(id));
-	 baseDao.delete(PubConstants.SHOP_USERADDRESS,whereMap);
-	 return "address";
-	 
-	}
+	
+	public  void   useraddressdel(){
+		Map<String, Object> sub_map = new HashMap<String, Object>(); 
+	     getLscode();
+	     HashMap<String, Object>whereMap=new HashMap<String, Object>();
+		 String  id=Struts2Utils.getParameter("id");
+		 whereMap.put("fromUserid", fromUserid);
+		 whereMap.put("_id",Long.parseLong(id));
+		 int i=baseDao.delete(PubConstants.SHOP_USERADDRESS,whereMap);
+		 if(i>0) {
+			 sub_map.put("state", 0);
+		 }
+		 
+		 //return "address";
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		}
+	
 	/**
 	 * ajax获取推广
 	 */
@@ -1758,45 +2007,58 @@ public class ShopAction extends GeneralAction {
 	/**
 	 * 砍价详情
 	 */
-	public String  bargaindetail(){
+	
+	public void  bargaindetail(){
+		Map<String, Object> sub_map = new HashMap<String, Object>();  
 		getLscode();
 		String  id=Struts2Utils.getParameter("id"); 
 		WxToken token=GetAllFunc.wxtoken.get(custid);
 		 if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
 		 } 
-	    Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
-		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
+	    //Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		sub_map.put("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		 token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
 		String  url=SysConfig.getProperty("ip")+"/shop/shop!bargaindetail.action?custid="+custid+"&id="+id;  
 		if(StringUtils.isEmpty(fromUserid)){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection); 
+			sub_map.put("inspection",inspection);
+			//return "refresh";
 		}else if(fromUserid.equals("register")){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
 		}  
 		DBObject  db=baseDao.getMessage(PubConstants.SHOP_BARGAININGYD,id);
 		Bargainingyd yd=(Bargainingyd) UniObject.DBObjectToObject(db, Bargainingyd.class);
 		ProductInfo  prd=yd.getPro(); 
 		db.put("nickname", wwzService.getWxUsertype(db.get("fromUserid").toString(),"nickname"));
 		db.put("headimgurl", wwzService.getWxUsertype(db.get("fromUserid").toString(),"headimgurl"));
-		Struts2Utils.getRequest().setAttribute("entity",db);
+		//Struts2Utils.getRequest().setAttribute("entity",db);
+		sub_map.put("entity",db);
 		//加载库存
-		Struts2Utils.getRequest().setAttribute("kcount",baseDao.getMessage(PubConstants.DATA_PRODUCT, yd.getPid()).get("num"));
+		//Struts2Utils.getRequest().setAttribute("kcount",baseDao.getMessage(PubConstants.DATA_PRODUCT, yd.getPid()).get("num"));
+		sub_map.put("kcount",baseDao.getMessage(PubConstants.DATA_PRODUCT, yd.getPid()).get("num"));
 		double bl= prd.getPrice()/prd.getOldprice();   
-		Struts2Utils.getRequest().setAttribute("bl",new java.text.DecimalFormat("#").format(bl*100)); 
-	    Struts2Utils.getRequest().setAttribute("custid",custid);
-		Struts2Utils.getRequest().setAttribute("slide",wwzService.getslide(custid, "shoppro-"+prd.get_id()));
+		//Struts2Utils.getRequest().setAttribute("bl",new java.text.DecimalFormat("#").format(bl*100)); 
+	    //Struts2Utils.getRequest().setAttribute("custid",custid);
+		//Struts2Utils.getRequest().setAttribute("slide",wwzService.getslide(custid, "shoppro-"+prd.get_id()));
+		sub_map.put("bl",new java.text.DecimalFormat("#").format(bl*100));
+		sub_map.put("custid",custid);
+		sub_map.put("slide",wwzService.getslide(custid, "shoppro-"+prd.get_id()));
+		
 		if(fromUserid.equals(yd.getFromUserid())){
-			Struts2Utils.getRequest().setAttribute("isadmin",true);  
+			//Struts2Utils.getRequest().setAttribute("isadmin",true);
+			sub_map.put("isadmin",true);
 			//加载地址信息
 			HashMap<String, Object>whereMap=new HashMap<String, Object>();
 			whereMap.put("fromUserid",fromUserid);
 			whereMap.put("lx", 1);
 			DBObject  address=baseDao.getMessage(PubConstants.SHOP_USERADDRESS, whereMap); 
-			Struts2Utils.getRequest().setAttribute("address",address); 
+			//Struts2Utils.getRequest().setAttribute("address",address); 
+			sub_map.put("address",address);
 			//加载购买状态
 			whereMap.clear();
 			whereMap.put("formUserid", fromUserid);
@@ -1805,7 +2067,8 @@ public class ShopAction extends GeneralAction {
 			whereMap.put("custid",custid);
 			Long count=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
 			if(count==0){
-				Struts2Utils.getRequest().setAttribute("ispay",true);
+				//Struts2Utils.getRequest().setAttribute("ispay",true);
+				sub_map.put("ispay",true);
 			}
 		}
 	
@@ -1814,8 +2077,11 @@ public class ShopAction extends GeneralAction {
 		share.put("fximg",wwzService.getWxUsertype(db.get("fromUserid").toString(),"headimgurl"));
 		share.put("fxsummary",prd.getSummary());
 		share.put("fxurl",url);
-		Struts2Utils.getRequest().setAttribute("share", share);
-		return "bargaindetail"; 
+		//Struts2Utils.getRequest().setAttribute("share", share);
+		sub_map.put("share", share);
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		//return "bargaindetail"; 
 	}
 	/**
 	 * 砍价
@@ -2410,26 +2676,36 @@ public class ShopAction extends GeneralAction {
 	 * 店铺支付列表
 	 * @return
 	 */
-	public  String storepayweb(){
+	
+	
+	public  void storepayweb(){
+		Map<String, Object> sub_map = new HashMap<String, Object>();
 		 getLscode(); 
-		 Struts2Utils.getRequest().setAttribute("custid",custid);
+		 //Struts2Utils.getRequest().setAttribute("custid",custid);
+		 sub_map.put("custid",custid);
 		 WxToken token=GetAllFunc.wxtoken.get(custid); 
 		 if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
 		 }
-		Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
-		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest());  
+		//Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		 sub_map.put("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		 token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
+		
 		String  url=SysConfig.getProperty("ip")+"/shop/shop!storepayweb.action?custid="+custid;
 		if(StringUtils.isEmpty(fromUserid)){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);
+			sub_map.put("inspection",inspection);
+			//return "refresh";
 		}else if(fromUserid.equals("register")){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
 		} 
-		return "storepayweb";
+		//return "storepayweb";
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax获取店铺列表
@@ -2486,27 +2762,35 @@ public class ShopAction extends GeneralAction {
 	 * 店铺支付
 	 * @return
 	 */
-	public  String  storepay(){
+	
+	public  void  storepay(){
+		Map<String, Object> sub_map = new HashMap<String, Object>();
 		 getLscode();
 		 String id=Struts2Utils.getParameter("id");
 		 WxToken token=GetAllFunc.wxtoken.get(custid); 
 		 if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
 		 }
-		Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		 sub_map.put("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+		//Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest());  
 		String  url=SysConfig.getProperty("ip")+"/shop/shop!storepay.action?custid="+custid+"&id="+id;
 		if(StringUtils.isEmpty(fromUserid)){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
 		}else if(fromUserid.equals("register")){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
-			Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			return "refresh";
+			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+			//return "refresh";
+			sub_map.put("inspection",inspection);
 		}
-		Struts2Utils.getRequest().setAttribute("entity",baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(id))); 
-		return "storepay"; 
+		//Struts2Utils.getRequest().setAttribute("entity",baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(id))); 
+		//return "storepay";
+		sub_map.put("entity",baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(id)));
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 微信支付
@@ -2781,27 +3065,41 @@ public class ShopAction extends GeneralAction {
     /**
      * 申请代理
      */
-    public  String  agent(){
+    
+    public  void  agent(){
+    	Map<String, Object> sub_map = new HashMap<String, Object>(); 
     	getLscode();
-    	Struts2Utils.getRequest().setAttribute("custid",custid);
+    	/*Struts2Utils.getRequest().setAttribute("custid",custid);
     	String id=Struts2Utils.getParameter("id");
     	String pid=Struts2Utils.getParameter("pid");
     	Struts2Utils.getRequest().setAttribute("id",id); 
-    	Struts2Utils.getRequest().setAttribute("pid",pid); 
-		return "agent";
-    	
-    }  
+    	Struts2Utils.getRequest().setAttribute("pid",pid); */
+    	String id=Struts2Utils.getParameter("id");
+    	String pid=Struts2Utils.getParameter("pid");
+    	sub_map.put("custid",custid);
+    	sub_map.put("id",id);
+    	sub_map.put("pid",pid);
+		//return "agent";
+    	String json = JSONArray.fromObject(sub_map).toString();
+  	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+    }
     /**
      * 佣金统计列表
      * @return
      */
-   public String agentweb(){
-	  getLscode(); 
-	  DBObject  db=wwzService.getAgentPrice(custid, fromUserid);
-	  Struts2Utils.getRequest().setAttribute("entity",db);
-	  Struts2Utils.getRequest().setAttribute("state", 1);
-	return "agentweb";    
-   }
+   
+    public void agentweb(){
+      Map<String, Object> sub_map = new HashMap<String, Object>(); 
+  	  getLscode(); 
+  	  DBObject  db=wwzService.getAgentPrice(custid, fromUserid);
+  	  /*Struts2Utils.getRequest().setAttribute("entity",db);
+  	  Struts2Utils.getRequest().setAttribute("state", 1);
+  		return "agentweb";    */
+  	  sub_map.put("entity",db);
+  	  sub_map.put("state", 1);
+  	  String json = JSONArray.fromObject(sub_map).toString();
+  	  Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+     }
    /**
     * ajax获取佣金统计详情
     */
@@ -2848,22 +3146,32 @@ public class ShopAction extends GeneralAction {
     * 代理提现
     * @return
     */
-   public String  agenttx(){
+   
+   public void  agenttx(){
+	   Map<String, Object> sub_map = new HashMap<String, Object>(); 
 	   getLscode(); 
 	   DBObject  db=wwzService.getAgentPrice(custid, fromUserid);
 	   db.put("headimgurl", wwzService.getWxUsertype(fromUserid, "headimgurl"));
 	   db.put("nickname", wwzService.getWxUsertype(fromUserid, "nickname"));
-	   Struts2Utils.getRequest().setAttribute("entity",db); 
-	return "agenttx";    
+	   //Struts2Utils.getRequest().setAttribute("entity",db); 
+	//return "agenttx"; 
+	   sub_map.put("entity",db);
+	   String json = JSONArray.fromObject(sub_map).toString();
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
    }
    /**
     * 代理提现记录
     * @return
     */
-   public String  agenttxweb(){
+   
+   public void  agenttxweb(){
+	   Map<String, Object> sub_map = new HashMap<String, Object>();
 	   getLscode();
-	   Struts2Utils.getRequest().setAttribute("state", 2);
-	return "agenttxweb";    
+	   //Struts2Utils.getRequest().setAttribute("state", 2);
+	   sub_map.put("state", 2);
+	//return "agenttxweb";   
+	   String json = JSONArray.fromObject(sub_map).toString();
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
    }
    /**
     * 微信提现

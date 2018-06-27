@@ -111,7 +111,7 @@
                         </button>
                         <ul class="dropdown-menu pull-right" role="menu">
                             <li> <a href="javascript:add();">
-                                 <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp; 添加店铺</a>
+                                 <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp; 添加账户</a>
                             </li>
                         </ul>
                     </div>
@@ -133,7 +133,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${List}" var="bean">
+                                <c:forEach items="${list}" var="bean">
                                     <tr>
                                         <td>${bean.account}</td>
                                         <td>${bean.cname}</td>
@@ -175,7 +175,7 @@
             <div class=" bg-bai border-radius3 overflow-hidden">
                 <div class="overflow-hidden line-height40 bg-bai line-bottom">
                     <div class="hang50 pull-left zi-hui-tq">
-                        <i class="weight500 size14 pl-10 line-height50">店铺管理</i>
+                        <i class="weight500 size14 pl-10 line-height50">账户管理</i>
                     </div>
                     <a href="javascript:ps_hide('inszc')">
                         <div class="hang40 pull-right zi-hui-tq">
@@ -199,14 +199,6 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-20">
-                                <label class="control-label">备注：</label>
-                                <input type="text" id="remark" name="remark"
-                                       class="form-control hang40" placeholder="请输入"/>
-                            </div>
-                        </div>
-                       
-                        <div class="col-sm-6">
-                            <div class="mb-20">
                                 <label class="control-label">币种：</label>
                                 <select id="cid" name="cid" class="select2 hang40"
                                         data-placeholder="请选择">
@@ -215,6 +207,15 @@
                                 <label class="error" for="color"></label>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="mb-20">
+                                <label class="control-label">备注：</label>
+                                <input type="text" id="remark" name="remark"
+                                       class="form-control hang40" placeholder="请输入"/>
+                            </div>
+                        </div>
+                       
+                        
                        
                     </div>
                     <div class="div-group-10 line-top" style="padding-left: 40px; padding-right: 40px;">
