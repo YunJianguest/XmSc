@@ -111,6 +111,10 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("typelist",typelist); 
+		
+		//获取店铺分类 
+		List<DBObject> prolist=baseDao.getList(PubConstants.SHOP_PROTYPE, null, sortMap);
+		Struts2Utils.getRequest().setAttribute("prolist",prolist); 
 		Struts2Utils.getRequest().setAttribute("bq",Struts2Utils.getParameter("bq"));
 		DBObject  db=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(Struts2Utils.getParameter("comid")));
 		if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){

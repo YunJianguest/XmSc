@@ -64,7 +64,8 @@ public class PubConstants
   public static String SHOP_SHOPMB="shop_shopmb";//商城模板
   public static String WX_SHOPBRAND="wx_shopbrand";
   public static String WX_HOUSEABOUT="wx_houseabout";
-  public static String SHOP_SHOPTYPE="shop_shoptype";
+  public static String SHOP_SHOPTYPE="shop_shoptype";//商品分类（店铺）
+  public static String SHOP_PROTYPE="shop_protype";//商品分类（平台）
   public static String SET_PRODICT="set_prodict";
   public static String SET_CARCX="set_carcx";
   public static String SET_DICT="set_dict";

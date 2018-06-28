@@ -5,11 +5,11 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /***
- * 商品分类（店铺）
+ * 商品分类（平台）
  * @author lsp
  *
  */
-public class ShopType  extends ReflectionDBObject{
+public class ProType  extends ReflectionDBObject{
 	/**
 	 * 分类名称
 	 */
