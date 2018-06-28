@@ -18,7 +18,7 @@ public class InteProstore extends ReflectionDBObject {
 	 * 预存类型   
 	 * ps_account 开通账户
 	 * ps_recovery 回本后待返
-	 * ps_shop 商城收益
+	 * shop_bmzt 商城收益
 	 */
 	private String type;
 	/**

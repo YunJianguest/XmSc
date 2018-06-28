@@ -17,9 +17,14 @@ public class IntegralInfo extends ReflectionDBObject {
 	private String custid;
 	/**
 	 * 积分类型
-	 * ps_account 推荐账户
+	 * ps_account 开通账户
+	 * tj_account 推荐管理员
 	 * ps_recovery 回本后待返
-	 * ps_shop 商城收益
+	 * shop_bmzt 商城收益
+	 * shop_jfdh 下单使用积分
+	 * jfcz 积分充值
+	 * jf_withdraw 积分提现
+	 * shop_order 订单收益
 	 */
 	private String type;
 	/**

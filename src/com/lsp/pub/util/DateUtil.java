@@ -295,18 +295,19 @@ public class DateUtil
     * 获取本月第一天
     */
    public static Date getfirstday(){
-	   Calendar   cal_1=Calendar.getInstance();//获取当前日期
-       cal_1.add(Calendar.MONTH, -1);
-       cal_1.set(Calendar.DAY_OF_MONTH,1);//设置为1号,当前日期既为本月第一天 
+	   Calendar   cal_1=Calendar.getInstance();
+       cal_1.add(Calendar.MONTH, 0);
+       cal_1.set(Calendar.DAY_OF_MONTH,1);
        return cal_1.getTime();
    }
    /**
     * 获取本月最后一天
     */
    public static Date getlastday(){
-	   Calendar cale = Calendar.getInstance();  
-       cale.set(Calendar.DAY_OF_MONTH,0);//设置为1号,当前日期既为本月第一天
-       return cale.getTime();   
+	   Calendar   cal_1=Calendar.getInstance();
+       cal_1.add(Calendar.MONTH, 1);
+       cal_1.set(Calendar.DAY_OF_MONTH,0);
+       return cal_1.getTime(); 
    }
    /**
     * 计算两个时间差
@@ -317,6 +318,46 @@ public class DateUtil
    public static Long  getTimeDifference(Date date1,Date date2){
 	  return date1.getTime()-date2.getTime();    
    }
-     
-    
+   
+   /**
+    *将时间date变成当天0点整
+    */
+   public static Date getTimesmornig(Date d){
+  	 Calendar calendar = Calendar.getInstance();
+  	    calendar.setTime(d);
+  	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+  	    calendar.set(Calendar.MINUTE, 0);
+  	    calendar.set(Calendar.SECOND, 0);
+  	    calendar.set(Calendar.MILLISECOND, 0);
+  	     
+  	 return  calendar.getTime();
+  	
+  }
+   /**
+    * 获取今年的第一天
+    * @return
+    */
+   public static Date getCurrYearFirst(){		
+		Calendar currCal=Calendar.getInstance();  
+		currCal.set(Calendar.DAY_OF_YEAR, 1);
+		currCal.set(Calendar.HOUR, -12);  
+		currCal.set(Calendar.MINUTE, 0);  
+		currCal.set(Calendar.SECOND, 0);  
+		return currCal.getTime();	
+	}	
+   /**
+    * 获取今年的最后一天
+    * @return
+    */
+   public static Date getCurrYearLast(){		
+		Calendar currCal=Calendar.getInstance();  
+		currCal.set(Calendar.DAY_OF_YEAR,1);
+		currCal.add(Calendar.YEAR,1);
+		currCal.add(Calendar.DATE,-1);
+		currCal.set(Calendar.HOUR, 11);  
+		currCal.set(Calendar.MINUTE, 59);  
+		currCal.set(Calendar.SECOND, 59); 
+		return currCal.getTime();
+	}
+
 }

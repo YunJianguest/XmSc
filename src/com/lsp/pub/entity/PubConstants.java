@@ -56,6 +56,7 @@ public class PubConstants
   public static String COMMENT_INFO="comment_info";//评论类
   
   public static String SHOP_AREATYPE="shop_areatype";
+  public static String SHOP_AFTERSERVICE="shop_afterservice";//售后服务
   public static String UPD_FREEMARKER="upd_freemarker";
   public static String WX_ORDERFORM="wx_orderform";//订单
   public static String WX_ORDERBUY="wx_orderbuy";

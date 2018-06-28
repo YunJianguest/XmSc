@@ -853,6 +853,45 @@ public class WwzService {
 		}
 		return null; 
 	}
+	
+	/**
+	 *微信推荐邀请注册
+	 */
+	public String registerCommend(String fromUser,WxUserToken  token,String custid,String number){
+		if(StringUtils.isNotEmpty(fromUser)){
+			HashMap<String, Object>whereMap=new HashMap<String, Object>();
+			whereMap.put("fromUser", fromUser); 
+			List<DBObject>list=baseDao.getList(PubConstants.DATA_WXUSER, whereMap,null);
+			if(list.size()==0){ 
+				WxUser  user=new WxUser(); 
+				String id=UUID.randomUUID().toString();
+				user.set_id(id);
+				user.setCustid(user.getCustid()+","+custid);
+				user.setFromUser(fromUser);
+				user.setNo(getVipNo());
+				//推荐人推荐号码保存
+				user.setReno(Integer.parseInt(number));
+				baseDao.insert(PubConstants.DATA_WXUSER, user);
+				updateUser(token,baseDao.getMessage(PubConstants.DATA_WXUSER, id));
+				
+				return id;
+			}else{
+				/**
+				 * 返回查到的用户
+				 */
+				WxUser  user=(WxUser) UniObject.DBObjectToObject(list.get(0), WxUser.class);
+				user.setCustid(user.getCustid()+","+custid);
+				user.setFromUser(fromUser);
+				baseDao.insert(PubConstants.DATA_WXUSER, user); 
+				if(list.get(0).get("headimgurl")==null||list.get(0).get("nickname")==null||list.get(0).get("nickname").equals("游客")){
+					 
+					updateUser(token,list.get(0));	
+				}
+				return list.get(0).get("_id").toString();
+			}
+		}
+		return null; 
+	}
     /**
      * 验证任务
      * @param type

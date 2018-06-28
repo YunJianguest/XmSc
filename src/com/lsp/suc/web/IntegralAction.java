@@ -2,6 +2,7 @@ package com.lsp.suc.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.CommonUtil;
 import com.lsp.pub.util.DateFormat;
+import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.PayCommonUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -47,6 +49,7 @@ import com.lsp.website.service.WebsiteService;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxPayConfig;
 import com.lsp.weixin.entity.WxUser;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -82,10 +85,95 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
 		
-		//toUser=SpringSecurityUtils.getCurrentUser().getToUser();
-		//sortMap.put("sort", -1); 
-		//whereMap.put("toUser", toUser);
-		System.out.println("进入这个方法");
+		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		String state=Struts2Utils.getParameter("state");
+		if(StringUtils.isNotEmpty(state)){
+			if(!state.equals("2")){
+				whereMap.put("state", Integer.parseInt(state));
+			}
+			Struts2Utils.getRequest().setAttribute("state",  state);
+		}
+		String type=Struts2Utils.getParameter("type");
+		if(StringUtils.isNotEmpty(type)){
+			whereMap.put("type", type);
+			Struts2Utils.getRequest().setAttribute("type",  type);
+		}
+		String sel_insdate=Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate=Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if(StringUtils.isNotEmpty(sel_insdate)){
+			dateCondition.append("$gte",DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate",  sel_insdate);
+		}
+		if(StringUtils.isNotEmpty(sel_enddate)){
+			dateCondition.append("$lte",DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate",  sel_enddate);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		
+		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
+		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("integralList", list);
+		return SUCCESS;
+	}
+	/**
+	 * 收入
+	 * 
+	 */
+	public String profit() throws Exception{
+		HashMap<String, Object> sortMap =new HashMap<String, Object>();
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
+		
+		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		String type=Struts2Utils.getParameter("type");
+		if(StringUtils.isNotEmpty(type)){
+			whereMap.put("type", type);
+			Struts2Utils.getRequest().setAttribute("type",  type);
+		}
+		String sel_insdate=Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate=Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if(StringUtils.isNotEmpty(sel_insdate)){
+			dateCondition.append("$gte",DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate",  sel_insdate);
+		}
+		if(StringUtils.isNotEmpty(sel_enddate)){
+			dateCondition.append("$lte",DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate",  sel_enddate);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		BasicDBList   dblist=new BasicDBList(); 
+		dblist.add(new BasicDBObject("type","ps_account"));
+		dblist.add(new BasicDBObject("type","ps_recovery"));
+		dblist.add(new BasicDBObject("type","shop_bmzt"));
+		dblist.add(new BasicDBObject("type","tj_account"));
+		//or判断
+		whereMap.put("$or", dblist); 
+		whereMap.put("state", 0);//收益
+		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
+		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("integralList", list);
+		return "profit";
+	}
+	
+	/**
+	 * 支出
+	 * 
+	 */
+	public String pay() throws Exception{
+		HashMap<String, Object> sortMap =new HashMap<String, Object>();
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
+		
 		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
 		String title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title)){
@@ -94,17 +182,145 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 			whereMap.put("fromUser", pattern);
 			Struts2Utils.getRequest().setAttribute("title",  title);
 		}
-	 
+		String state=Struts2Utils.getParameter("state");
+		if(StringUtils.isNotEmpty(state)){
+			whereMap.put("state", Integer.parseInt(state));
+			Struts2Utils.getRequest().setAttribute("state",  state);
+		}
+		String type=Struts2Utils.getParameter("type");
+		if(StringUtils.isNotEmpty(type)){
+			whereMap.put("type", type);
+			Struts2Utils.getRequest().setAttribute("type",  type);
+		}
+		String sel_insdate=Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate=Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if(StringUtils.isNotEmpty(sel_insdate)){
+			dateCondition.append("$gte",DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate",  sel_insdate);
+		}
+		if(StringUtils.isNotEmpty(sel_enddate)){
+			dateCondition.append("$lte",DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate",  sel_enddate);
+		}
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
+		whereMap.put("state", 1);//支出
+		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
+		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("integralList", list);
+		return "pay";
+	}
+	
+	/**
+	 * 充值记录
+	 * 
+	 */
+	public String recharge() throws Exception{
+		HashMap<String, Object> sortMap =new HashMap<String, Object>();
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
 		
+		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		String sel_insdate=Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate=Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if(StringUtils.isNotEmpty(sel_insdate)){
+			dateCondition.append("$gte",DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate",  sel_insdate);
+		}
+		if(StringUtils.isNotEmpty(sel_enddate)){
+			dateCondition.append("$lte",DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate",  sel_enddate);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		whereMap.put("type", "jfcz");//充值记录
+		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
+		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("integralList", list);
+		return "recharge";
+	}
+	/**
+	 * 提现记录
+	 * 
+	 */
+	public String withdraw() throws Exception{
+		HashMap<String, Object> sortMap =new HashMap<String, Object>();
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
+		
+		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		String sel_insdate=Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate=Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if(StringUtils.isNotEmpty(sel_insdate)){
+			dateCondition.append("$gte",DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate",  sel_insdate);
+		}
+		if(StringUtils.isNotEmpty(sel_enddate)){
+			dateCondition.append("$lte",DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate",  sel_enddate);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		whereMap.put("type", "jf_withdraw");//提现记录
+		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
+		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("integralList", list);
+		return "withdraw";
+	}
+	/**
+	 * 每日收益
+	 * 
+	 */
+	public String day() throws Exception{
+		HashMap<String, Object> sortMap =new HashMap<String, Object>();
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
+		
+		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		String type=Struts2Utils.getParameter("type");
+		if(StringUtils.isNotEmpty(type)){
+			whereMap.put("type", type);
+			Struts2Utils.getRequest().setAttribute("type",  type);
+		}
+		String sel_insdate=Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate=Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if(StringUtils.isNotEmpty(sel_insdate)){
+			dateCondition.append("$gte",DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate",  sel_insdate);
+		}
+		if(StringUtils.isNotEmpty(sel_enddate)){
+			dateCondition.append("$lte",DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate",  sel_enddate);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		BasicDBList   dblist=new BasicDBList(); 
+		dblist.add(new BasicDBObject("type","ps_account"));
+		dblist.add(new BasicDBObject("type","ps_recovery"));
+		dblist.add(new BasicDBObject("type","shop_bmzt"));
+		//or判断
+		whereMap.put("$or", dblist); 
 		List<DBObject> list=baseDao.getList(PubConstants.INTEGRAL_INFO,whereMap,fypage,10,sortMap,backMap);
 		fycount=baseDao.getCount(PubConstants.INTEGRAL_INFO);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		Struts2Utils.getRequest().setAttribute("toUser", toUser);
-		
-		return SUCCESS;
+		return "day";
 	}
 
 
@@ -518,5 +734,347 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
  
+	
+	//积分统计
+	/**
+	 * 收入支出饼状图
+	 * @return
+	 * @throws Exception
+	 */
+	public String pie() throws Exception{
+		String state=Struts2Utils.getParameter("state");
+		//0-为收入饼状图    1-为支出饼状图 
+		if(state==null){
+			state="0";
+		}
+		Struts2Utils.getRequest().setAttribute("state", state);
+		return "pie";
+	}
+	/**
+	 * 收入支出趋势对比图
+	 * @return
+	 * @throws Exception
+	 */
+	public String link() throws Exception{
+		return "link";
+	}
+	
+	public void linkChart() throws Exception{
+		  custid = SpringSecurityUtils.getCurrentUser().getId();
+		  Map<String, Object> sub_map = new HashMap<String, Object>();
+		  HashMap<String,Object>whereMap=new HashMap<>();
+		  BasicDBObject dateCondition = new BasicDBObject();
+		  List<Object>Datalist1=new ArrayList<>();
+		  List<Object>Datalist2=new ArrayList<>();
+		  List<Object>data=new ArrayList<>();
+		  dateCondition=new BasicDBObject();
+
+		  Datalist1=new ArrayList<>();
+		  Datalist2=new ArrayList<>();
+		  for(int i=1;i<=30;i++){ 
+			  //收入  
+			  whereMap.clear();
+			  dateCondition=new BasicDBObject();
+			  dateCondition.append("$gte",DateUtil.getTimesmornig(DateUtil.addDay(DateUtil.getfirstday(),i-1)));
+			  dateCondition.append("$lte",DateUtil.getTimesmornig(DateUtil.addDay(DateUtil.getfirstday(),i)));
+			  whereMap.put("createdate", dateCondition);
+			  whereMap.put("fromUserid", custid);
+			  whereMap.put("state", 0);
+			  List<DBObject> list =baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			  String total="0";
+			  for (DBObject dbObject : list) {
+				if(dbObject.get("value")!=null){
+					total = BaseDecimal.add(total, dbObject.get("value").toString());
+				}
+			  }
+			  data.add(i);
+			  data.add(total);
+			  Datalist1.add(data);
+			  data=new ArrayList<>();
+			  
+			  //支出  
+			  whereMap.clear();
+			  dateCondition=new BasicDBObject();
+			  dateCondition.append("$gte",DateUtil.getTimesmornig(DateUtil.addDay(DateUtil.getfirstday(),i-1)));
+			  dateCondition.append("$lte",DateUtil.getTimesmornig(DateUtil.addDay(DateUtil.getfirstday(),i)));
+			  whereMap.put("createdate", dateCondition);
+			  whereMap.put("fromUserid", custid);
+			  whereMap.put("state", 1);
+			  list =baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			  total="0";
+			  for (DBObject dbObject : list) {
+				if(dbObject.get("value")!=null){
+					total = BaseDecimal.add(total, dbObject.get("value").toString());
+				}
+			  }
+			  data.add(i);
+			  data.add(total);
+			  Datalist2.add(data);
+			  data=new ArrayList<>();
+		  } 
+		  sub_map.put("Datalist1", Datalist1);
+		  sub_map.put("Datalist2", Datalist2);
+ 
+		  String json = JSONArray.fromObject(sub_map).toString();  
+		  Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	public void pieChart() throws Exception{
+		  custid = SpringSecurityUtils.getCurrentUser().getId();
+		  Map<String, Object> sub_map = new HashMap<String, Object>();
+		  String state=Struts2Utils.getParameter("state");
+		  HashMap<String,Object>whereMap=new HashMap<>();
+		  BasicDBObject dateCondition = new BasicDBObject();
+		  List<Object>Datalist1=new ArrayList<>();
+		  DBObject  where=new BasicDBObject();;
+		  String sum = "0";
+		  String add = "0";
+		  String result = "0";
+		  if(StringUtils.isNotEmpty(state)){
+			  if(state.equals("0")){//收入
+				  NumberFormat numberFormat = NumberFormat.getInstance();
+				  numberFormat.setMaximumFractionDigits(2);
+				  dateCondition.append("$gte",DateUtil.getfirstday());
+			      dateCondition.append("$lte",DateUtil.getlastday());
+			      
+				  //收入总计
+			      whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			      for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						sum = BaseDecimal.add(sum, dbObject.get("value").toString());
+					}
+				  }
+			      
+				  //收入  开通账户
+			      whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      whereMap.put("type", "ps_account");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", "开通账户");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#ff9240");
+				  Datalist1.add(where);
+				  
+				  
+				  //收入   推荐管理员
+				  add = "0";
+				  where=new BasicDBObject();
+				  whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      whereMap.put("type", "tj_account");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", " 推荐收益");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#ec4763");
+				  Datalist1.add(where);
+				  
+				  //收入   回本收益
+				  add = "0";
+				  where=new BasicDBObject();
+				  whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      whereMap.put("type", "ps_recovery");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", "回本收益");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#51abf9");
+				  Datalist1.add(where);
+				  
+				  //收入   订单收益
+				  add = "0";
+				  where=new BasicDBObject();
+				  whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      whereMap.put("type", "shop_order");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", "订单收益");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#ee656f");
+				  Datalist1.add(where);
+				  
+				  //收入   商城收益
+				  add = "0";
+				  where=new BasicDBObject();
+				  whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      whereMap.put("type", "shop_bmzt");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", "订单提成");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#20cab1");
+				  Datalist1.add(where);
+				  
+				  //收入  积分充值
+				  add = "0";
+				  where=new BasicDBObject();
+				  whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 0);
+			      whereMap.put("type", "jfcz");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", "积分充值");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#d36d4a");
+				  Datalist1.add(where);
+				   
+				  sub_map.put("Datalist1", Datalist1);
+			  }
+			  
+			  if(state.equals("1")){//支出
+				  sum = "1";
+				  NumberFormat numberFormat = NumberFormat.getInstance();
+				  numberFormat.setMaximumFractionDigits(2);
+				  dateCondition = new BasicDBObject();
+				  dateCondition.append("$gte",DateUtil.getfirstday());
+			      dateCondition.append("$lte",DateUtil.getlastday());
+			      
+				  //支出总计
+			      whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 1);
+			      List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						sum = BaseDecimal.add(sum, dbObject.get("value").toString());
+					}
+				  }
+			      
+				  add = "0";
+				  where=new BasicDBObject();
+				  //收入  下单使用积分
+			      whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 1);
+			      whereMap.put("type", "shop_jfdh");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", "商城下单");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#ee656f");
+				  Datalist1.add(where);
+				  
+				  //支出 提现
+				  add = "0";
+				  where=new BasicDBObject();
+				  whereMap.put("createdate", dateCondition);
+			      whereMap.put("fromUserid", custid);
+			      whereMap.put("state", 1);
+			      whereMap.put("type", "jf_withdraw");
+			      list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				  for (DBObject dbObject : list) {
+					if(dbObject.get("value")!=null){
+						add = BaseDecimal.add(add, dbObject.get("value").toString());
+					}
+				  }
+				  
+				  if(sum.equals("")||sum.equals("0")){
+					  result = "0";
+				  }else{
+					  result = BaseDecimal.division(add, sum);
+				  }
+				  
+				  where.put("label", " 提现");
+			      where.put("data", BaseDecimal.division(result, "100", 2));
+			      where.put("color", "#fdf54c");
+				  Datalist1.add(where);
+				  
+				  sub_map.put("Datalist1", Datalist1);
+			  }
+		  }
+		  String json = JSONArray.fromObject(sub_map).toString();  
+		  Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+
 	
 }

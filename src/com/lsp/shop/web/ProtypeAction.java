@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -51,7 +52,10 @@ public class ProtypeAction extends GeneralAction<ProType> {
 		sortMap.put("sort", 1);
 		 
 		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-	    whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("parentid")));
+		String  parentid=Struts2Utils.getParameter("parentid");
+		if(StringUtils.isNotEmpty(parentid)){
+			whereMap.put("parentid", Long.parseLong(parentid));
+		}
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_PROTYPE,whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("funcList", list);
 		Struts2Utils.getRequest().setAttribute("parentid",whereMap.get("parentid"));

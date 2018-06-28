@@ -370,8 +370,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	  */
 	 public  String   wxlogin(){
 		 getLscode();
+		 String number = Struts2Utils.getParameter("number");
 		 WxUserToken token=GetAllFunc.usertoken.get(fromUser);
-		 fromUserid=wwzservice.register(fromUser,token,custid); 
+		 //fromUserid=wwzservice.register(fromUser,token,custid);
+		 fromUserid=wwzservice.registerCommend(fromUser,token,custid,number); 
 		 if(StringUtils.isNotEmpty(fromUserid)){
 			 lscode=wwzservice.createcode(fromUserid);	 
 		 }
@@ -537,6 +539,16 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		System.out.println("---->"+_id);
 		basedao.insert(PubConstants.DATA_WXUSER, user); */
 		System.err.println();
+	}
+	
+	/**
+	 * 推荐用户
+	 */
+	public String commend() throws Exception{
+		getLscode();  
+		DBObject  user=wwzservice.getWxUser(fromUserid);
+		Struts2Utils.getRequest().setAttribute("user",user);
+		return "commend";
 	}
 	 
 }

@@ -121,7 +121,7 @@ function share(url) {
   <div class="mainpanel">
 	<%@include file="/webcom/header-headerbar.jsp"%>
     
-	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral.action" >
+	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral!withdraw.action" >
     
     <div class="pageheader">
       <h2><i class="fa fa-user"></i>系统管理 <span>积分管理</span></h2>
@@ -129,25 +129,6 @@ function share(url) {
    <div class="panelss ">
                 <div class="panel-body fu10">
                     <div class="row-pad-5">
-                       <div class="form-group col-sm-2">
-			            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择收入\支出 ">
-			            	                <option value="2">收入\支出</option>
-			            	 				<option value="0">收入</option>
-			                    			<option value="1">支出</option>
-			                 </select>
-			            </div>
-			            <div class="form-group col-sm-2">
-			            	<select  id="sel_type"  name="type" class="form-control "  data-placeholder="请选择积分类型 ">
-			            	                <option value="">请选择积分类型</option>
-			            	 				<option value="ps_account">开通账户收益</option>
-			                    			<option value="tj_account">推荐收益</option>
-			                    			<option value="ps_recovery">回本后待返收益</option>
-			                    			<option value="shop_bmzt">利润提成</option>
-			                    			<option value="shop_jfdh">下单支出</option>
-			                    			<option value="jfcz">积分充值</option>
-			                    			<option value="jf_withdraw">积分提现</option>
-			                 </select>
-			            </div>
 			            <div class="form-group col-sm-2">
 			                 <input type="text" id="sel_insdate" name="sel_insdate" value="${sel_insdate}" placeholder="开始日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control" />
 			            </div>
@@ -222,12 +203,12 @@ function share(url) {
 	</form>
   </div><!-- mainpanel -->
 </section>
+ 
+
 	<script>
 jQuery(".select2").select2({
     width: '100%'
 });
-$('#sel_state').val('${state}').trigger("change"); 
-$('#sel_type').val('${type}').trigger("change"); 
 </script>
 </body>
 </html>

@@ -244,6 +244,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  roleid=Struts2Utils.getParameter("roleid");
 			String  type=Struts2Utils.getParameter("type");
 			String  funcs=Struts2Utils.getParameter("funcs");
+			System.out.println("funcs--->"+funcs);
 			String  fxmb=Struts2Utils.getParameter("mb");
 			String  area=Struts2Utils.getParameter("area");
 			String  province=Struts2Utils.getParameter("province");
@@ -302,6 +303,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			List<DBObject>list=new ArrayList<DBObject>();
 			  if(StringUtils.isNotEmpty(funcs)){
 				  String[]lsfunc=funcs.split(",");
+				  System.out.println("funcs--->"+funcs);
 				  for (String string : lsfunc) {
 					if(StringUtils.isNotEmpty(string)){
 						DBObject  db=basedao.getMessage(PubConstants.PUB_FROMUSERFUNC, Long.parseLong(string));
@@ -714,7 +716,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			//1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
 			String any = "";
 			if(db.get("any")!=null){
-				any = BaseDecimal.division(db.get("any").toString(), "100", 2);
+				any = BaseDecimal.division(db.get("any").toString(), "100", 6);
 			}
 			if(type == 1){
 				if(db.get("returnProvince")!=null){

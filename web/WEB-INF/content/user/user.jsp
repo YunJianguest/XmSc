@@ -65,7 +65,7 @@
             });
         }
         function submint() {
-        	alert($('#renumber').val());
+        	alert($('#funcs').val());
             var submitData = {
                 id: $('#_id').val(),
                 funcs: $('#funcs').val(),

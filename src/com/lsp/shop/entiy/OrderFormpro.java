@@ -18,6 +18,14 @@ public class OrderFormpro extends ReflectionDBObject{
 	 private DBObject pro;
 	 private Long  pid;
 	 private String fromUserid;
+	 /**
+	  * 0-正常 1-异常（售后）
+	  */
+	 private int state;
+	 /**
+	  * 售后申请id
+	  */
+	 private String sid;
 	public String getOrderid() {
 		return orderid;
 	}
@@ -53,6 +61,18 @@ public class OrderFormpro extends ReflectionDBObject{
 	}
 	public void setFromUserid(String fromUserid) {
 		this.fromUserid = fromUserid;
+	}
+	public String getSid() {
+		return sid;
+	}
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
 	}
 	 
 	
