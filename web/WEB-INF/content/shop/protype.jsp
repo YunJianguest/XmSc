@@ -87,7 +87,7 @@
 		<div class="mainpanel">
 			<%@include file="/webcom/header-headerbar.jsp"%>
 			<form id="custinfoForm" name="custinfoForm" method="post"
-				action="${contextPath}/shop/protype.action">
+				action="${contextPath}/shop/protype.action?parentid=${parentid}">
 				<div class="pageheader">
 					<h2>
 						<i class="fa fa-user"></i> 微官网 <span>行业分类</span>

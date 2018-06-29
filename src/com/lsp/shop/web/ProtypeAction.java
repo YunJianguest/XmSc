@@ -55,19 +55,18 @@ public class ProtypeAction extends GeneralAction<ProType> {
 		String  parentid=Struts2Utils.getParameter("parentid");
 		if(StringUtils.isNotEmpty(parentid)){
 			whereMap.put("parentid", Long.parseLong(parentid));
+		}else {
+			whereMap.put("parentid",0L);
 		}
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_PROTYPE,whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("funcList", list);
-		Struts2Utils.getRequest().setAttribute("parentid",whereMap.get("parentid"));
+		Struts2Utils.getRequest().setAttribute("funcList", list); 
 		return SUCCESS;
 	}
 
 	@Override
 	public String delete() throws Exception {
 		try {
-			custid=SpringSecurityUtils.getCurrentUser().getId();
-			Struts2Utils.getRequest().setAttribute("parentid",
-					Struts2Utils.getParameter("parentid"));
+			custid=SpringSecurityUtils.getCurrentUser().getId(); 
 			baseDao.delete(PubConstants.SHOP_PROTYPE, _id);
 			addActionMessage("成功删除!");
 		} catch (Exception e) {
@@ -78,16 +77,12 @@ public class ProtypeAction extends GeneralAction<ProType> {
 	}
 
 	@Override
-	public String input() throws Exception {
-		Struts2Utils.getRequest().setAttribute("parentid",
-				Struts2Utils.getParameter("parentid"));
+	public String input() throws Exception { 
 		return "add";
 	}
 
 	@Override
-	public String update() throws Exception {
-		Struts2Utils.getRequest().setAttribute("parentid",
-				Struts2Utils.getParameter("parentid"));
+	public String update() throws Exception { 
 		DBObject db = baseDao.getMessage(PubConstants.SHOP_PROTYPE, _id);
 
 		entity = JSON.parseObject(db.toString(), ProType.class);
@@ -122,9 +117,10 @@ public class ProtypeAction extends GeneralAction<ProType> {
 			entity.set_id(_id);
 			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
 			entity.setType(entity.get_id()+"");
-			baseDao.insert(PubConstants.SHOP_PROTYPE, entity);
-			Struts2Utils.getRequest().setAttribute("parentid",
-					Struts2Utils.getParameter("parentid"));
+			if (StringUtils.isEmpty(Struts2Utils.getParameter("parentid"))) {
+				entity.setParentid(0L);
+			}
+			baseDao.insert(PubConstants.SHOP_PROTYPE, entity); 
 			addActionMessage("成功添加!");
 		} catch (Exception e) {
 			e.printStackTrace();
