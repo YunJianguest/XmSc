@@ -1,4 +1,5 @@
 package com.lsp.pub.web; 
+import com.lsp.jwt.filter.SignFilter;
 import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.Struts2Utils;
@@ -10,7 +11,11 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.Preparable; 
+import com.opensymphony.xwork2.Preparable;
+
+import io.jsonwebtoken.Claims;
+
+import java.io.IOException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -382,6 +387,12 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 		}
 		
 	}
+	
+	public String FromUserid() {
+		return "";
+
+	}
+	
 
 	public void setLscode(String lscode) {
 		this.lscode = lscode;
@@ -398,6 +409,13 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 	public void setAgid(String agid) {
 		this.agid = agid;
 	}
-	
+	/**
+	 * 跨越获取登录信息
+	 * @throws IOException 
+	 */
+	public void  getFromid() throws IOException {
+		Claims claims=SignFilter.checkSign();
+		fromUserid=claims.getId(); 
+	}
  
 }
