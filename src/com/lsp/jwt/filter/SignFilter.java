@@ -150,7 +150,7 @@ public class SignFilter{
 		
 		PrintWriter printWriter2 = Struts2Utils.getResponse().getWriter();
 		
-		printWriter2.print(JsonUtil.objectToJsonStr(data));
+		printWriter2.print(ResponseMsg.successWithData(data));
 		printWriter2.flush();
 		printWriter2.close();
 
