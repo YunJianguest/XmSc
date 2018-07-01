@@ -123,6 +123,17 @@
                                                id="time" value="<s:property value='time'/>" name="time" placeholder=" 运行周期(年)">
                                     </div>
                                 </div>
+                <div class="col-2 pl-10">
+                                    <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
+                                     提成百分比
+                                    </div>
+                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
+                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
+                                               type="text"
+                                               id="percent" value="<s:property value='percent'/>" name="percent"
+                                               placeholder=" 提成百分比">
+                                    </div>
+                                </div>
                                    <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         备注

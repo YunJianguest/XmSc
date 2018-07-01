@@ -3645,10 +3645,10 @@ public class ShopAction extends GeneralAction {
 
 		entity.setComid(comid);// 14
 		entity.setCounts(num);// 15
-		entity.setTotal(total);// 6
-
-		entity.setZfmoney(Double.parseDouble(price));// 7
-		entity.setIds(recordid);
+		/*entity.setTotal(total);// 6
+*/
+		/*entity.setZfmoney(Double.parseDouble(price));// 7
+*/		entity.setIds(recordid);
 		entity.setRemark(remark);
 
 		String cost = "";

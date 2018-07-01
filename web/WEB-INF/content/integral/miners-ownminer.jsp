@@ -12,6 +12,7 @@
 		<script src="${ctx}/app/js/iosOverlay.js"></script>
         <script src="${ctx}/app/js/spin.min.js"></script>
         <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+        <script src="${ctx}/mvccol/js/fomatdate.js"></script>
 		<style type="text/css">
 			.mui-content {
 				padding-top: 44px;
@@ -79,7 +80,7 @@
 	    }; 
 	   
 	    issend=false;  
-	    $.post('${ctx}/integral/miners!showall.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
+	    $.post('${ctx}/integral/miners!myMiner.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
 	       	function(json) { 
 	    		var xszf=$('.mui-table-view').html(); 
 		    	if(json.state=='0'){
@@ -88,18 +89,15 @@
 		    		    xszf+='<li class="mui-table-view-cell mui-media miner-media">'
 							+'<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">'
 						    +'<div class="mui-media-body miner-txt">'
-							+'<div class="miner-txt-cont mui-col-xs-9">'+v[i].ptitle+''
 							+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].price+'</span></p>'
-						    +'<p class="mui-ellipsis"><span>运行周期:</span><span>'+v[i].time+'年</span></p>'
-							+'<p class="mui-ellipsis"><span>提成百分比:</span><span>'+v[i].percent+'</span></p>'	
+						    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
+							+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
 							+'</div>'	
 							+'<div class="miner-buyBtn mui-col-xs-3">'
-							+'<button type="button" class="mui-btn mui-btn-green miner-btnbuy" onclick="rechange('+v[i]._id+')">兑换</button>'
+							+'<button type="button" class="mui-btn mui-btn-green miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
 							+'</div></div></li>';
 					 }
 		    		fypage++;
-					 
-		    		
 		    	}else{
 		    		
 		    	}
@@ -109,29 +107,8 @@
 		},"json")
 		
 	}
-	  function rechange(id){
-		  mui.confirm('你确定要购买矿机吗','提示',['取消','确认'],function (e) {
-				console.log(e.index)
-				if (e.index == 1) {
-					var submitData = { 
-					   		id:id	
-					    }; 
-					  $.post('${ctx}/integral/miners!saveMiner.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
-				        	function (json) {
-				            	if(json.state==0){
-				            		alert('兑换成功');
-				            		window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
-				            	}else if(json.state==2){
-				            		alert('积分不足');
-				            	}else{
-				            		alert('操作失败');
-				            	}
-					  },"json")
-				}else{
-					mui.toast('你取消了购买')
-				}
-			},'div')
-		  
+	  function find(id){
+  		  window.location.href="${ctx}/integral/miners!find.action?custid=${custid}&agid=${agid}&lscode=${lscode}&id="+id;
 	  }
 		
 		</script>
@@ -153,7 +130,14 @@
 		<script type="text/javascript">
 			mui.init();
 			$('.miner-btnbuy').click(function(){
-				
+				mui.confirm('你确定要购买矿机吗','提示',['取消','确认'],function (e) {
+					console.log(e.index)
+					if (e.index == 1) {
+						
+					}else{
+						mui.toast('你取消了购买')
+					}
+				},'div')
 			})
 			
 			ajaxjz();

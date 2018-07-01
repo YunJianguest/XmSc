@@ -54,6 +54,10 @@ public class Miner extends ReflectionDBObject {
 	private int sort;
 	
 	private String remark;
+	/**
+	 * 提成比例
+	 */
+	private Double percent;
     
 	public String getCustid() {
 		return custid;
@@ -126,6 +130,12 @@ public class Miner extends ReflectionDBObject {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public Double getPercent() {
+		return percent;
+	}
+	public void setPercent(Double percent) {
+		this.percent = percent;
 	}
 	
 	
