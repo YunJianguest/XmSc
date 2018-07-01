@@ -75,6 +75,36 @@
                         }
                     }, "json")
         }
+        var getid;
+        var mintypeid;
+        function getchild(id) {
+            var submitData = {
+           		 pid: id
+            };
+            $.post('${ctx}/shop/goods!get.action', submitData,
+                    function (json) {
+                       if(json.state==0){ 
+                       	var list=json.list;
+                       	var options="<option  value=''>请选择</option>"; 
+                       	for (var i = 0; i < list.length; i++) {	
+                       		options+="<option  value="+list[i].id+">"+list[i].name+"</option>";	
+   						}
+                          $("#mintypeid").html(options); 
+                          if("${entity.typeid}"==$("#typeid").val()){ 
+                       	   $("#mintypeid").val("${entity.mintypeid}").trigger("change"); 
+                          }else{ 
+                       	   $("#mintypeid").val("").trigger("change"); 
+                          }
+                         
+                          
+                       }else{
+                       	 
+                       }
+                    }, "json")
+        }
+        function clear(){
+         	('#mintypeid').val('').trigger("change");
+         }
     </script>
 </head>
 <body>

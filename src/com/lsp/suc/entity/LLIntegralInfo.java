@@ -5,13 +5,13 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * 除大众区买东西返乐乐币，都返还此币种盼盼币
- * 积分
- * 
+ * 币种二   积分
+ * 在大众区买商品返还的币种（当前名称盼盼币）
+ * 只能上盘
  * @author lsp
  * 
  */
-public class IntegralInfo extends ReflectionDBObject {
+public class LLIntegralInfo extends ReflectionDBObject {
 	private String toUser;
 	private String fromUser; 
 	private String fromUserid;

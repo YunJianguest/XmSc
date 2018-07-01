@@ -21,6 +21,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.DictionaryUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.ProductInfo; 
@@ -81,8 +82,9 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 				dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
 			}
 		Struts2Utils.getRequest().setAttribute("custid",SpringSecurityUtils.getCurrentUser().getId());
+		
 		Struts2Utils.getRequest().setAttribute("ProductInfoList", list);
-	
+		
 		return SUCCESS;
 	}
 	
@@ -120,6 +122,10 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){
 			Struts2Utils.getRequest().setAttribute("isjf",1); 
 		}
+		whereMap.clear();
+		whereMap.put("parentid", 0L);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("protype", baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap));
 		return "add";
 	}
 	
@@ -141,6 +147,10 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){
 			Struts2Utils.getRequest().setAttribute("isjf",1);
 		} 
+		whereMap.clear();
+		whereMap.put("parentid", 0L);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("protype", baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap));
 		return "add";
 	}
 	@Override
@@ -301,5 +311,24 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		Struts2Utils.getRequest().setAttribute("id",id);
 		fycount=baseDao.getCount(PubConstants.SHOP_BARGAININGSTATI, whereMap);
 		return "bardetaillist"; 	
+	}
+	/**
+	 * 通过平台父id获取平台子分类
+	 * @throws Exception
+	 */
+	public  void get() throws Exception{
+		Map<String,Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
+		String pid = Struts2Utils.getParameter("pid");
+		HashMap<String, Object>whereMap = new HashMap<>();
+		HashMap<String, Object>sortMap = new HashMap<>();
+		whereMap.put("parentid", Long.parseLong(pid));
+		List<DBObject>list = baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap);
+		if(list.size()>0){
+			sub_map.put("list", list);
+			sub_map.put("state", 0);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 }

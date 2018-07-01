@@ -3825,5 +3825,9 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
+	
+	public String main() throws Exception{
+		return "main";
+	}
 
 }
