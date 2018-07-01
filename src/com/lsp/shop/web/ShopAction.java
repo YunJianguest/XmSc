@@ -3669,30 +3669,39 @@ public class ShopAction extends GeneralAction {
 		entity.setCounts(num);// 15
 		entity.setTotal(total);// 6
 
-		entity.setZfmoney(Double.parseDouble(price));// 7
+		//entity.setZfmoney(Double.parseDouble(price));// 7
 		entity.setIds(recordid);
 		entity.setRemark(remark);
 
-		String cost = "";
-		String zfmoney = "";
+		String cost = "0";
+		String zfmoney = "0";
 		//大众区支付金额
-		String public_money = "";
+		String public_money = "0";
 		//特约区支付金额
-		String contri_money = "";
+		String contri_money = "0";
 		//会员区支付金额
-		String members_money = "";
+		String members_money = "0";
 
 		String[] ids = recordid.split(",");
 		String[] nums = num.split(",");
 		String[] specs = spec.split(",");
 		for (int i = 0; i < ids.length; i++) {
 			if (StringUtils.isNotEmpty(ids[i])) {
-				DBObject shop = baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
 				HashMap<String, Object> backMap = new HashMap<String, Object>();
 				backMap.put("context", 0);
 				backMap.put("summary", 0);
-				DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),
-						backMap);
+				DBObject pro=null;
+				if (Struts2Utils.getParameter("isgwc").equals("1")) {
+					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(ids[i]),
+							backMap);
+				}else {
+					System.out.println(ids[i]);
+					DBObject shop = baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
+					
+					System.out.println(shop.get("pid"));
+					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),
+							backMap);
+				}
 
 				if (pro.get("gmcs") != null && Integer.parseInt(pro.get("gmcs").toString()) > 0) {
 					HashMap<String, Object> whereMap = new HashMap<>();

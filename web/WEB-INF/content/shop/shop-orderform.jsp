@@ -127,7 +127,8 @@ function ajaxjz(){//加载
 	    		         }else if(v[i].state==5){
 	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">已退款</div>';
 	    		         } 
-	    		         xszf+='</div></font></div></div></div>';
+	    		         xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>'
+	    		             +'</div></font></div></div></div>';
 	    		       }
 	    		     
 	    		      }
@@ -145,6 +146,10 @@ function ajaxjz(){//加载
 			 
 	},"json")
 	
+}
+
+function service(orderproId){
+	window.location.href="${ctx}/shop/service!serviceadd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&orderproId="+orderproId;
 }
 function del(id) {
 	  

@@ -35,6 +35,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.AfterService;
 import com.lsp.shop.entiy.OrderForm;
+import com.lsp.shop.entiy.AfterService;
 import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBObject;
@@ -48,7 +49,7 @@ import com.mongodb.DBObject;
  */
 @Namespace("/shop")
 @Results( { @Result(name = ServiceAction.RELOAD, location = "service.action",params={"fypage", "%{fypage}","state","%{state}","comid","%{comid}"}, type = "redirect") })
-public class ServiceAction extends GeneralAction<OrderForm> {
+public class ServiceAction extends GeneralAction<AfterService> {
 
 	private static final long serialVersionUID = -6784469775589971579L;
 	@Autowired
@@ -58,9 +59,13 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	@Autowired
 	private DictionaryUtil dictionaryUtil;
 	private MongoSequence mongoSequence;
-	private OrderForm entity=new OrderForm();
+	private AfterService entity=new AfterService();
 	private String _id;
-
+    
+	@Autowired
+	public void setMongoSequence(MongoSequence mongoSequence) {
+		this.mongoSequence = mongoSequence;
+	}
 
 	@Override
 	public String execute() throws Exception {
@@ -178,9 +183,9 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	protected void prepareModel() throws Exception {
 		if (_id != null) {
 			//有custId查出来 用户信息
-			entity = (OrderForm)UniObject.DBObjectToObject(baseDao.getMessage(PubConstants.WX_ORDERFORM,_id),OrderForm.class);
+			entity = (AfterService)UniObject.DBObjectToObject(baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE,_id),AfterService.class);
 		} else {
-			entity = new OrderForm();
+			entity = new AfterService();
 		}
 	}
 	
@@ -188,22 +193,7 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 
 	@Override
 	public String save() throws Exception {
-		//注册业务逻辑
-		try {
-			entity = (OrderForm)UniObject.DBObjectToObject(baseDao.getMessage(PubConstants.WX_ORDERFORM,_id),OrderForm.class);
-			custid=SpringSecurityUtils.getCurrentUser().getId();
-			entity.set_id(_id);
-			entity.setKdno(Struts2Utils.getParameter("kdno"));
-			entity.setKdcom(Struts2Utils.getParameter("kdcom"));
-			int state=Integer.parseInt(Struts2Utils.getParameter("state")); 
-			entity.setState(state);
-			baseDao.insert(PubConstants.WX_ORDERFORM, entity); 
-			addActionMessage("成功添加!");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			addActionMessage("抱歉,添加过程中出现异常!");
-		}
+		
 		
 		return RELOAD;
 	}
@@ -212,7 +202,7 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 
 	
 	@Override
-	public OrderForm getModel() {
+	public AfterService getModel() {
 		return entity;
 	}
 	public void set_id(String _id) {
@@ -222,8 +212,8 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		String detailid = Struts2Utils.getParameter("detailid");
-		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(detailid));
+		String orderproId = Struts2Utils.getParameter("orderproId");
+		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
 		Struts2Utils.getRequest().setAttribute("db", dbObject);
 		return "serviceadd";
 	}
@@ -234,12 +224,11 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	 */
 	public void ajaxsave() throws Exception{
 		getLscode();
+		Map<String,Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		String pid = Struts2Utils.getParameter("pid");
 		String custid = Struts2Utils.getParameter("custid");
-		String fromUserid = Struts2Utils.getParameter("fromUserid");
-		String oid = Struts2Utils.getParameter("oid");
 		String num = Struts2Utils.getParameter("num");
 		String resource = Struts2Utils.getParameter("resource");
 		String remark = Struts2Utils.getParameter("remark");
@@ -247,40 +236,47 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 		
 		// 四位随机数
 		String strRandom = TenpayUtil.buildRandom(4) + "";
-		String serviceno = DateFormat.getDate() + strRandom + mongoSequence.currval("serviceno");
+		String serviceno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.SHOP_AFTERSERVICE);
 		AfterService info = new AfterService();
 		info.set_id(serviceno);
-		if(StringUtils.isNotEmpty(pid)){
-			info.setProduct(baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(pid)));
-		}
-		info.setOid(oid);
-		info.setCustid(custid);
-		info.setRemark(remark);
-		info.setNum(Integer.parseInt(num));
-		info.setFromUserid(fromUserid);
-		info.setResource(resource);
-		info.setCreatedate(new Date());
-		info.setType(Integer.parseInt(type));
-		double price = 0;
-		if(Integer.parseInt(type) == 1){
-			DBObject  pro =  info.getProduct();
-			if(pro != null){
-				if(pro.get("price") != null){
-					price = Double.parseDouble(pro.get("price").toString())*Integer.parseInt(num);
-				}
-			}
-		}
-		info.setPrice(price);
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
 		if(dbObject != null){
 			Map<String, Class> classMap = new HashMap<String, Class>();
 			classMap.put("pro", Map.class);
-			OrderFormpro pro=(OrderFormpro) JSONObject.toBean(JSONObject.fromObject(dbObject),OrderFormpro.class,classMap);
+			OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
 			pro.setState(1);//异常订单
 			pro.setSid(info.get_id().toString());
+			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
+			System.out.println("db-1-->"+baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, pro.get_id().toString()));
+			
+			info.setProduct(pro.getPro());
+		    info.setOid(pro.getOrderid());
+			info.setCustid(custid);
+			info.setRemark(remark);
+			if(StringUtils.isNotEmpty(num)){
+				info.setNum(Integer.parseInt(num));	
+			}else{
+				info.setNum(1);	
+			}
+			info.setFromUserid(fromUserid);
+			info.setResource(resource);
+			info.setCreatedate(new Date());
+			info.setType(Integer.parseInt(type));
+			double price = 0;
+			if(Integer.parseInt(type) == 1){
+				DBObject pros = pro.getPro();
+				if(pros != null){
+					if(pros.get("price") != null){
+						price = Double.parseDouble(pros.get("price").toString())*info.getNum();
+					}
+				}
+			}
+			info.setPrice(price);
 			baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
+			sub_map.put("state", 0);
 		}
-		baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
 	/**

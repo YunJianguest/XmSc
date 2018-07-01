@@ -67,6 +67,7 @@
           } 
            if($('#address').val()=='详细地址'){
            alert('请填写详细地址');
+           return ;
           }  
          var submitData = { 
             name:name,

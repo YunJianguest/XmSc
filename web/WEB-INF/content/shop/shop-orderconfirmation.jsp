@@ -126,11 +126,11 @@
         			}
         		},
         		"json") */
-        		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+        		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}&isgwc=1', submitData,
                 		function(json) { 
-                			
                 		     loading.hide();
-                		 	if (json.data.state == 0) {
+                		     alert(json.state);
+                		 	if (json.state == 0) {
                 				alert("购买成功！");
                 				window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
                 			}else if(json.state == 1) {
