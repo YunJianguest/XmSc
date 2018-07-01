@@ -21,7 +21,7 @@ public class Exceptional extends ReflectionDBObject{
 	/**
 	 * 金额
 	 */
-	private  float  price;
+	private  double  price;
 	public String getCustid() {
 		return custid;
 	}
@@ -46,9 +46,12 @@ public class Exceptional extends ReflectionDBObject{
 	}
 	public void setCreatedate(Date createdate) {
 		this.createdate = createdate;
-	}
-	public float getPrice() {
+	} 
+	public double getPrice() {
 		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public void setPrice(float price) {
 		this.price = price;

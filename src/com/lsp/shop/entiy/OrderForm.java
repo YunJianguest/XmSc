@@ -1,8 +1,7 @@
-package com.lsp.shop.entiy;
-
+package com.lsp.shop.entiy; 
 import java.util.Date;
 import java.util.List;
-
+ 
 import com.mongodb.ReflectionDBObject;
 /**
  * 订单编号
@@ -19,16 +18,16 @@ public class OrderForm extends ReflectionDBObject{
 	/**
 	 * 总
 	 */
-	private float total;
+	private double total;
 	/**
 	 * 支付的金钱
 	 */
-	private float zfmoney;
+	private double zfmoney;
 	private double money;
 	/**
 	 * 兑换的积分
 	 */
-	private float jfdh;
+	private double jfdh;
 	/**
 	 * 商品编号
 	 */
@@ -36,7 +35,7 @@ public class OrderForm extends ReflectionDBObject{
 	/**
 	 * 商品价格
 	 */
-	private float remoney; 
+	private double remoney; 
 
 	/**
 	 * 经纬度，经度在前，纬度在后
@@ -111,20 +110,50 @@ public class OrderForm extends ReflectionDBObject{
 	/**
 	 * 积分返还
 	 */
-	private float  jffh;
+	private double  jffh;
 	/**
 	 * 是否显示（0显示1不显示）
 	 */
 	private int    isxs;
 	
-	private float cost;//成本价格
-	private float profit;//利润
+	private double cost;//成本价格
+	private double profit;//利润
 	private Long deptCode;//部门编号
 	/**
 	 * 确认收货时间
 	 */
 	private Date deliveryDate;
+	/**
+	 * 大众区支付金额
+	 */
+	private Double public_money;
+	/**
+	 * 特约区支付金额
+	 */
+	private Double contri_money;
+	/**
+	 * 会员区支付金额
+	 */
+	private Double members_money; 
 	
+	public Double getPublic_money() {
+		return public_money;
+	}
+	public void setPublic_money(Double public_money) {
+		this.public_money = public_money;
+	}
+	public Double getContri_money() {
+		return contri_money;
+	}
+	public void setContri_money(Double contri_money) {
+		this.contri_money = contri_money;
+	}
+	public Double getMembers_money() {
+		return members_money;
+	}
+	public void setMembers_money(Double members_money) {
+		this.members_money = members_money;
+	}
 	public int getIsxs() {
 		return isxs;
 	}
@@ -150,9 +179,7 @@ public class OrderForm extends ReflectionDBObject{
 		this.no = no;
 	}
 	
-	public float getTotal() {
-		return total;
-	}
+	 
 	public void setTotal(float total) {
 		this.total = total;
 	}
@@ -163,9 +190,7 @@ public class OrderForm extends ReflectionDBObject{
 	public void setMoney(double money) {
 		this.money = money;
 	} 
-	public float getJfdh() {
-		return jfdh;
-	}
+	 
 	public void setJfdh(float jfdh) {
 		this.jfdh = jfdh;
 	}
@@ -256,8 +281,27 @@ public class OrderForm extends ReflectionDBObject{
 	public void setLx(int lx) {
 		this.lx = lx;
 	}
-	public float getRemoney() {
+	 
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	public double getJfdh() {
+		return jfdh;
+	}
+	public void setJfdh(double jfdh) {
+		this.jfdh = jfdh;
+	}
+	public double getRemoney() {
 		return remoney;
+	}
+	public void setRemoney(double remoney) {
+		this.remoney = remoney;
+	}
+	public void setZfmoney(double zfmoney) {
+		this.zfmoney = zfmoney;
 	}
 	public void setRemoney(float remoney) {
 		this.remoney = remoney;
@@ -280,7 +324,7 @@ public class OrderForm extends ReflectionDBObject{
 	public void setRemind(String remind) {
 		this.remind = remind;
 	}
-	public float getZfmoney() {
+	public double getZfmoney() {
 		return zfmoney;
 	}
 	public void setZfmoney(float zfmoney) {
@@ -334,20 +378,32 @@ public class OrderForm extends ReflectionDBObject{
 	public void setKjid(String kjid) {
 		this.kjid = kjid;
 	}
-	public float getJffh() {
-		return jffh;
-	}
+	 
 	public void setJffh(float jffh) {
 		this.jffh = jffh;
 	}
-	public float getCost() {
-		return cost;
-	}
+	 
 	public void setCost(float cost) {
 		this.cost = cost;
 	}
-	public float getProfit() {
+	 
+	public double getJffh() {
+		return jffh;
+	}
+	public void setJffh(double jffh) {
+		this.jffh = jffh;
+	}
+	public double getCost() {
+		return cost;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public double getProfit() {
 		return profit;
+	}
+	public void setProfit(double profit) {
+		this.profit = profit;
 	}
 	public void setProfit(float profit) {
 		this.profit = profit;

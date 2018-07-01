@@ -1214,7 +1214,7 @@ public class BbsAction extends GeneralAction<BbsInfo> {
         		
         	}else{ 
         		//结算 
-        		float  mo=entity.getZfmoney()*100;
+        		double  mo=entity.getZfmoney()*100;
         		String toUserid=attach[2];
         		Exceptional  exc=new Exceptional();
 				exc.set_id(mongoSequence.currval(PubConstants.SUC_EXCEPTIONAL));

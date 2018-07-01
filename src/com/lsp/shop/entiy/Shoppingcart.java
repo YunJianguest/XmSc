@@ -28,7 +28,7 @@ public class Shoppingcart extends ReflectionDBObject{
 	private int    count; 
 	private Date   createdate;
 	private int    state;
-	private float  price;
+	private double  price;
 	public String getFromUser() {
 		return fromUser;
 	}
@@ -83,8 +83,12 @@ public class Shoppingcart extends ReflectionDBObject{
 	public void setSpec(String spec) {
 		this.spec = spec;
 	}
-	public float getPrice() {
+	 
+	public double getPrice() {
 		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public void setPrice(float price) {
 		this.price = price;
