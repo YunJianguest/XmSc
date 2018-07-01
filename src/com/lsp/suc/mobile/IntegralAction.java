@@ -442,7 +442,7 @@ public class IntegralAction  extends GeneralAction<IntegralInfo>{
         		
         	}else{ 
         		//结算 
-        		 float  mo=entity.getZfmoney()*100; 
+        		 double  mo=entity.getZfmoney()*100; 
         		 wwzService.addjf(mo+"",wwzService.getfromUserid(fromUser,custid),"jfcz", custid, null);
         		
         	}
