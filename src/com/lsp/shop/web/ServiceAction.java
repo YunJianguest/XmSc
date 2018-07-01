@@ -222,6 +222,9 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String detailid = Struts2Utils.getParameter("detailid");
+		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(detailid));
+		Struts2Utils.getRequest().setAttribute("db", dbObject);
 		return "serviceadd";
 	}
 	

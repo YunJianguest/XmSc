@@ -146,9 +146,9 @@ public class SignFilter{
 	 * 
 	 * @throws IOException
 	 */
-	public static void printNoCheck(Object data) throws IOException {
+	public static void printNoCheck(HttpServletRequest request, HttpServletResponse response,Object data) throws IOException {
 		
-		PrintWriter printWriter2 = Struts2Utils.getResponse().getWriter();
+		PrintWriter printWriter2 = response.getWriter();
 		
 		printWriter2.print(ResponseMsg.successWithData(data));
 		printWriter2.flush();
