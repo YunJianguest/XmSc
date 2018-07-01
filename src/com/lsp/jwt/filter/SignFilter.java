@@ -160,6 +160,20 @@ public class SignFilter{
 	 * 
 	 * @throws IOException
 	 */
+	public static void printNoCheck(Object data) throws IOException {
+		
+		PrintWriter printWriter2 = Struts2Utils.getResponse().getWriter();
+		
+		printWriter2.print(ResponseMsg.successWithData(data));
+		printWriter2.flush();
+		printWriter2.close();
+
+	}
+	/**
+	 * 发送数据
+	 * 
+	 * @throws IOException
+	 */
 	public static void printNo(HttpServletRequest request, HttpServletResponse response,Object data) throws IOException {
 		
 		PrintWriter printWriter2 = response.getWriter();
