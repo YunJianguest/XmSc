@@ -84,7 +84,8 @@ public class PubConstants
   public static String SUC_SCENE="suc_scene";
   public static String SUC_SPIRIT="suc_spirit";
   
-  public static String INTEGRAL_INFO="integral_info";
+  public static String INTEGRAL_INFO="integral_info";//积分
+  public static String INTEGRALLL_INFO="integralll_info";//LL积分
   public static String INTEGRALM="integrallm";
   public static String JF_TOTAL="jf_total";
   

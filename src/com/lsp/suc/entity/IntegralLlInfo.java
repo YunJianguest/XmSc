@@ -5,15 +5,11 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * 除大众区买东西返乐乐币，都返还此币种盼盼币
- * 积分
- * 
+ * LL
  * @author lsp
- * 
+ *
  */
-public class IntegralInfo extends ReflectionDBObject {
-	private String toUser;
-	private String fromUser; 
+public class IntegralLlInfo extends ReflectionDBObject { 
 	private String fromUserid;
 	private String custid;
 	/**
@@ -45,35 +41,7 @@ public class IntegralInfo extends ReflectionDBObject {
      * 2-冻结积分
      **/
     private int  jfstate;
-    private String fid;
-    /**
-     * 积分种类（0为普通积分1为PP币，2为LL币）
-     */
-    private int jflx;
-    
-	public int getJflx() {
-		return jflx;
-	}
-
-	public void setJflx(int jflx) {
-		this.jflx = jflx;
-	}
-
-	public String getToUser() {
-		return toUser;
-	}
-
-	public void setToUser(String toUser) {
-		this.toUser = toUser;
-	}
-
-	public String getFromUser() {
-		return fromUser;
-	}
-
-	public void setFromUser(String fromUser) {
-		this.fromUser = fromUser;
-	}
+    private String fid;  
  
 	public String getType() {
 		return type;

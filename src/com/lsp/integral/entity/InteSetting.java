@@ -18,9 +18,11 @@ public class InteSetting extends ReflectionDBObject {
 	 */
 	private String name;//币种一设置
 	private String num;//币种一发行数量
+	private String nownum;//币种一目前发行数量
 	private String remark;//备注
 	private String names;//币种二设置
 	private String nums;//币种二发行数量
+	private String nownums;//币种二目前发行数量
 	private String remarks;//币种二备注
 	
 	/**
@@ -54,6 +56,12 @@ public class InteSetting extends ReflectionDBObject {
 	private double deptTime;//部门预返时间
 	
 	private Date createdate;
+	
+	/**
+	 * 区域提成划分
+	 */
+	private double dzqtc;//大众区提成比例配置
+	private double hyqtc;//会员区提成比例配置
 	
 	public String getCustid() {
 		return custid;
@@ -211,5 +219,30 @@ public class InteSetting extends ReflectionDBObject {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public String getNownum() {
+		return nownum;
+	}
+	public void setNownum(String nownum) {
+		this.nownum = nownum;
+	}
+	public String getNownums() {
+		return nownums;
+	}
+	public void setNownums(String nownums) {
+		this.nownums = nownums;
+	}
+	public double getDzqtc() {
+		return dzqtc;
+	}
+	public void setDzqtc(double dzqtc) {
+		this.dzqtc = dzqtc;
+	}
+	public double getHyqtc() {
+		return hyqtc;
+	}
+	public void setHyqtc(double hyqtc) {
+		this.hyqtc = hyqtc;
+	}
+	
 	
 }
