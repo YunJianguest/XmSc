@@ -44,10 +44,24 @@
                 <div class=" div-group-10 pb-25 bg-bai border-radius5 overflow-hidden">
                     <div class="clear pt-25 pr-10">
                         <div class="col-2 pl-10">
-                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一:</div>
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一命名:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.name}" name="name" id="name">
+                            </div>
+                        </div>
+                         <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一发行量:</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.num}" name="num" id="num">
+                            </div>
+                        </div>
+                        <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一备注:</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.remark}"  name="remark" id="remark">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
@@ -58,11 +72,17 @@
                             </div>
                         </div>
                         <div class="col-2 pl-10">
-                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">备注:</div>
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种二发行量:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.remark}"
-                                       name="remark" id="remark">
+                                       value="${entity.nums}" name="nums" id="nums">
+                            </div>
+                        </div>
+                        <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种二备注:</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.remarks}" name="remarks" id="remarks">
                             </div>
                         </div>
                     </div>
@@ -75,7 +95,7 @@
                 <div class=" div-group-10 pb-25 bg-bai border-radius5 overflow-hidden">
                     <div class="clear pt-25 pr-10">
                         
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">任意推荐(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -83,7 +103,7 @@
                                        name="any" id="any">
                             </div>
                         </div>
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">直推(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -91,7 +111,7 @@
                                        name="direct" id="direct">
                             </div>
                         </div>
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">二级推荐(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -99,7 +119,45 @@
                                        name="between" id="between">
                             </div>
                         </div>
-                        <div class="col-2 pl-10" id="app_secret">
+                        
+                          <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">部门提成(%):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.sameDepartment}"
+                                       name="sameDepartment" id="sameDepartment">
+                            </div>
+                        </div>
+                        
+                        <div class="pt-25 clear">
+                        <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">同地推荐省级(%):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.sameProvince}"
+                                       name="sameProvince" id="sameProvince">
+                            </div>
+                        </div>
+                        
+                        <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">同地推荐市级(%):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.sameCity}"
+                                       name="sameCity" id="sameCity">
+                            </div>
+                        </div>
+                        
+                        <div class="col-2 pl-10" >
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">同地推荐县级(%):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.sameCounty}"
+                                       name="sameCounty" id="sameCounty">
+                            </div>
+                        </div>
+                       
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">异地推荐省级(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -108,7 +166,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">异地推荐市级(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -117,13 +175,14 @@
                             </div>
                         </div>
                         
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10" >
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">异地推荐县级(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.diffCounty}"
                                        name="diffCounty" id="diffCounty">
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -135,7 +194,7 @@
                 <div class=" div-group-10 pb-25 bg-bai border-radius5 overflow-hidden">
                     <div class="clear pt-25 pr-10">
                         
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">省级预返值(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -143,8 +202,16 @@
                                        name="returnProvince" id="returnProvince">
                             </div>
                         </div>
+                         <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">省级预返时间(年):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.provinceTime}"
+                                       name="provinceTime" id="provinceTime">
+                            </div>
+                        </div>
                         
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">市级预返值(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -152,7 +219,16 @@
                                        name="returnCity" id="returnCity">
                             </div>
                         </div>
-                        <div class="col-2 pl-10" id="app_secret">
+                        <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">市级预返时间(年):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.cityTime}"
+                                       name="cityTime" id="cityTime">
+                            </div>
+                        </div>
+                         <div class="pt-25 clear">
+                        <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">县级预返值(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
@@ -160,6 +236,15 @@
                                        name="returnCounty" id="returnCounty">
                             </div>
                         </div>
+                        <div class="col-2 pl-10">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">县级预返时间(年):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.countyTime}"
+                                       name="countyTime" id="countyTime">
+                            </div>
+                        </div>
+                        
 						<div class="col-2 pl-10" id="app_secret">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">部门预返值(%):</div>
                             <div class="line-bottom line-right line-left1 hang40">
@@ -167,6 +252,15 @@
                                        value="${entity.returnDept}"
                                        name="returnDept" id="returnDept">
                             </div>
+                        </div>
+                        <div class="col-2 pl-10" id="app_secret">
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">部门预返时间(年):</div>
+                            <div class="line-bottom line-right line-left1 hang40">
+                                <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
+                                       value="${entity.deptTime}"
+                                       name="deptTime" id="deptTime">
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>

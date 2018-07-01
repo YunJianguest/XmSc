@@ -1,0 +1,19 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+a{
+	color: #000 !important;
+}
+ul,li,ol{
+	list-style-type: none;
+}
+.mui-tab-item .mui-active .mui-tab-label{
+	color: #ff0000;
+}
+header.mui-bar.mui-bar-nav{
+	box-shadow: 0 1px 1px #ccc;
+}
+html,body{
+	height: 100%;
+}

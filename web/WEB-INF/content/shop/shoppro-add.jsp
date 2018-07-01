@@ -98,6 +98,38 @@
                 $('.tg').hide();
             }
         }
+        
+        var getid;
+        var mintypeid;
+        function getchild(id) {
+            var submitData = {
+           		 pid: id
+            };
+            $.post('${ctx}/shop/shoppro!get.action', submitData,
+                    function (json) {
+                       if(json.state==0){ 
+                       	var list=json.list;
+                       	var options="<option  value=''>请选择</option>"; 
+                       	for (var i = 0; i < list.length; i++) {	
+                       		options+="<option  value="+list[i].id+">"+list[i].name+"</option>";	
+   						}
+                          $("#mintypeid").html(options); 
+                          if("${entity.typeid}"==$("#typeid").val()){ 
+                       	   $("#mintypeid").val("${entity.mintypeid}").trigger("change"); 
+                          }else{ 
+                       	   $("#mintypeid").val("").trigger("change"); 
+                          }
+                         
+                          
+                       }else{
+                    	   $("#mintypeid").val("").trigger("change"); 
+                    	   $("#mintypeid").html("<option  value=''>暂无数据</option>"); 
+                       }
+                    }, "json")
+        }
+        function clear(){
+         	('#mintypeid').val('').trigger("change");
+         }
 
     </script>
     <style type="text/css">
@@ -187,7 +219,7 @@
                                 </div>
                                 <div class="col-2 pl-10">
                                     <div class="size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        商品分类
+                                        店铺分类
                                     </div>
                                     <div class="overflow-hidden">
                                         <select id="hylx" name="hylx" class="select2" data-placeholder="请选择">
@@ -198,7 +230,30 @@
                                         </select>
                                     </div>
                                 </div>
-  
+                                  <div class="col-2 pl-10">
+                                    <div class="size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
+                                        商品一级分类
+                                    </div>
+                                    <div class="overflow-hidden">
+                                        <select id="typeid" name="typeid" class="select2" data-placeholder="请选择">
+                                            <option value="">请选择</option>
+                                            <c:forEach items="${protype}" var="bean" varStatus="status">
+                                                <option value="${bean._id}">${bean.name}</option>
+                                            </c:forEach>
+
+                                        </select>
+                                    </div>
+                                </div>
+                    <div class="col-2 pl-10">
+                                    <div class="size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
+                                        商品二级分类
+                                    </div>
+                                    <div class="overflow-hidden">
+                                         <select id="mintypeid" name="mintypeid" class="select2" data-placeholder="请选择" >
+                                        
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-2 pl-10">
                                     <div class="size14  weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         模板
@@ -220,7 +275,10 @@
                                                placeholder="请输入序号">
                                     </div>
                                 </div>
-                                <div class="col-2 pl-10">
+
+
+                            <div class="pt-25 clear">
+                               <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         分享说明
                                     </div>
@@ -242,11 +300,9 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="pt-25 clear">
                                <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                 成本价格      
+                         成本价格      
                                     </div>
                                     <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
@@ -519,6 +575,17 @@
     $("#pcount").val("${entity.pcount}");
     changebq();
     setcke();
+    $('#typeid').change(function(){ 
+    	var id=$("#typeid").val();
+    	if(isNaN(id)||id==null||id==''){
+    		$("#mintypeid").html("<option  value=''>请选择</option>"); 
+    	}else{ 
+    		getchild(id); 	
+    	}
+    	
+    	
+    });
+    $("#typeid").val("${entity.typeid}").trigger("change");
     //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     jQuery(".select2").select2({
