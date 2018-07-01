@@ -3761,5 +3761,32 @@ public class ShopAction extends GeneralAction {
 		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),map);
 
 	}
+	
+	/**
+	 * 获取分类
+	 * @throws Exception
+	 */
+	public void gettype() throws Exception{
+		HashMap<String, Object>whereMap=new HashMap<>();
+		HashMap<String, Object>sortMap=new HashMap<>();
+		Map<String,Object>sub_map=new HashMap<>();
+		sub_map.put("state", 1);
+		String parentId=Struts2Utils.getParameter("parentId");
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		if(StringUtils.isNotEmpty(parentId)){
+			whereMap.put("parentid", Long.parseLong(parentId));
+		}else{
+			whereMap.put("parentid", 0L);
+		}
+		sortMap.put("sort", Long.valueOf(1));
+		List<DBObject>list=baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap,  sortMap);
+		System.out.println("进入这个方法---->"+list.size());
+		if(list.size()>0){
+			sub_map.put("state", 0);
+			sub_map.put("list", list);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
      
 }

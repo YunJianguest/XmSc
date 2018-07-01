@@ -72,7 +72,7 @@ public class LoginAction extends ActionSupport
    * 登录 
    * @throws Exception
    */
-  public void  ajaxlogin() throws Exception{
+  /*public void  ajaxlogin() throws Exception{
 	  HashMap<String, Object> whereMap = new HashMap<String, Object>();
 	  Map<String, Object> sub_map = new HashMap<String, Object>(); 
 	  
@@ -92,7 +92,36 @@ public class LoginAction extends ActionSupport
   		   }
   	  }
   	  SignFilter.printNoCheck(null);
+  }*/
+  
+  public void  ajaxlogin() throws Exception{
+	  HashMap<String, Object> whereMap = new HashMap<String, Object>();
+	  Map<String, Object> sub_map = new HashMap<String, Object>(); 
+	  
+	  String password =Struts2Utils.getParameter("password");
+  	  String name =Struts2Utils.getParameter("name");  
+  	  System.out.println(password);
+  	  System.out.println(name);
+  	  whereMap.put("account", name);
+  	  if (StringUtils.isNotEmpty(name)&&StringUtils.isNotEmpty(password)) {
+  		   DBObject user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+  		   
+  		   //当前密码未验证
+  		   System.out.println(user.get("password").toString());
+  		   System.out.println(user.get("account").toString());
+  		   if(user != null){
+  			   if(user.get("password").toString().equals(password)) {
+	  			   String result=TokenTool.createJWT(user.get("_id").toString(),user.get("account").toString(), Constant.JWT_TTL);
+	  			   System.out.println(result);
+	  			   sub_map.put("token", result);
+	  			   sub_map.put("user", user);
+	  			   SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+  			   }
+  		   }
+  	  }
+  	  SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),null);
   }
+
   
  
 }
