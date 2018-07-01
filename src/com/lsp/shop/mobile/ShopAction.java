@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
   
 import com.lsp.android.entity.MessageInfo;
-import com.lsp.jwt.filter.SignFilter;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.GetAllFunc;
@@ -94,14 +93,14 @@ public class ShopAction extends GeneralAction {
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		
 		String  comid=Struts2Utils.getParameter("comid"); 
-		//getFromid();
+		getLscode(); 
 		//Struts2Utils.getRequest().setAttribute("custid",custid);
 		sub_map.put("custid",custid);
 		WxToken token=GetAllFunc.wxtoken.get(custid); 
-	/*	if(token.getSqlx()>0){
+		if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
 		}
-		*/
+		
 		//Struts2Utils.getRequest().setAttribute("token", WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		sub_map.put("token", WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest());
@@ -167,8 +166,6 @@ public class ShopAction extends GeneralAction {
 		//加载广告
 		//Struts2Utils.getRequest().setAttribute("slide",wwzService.getslide(custid, "shopmb-"+shopmb.get("_id").toString()));
 		sub_map.put("slide",wwzService.getslide(custid, "shopmb-"+shopmb.get("_id").toString()));
-		
-		
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
 		//Struts2Utils.getRequest().setAttribute("typelist",typelist);  
@@ -198,17 +195,17 @@ public class ShopAction extends GeneralAction {
 		sub_map.put("share",share);
 		//检测代理 
 		if(wwzService.checkAgent(agid, custid, fromUserid)){
-			//Struts2Utils.getRequest().setAttribute("isAgent","ok");
+			Struts2Utils.getRequest().setAttribute("isAgent","ok");
 			sub_map.put("isAgent","ok");
 		}
 		//检测全局代理 
 		if(wwzService.checkAgent(custid,fromUserid)){
-			 //Struts2Utils.getRequest().setAttribute("isAgents","ok");
+			 Struts2Utils.getRequest().setAttribute("isAgents","ok");
 			 sub_map.put("isAgents","ok");
 		}
 		//检测当前店铺
 		if(StringUtils.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(),wwzService.getVipNo(fromUserid)))){
-			//Struts2Utils.getRequest().setAttribute("isAgentcom","ok");
+			Struts2Utils.getRequest().setAttribute("isAgentcom","ok");
 			sub_map.put("isAgentcom","ok");
 		}
 		/*if(shopmb!=null){
@@ -221,65 +218,8 @@ public class ShopAction extends GeneralAction {
 			return "index";
 		}*/
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	
-	/**
-	 * 主页面轮播图
-	 * @throws IOException 
-	 * @throws Exception
-	 */
-	public void index_slide() throws IOException {
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		String  comid=Struts2Utils.getParameter("comid");
-		HashMap<String, Object>whereMap=new HashMap<String, Object>();
-		if(StringUtils.isNotEmpty(comid)){
-			whereMap.put("_id",Long.parseLong(comid));	
-		}else{
-			whereMap.put("lx",1);	
-		}  
-		whereMap.put("custid", custid);
-		
-		DBObject shopmb=baseDao.getMessage(PubConstants.SHOP_SHOPMB,whereMap);
-		sub_map.put("slide",wwzService.getslide(custid, "shopmb-"+shopmb.get("_id").toString()));
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		
-		
-	}
-	/**
-	 * 店铺分类
-	 * @throws IOException 
-	 * @throws Exception
-	 */
-	public void index_type() throws IOException {
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		String  comid=Struts2Utils.getParameter("comid");
-		HashMap<String, Object>whereMap=new HashMap<String, Object>();
-		if(StringUtils.isNotEmpty(comid)){
-			whereMap.put("_id",Long.parseLong(comid));	
-		}else{
-			whereMap.put("lx",1);	
-		}  
-		whereMap.put("custid", custid);
-		
-		DBObject shopmb=baseDao.getMessage(PubConstants.SHOP_SHOPMB,whereMap);
-		sub_map.put("entity",shopmb);
-	    //加载分类
-		whereMap.clear();
-		HashMap<String, Object>sortMap=new HashMap<String, Object>();
-		whereMap.put("parentid", Long.parseLong(shopmb.get("_id").toString())); 
-		sortMap.put("sort", -1);
-		//获取店铺分类 
-		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
-		sub_map.put("typelist",typelist);
-		
-		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
-		
-	}
-	
 	/**
 	 * 主页面
 	 * @return
@@ -316,8 +256,7 @@ public class ShopAction extends GeneralAction {
 		
 		sub_map.put("list", proList);
 		String json = JSONArray.fromObject(sub_map).toString();
-		System.out.println(json);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	 
 	 
@@ -328,7 +267,7 @@ public class ShopAction extends GeneralAction {
 	 */
 	
 	public void orderform() throws IOException{ 
-		getFromid();
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		//Struts2Utils.getRequest().setAttribute("custid",custid);
 		//Struts2Utils.getRequest().setAttribute("lscode",lscode); 
@@ -342,7 +281,7 @@ public class ShopAction extends GeneralAction {
 		sub_map.put("ordercount",baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));
 		
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
 	 
@@ -353,7 +292,7 @@ public class ShopAction extends GeneralAction {
 	 */
 	/*public String fahuo() throws Exception{
 		custid=getCustid();
-		lscode=getFromid();
+		lscode=getLscode();
 		List<DBObject> relist=new ArrayList<DBObject>();
 		Long _id=Long.parseLong(Struts2Utils.getParameter("_id"));
 		
@@ -368,8 +307,8 @@ public class ShopAction extends GeneralAction {
 		return "orderform";
 	}*/
 	public void fahuo() throws Exception{
-		/*custid=getCustid();
-		lscode=getFromid();*/
+		custid=getCustid();
+		lscode=getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		List<DBObject> relist=new ArrayList<DBObject>();
 		Long _id=Long.parseLong(Struts2Utils.getParameter("_id"));
@@ -386,7 +325,7 @@ public class ShopAction extends GeneralAction {
 		sub_map.put("lscode", lscode);
 		
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 确认货单
@@ -401,7 +340,7 @@ public class ShopAction extends GeneralAction {
 		//Struts2Utils.getSession().setAttribute("fromLogin", null);
 		//Struts2Utils.getRequest().setAttribute("method", "/wwz/wwz!fromuser.action");
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	 
 	/**
@@ -410,15 +349,12 @@ public class ShopAction extends GeneralAction {
 	 */
 	public void wxpay() throws Exception{
 		SortedMap<Object,Object> params = new TreeMap<Object,Object>();
-		getFromid();
-		fromUserid=Struts2Utils.getParameter("fromUserid");
-		
-		System.out.println(fromUserid);
+		getLscode(); 
 		DBObject  wx=wwzService.getWxUser(fromUserid);
 		if(wx.get("_id").equals("notlogin")){
 			params.put("state", 3);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return; 
 		} 
 		WxToken wxtoken=GetAllFunc.wxtoken.get(custid);
@@ -426,7 +362,7 @@ public class ShopAction extends GeneralAction {
 		if(wxtoken.getQx()==0){
 			params.put("state", 1);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}else if(wxtoken.getQx()==1){
 			wxconfig=GetAllFunc.wxPay.get(custid);
@@ -500,12 +436,10 @@ public class ShopAction extends GeneralAction {
 				//购买次数已完
 				params.put("state", 10);
 				String json = JSONArray.fromObject(params).toString();
-				SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+				Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 				return;
 			}
 		}
-		//通过商品id查单价
-		
 		
 		String orderno = DateFormat.getDate() + strRandom+mongoSequence.currval("orderno");
 		 	OrderForm entity=new OrderForm();
@@ -646,9 +580,7 @@ public class ShopAction extends GeneralAction {
 	  
 	    params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
-		System.out.println(json);
-		//SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
 	/**
@@ -758,12 +690,12 @@ public class ShopAction extends GeneralAction {
 	 */
 	public void wxcarpay() throws Exception{
 		SortedMap<Object,Object> params = new TreeMap<Object,Object>();
-		getFromid();
+		getLscode();
 		DBObject  wx=wwzService.getWxUser(fromUserid);
 		if(wx.get("_id").equals("notlogin")){
 			params.put("state", 3);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return; 
 		}
 		String comtoUser=toUser;
@@ -772,7 +704,7 @@ public class ShopAction extends GeneralAction {
 		if(wxtoken.getQx()==0){
 			params.put("state", 1);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}else if(wxtoken.getQx()==1){
 			wxconfig=GetAllFunc.wxPay.get(custid);
@@ -783,7 +715,7 @@ public class ShopAction extends GeneralAction {
 		if(wxconfig==null||wxconfig.getAppid()==null){
 			params.put("state", 1);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}
 		//支付的价格
@@ -887,7 +819,7 @@ public class ShopAction extends GeneralAction {
 									//购买次数已完
 									params.put("state", 10);
 									String json = JSONArray.fromObject(params).toString();
-									SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+									Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 									return;
 								}
 							}
@@ -985,7 +917,7 @@ public class ShopAction extends GeneralAction {
 	  
 	    params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 通知
@@ -1122,9 +1054,8 @@ public class ShopAction extends GeneralAction {
 	}
 	/**
 	 * ajax获取列表
-	 * @throws IOException 
 	 */
-	public void ajaxweb() throws IOException{
+	public void ajaxweb(){
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		try {
 			String  cid=Struts2Utils.getParameter("cid");
@@ -1168,23 +1099,20 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
 	}
 	/**
 	 * ajax添加购物车
-	 * @throws IOException 
 	 */
-	public void  ajaxshopcarsave() throws IOException{
+	public void  ajaxshopcarsave(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
-			getFromid();
+			getLscode();
 			String  pid=Struts2Utils.getParameter("pid");
 			String  spec=Struts2Utils.getParameter("spec");
 			String  counts=Struts2Utils.getParameter("count");
 			String  price=Struts2Utils.getParameter("price");
-			//fromUserid=Struts2Utils.getParameter("fromUserid");
-			custid=Struts2Utils.getParameter("custid");
 			Shoppingcart  shop=new Shoppingcart();
 			shop.set_id(mongoSequence.currval(PubConstants.SUC_SHOPPINGCART));
 			shop.setCount(1);
@@ -1212,16 +1140,15 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 		
 	}
 	/**
 	 * 移除购物车
-	 * @throws IOException 
 	 */
-	public void  ajaxdelshopcar() throws IOException{
-		getFromid();
+	public void  ajaxdelshopcar(){
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String id=Struts2Utils.getParameter("id");
 		if(StringUtils.isNotEmpty(id)){
@@ -1232,17 +1159,15 @@ public class ShopAction extends GeneralAction {
 			sub_map.put("state", 0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax获取购物车列表
-	 * @throws IOException 
 	 */
-	public void  ajaxshopcarweb() throws IOException{
+	public void  ajaxshopcarweb(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try { 
-			getFromid();
-			custid=Struts2Utils.getParameter("custid");
+			getLscode(); 
 			HashMap<String,Object>whereMap=new HashMap<String, Object>();
 			HashMap<String,Object>sortMap=new HashMap<String, Object>();
 			whereMap.put("fromUserid", fromUserid);
@@ -1275,18 +1200,15 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		System.out.println(json);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		//SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	 	
 	}
 	/**
 	 * 商品详情
 	 * @return
-	 * @throws IOException 
 	 */
 	/*public String  shopproduct(){
-		getFromid(); 
+		getLscode();  
 		String  pid=Struts2Utils.getParameter("pid"); 
 		WxToken token=GetAllFunc.wxtoken.get(custid); 
 		if(token.getSqlx()>0){
@@ -1408,14 +1330,15 @@ public class ShopAction extends GeneralAction {
 		return "productdetail"+db.get("bq");
 	 
 	}*/
-	public void  shopproduct() throws IOException{
+	public void  shopproduct(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
-		getFromid(); 
+		getLscode();  
 		String  pid=Struts2Utils.getParameter("pid"); 
 		WxToken token=GetAllFunc.wxtoken.get(custid); 
 		if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
 		 }
+		//Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		sub_map.put("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 		token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
 		String  url=SysConfig.getProperty("ip")+"/shop/shop!shopproduct.action?custid="+custid+"&pid="+pid+"&agid="+agid;  
@@ -1484,12 +1407,11 @@ public class ShopAction extends GeneralAction {
 		whereMap.put("parentid",Long.parseLong(pid));
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		sortMap.put("sort",-1);
-		List<DBObject> spelist=baseDao.getList(PubConstants.SHOP_SPECIFICATION, whereMap, sortMap);
+		List<DBObject>spelist=baseDao.getList(PubConstants.SHOP_SPECIFICATION, whereMap, sortMap);
 		if(spelist.size()>0){
 			//Struts2Utils.getRequest().setAttribute("spelist", spelist);	
 			sub_map.put("spelist", spelist);
 		}
-		sub_map.put("spelist", spelist);
 		//加载用户积分
 		//Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(custid, fromUserid));
 		sub_map.put("jf", wwzService.getJf(custid, fromUserid));
@@ -1550,19 +1472,16 @@ public class ShopAction extends GeneralAction {
 		
 		//return "productdetail"+db.get("bq");
 		String json = JSONArray.fromObject(sub_map).toString();
-		//SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 购物车详情
 	 * @return
-	 * @throws IOException 
 	 */
 	
-	public void  shoppingcar() throws IOException{
+	public void  shoppingcar(){
 		Map<String, Object> sub_map = new HashMap<String, Object>();
-		getFromid();
+		getLscode();
 		//Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUser(fromUserid));
 		sub_map.put("user",wwzService.getWxUser(fromUserid));
 		String  pid=Struts2Utils.getParameter("pid");  
@@ -1583,18 +1502,17 @@ public class ShopAction extends GeneralAction {
 		sub_map.put("entity",entity);
 		//return "shoppingcar";
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 订单确认
 	 * @return
-	 * @throws IOException 
 	 */
 	
 	
-	public void orderconfirmation() throws IOException{
+	public void orderconfirmation(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
-		getFromid();
+		getLscode();
 		String  pid=Struts2Utils.getParameter("pid"); 
 		DBObject  db=baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(pid));
 		//加载地址信息
@@ -1623,14 +1541,13 @@ public class ShopAction extends GeneralAction {
 		sub_map.put("price",Struts2Utils.getParameter("price"));
 		//return "orderconfirmation";
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax删除地址
-	 * @throws IOException 
 	 */
-	public void ajaxdeladdress() throws IOException{
-		getFromid();
+	public void ajaxdeladdress(){
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
 			String id=Struts2Utils.getParameter("id");
@@ -1644,17 +1561,16 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
 	/**
 	 * 生成订单
-	 * @throws IOException 
 	 */
-	public void  shoppay() throws IOException{
+	public void  shoppay(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
-			getFromid();
+			getLscode();
 			String  pid=Struts2Utils.getParameter("pid"); 
 			String  jfdh=Struts2Utils.getParameter("jfdh");
 			String  count=Struts2Utils.getParameter("count");
@@ -1708,14 +1624,13 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 订单列表
-	 * @throws IOException 
 	 */
 	
-	public  void  orderfrom() throws IOException{ 
+	public  void  orderfrom(){ 
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		sub_map.put("custid",Struts2Utils.getParameter("custid"));
 		sub_map.put("lscode",Struts2Utils.getParameter("lscode"));
@@ -1723,14 +1638,13 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("lscode",Struts2Utils.getParameter("lscode"));
 		return "orderfrom";*/
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
-	public void  ajaxdelorder() throws IOException{ 
-		getFromid();
+	public void  ajaxdelorder(){ 
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		String id=Struts2Utils.getParameter("id");
-		fromUserid=Struts2Utils.getParameter("fromUserid");
 		if(StringUtils.isNotEmpty(id)){
 			HashMap<String, Object>whereMap=new HashMap<String, Object>();
 			whereMap.put("fromUserid",fromUserid);
@@ -1745,19 +1659,15 @@ public class ShopAction extends GeneralAction {
 			
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		System.out.println(json);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		
-		//SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	} 
 	/**
 	 * ajax获取订单列表
-	 * @throws IOException 
 	 */
-	public  void  ajaxorder() throws IOException{
+	public  void  ajaxorder(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try { 
-			getFromid();
+			getLscode();
 			Struts2Utils.getRequest().setAttribute("custid",Struts2Utils.getParameter("custid"));
 			if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 				fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
@@ -1823,18 +1733,17 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		 
 		 
 	}
 	/**
 	 * ajax获取订单列表
-	 * @throws IOException 
 	 */
-	public  void  ajaxorders() throws IOException{
+	public  void  ajaxorders(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
-			getFromid();
+			getLscode();
 			Struts2Utils.getRequest().setAttribute("custid",Struts2Utils.getParameter("custid"));
 			if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 				fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
@@ -1878,22 +1787,25 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		System.out.println(json);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		 
 		 
 	}
 	/**
 	 * 用户地址管理
-	 * @throws IOException 
 	 */
 	
 	
-	public void  useraddress() throws IOException{
+	public void  useraddress(){
 		Map<String, Object> sub_map = new HashMap<String, Object>();
-		getFromid();
-		sub_map.put("custid",Struts2Utils.getParameter("custid"));
+		getLscode(); 
+		/*Struts2Utils.getRequest().setAttribute("custid",custid);
+		Struts2Utils.getRequest().setAttribute("addressis", Struts2Utils.getParameter("addressis"));
+		Struts2Utils.getRequest().setAttribute("backurl", Struts2Utils.getParameter("backurl"));
+		Struts2Utils.getRequest().setAttribute("count", Struts2Utils.getParameter("count"));
+		Struts2Utils.getRequest().setAttribute("price", Struts2Utils.getParameter("price"));
+		Struts2Utils.getRequest().setAttribute("spec", Struts2Utils.getParameter("spec"));*/
+		sub_map.put("custid",custid);
 		sub_map.put("addressis", Struts2Utils.getParameter("addressis"));
 		sub_map.put("backurl", Struts2Utils.getParameter("backurl"));
 		sub_map.put("count", Struts2Utils.getParameter("count"));
@@ -1904,26 +1816,19 @@ public class ShopAction extends GeneralAction {
 		whereMap.put("fromUserid",fromUserid);
 		whereMap.put("lx", 1);
 		DBObject  address=baseDao.getMessage(PubConstants.SHOP_USERADDRESS, whereMap);
-		if(address!=null) {
-			sub_map.put("state",0);
-			sub_map.put("address",address);
-		}else {
-			sub_map.put("state",1);
-		}
-		
+		Struts2Utils.getRequest().setAttribute("address",address); 
+		sub_map.put("address",address);
+		//return "address";
 		String json = JSONArray.fromObject(sub_map).toString();
-		System.out.println("------------------------->>>..");
-		System.out.println(json);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 用户新增管理
-	 * @throws IOException 
 	 */
 	
-	public void  useraddresssave() throws IOException{
+	public void  useraddresssave(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
-		getFromid();
+		getLscode(); 
 		/*Struts2Utils.getRequest().setAttribute("addressis", Struts2Utils.getParameter("addressis"));
 		 
 		Struts2Utils.getRequest().setAttribute("backurl", Struts2Utils.getParameter("backurl")); 
@@ -1942,17 +1847,16 @@ public class ShopAction extends GeneralAction {
 		
 		sub_map.put("custid",custid);
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
 	/**
 	 * ajax获取用户地址
-	 * @throws IOException 
 	 */
-	public void  ajaxuseraddress() throws IOException{
+	public void  ajaxuseraddress(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
-			getFromid();
+			getLscode();
 			HashMap<String, Object>whereMap=new HashMap<String, Object>();
 			HashMap<String, Object>sortMap=new HashMap<String, Object>();
 			sortMap.put("createdate", -1); 
@@ -1973,19 +1877,16 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
-	
-	
 	/**
 	 * 设置默认地址
-	 * @throws IOException 
 	 */
-	public void  ajaxsetaddress() throws IOException{
+	public void  ajaxsetaddress(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
-			getFromid();
+			getLscode();
 			
 			String  id=Struts2Utils.getParameter("id");
 		    //先验证
@@ -2014,24 +1915,22 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax新增用户地址
-	 * @throws IOException 
 	 */
-	public void  ajaxuseraddresssave() throws IOException{
+	public void  ajaxuseraddresssave(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		try {
-			getFromid();
+			getLscode();
 			String  address=Struts2Utils.getParameter("address");
 			String  province=Struts2Utils.getParameter("province");
 			String  city=Struts2Utils.getParameter("city");
 			String  county=Struts2Utils.getParameter("county");
 			String  name=Struts2Utils.getParameter("name");
 			String  tel=Struts2Utils.getParameter("tel");
-			System.out.println(Struts2Utils.getParameter("fromUserid"));
+			 
 			Useraddress  obj=new Useraddress();
 			Long id=mongoSequence.currval(PubConstants.SHOP_USERADDRESS);
 			obj.set_id(id);
@@ -2044,7 +1943,7 @@ public class ShopAction extends GeneralAction {
 			obj.setTel(tel);
 			obj.setProvince(province);
 			baseDao.insert(PubConstants.SHOP_USERADDRESS, obj);
-			sub_map.put("state", 0);
+			sub_map.put("state", 0); 
 			sub_map.put("value", id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2052,17 +1951,16 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
 	}
 	/**
 	 * ajax删除地址
-	 * @throws IOException 
 	 */
 	
-	public  void   useraddressdel() throws IOException{
+	public  void   useraddressdel(){
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
-	     getFromid();
+	     getLscode();
 	     HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		 String  id=Struts2Utils.getParameter("id");
 		 whereMap.put("fromUserid", fromUserid);
@@ -2074,19 +1972,16 @@ public class ShopAction extends GeneralAction {
 		 
 		 //return "address";
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		}
 	
 	/**
 	 * ajax获取推广
-	 * @throws IOException 
 	 */
-	public void   ajaxgettg() throws IOException{
-		getFromid();
+	public void   ajaxgettg(){
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		String  comid=Struts2Utils.getParameter("comid");
-		custid=Struts2Utils.getParameter("custid"); 
-		System.out.println(comid);
 		if(StringUtils.isNotEmpty(comid)){
 		   HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		   HashMap<String, Object>sortMap=new HashMap<String, Object>();
@@ -2107,17 +2002,15 @@ public class ShopAction extends GeneralAction {
 		   }
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		System.out.println(json);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 砍价详情
-	 * @throws IOException 
 	 */
 	
-	public void  bargaindetail() throws IOException{
+	public void  bargaindetail(){
 		Map<String, Object> sub_map = new HashMap<String, Object>();  
-		getFromid();
+		getLscode();
 		String  id=Struts2Utils.getParameter("id"); 
 		WxToken token=GetAllFunc.wxtoken.get(custid);
 		 if(token.getSqlx()>0){
@@ -2187,17 +2080,16 @@ public class ShopAction extends GeneralAction {
 		//Struts2Utils.getRequest().setAttribute("share", share);
 		sub_map.put("share", share);
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		//return "bargaindetail"; 
 	}
 	/**
 	 * 砍价
-	 * @throws IOException 
 	 * @throws IllegalAccessException 
 	 * @throws IllegalArgumentException 
 	 */
-	public void  bargain() throws IOException{ 
-		getFromid();
+	public void  bargain(){ 
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();  
 		String  ydid=Struts2Utils.getParameter("ydid");
 		if(StringUtils.isNotEmpty(ydid)){
@@ -2304,15 +2196,14 @@ public class ShopAction extends GeneralAction {
 		} 
 		 
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
 	/**
 	 * 砍价预定
-	 * @throws IOException 
 	 */
-	public void  bargainyd() throws IOException{ 
-		getFromid();
+	public void  bargainyd(){ 
+		getLscode(); 
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String  id=Struts2Utils.getParameter("id");
 		if(StringUtils.isNotEmpty(id)){
@@ -2328,7 +2219,7 @@ public class ShopAction extends GeneralAction {
 				 sub_map.put("state", 2);
 				 sub_map.put("value", list.get(0).get("_id"));
 				 String json = JSONArray.fromObject(sub_map).toString();
-				 SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+				 Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 				 return;	
 			 }
 			 DBObject  bar=baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(id));
@@ -2356,14 +2247,13 @@ public class ShopAction extends GeneralAction {
 			
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 砍价记录
-	 * @throws IOException 
 	 */
-	public  void   bargaintj() throws IOException{ 
-		getFromid();
+	public  void   bargaintj(){ 
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String  ydid=Struts2Utils.getParameter("ydid");
 		if(StringUtils.isNotEmpty(ydid)){
@@ -2387,14 +2277,13 @@ public class ShopAction extends GeneralAction {
 			
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 砍价购买记录
-	 * @throws IOException 
 	 */
-	public  void   bargaingm() throws IOException{ 
-		getFromid();
+	public  void   bargaingm(){ 
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String  id=Struts2Utils.getParameter("id"); 
 		String  kjid=Struts2Utils.getParameter("kjid"); 
@@ -2423,14 +2312,13 @@ public class ShopAction extends GeneralAction {
 			}
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 团购预定
-	 * @throws IOException 
 	 */
-	public  void  ajaxbulkyd() throws IOException{
-		getFromid();
+	public  void  ajaxbulkyd(){
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String id=Struts2Utils.getParameter("id");
 		if(StringUtils.isNotEmpty(id)){
@@ -2466,14 +2354,13 @@ public class ShopAction extends GeneralAction {
 			}
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 团购预定列表
-	 * @throws IOException 
 	 */
-    public  void  ajaxbulkydlist() throws IOException{
-    	getFromid();
+    public  void  ajaxbulkydlist(){
+    	getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String id=Struts2Utils.getParameter("id");
 		if(StringUtils.isNotEmpty(id)){
@@ -2500,14 +2387,13 @@ public class ShopAction extends GeneralAction {
 			}
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
     /**
 	 * 团购购买列表
-     * @throws IOException 
 	 */
-    public  void  ajaxbulkgmlist() throws IOException{
-    	getFromid();
+    public  void  ajaxbulkgmlist(){
+    	getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String id=Struts2Utils.getParameter("id");
 		if(StringUtils.isNotEmpty(id)){
@@ -2535,7 +2421,7 @@ public class ShopAction extends GeneralAction {
 			}
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 微信退款
@@ -2556,7 +2442,7 @@ public class ShopAction extends GeneralAction {
 		if(wxToUser.getQx()==0){
 			sub_map.put("state", 1);
 			String json = JSONArray.fromObject(sub_map).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}else if(wxToUser.getQx()==1){
 			wxconfig=GetAllFunc.wxPay.get(toUser);
@@ -2565,7 +2451,7 @@ public class ShopAction extends GeneralAction {
 			if(commain==null){
 				sub_map.put("state", 1);
 				String json = JSONArray.fromObject(sub_map).toString();
-				SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+				Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 				return;
 			}
 			toUser=commain.getToUser();
@@ -2576,7 +2462,7 @@ public class ShopAction extends GeneralAction {
 		if(wxconfig==null||wxconfig.getAppid()==null){
 			sub_map.put("state", 1);
 			String json = JSONArray.fromObject(sub_map).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}
 		
@@ -2620,14 +2506,13 @@ public class ShopAction extends GeneralAction {
 		
 	
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 积分兑换
-	 * @throws IOException 
 	 */
-	public  void  jfpay() throws IOException{ 
-		getFromid();
+	public  void  jfpay(){ 
+		getLscode(); 
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String remark = Struts2Utils.getParameter("remark");
 		//商品类型
@@ -2719,14 +2604,13 @@ public class ShopAction extends GeneralAction {
     		baseDao.insert(PubConstants.DATA_PRODUCT, pr);
     		sub_map.put("state",0);
     		String json = JSONArray.fromObject(sub_map).toString();
-    		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+    		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 积分商城验证
-	 * @throws IOException 
 	 */
-	public  void  checkJfsc() throws IOException{
-		getFromid();
+	public  void  checkJfsc(){
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		HashMap<String,Object>whereMap=new HashMap<String, Object>();
 		whereMap.put("custid", custid);
@@ -2737,14 +2621,13 @@ public class ShopAction extends GeneralAction {
 			sub_map.put("value",list.get(0).get("_id"));
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 更新状态
-	 * @throws IOException 
 	 */
-	public  void   gxzt() throws IOException{
-		getFromid();
+	public  void   gxzt(){
+		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String  id=Struts2Utils.getParameter("id");
 		DBObject db=baseDao.getMessage(PubConstants.SHOP_BARGAININGYD, Long.parseLong(id));
@@ -2755,14 +2638,13 @@ public class ShopAction extends GeneralAction {
 			sub_map.put("state",0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax获取砍价预定列表
-	 * @throws IOException 
 	 */
-	public  void  ajaxbargainyd() throws IOException{
-		getFromid();
+	public  void  ajaxbargainyd(){
+		getLscode();
 		String id=Struts2Utils.getParameter("id");
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
@@ -2787,19 +2669,18 @@ public class ShopAction extends GeneralAction {
 			sub_map.put("list", list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
 	/**
 	 * 店铺支付列表
 	 * @return
-	 * @throws IOException 
 	 */
 	
 	
-	public  void storepayweb() throws IOException{
+	public  void storepayweb(){
 		Map<String, Object> sub_map = new HashMap<String, Object>();
-		 getFromid();
+		 getLscode(); 
 		 //Struts2Utils.getRequest().setAttribute("custid",custid);
 		 sub_map.put("custid",custid);
 		 WxToken token=GetAllFunc.wxtoken.get(custid); 
@@ -2824,14 +2705,13 @@ public class ShopAction extends GeneralAction {
 		} 
 		//return "storepayweb";
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * ajax获取店铺列表
-	 * @throws IOException 
 	 */
-	public  void   ajaxshopmb() throws IOException{
-		getFromid();
+	public  void   ajaxshopmb(){
+		getLscode(); 
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
@@ -2874,19 +2754,18 @@ public class ShopAction extends GeneralAction {
 			sub_map.put("list", list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
 	 
 	/**
 	 * 店铺支付
 	 * @return
-	 * @throws IOException 
 	 */
 	
-	public  void  storepay() throws IOException{
+	public  void  storepay(){
 		Map<String, Object> sub_map = new HashMap<String, Object>();
-		 getFromid();
+		 getLscode();
 		 String id=Struts2Utils.getParameter("id");
 		 WxToken token=GetAllFunc.wxtoken.get(custid); 
 		 if(token.getSqlx()>0){
@@ -2911,19 +2790,19 @@ public class ShopAction extends GeneralAction {
 		//return "storepay";
 		sub_map.put("entity",baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(id)));
 		String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
 	 * 微信支付
 	 */
 	public void  storewxpay()throws Exception{
 		SortedMap<Object,Object> params = new TreeMap<Object,Object>();
-		getFromid();
+		getLscode(); 
 		DBObject  wx=wwzService.getWxUser(fromUserid);
 		if(wx.get("_id").equals("notlogin")){
 			params.put("state", 3);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return; 
 		} 
 		WxToken wxtoken=GetAllFunc.wxtoken.get(custid);
@@ -2931,7 +2810,7 @@ public class ShopAction extends GeneralAction {
 		if(wxtoken.getQx()==0){
 			params.put("state", 1);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}else if(wxtoken.getQx()==1){
 			wxconfig=GetAllFunc.wxPay.get(custid);
@@ -3016,7 +2895,7 @@ public class ShopAction extends GeneralAction {
 	  
 	    params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
 	/**
@@ -3090,10 +2969,9 @@ public class ShopAction extends GeneralAction {
 	}
     /**
      * ajax获取支付流水
-     * @throws IOException 
      */
-    public  void   ajaxpayweb() throws IOException{
-    	getFromid();
+    public  void   ajaxpayweb(){
+    	getLscode();
     	String id=Struts2Utils.getParameter("id");
     	Map<String, Object> sub_map = new HashMap<String, Object>();
     	HashMap<String, Object>whereMap=new  HashMap<>();
@@ -3123,16 +3001,15 @@ public class ShopAction extends GeneralAction {
     		sub_map.put("list",list);
     	}
     	String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     	
     }
     /**
      * ajax获取支付详情
-     * @throws IOException 
      */
-    public  void  ajaxpaydetail() throws IOException{
+    public  void  ajaxpaydetail(){
     	
-    	getFromid();
+    	getLscode();
     	String id=Struts2Utils.getParameter("id");
     	Map<String, Object> sub_map = new HashMap<String, Object>();
     	if(StringUtils.isNotEmpty(id)){ 
@@ -3153,14 +3030,13 @@ public class ShopAction extends GeneralAction {
     		
     	}
     	String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     }
     /**
      * 申请代理
-     * @throws IOException 
      */
-    public  void  applyagent() throws IOException{
-    	getFromid();
+    public  void  applyagent(){
+    	getLscode();
     	Map<String, Object> sub_map = new HashMap<String, Object>();
     	String id=Struts2Utils.getParameter("id");
     	String name=Struts2Utils.getParameter("name");
@@ -3183,17 +3059,16 @@ public class ShopAction extends GeneralAction {
     		sub_map.put("value",id+"-"+wwzService.getVipNo(fromUserid));
     	}
     	String json = JSONArray.fromObject(sub_map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     	
     }
     /**
      * 申请代理
-     * @throws IOException 
      */
     
-    public  void  agent() throws IOException{
+    public  void  agent(){
     	Map<String, Object> sub_map = new HashMap<String, Object>(); 
-    	getFromid();
+    	getLscode();
     	/*Struts2Utils.getRequest().setAttribute("custid",custid);
     	String id=Struts2Utils.getParameter("id");
     	String pid=Struts2Utils.getParameter("pid");
@@ -3206,17 +3081,16 @@ public class ShopAction extends GeneralAction {
     	sub_map.put("pid",pid);
 		//return "agent";
     	String json = JSONArray.fromObject(sub_map).toString();
-  	    SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+  	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     }
     /**
      * 佣金统计列表
      * @return
-     * @throws IOException 
      */
    
-    public void agentweb() throws IOException{
+    public void agentweb(){
       Map<String, Object> sub_map = new HashMap<String, Object>(); 
-  	  getFromid();
+  	  getLscode(); 
   	  DBObject  db=wwzService.getAgentPrice(custid, fromUserid);
   	  /*Struts2Utils.getRequest().setAttribute("entity",db);
   	  Struts2Utils.getRequest().setAttribute("state", 1);
@@ -3224,14 +3098,13 @@ public class ShopAction extends GeneralAction {
   	  sub_map.put("entity",db);
   	  sub_map.put("state", 1);
   	  String json = JSONArray.fromObject(sub_map).toString();
-  	  SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+  	  Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
      }
    /**
     * ajax获取佣金统计详情
- * @throws IOException 
     */
-   public  void  ajaxagent() throws IOException{
-	   getFromid();
+   public  void  ajaxagent(){
+	   getLscode();
 	   Map<String, Object> sub_map = new HashMap<String, Object>(); 
 	   HashMap<String, Object>whereMap=new HashMap<>();
 	   HashMap<String, Object>sortMap=new HashMap<>(); 
@@ -3266,18 +3139,17 @@ public class ShopAction extends GeneralAction {
 		   sub_map.put("list", list);
 	   }
 	   String json = JSONArray.fromObject(sub_map).toString();
-	   SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	   
    }
    /**
     * 代理提现
     * @return
- * @throws IOException 
     */
    
-   public void  agenttx() throws IOException{
+   public void  agenttx(){
 	   Map<String, Object> sub_map = new HashMap<String, Object>(); 
-	   getFromid();
+	   getLscode(); 
 	   DBObject  db=wwzService.getAgentPrice(custid, fromUserid);
 	   db.put("headimgurl", wwzService.getWxUsertype(fromUserid, "headimgurl"));
 	   db.put("nickname", wwzService.getWxUsertype(fromUserid, "nickname"));
@@ -3285,34 +3157,33 @@ public class ShopAction extends GeneralAction {
 	//return "agenttx"; 
 	   sub_map.put("entity",db);
 	   String json = JSONArray.fromObject(sub_map).toString();
-	   SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
    }
    /**
     * 代理提现记录
     * @return
- * @throws IOException 
     */
    
-   public void  agenttxweb() throws IOException{
+   public void  agenttxweb(){
 	   Map<String, Object> sub_map = new HashMap<String, Object>();
-	   getFromid();
+	   getLscode();
 	   //Struts2Utils.getRequest().setAttribute("state", 2);
 	   sub_map.put("state", 2);
 	//return "agenttxweb";   
 	   String json = JSONArray.fromObject(sub_map).toString();
-	   SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
    }
    /**
     * 微信提现
     */
    public  void  wxtx() throws Exception{
 	    SortedMap<Object,Object> params = new TreeMap<Object,Object>();
-		getFromid();
+		getLscode(); 
 		DBObject  wx=wwzService.getWxUser(fromUserid);
 		if(wx.get("_id").equals("notlogin")){
 			params.put("state", 3);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return; 
 		} 
 		WxToken wxtoken=GetAllFunc.wxtoken.get(custid);
@@ -3320,7 +3191,7 @@ public class ShopAction extends GeneralAction {
 		if(wxtoken.getQx()==0){
 			params.put("state", 1);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}else if(wxtoken.getQx()==1){
 			wxconfig=GetAllFunc.wxPay.get(custid);
@@ -3333,14 +3204,14 @@ public class ShopAction extends GeneralAction {
 			//账号余额不足
 			params.put("state",2);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		}
 		if(Double.parseDouble(price)>200||Double.parseDouble(price)<1){
 			//输入金额有误（支持1-200）
 			params.put("state",4);
 			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 			return;
 		} 
 		//备注
@@ -3387,15 +3258,14 @@ public class ShopAction extends GeneralAction {
 	    params.put("state", 0); 
 	    params.put("value",price);
 		String json = JSONArray.fromObject(params).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
    }
    /**
     * 加载限购信息
- * @throws IOException 
     */
-   public void  ajaxrestriction() throws IOException{
-	   getFromid();
+   public void  ajaxrestriction(){
+	   getLscode();
 	   Map<String, Object> sub_map = new HashMap<String, Object>(); 
 	   String id=Struts2Utils.getParameter("id");
 	   if(StringUtils.isNotEmpty(id)){
@@ -3441,24 +3311,22 @@ public class ShopAction extends GeneralAction {
 			
 	   }
 	   String json = JSONArray.fromObject(sub_map).toString();
-	   SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	
    }
    /**
     * 代理的店铺列表
     * @return
- * @throws IOException 
     */
-   public  String   agentshop() throws IOException{
-	  getFromid();
+   public  String   agentshop(){
+	  getLscode();
 	return "agentshop";    
    }
    /**
     * ajax获取代理店铺
- * @throws IOException 
     */
-   public  void   ajaxagentshop() throws IOException{
-	   getFromid();
+   public  void   ajaxagentshop(){
+	   getLscode();
 	   Map<String, Object> sub_map = new HashMap<String, Object>(); 
 	   HashMap<String,Object>whereMap=new HashMap<>();
 	   HashMap<String,Object>sortMap=new HashMap<>();
@@ -3479,7 +3347,7 @@ public class ShopAction extends GeneralAction {
 		   sub_map.put("list",list);
 	   }
 	   String json = JSONArray.fromObject(sub_map).toString();
-	   SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+	   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
    }
    /**
     * 
@@ -3507,259 +3375,5 @@ public class ShopAction extends GeneralAction {
            
 	   }
    }
-   
-   /**
-	 * 生成购物车订单
-	 * 
-	 * @throws Exception
-	 */
-	public void COrderFromCar() throws Exception {
-		SortedMap<Object, Object> params = new TreeMap<Object, Object>();
-		getFromid();
-		DBObject wx = wwzService.getWxUser(fromUserid);
-		/*if (wx.get("_id").equals("notlogin")) {
-			params.put("state", 3);
-			String json = JSONArray.fromObject(params).toString();
-			SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-			return;
-		}*/
-		// 支付的价格
-		String price = "";
-		// 获取提交的商品名称
-		String remark = Struts2Utils.getParameter("remark");
-		// 商品类型
-		int lx = Integer.parseInt(Struts2Utils.getParameter("lx"));// 0 商品 1选号 2扫码付3优惠劵4砍价
-		// 总金额
-		float total = 0f;
-
-		String recordid = null;
-		// 商品编号
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("recordid"))) {
-			recordid = Struts2Utils.getParameter("recordid");// 14
-		}
-		String remoney = null;
-		// 商品价格
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("remoney"))) {
-			remoney = Struts2Utils.getParameter("remoney");// 14
-		}
-		String spec = null;
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("spec"))) {
-			spec = Struts2Utils.getParameter("spec");
-		}
-
-		// 地址信息
-		String name = Struts2Utils.getParameter("name");
-		String tel = Struts2Utils.getParameter("tel");
-		String address = Struts2Utils.getParameter("address");
-		String no = Struts2Utils.getParameter("no");
-		// 店铺编号
-		Long comid = 0L;
-		if (org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("comid"))) {
-			comid = Long.parseLong(Struts2Utils.getParameter("comid"));// 14
-		}
-		// 数量
-		String num = Struts2Utils.getParameter("num");
-		Long proid = 0L;
-		if (org.apache.commons.lang.StringUtils.isNotEmpty(Struts2Utils.getParameter("proid"))) {
-			proid = Long.parseLong(Struts2Utils.getParameter("proid"));// 14
-		}
-
-		// 积分返还
-		float jffh = 0;
-
-		// 四位随机数
-		String strRandom = TenpayUtil.buildRandom(4) + "";
-		// 10位序列号,可以自行调整。
-		String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval("orderno");
-		
-		//通过id查商品单价
-		/*DBObject  db=baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(recordid));  
-		if(db!=null) {
-			price=db.get("price").toString();
-			//Double.parseDouble(db.get("price").toString())
-		}*/
-		OrderForm entity = new OrderForm();
-		entity.set_id(orderno);
-		entity.setState(1);
-		entity.setNo(no);
-		entity.setLx(lx);
-
-		entity.setFromUserid(fromUserid);
-		entity.setCustid(custid);
-		entity.setName(name);
-		entity.setTel(tel);
-		entity.setAddress(address);
-		entity.setInsDate(new Date());
-
-		entity.setComid(comid);// 14
-		entity.setCounts(num);// 15
-		entity.setTotal(total);// 6
-		
-		entity.setIds(recordid);
-		entity.setRemark(remark);
-
-		String cost = "0";
-		String zfmoney = "0";
-
-		String[] ids = recordid.split(",");
-		String[] nums = num.split(",");
-		String[] specs = spec.split(",");
-		for (int i = 0; i < ids.length; i++) {
-		
-			if (StringUtils.isNotEmpty(ids[i])) {
-				HashMap<String, Object> backMap = new HashMap<String, Object>();
-				backMap.put("context", 0);
-				backMap.put("summary", 0);
-				DBObject pro=null;
-				if (Struts2Utils.getParameter("isgwc").equals("1")) {
-					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(ids[i]),
-							backMap);
-				}else {
-					System.out.println(ids[i]);
-					DBObject shop = baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
-					
-					System.out.println(shop.get("pid"));
-					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),
-							backMap);
-				}
-
-				if (pro.get("gmcs") != null && Integer.parseInt(pro.get("gmcs").toString()) > 0) {
-					HashMap<String, Object> whereMap = new HashMap<>();
-					whereMap.put("pid", Integer.parseInt(pro.get("_id").toString()));
-					whereMap.put("fromUserid", fromUserid);
-					int ll = 0;
-					List<DBObject> listdb = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, null);
-					for (DBObject dbObject : listdb) {
-						DBObject order = baseDao.getMessage(PubConstants.WX_ORDERFORM,
-								dbObject.get("orderid").toString());
-						if (order != null && Integer.parseInt(order.get("state").toString()) != 1) {
-							ll += Integer.parseInt(order.get("count").toString());
-						}
-					}
-					if (ll >= Integer.parseInt(pro.get("gmcs").toString())) {
-						// 购买次数已完
-						params.put("state", 10);
-						String json = JSONArray.fromObject(params).toString();
-						SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
-						return;
-					}
-				}
-
-				if (pro.get("price") != null) {
-					String zfmoneys = zfmoney;
-					System.out.println("赋值的钱数---》" + zfmoneys);
-					// 商品价格
-					zfmoney = BaseDecimal.multiplication(pro.get("price").toString(), nums[i]);
-					System.out.println("当前商品的价格---》" + zfmoney);
-					zfmoney = BaseDecimal.add(zfmoney, zfmoneys);
-					System.out.println("当前商品的价格1---》" + zfmoney);
-					if (pro.get("cost") != null) {
-						System.out.println(pro.get("cost"));
-						String costs = cost;
-						System.out.println("赋值的成本---》" + costs);
-						// 成本
-						cost = BaseDecimal.multiplication(pro.get("cost").toString(), nums[i]);
-						System.out.println("当前商品的成本---》" + cost);
-						cost = BaseDecimal.add(cost, costs);
-						System.out.println("当前商品的成本1---》" + cost);
-					}
-				}
-
-				// 生成信息
-				if (pro != null) {
-					if (pro.get("jffh") != null) {
-						jffh = jffh + Float.parseFloat(pro.get("jffh").toString());
-					}
-					OrderFormpro ord = new OrderFormpro();
-					ord.set_id(mongoSequence.currval(PubConstants.SHOP_ODERFORMPRO));
-
-					ord.setOrderid(orderno);
-					ord.setCount(Integer.parseInt(nums[i]));
-					ord.setPro(pro);
-					ord.setPid(Long.parseLong(pro.get("_id").toString()));
-					ord.setSpec(specs[i]);
-					baseDao.insert(PubConstants.SHOP_ODERFORMPRO, ord);
-				}
-
-			}
-		}
-		//entity.setZfmoney(Float.parseFloat(price));// 7
-		entity.setZfmoney(Float.valueOf(zfmoney));
-		entity.setCost(Float.valueOf(cost));
-		entity.setProfit(Float.valueOf(BaseDecimal.subtract(zfmoney, cost)));
-		entity.setJffh(jffh);
-		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
-
-		params.put("state", 0);
-		params.put("orderno", orderno);
-		String json = JSONArray.fromObject(params).toString();
-		System.out.println(json);
-		//SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),params);
-	
-	}
-
-	/**
-	 * 订单支付(积分) 接口返回说明：1其他错误，2积分不足，3库存不足，4商品已下架，5订单不存在，6订单编号错误
-	 * @throws IOException 
-	 */
-	public void OrderPayJf() throws IOException {
-		getFromid();
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("state", 1);
-		String oid = Struts2Utils.getParameter("oid");
-		if (StringUtils.isNotEmpty(oid)) {
-			DBObject db = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
-			if (db != null && db.get("fromUserid").equals(fromUserid)) {
-				OrderForm entity = (OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
-
-				HashMap<String, Object> whereMap = new HashMap<>();
-				whereMap.put("orderid", oid);
-				List<DBObject> list = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, null);
-				for (DBObject dbObject : list) {
-					DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
-							Long.parseLong(dbObject.get("pid").toString()));
-					// 验证库存
-					if (pro != null) {
-						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
-						if (obj.getNum() - obj.getGmnum() - entity.getCount() > 0) {
-							// 开始支付
-							if (wwzService.deljf(entity.getZfmoney() + "", fromUserid, "shop_jfdh", custid, null)) {
-								// 支付成功并更新订单状态
-								entity.setState(2);
-								baseDao.insert(PubConstants.WX_ORDERFORM, entity);
-								// 更新库存状态
-								obj.setGmnum(obj.getGmnum() + entity.getCount());
-								obj.setNum(obj.getNum() - entity.getCount());
-								baseDao.insert(PubConstants.DATA_PRODUCT, obj);
-								// 支付成功
-								map.put("state", 0);
-							} else {
-								// 积分不足
-								map.put("state", 2);
-							}
-						} else {
-							// 库存不足
-							map.put("state", 3);
-						}
-
-					} else {
-						// 商品已下架
-						map.put("state", 4);
-					}
-				}
-
-			} else {
-				// 订单不存在
-				map.put("state", 5);
-			}
-		} else {
-			// 订单编号错误
-			map.put("state", 6);
-		}
-		String json = JSONArray.fromObject(map).toString();
-		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),map);
-
-	}
      
 }
