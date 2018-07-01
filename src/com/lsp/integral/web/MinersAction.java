@@ -2,6 +2,7 @@ package com.lsp.integral.web;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -18,6 +19,8 @@ import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.mongodb.DBObject;
+
+import net.sf.json.JSONArray;
 
 /**
  * 设置
@@ -127,6 +130,9 @@ public class MinersAction extends GeneralAction<Miner> {
 	}
 	
 	public String list() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		return "list";
 	}
 	
@@ -140,15 +146,120 @@ public class MinersAction extends GeneralAction<Miner> {
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		
-		sortMap.put("sort", -1);   
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		sub_map.put("state", 1);
+		sortMap.put("price", 1);   
 		whereMap.put("custid", SysConfig.getProperty("custid"));
 		
 		//分页
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_MINER,null,fypage,10,sortMap);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_MINER,whereMap,fypage,10,sortMap);
+		if(list.size()>0){
+			sub_map.put("list", list);
+			sub_map.put("state", 0);
+		}
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
+	/**
+	 * 我的兑换
+	 * @throws Exception
+	 */
+	public void saveMiner() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		String id = Struts2Utils.getParameter("id");
+		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_MINER, id);
+		if(db != null){
+			if(db.get("price")!=null){
+				whereMap.put("fromUserid", fromUserid);
+		        //type为shop_bmzt是商城收益
+		        whereMap.put("type", "shop_bmzt");
+		        whereMap.put("isfreeze", 1);
+		        DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, whereMap);
+		        
+		        if(dbObject !=null){
+		        	if(dbObject.get("money")!=null){
+		        		if(Double.parseDouble(dbObject.get("money").toString())>Double.parseDouble(db.get("price").toString())){
+		        			//添加预付积分
+		        			
+		        			//减少冻结积分
+		        			
+		        			sub_map.put("state", 1);//兑换成功
+		        		}else{
+		        			sub_map.put("state", 2);//积分不足
+		        		}
+		        	}
+		        	
+		        }else{
+		        	sub_map.put("state", 2);//积分不足
+		        }
+			}
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	/*public void prostore(String custid,String fromUserid,String type,String price){
+		
+	}*/
+	
+	/**
+	 * 我的商城收益页面
+	 */
+	public String ownminer(){
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		return "ownminer";
+	}
+	
+	/**
+	 * 我的商城收益列表
+	 * @throws Exception
+	 */
+	public  void myMiner() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		
+		sortMap.put("createdate", -1); 
+        whereMap.put("fromUserid", fromUserid);
+        //type为shop_bmzt是商城收益
+        whereMap.put("type", "shop_bmzt");
+        whereMap.put("isfreeze", 0);
+		//分页
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap,fypage,10,sortMap);
+		if(list.size()>0){
+			sub_map.put("list", list);
+			sub_map.put("state", 0);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	public String detail() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String id = Struts2Utils.getParameter("id");
+		DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, Long.parseLong(id));
+		Struts2Utils.getRequest().setAttribute("db", dbObject);
+		return "detail";
+	} 
 
 }

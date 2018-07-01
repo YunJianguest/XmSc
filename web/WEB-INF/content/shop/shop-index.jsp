@@ -390,6 +390,7 @@
             });
         </script>
     </c:if>
+     
     <div id="ajaxtg">
     </div>
     <font size="2">
@@ -403,6 +404,7 @@
         <div class="col-6" style="padding-left: 5px;" id="ajaxdivright">
         </div>
     </div>
+    
     <%@include file="/webcom/foot.jsp" %>
 </main>
 <%@include file="/webcom/return-top.jsp" %>
@@ -423,6 +425,7 @@
                 </div>
             </a>
         </div>
+        
         <div class="position-f bg-hei overflow-auto" style="top:40px;width:200px;height:400px;">
             <div class="hang40 bg-hei zi-bai line-height40 line-bottom-bai" onclick="">
                 <div class="col-11 pl-10">
@@ -458,9 +461,12 @@
                     </a>
                 </c:if>
             </c:forEach>
+           
         </div>
+        
     </div>
 </div>
+
 <script>
     function  check_task(){
        var submitData = { 

@@ -218,12 +218,21 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	public void set_id(String _id) {
 		this._id = _id; 
 	}
+	public String serviceadd() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		return "serviceadd";
+	}
+	
 	/**
 	 * 退换货申请
 	 * @throws Exception
 	 */
 	public void ajaxsave() throws Exception{
 		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		String pid = Struts2Utils.getParameter("pid");
 		String custid = Struts2Utils.getParameter("custid");
 		String fromUserid = Struts2Utils.getParameter("fromUserid");
@@ -275,7 +284,6 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	 * 退换货审批
 	 */
 	public void approval() throws Exception{
-		getLscode();
 		Map<String,Object>sub_map = new HashMap<>();
 		sub_map.put("state", 1);//操作失败
 		String id = Struts2Utils.getParameter("id");
@@ -321,6 +329,8 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	 */
 	public void cancel () throws Exception{
 		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		Map<String,Object>sub_map = new HashMap<>();
 		sub_map.put("state", 1);//操作失败
 		String id = Struts2Utils.getParameter("id");
@@ -354,6 +364,8 @@ public class ServiceAction extends GeneralAction<OrderForm> {
 	 */
 	public void detail() throws Exception{
 		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		String id = Struts2Utils.getParameter("id");
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(id));
 		String json = JSONObject.fromObject(dbObject).toString();

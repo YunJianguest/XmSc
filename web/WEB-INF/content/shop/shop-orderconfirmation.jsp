@@ -93,7 +93,7 @@
         			
         	}; 
         	loading();
-        	$.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+        	/* $.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
         		function(json) { 
         		     loading.hide();
         		 	if (json.state == 0) { 
@@ -125,7 +125,23 @@
         			  alert("购买次数已完");
         			}
         		},
-        		"json")
+        		"json") */
+        		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+                		function(json) { 
+                			
+                		     loading.hide();
+                		 	if (json.data.state == 0) {
+                				alert("购买成功！");
+                				window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+                			}else if(json.state == 1) {
+                				alert("该账号没有开通支付"); 
+                			}else if(json.state == 3){
+                			  alert("没有登录");
+                			}else if(json.state==10){
+                			  alert("购买次数已完");
+                			}
+                		},
+                		"json")
         	 
         } 
         function  jfpay(){
