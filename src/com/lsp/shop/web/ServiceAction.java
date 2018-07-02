@@ -241,13 +241,10 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		info.set_id(serviceno);
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
 		if(dbObject != null){
-			Map<String, Class> classMap = new HashMap<String, Class>();
-			classMap.put("pro", Map.class);
 			OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
-			pro.setState(1);//异常订单
+			pro.setState(Integer.parseInt(type));//异常订单  1-退货   2-换货
 			pro.setSid(info.get_id().toString());
 			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
-			System.out.println("db-1-->"+baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, pro.get_id().toString()));
 			
 			info.setProduct(pro.getPro());
 		    info.setOid(pro.getOrderid());
@@ -289,31 +286,49 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		String state =Struts2Utils.getParameter("state");
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(id));
 		if(dbObject !=null){
-			Map<String, Class> classMap = new HashMap<String, Class>();
-			classMap.put("pro", Map.class);
-			AfterService info=(AfterService) JSONObject.toBean(JSONObject.fromObject(dbObject),AfterService.class,classMap);
+			AfterService info = (AfterService) UniObject.DBObjectToObject(dbObject, AfterService.class);
+			DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
 			if(info.getState() == 0){
 				info.setState(Integer.parseInt(state));
+				//判断是否为退货，退货则退积分
 				if(Integer.parseInt(state) == 1){//同意
-					//判断是否为退货，退货则退积分
-					if(info.getType() == 2){
-						//卖家增加积分
-						wwzService.addjf(info.getPrice()+"", info.getFromUserid(), "shop_afterservice", null, null);
-						
-						//卖家减少积分
-						wwzService.deljf(info.getPrice()+"", info.getCustid(), "shop_afterservice", null, null);
+					//根据订单号查询订单
+					DBObject db = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOid());
+					if(db!= null){
+						OrderForm order = (OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
+						DBObject dbObject2 = info.getProduct();
+						if(dbObject2!=null){
+							if(dbObject2.get("type")!=null){
+								if(dbObject2.get("type").equals("3")){//商品为大众区商品
+									order.setPublic_money(order.getPublic_money()-info.getPrice());
+								}
+								if(dbObject2.get("type").equals("4")){//商品为特约区商品
+									order.setContri_money(order.getContri_money()-info.getPrice());									
+								}
+								if(dbObject2.get("type").equals("5")){//商品为会员区商品
+									order.setMembers_money(order.getMembers_money()-info.getPrice());
+								}
+								baseDao.insert(PubConstants.SHOP_ODERFORMPRO, order);
+							}
+						}
+					 }
+					if(dbObjects != null){
+						OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+						if(info.getType() == 1){//为退货
+							pro.setState(3);//订单详情状态变成退货完成
+						}
+                        if(info.getType() == 2){//为换货
+                        	pro.setState(4);//订单详情状态变成换货完成
+						}
 					}
 				}else{
-					DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
 					if(dbObjects != null){
-						classMap.clear();
-						classMap.put("pro", Map.class);
-						OrderFormpro pro=(OrderFormpro) JSONObject.toBean(JSONObject.fromObject(dbObjects),OrderFormpro.class,classMap);
-						pro.setState(0);//将订单变成正常订单
-						baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
+						OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+						pro.setState(0);//将订单详情变成正常订单
 					}
 				}
 				baseDao.insert(PubConstants.SHOP_ODERFORMPRO, info);
+				baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
 			}else{
 				sub_map.put("state", 2);//重复操作
 			}
@@ -335,16 +350,12 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		String id = Struts2Utils.getParameter("id");
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(id));
 		if(dbObject !=null){
-			Map<String, Class> classMap = new HashMap<String, Class>();
-			classMap.put("pro", Map.class);
-			AfterService info=(AfterService) JSONObject.toBean(JSONObject.fromObject(dbObject),AfterService.class,classMap);
+			AfterService info = (AfterService) UniObject.DBObjectToObject(dbObject, AfterService.class);
 			if(info.getState()==0){
 				info.setState(3);
 				DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
 				if(dbObjects != null){
-					classMap.clear();
-					classMap.put("pro", Map.class);
-					OrderFormpro pro=(OrderFormpro) JSONObject.toBean(JSONObject.fromObject(dbObjects),OrderFormpro.class,classMap);
+					OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
 					pro.setState(0);//将订单变成正常订单
 					baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
 				}
@@ -367,8 +378,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		String id = Struts2Utils.getParameter("id");
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(id));
-		String json = JSONObject.fromObject(dbObject).toString();
-		Struts2Utils.renderJson(json, new String[0]);
+		Struts2Utils.getRequest().setAttribute("dbObject", dbObject);
 	}
 	
 	

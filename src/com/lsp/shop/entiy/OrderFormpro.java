@@ -19,7 +19,7 @@ public class OrderFormpro extends ReflectionDBObject{
 	 private Long  pid;
 	 private String fromUserid;
 	 /**
-	  * 0-正常 1-异常（售后）
+	  * 0-正常 1-退货申请   2-换货申请    3-退货   4-换货
 	  */
 	 private int state;
 	 /**

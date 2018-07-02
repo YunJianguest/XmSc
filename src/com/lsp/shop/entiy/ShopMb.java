@@ -67,7 +67,7 @@ public class ShopMb  extends ReflectionDBObject{
 	private int    lx;
 	private String searchcolor;
 	/**
-	 * 网店类型，0为普通网店，1为积分商城  3-大众区  4-特约区
+	 * 网店类型，0为普通网店，1为积分商城  3-大众区  4-特约区 5-会员区
 	 */
 	private int    type;
 	/**
