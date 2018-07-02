@@ -99,16 +99,11 @@ public class LoginAction extends ActionSupport
 	  Map<String, Object> sub_map = new HashMap<String, Object>(); 
 	  
 	  String password =Struts2Utils.getParameter("password");
-  	  String name =Struts2Utils.getParameter("name");  
-  	  System.out.println(password);
-  	  System.out.println(name);
+  	  String name =Struts2Utils.getParameter("name"); 
   	  whereMap.put("account", name);
   	  if (StringUtils.isNotEmpty(name)&&StringUtils.isNotEmpty(password)) {
   		   DBObject user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
   		   
-  		   //当前密码未验证
-  		   System.out.println(user.get("password").toString());
-  		   System.out.println(user.get("account").toString());
   		   if(user != null){
   			   if(user.get("password").toString().equals(password)) {
 	  			   String result=TokenTool.createJWT(user.get("_id").toString(),user.get("account").toString(), Constant.JWT_TTL);
