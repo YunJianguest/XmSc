@@ -4,25 +4,15 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 祭奠关注
  * @author lsp
  *
  */
 public class MemorialFocuson extends ReflectionDBObject{
 
-	private String custid; 
-	/**
-	 * 栏目ID
-	 */
+	private String custid;
 	private Long   wid;
 	private String fromUserid;
-	/**
-	 * 祭奠人名称
-	 */
 	private String nickname;
-	/**
-	 * 祭奠人头像
-	 */
 	private String headimgurl; 
 	private Date   createdate;  
 	public Long getWid() {

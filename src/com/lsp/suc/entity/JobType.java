@@ -5,8 +5,6 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * 招聘类型
- * 
  * @author lsp
  * 
  */

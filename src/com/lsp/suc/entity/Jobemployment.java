@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 招聘信息
  * @author lsp
  *
  */
@@ -12,65 +11,21 @@ public class Jobemployment  extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid;
-	/**
-	 * 公司ID
-	 */ 
 	private Long   cid;
-	/**
-	 * 岗位名称
-	 */
 	private String title;
-	/**
-	 * 岗位类型
-	 */
 	private String type;
-	/**
-	 * 招聘人数
-	 */
 	private int    pcount;
-	/**
-	 * 学历要求
-	 */
 	private String record;
-	/**
-	 * 薪资
-	 */
 	private int salary;
-	/**
-	 * 工作地点
-	 */
 	private String workaddress;
-	/**
-	 * 职位描述
-	 */
 	private String summary;
-	/**
-	 * 经验要求
-	 */
 	private String experience;
-	/**
-	 * 联系人
-	 */
 	private String linkman;
-	/**
-	 * 联系电话
-	 */
 	private String tel;
 	private Date createdate;
 	private int  sort;
-	/**
-	 * 行业
-	 * @return
-	 */
 	private String industry;
-	/**
-	 * 性质
-	 * @return
-	 */
 	private String nature;
-	/**
-	 * 福利
-	 */
 	private String welfare;
 	public String getCustid() {
 		return custid;

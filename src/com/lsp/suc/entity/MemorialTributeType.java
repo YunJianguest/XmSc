@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 祭奠贡品类别
  * @author lsp
  *
  */

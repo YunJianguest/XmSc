@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 悬赏管理
+ * xs管理
  * @author lsp
  *
  */
@@ -17,11 +17,11 @@ public class Areward  extends ReflectionDBObject{
 	private Long   bmtid;
 	private Long   answerid;
 	/**
-	 * 1为悬赏结束0为悬赏开始
+	 * 1为xs结束0为xs开始
 	 */
 	private int    state;
 	/**
-	 * 悬赏金额
+	 * xs金额
 	 */
 	private int    price;
 	public String getFromUserid() {

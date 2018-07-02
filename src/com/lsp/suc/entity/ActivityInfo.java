@@ -51,11 +51,11 @@ public class ActivityInfo extends ReflectionDBObject{
 	 */
 	private int      isxs;
 	/**
-	 * 积分兑换
+	 * 兑换
 	 */
 	private float    jfdh;
 	/**
-	 * 积分参与
+	 * 参与
 	 */
 	private float    jfcy;
 	private Date     createdate;

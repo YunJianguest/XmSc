@@ -5,7 +5,7 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /***
- * 报名管理
+ * 资源管理
  * @author lsp
  *
  */

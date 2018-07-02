@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /***
- * 纪念馆通用
  * @author lsp
  *
  */

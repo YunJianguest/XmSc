@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
  /**
-  * 婚恋星级评分
+  * 资源管理
   * @author lsp
   *
   */
@@ -13,9 +13,6 @@ public class DatingStar  extends ReflectionDBObject{
 	 private String fromUserid;
 	 private String custid;
 	 private Date   createdate;
-	 /**
-	  * 星级
-	  */
 	 private int    star;
 	 private String content;
 	public String getFromUserid() {

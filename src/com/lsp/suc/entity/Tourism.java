@@ -6,7 +6,7 @@ import java.util.List;
 import com.mongodb.ReflectionDBObject;
 
 /***
- * 旅游管理
+ * 资源管理
  * @author lsp
  *
  */

@@ -2,7 +2,7 @@ package com.lsp.suc.entity;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 任务管理
+ * 资源管理
  * @author lsp
  *
  */
@@ -22,22 +22,13 @@ public class TaskInfo extends ReflectionDBObject{
 	 * 类型
 	 */
 	private String  type;
-	/**
-	 * 任务量
-	 */
 	private int     count;
 	/**
 	 * 模板
 	 */
 	private int  mb;
-	/**
-	 * 经验奖励
-	 */
 	private int  expreward;
-	/**
-	 * 积分奖励
-	 * @return
-	 */
+	
 	private int  jfreward;
 	public String getCustid() {
 		return custid;

@@ -3,7 +3,7 @@ package com.lsp.suc.entity;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * 精灵
+ * 资源管理
  * @author lsp
  *
  */
@@ -16,7 +16,7 @@ public class SpiritInfo extends ReflectionDBObject{
 	private String picurl;
 	private String url;
 	/**
-	 * 精灵类型0为普通（不带任何样式），1为两个一排（50%）2为3个一排（33%）3为4个一排（25%）
+	 * 类型0为普通（不带任何样式），1为两个一排（50%）2为3个一排（33%）3为4个一排（25%）
 	 */
 	private String type;
 	//层ID

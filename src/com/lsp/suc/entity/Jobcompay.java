@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 招聘求职
  * @author lsp
  *
  */
@@ -19,24 +18,10 @@ public class Jobcompay  extends ReflectionDBObject{
 	private String summary;
 	private Date   createdate;
 	private String address;
-	/**
-	 * 联系人
-	 */
 	private String linkman;
-	/**
-	 * 福利
-	 */
 	private String welfare;
 	private int    sort;
-	/**
-	 * 行业
-	 * @return
-	 */
 	private String industry;
-	/**
-	 * 性质
-	 * @return
-	 */
 	private String nature;
 	public String getCustid() {
 		return custid;

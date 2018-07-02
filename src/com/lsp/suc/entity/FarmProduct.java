@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 农产品
  * @author lsp
  *
  */
@@ -14,25 +13,10 @@ public class FarmProduct extends ReflectionDBObject{
 	private String title;
 	private String picurl;
 	private String summary;
-	/**
-	 * 总成长值
-	 */
 	private int  growth;
-	/**
-	 * 当前成长值
-	 */
 	private int  nowgrowth;
-	/**
-	 * 成长速度（每小时）
-	 */
 	private int  speed;
-	/**
-	 * 魅力值
-	 */
 	private int  charm;
-	/**
-	 * 价格
-	 */
 	private double price;
 	private int    sort;
 	private Date   createdate;

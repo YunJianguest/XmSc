@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 奖品结果
  * @author lsp
  *
  */
@@ -33,9 +32,7 @@ public class RewardRecord extends ReflectionDBObject{
 	 * 活动类型  1 大转盘 2砍价活动
 	 */	
 	private int lx;
-	/**
-	 * 兑奖卷颜色
-	 */	
+	
 	private String ys;
 	/**
 	 * 背景图片

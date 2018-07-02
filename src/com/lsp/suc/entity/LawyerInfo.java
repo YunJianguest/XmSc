@@ -20,17 +20,8 @@ public class LawyerInfo extends ReflectionDBObject{
 	private Date  updatedate;
 	private String tel;
 	private String address;
-	/**
-	 * 擅长领域
-	 */
 	private String field;
-	/**
-	 * 机构
-	 */
 	private String institution;
-	/**
-	 * 证书号
-	 */
 	private String cerno;
 	/**
 	 * 0未审核，1审核中，2审核成功，3审核驳回

@@ -4,34 +4,23 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 房间管理
+ * fj管理
  * @author lsp 
  *   
  */
 public class RoomOrder extends ReflectionDBObject {
 
 	private Long roomid;
-	// 预订人
 	private String order_user;
-	// 手机
 	private String tel;
-	// 房间数
 	private int rooms;
-	// 支付方式
 	private String paytype;
-	// 预定晚数
 	private int days;
-	// 预定床型
 	private String bedtype;
-	// 是否吸烟
 	private String somke;
-	// 备注
 	private String remark;
-	// 入住
 	private Date starttime;
-	// 离开
 	private Date endtime;
-	// 预定时间
 	private Date orderdate;
 
 	private String fromUser;

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 农场道具
  * @author lsp
  *
  */
@@ -14,23 +13,11 @@ public class FarmProps extends ReflectionDBObject{
 	private String title;
 	private String picurl;
 	private String summary;
-	/**
-	 * 总成长值
-	 */
 	private int  growth;
-	/**
-	 * 魅力值
-	 */
 	private int  charm;
-	/**
-	 * 价格
-	 */
 	private double price;
 	private int    sort;
 	private Date   createdate;
-	/**
-	 * 最大使用次数（0为不限次数）
-	 */
 	private int    bigCount;
 	private int    type;
 	/**

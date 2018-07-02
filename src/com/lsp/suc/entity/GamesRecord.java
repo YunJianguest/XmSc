@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 游戏统计
  * @author lsp
  *
  */
@@ -14,13 +13,7 @@ public class GamesRecord extends ReflectionDBObject{
 	private Long   gid;
 	private String fromUserid;
 	private Date   createdate;
-	/**
-	 * 最后登录时间
-	 */
 	private Date   endlogindate;
-	/**
-	 * 成就
-	 */
 	private String achievement;
 	public String getCustid() {
 		return custid;

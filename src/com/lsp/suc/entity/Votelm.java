@@ -28,31 +28,11 @@ public class Votelm extends ReflectionDBObject{
 	private Date   createdate;
 	private Date   enddate;
 	private Date   startdate;
-	/**
-	 * 报名截止日期
-	 */
 	private Date   bmenddate;
-	/**
-	 * 未开始提示语
-	 */
 	private String startclues;
-	/**
-	 * 已结束提示语
-	 */
 	private String endclues;
-	/**
-	 * 频率
-	 */
 	private  int   frequency; 
-	/**
-	 * 模板
-	 * @return
-	 */
 	private  int  mb;
-	/**
-	 * 奖品设置
-	 * @return
-	 */
 	private String jpsz;
 	public String getBgcurl() {
 		return bgcurl;

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 房屋租赁
  * @author lsp
  *
  */
@@ -25,55 +24,21 @@ public class JobSupplydemand  extends ReflectionDBObject{
 	private String name;
 	private String summary;
 	private Date   createdate;
-	/***
-	 * 期望价格
-	 */
 	private int price;
 	private int sort;
-	/**
-	 * 是否二手
-	 * 
-	 */
 	private String issecond;
-	/**
-	 * 装修状况(精装，简装);
-	 */
 	private String decorate;
-	/**
-	 * 多少平方
-	 */
 	private String  big;
-	/**
-	 * 规格
-	 */
 	private String standard;
-	/**
-	 * 房屋地址
-	 */
 	private String address;
 	/**
 	 * 类型 0为供1为求
 	 */
 	private int lx;
-	/**
-	 * 房屋类型（洋楼，别墅）
-	 */
 	private String type; 
-	/**
-	 * 朝向
-	 */
 	private String  risingsun;
-	/**
-	 * 房龄
-	 */
 	private String  age;
-	/**
-	 * 楼层
-	 */
 	private String  floor;
-	/**
-	 * 产权
-	 */
 	private String  equity;
 	
 	public String getCustid() {

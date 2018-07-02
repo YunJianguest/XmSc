@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 二手车
  * @author lsp
  *
  */
@@ -25,9 +24,6 @@ public class JobCar  extends ReflectionDBObject{
 	private String tel;
 	private String summary; 
 	private Date   createdate;
-	/**
-	 * 所在地
-	 */
 	private String address; 
 	/**
 	 * 类型 0为供1为求
@@ -38,32 +34,11 @@ public class JobCar  extends ReflectionDBObject{
 	 * 价格
 	 */
 	private int price;
-	/**
-	 * 类型：轿车，卡车
-	 */
 	private String type;
-	/**
-	 * 品牌
-	 */
 	private String brand;
-	/**
-	 * 车系
-	 * @return
-	 */
 	private String series;
-	/**
-	 * 车龄
-	 * @return
-	 */
 	private String age;
-	/**
-	 * 变速箱
-	 * @return
-	 */
 	private String gearbox;
-	/**
-	 * 排量
-	 */
 	private String displacement;
 	
 	

@@ -7,30 +7,17 @@ import com.mongodb.ReflectionDBObject;
  *
  */
 public class Reward extends ReflectionDBObject{
-	/**
-	 * 编号
-	 * 0 未中  1  2 3 4
-	 */															
+														
 	private int no;
-	/**
-	 * 奖品
-	 */															
+																
 	private String jp;
-	/**
-	 * 中奖概率
-	 */															
+																
 	private int zjl;
-	/**
-	 * 数量
-	 */															
+															
 	private int total;
-	/**
-	 * 领奖页面
-	 */															
+															
 	private String method;
-	/**
-	 * 奖券id
-	 */															
+															
 	private Long jjid;
 	public int getNo() {
 		return no;

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 签到摇奖（签到统计）
  * @author lsp
  *
  */

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 简历投放管理
  * @author lsp
  *
  */
@@ -12,13 +11,7 @@ public class JobseekersTf  extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid;
-	/**
-	 * 简历ID
-	 */
     private Long    seeid;
-    /**
-     * 投放公司ID
-     */
     private Long    comid;
     /**
      * 0已审核1未审核2同意3拒绝

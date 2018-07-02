@@ -3,7 +3,7 @@ package com.lsp.suc.entity;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * 积分总计
+ * 乐乐币总计
  * @author lsp
  *
  */

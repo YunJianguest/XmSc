@@ -259,7 +259,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
-	 * 砍价列表
+	 * kj列表
 	 * @return
 	 */
 	public  String   barlist(){
@@ -286,7 +286,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		return "barlist"; 	
 	}
 	/**
-	 * 砍价详情列表
+	 * kj详情列表
 	 * @return
 	 */
 	public  String   bardetaillist(){

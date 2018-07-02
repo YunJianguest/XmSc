@@ -4,48 +4,20 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
  /**
-  * 婚恋条件
   * @author lsp
   *
   */
 public class DatingCondition  extends ReflectionDBObject{
    
 	private String fromUserid;
-	/**
-	 * 开始年龄
-	 */
 	private int    startAge;
-	/**
-	 * 结束年龄
-	 */
 	private int    endAge;
-	/**
-	 * 开始身高
-	 */
 	private int    startHeight;
-	/**
-	 * 结束身高
-	 */
 	private int    endHeight;
-	/**
-	 * 学历
-	 */
 	private int    record;
-	/**
-	 * 收入
-	 */
-	private int    income;  
-	/**
-	 * 区县
-	 */
+	private int    income;
 	private String county;
-	/**
-	 * 省
-	 */
 	private String province;
-	/**
-	 * 市
-	 */
 	private String city;
 	/**
 	 * 0为男，1为女

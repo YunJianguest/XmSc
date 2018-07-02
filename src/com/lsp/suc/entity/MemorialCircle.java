@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 祭奠亲友圈
  * @author lsp
  *
  */
@@ -12,21 +11,9 @@ public class MemorialCircle extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid;
-	/**
-	 * 关系
-	 */
 	private String relashipbetween;
-	/**
-	 * 祭奠ID
-	 */
 	private Long   wid;
-	/**
-	 * 祭奠人名称
-	 */
 	private String nickname;
-	/**
-	 * 祭奠人头像
-	 */
 	private String headimgurl;
 	private Date   createdate;
 	/**

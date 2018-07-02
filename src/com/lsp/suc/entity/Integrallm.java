@@ -5,8 +5,6 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * 积分栏目
- * 
  * @author lsp
  * 
  */
@@ -21,7 +19,7 @@ public class Integrallm extends ReflectionDBObject {
 	 */
 	private String key;
 	/**
-	 * 积分数量或者倍率，
+	 * 数量或者倍率，
 	 */
 	private int value;
 	 

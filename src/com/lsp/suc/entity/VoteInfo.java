@@ -22,7 +22,7 @@ public class VoteInfo extends ReflectionDBObject{
 	private String url;
  
 	/**
-	 * 图片是否显示，1停止投票  0显示
+	 * 图片是否显示，1停止  0显示
 	 */
 	private int stop;
 	private String type;

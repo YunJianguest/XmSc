@@ -409,9 +409,9 @@ public class ShopAction extends GeneralAction {
 		String kjid = Struts2Utils.getParameter("kjid");
 		// 四位随机数
 		String strRandom = TenpayUtil.buildRandom(4) + "";
-		// 积分返还
+		// 返还
 		String jffh = Struts2Utils.getParameter("jffh");
-		// 积分兑换
+		// 兑换
 		String jfdh = Struts2Utils.getParameter("jfdh");
 		// 10位序列号,可以自行调整。
 		// 限购
@@ -643,7 +643,7 @@ public class ShopAction extends GeneralAction {
 				shopmb.setSales(shopmb.getSales() + Double.parseDouble(entity.getZfmoney() + ""));
 				baseDao.insert(PubConstants.SHOP_SHOPMB, shopmb);
 			}
-			// 返还积分
+			
 			if (StringUtils.isNotEmpty(jffh) && Double.parseDouble(jffh) > 0) {
 				wwzService.addjf(jffh, fromUserid, "shop-fh", custid, null);
 			}
@@ -759,7 +759,7 @@ public class ShopAction extends GeneralAction {
 			proid = Long.parseLong(Struts2Utils.getParameter("proid"));// 14
 		}
 
-		// 积分返还
+		
 		double jffh = 0;
 
 		// 四位随机数
@@ -981,7 +981,7 @@ public class ShopAction extends GeneralAction {
 					}
 				}
 			}
-			// 返还积分
+			
 			if (StringUtils.isNotEmpty(jffh) && Double.parseDouble(jffh) > 0) {
 				wwzService.addjf(jffh, fromUserid, "shop-fh", custid, null);
 			}
@@ -1289,7 +1289,7 @@ public class ShopAction extends GeneralAction {
 		if (spelist.size() > 0) {
 			Struts2Utils.getRequest().setAttribute("spelist", spelist);
 		}
-		// 加载用户积分
+		
 		Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(custid, fromUserid));
 		DBObject share = new BasicDBObject();
 		share.put("fxtitle", db.get("ptitle"));
@@ -2352,9 +2352,7 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
-	/**
-	 * 积分兑换
-	 */
+	
 	public void jfpay() {
 		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
@@ -2385,9 +2383,9 @@ public class ShopAction extends GeneralAction {
 		String kjid = Struts2Utils.getParameter("kjid");
 		// 四位随机数
 		String strRandom = TenpayUtil.buildRandom(4) + "";
-		// 积分返还
+		// 返还
 		String jffh = Struts2Utils.getParameter("jffh");
-		// 积分兑换
+		// 兑换
 		String jfdh = Struts2Utils.getParameter("jfdh");
 		// 10位序列号,可以自行调整。
 		String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval("orderno");
@@ -2452,7 +2450,7 @@ public class ShopAction extends GeneralAction {
 	}
 
 	/**
-	 * 积分商城验证
+	 * 商城验证
 	 */
 	public void checkJfsc() {
 		getLscode();
@@ -3536,9 +3534,9 @@ public class ShopAction extends GeneralAction {
 		String kjid = Struts2Utils.getParameter("kjid");
 		// 四位随机数
 		String strRandom = TenpayUtil.buildRandom(4) + "";
-		// 积分返还
+		// 返还
 		String jffh = "";
-		// 积分兑换
+		// 兑换
 		String jfdh = Struts2Utils.getParameter("jfdh");
 		// 10位序列号,可以自行调整。
 		// 限购
@@ -3673,7 +3671,7 @@ public class ShopAction extends GeneralAction {
 			proid = Long.parseLong(Struts2Utils.getParameter("proid"));// 14
 		}
 
-		// 积分返还
+		// 返还
 		double jffh = 0;
 
 		// 四位随机数
@@ -3820,7 +3818,7 @@ public class ShopAction extends GeneralAction {
 	}
 
 	/**
-	 * 订单支付(积分) 接口返回说明：1其他错误，2积分不足，3库存不足，4商品已下架，5订单不存在，6订单编号错误
+	 * 订单支付() 接口返回说明：1其他错误，2乐乐币不足，3库存不足，4商品已下架，5订单不存在，6订单编号错误
 	 */
 	public void OrderPayJf() {
 		getLscode();
@@ -3854,7 +3852,7 @@ public class ShopAction extends GeneralAction {
 								// 支付成功
 								map.put("state", 0);
 							} else {
-								// 积分不足
+								// 乐乐币不足
 								map.put("state", 2);
 							}
 						} else {

@@ -18,20 +18,9 @@ public class HouseList  extends ReflectionDBObject{
 	 * 简介
 	 */
 	private String summary;
-	
-	/**
-	 * 内容  
-	 */
 	private String context;
-	/**
-	 * 户型图
-	 */
 	private String picurl;
-	/**
-	 * 全景图
-	 */
 	private String phototu;
-	
 	
 	private Date createdate;
 	private Long custid;

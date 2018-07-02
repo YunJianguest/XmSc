@@ -13,20 +13,16 @@ public class IntegralLlInfo extends ReflectionDBObject {
 	private String fromUserid;
 	private String custid;
 	/**
-	 * 积分类型
 	 * ps_account 开通账户
 	 * tj_account 推荐管理员
 	 * ps_recovery 回本后待返
 	 * shop_bmzt 商城收益
-	 * shop_jfdh 下单使用积分
-	 * jfcz 积分充值
-	 * jf_withdraw 积分提现
+	 * shop_jfdh 下单使用
+	 * jfcz 充值
+	 * jf_withdraw 提现
 	 * shop_order 订单收益
 	 */
 	private String type;
-	/**
-	 * 积分
-	 */
 	private double value;
 	 
     private Date createdate;
@@ -36,9 +32,9 @@ public class IntegralLlInfo extends ReflectionDBObject {
      */
     private int    state;
     /**
-     * 0-待返积分
-     * 1-可使用积分
-     * 2-冻结积分
+     * 0-待返
+     * 1-可使用
+     * 2-冻结
      **/
     private int  jfstate;
     private String fid;  

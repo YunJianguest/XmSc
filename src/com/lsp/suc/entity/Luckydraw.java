@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.mongodb.ReflectionDBObject;
 /***
- * 摇奖管理
  * @author lsp
  *
  */

@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 积分统计
+ * 统计
  * @author lsp
  *
  */
@@ -24,9 +24,6 @@ public class IntegralTotal extends ReflectionDBObject{
 	 * 总支出
 	 */
 	private int zc;
-	/**
-	 * 积分
-	 */
 	private int jf;
 	private Date insdate;
 	public String getFromUser() {

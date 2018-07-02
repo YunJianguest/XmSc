@@ -4,7 +4,6 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 祭奠逝者信息
  * @author lsp
  *
  */
@@ -13,45 +12,16 @@ public class MemorialDead extends ReflectionDBObject{
 	private String custid;
 	private String fromUserid;
 	private String picurl;
-	/**
-	 * 祭奠id
-	 */
 	private Long   wid;
-	/**
-	 * 姓名
-	 */
 	private String name;
-	/**
-	 * 籍贯
-	 */
 	private String nativePlace;
-	/**
-	 * 职业
-	 */
 	private String professional;
-	/**
-	 * 与逝者关系
-	 */
 	private String relashipbetween;
-	/**
-	 * 出生地
-	 */
 	private String birthAddress;
-	/**
-	 * 安葬地
-	 */
 	private String burialAddress;
 	private String summary;
 	private Date   createdate;
-	/**
-	 * 生日
-	 * @return
-	 */
 	private String  birthdate;
-	/**
-	 * 忌日
-	 * @return
-	 */
 	private String  burialdate;
 	private int   sort;
 	

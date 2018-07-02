@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /***
- * 活动记录
+ * 资源管理
  * @author lsp
  *
  */

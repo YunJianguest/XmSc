@@ -4,59 +4,23 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 帮派管理
  * @author lsp
  *
  */
 public class Gang extends ReflectionDBObject{
 
-	/**
-	 * 地区
-	 */
 	private String  custid;
-	/**
-	 * 创建者
-	 */
 	private String  fromUserid;
 	private String  sort;
 	private Date    createdate;
-	/**
-	 * 帮派名称
-	 */
 	private String  title;
-	/**
-	 * 帮派人数
-	 */
 	private int     pcount;
-	/**
-	 * 帮派等级
-	 */
 	private int     level;
-	/**
-	 * 累计总经验
-	 * @return
-	 */
 	private int  experience;
-	/**
-	 * 升级需要经验
-	 */
 	private int  needExperience;
-	/**
-	 * 当前获得经验
-	 */
 	private int  getExperience;
-	/**
-	 * 简介
-	 */ 
 	private String summary;
-	/**
-	 * 帮派资金
-	 */
 	private float  money;
-	/**
-	 * 
-	 * 每日维护经费
-	 */
 	private float whmoney;
 	
 	public float getWhmoney() {
