@@ -112,8 +112,7 @@
 								<table class="table table-striped table-action table-primary mb30">
 									<thead>
 										<tr>
-											<th class="table-action">序号</th>
-											<th class="table-action">图标</th>
+											<th class="table-action">序号</th> 
 											<th class="table-action">图片</th>
 											<th class="table-action">名称</th> 
 											<th class="table-action">地址</th>
@@ -123,8 +122,7 @@
 									<tbody>
 										<c:forEach items="${funcList}" var="bean">
 											<tr>
-												<td>${bean.sort}</td>
-												<td><i class="fa ${bean.ioc} "></i>
+												<td>${bean.sort}</td> 
 												</td>
 												<td><img src="${filehttp}/${bean.picurl}" height="25px" style="background-color: black;"/></i>
 												</td>
@@ -194,34 +192,28 @@
                                 <input type="text" id="url" name="url"
                                        class="form-control" placeholder="请输入"/>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="mb-20">
-                                <label class="control-label">图标：</label>
-                                <input type="text" id="ioc" name="ioc"
-                                       class="form-control" placeholder="请输入"/>
-                            </div>
-                        </div>
-                      
-                        <div class="col-sm-6">
-                            <div class="mb-20">
-                                <label class="control-label">图片:</label>
-                                <input type="text" id="picurl" name="picurl"
-                                       class="form-control" placeholder="请输入" onclick="init_ioc('picurl','inszc'),color_hide()"/>
-                            </div>
-                        </div>
-                         <div class="col-sm-6">
-                            <div class="mb-20">
-                                <label class="control-label">背景颜色:</label>
-                                <input type="text" id="bgcolor" name="bgcolor"
-                                       class="form-control" placeholder="请输入" onclick="init_color('bgcolor','inszc'),ioc_hide()"/>
-                            </div>
-                        </div>
+                        </div>  
                         <div class="col-sm-6">
                             <div class="mb-20">
                                 <label class="control-label">序号：</label>
                                 <input type="text" id="sort" name="sort"
                                        class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                           <div class="col-sm-6">
+                            <label class="control-label">图片：</label>
+                            <div>
+                                <div class="col-sm-8 mb-20" style="padding:0px;">
+                                    <input type="text" id="picurl" name="picurl" class=" form-control hang40"/>
+                                </div>
+                                <div class="col-sm-4 mb-20" style="padding:0px;position: relative;"
+                                     onclick="pz('picurl','200','200',false)">
+                                    <div class="btn btn-primary"
+                                         style="width: 100%;line-height: 20px;height:40px;">
+                                        上传
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -234,8 +226,7 @@
         </div>
     </div>
 </div>	 
-	<%@ include file="/webcom/preview.jsp"%>
-	<%@ include file="/webcom/color.jsp"%>
-	<%@ include file="/webcom/ioc.jsp"%> 
+	<%@ include file="/webcom/preview.jsp"%> 
+	<%@include file="/webcom/cut-img.jsp" %> 
 </body>
 </html>
