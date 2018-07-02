@@ -193,7 +193,7 @@
                                 <tbody>
                                 <c:forEach items="${userList}" var="bean">
                                     <tr>
-                                        <td>${bean.nickname}</td>
+                                        <td>${bean.nickname}/${bean.tel}/${bean.password}</td>
                                         <td>${bean._id}</td>
                                         <td>${bean.no}</td>
                                         <td><img src="${filehttp}/${bean.headimgurl}" height="25px"/></td>

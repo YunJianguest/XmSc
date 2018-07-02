@@ -59,6 +59,13 @@
                         }
                         cke();
                         $('#mb').val(json.mb);
+                        alert('--->'+json.type);
+                        if(json.type == '1'){
+                        	$("#agentLevel_show").show();
+                        }else if(json.type == '2'){
+                        	$("#agentLevel_show").hide();
+                    		$("#agentLevel_show").val("").trigger("change");
+                        }
                     }, "json")
             $('#inszc').modal({
                 show: true
@@ -125,6 +132,7 @@
         		$("#agentLevel_show").show();
         	}else if(type == '2'){
         		$("#agentLevel_show").hide();
+        		$("#agentLevel_show").val("").trigger("change");
         	}
         }
     </script>
@@ -228,7 +236,7 @@
                                         <td>${bean.roleid}</td>
                                         <td>
                                         <c:choose>
-										   <c:when test="${bean.agentLevel==1}">省级代理商</c:when>
+										   <c:when test="${bean.agentLevel==1}">${bean.agentLevel}省级代理商</c:when>
 										   <c:when test="${bean.agentLevel==2}">市级代理商</c:when>
 										   <c:when test="${bean.agentLevel==3}">县级代理商</c:when>
 										   <c:when test="${bean.agentLevel==4}">部门代理商</c:when>

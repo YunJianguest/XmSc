@@ -95,7 +95,12 @@ public class ShopAction extends GeneralAction {
 		System.out.println("comid--->" + comid);
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
-		WxToken token = GetAllFunc.wxtoken.get(custid);
+		WxToken token = null;
+		if(StringUtils.isNotEmpty(custid)){
+			token = GetAllFunc.wxtoken.get(custid);
+		}else{
+			token = GetAllFunc.wxtoken.get(SysConfig.getProperty("custid"));
+		}
 		if (token.getSqlx() > 0) {
 			token = GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid));
 		}
@@ -124,6 +129,7 @@ public class ShopAction extends GeneralAction {
 			return "refresh";
 		}
 		Struts2Utils.getRequest().setAttribute("cid", comid);
+
 		List<DBObject> list = wwzService.advertisement(custid, "shopmb-" + comid);
 		Struts2Utils.getRequest().setAttribute("advertising", list);
 		List<DBObject> list1 = wwzService.slide(custid, "shopmb-" + comid);
@@ -166,18 +172,31 @@ public class ShopAction extends GeneralAction {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		if (shopmb != null) {
 			whereMap.put("parentid", Long.parseLong(shopmb.get("_id").toString()));
+			// 加载滚动
+			Struts2Utils.getRequest().setAttribute("roll",
+					wwzService.getRoll(custid, "shopmb-" + shopmb.get("_id").toString()));
+			// 加载广告
+			Struts2Utils.getRequest().setAttribute("slide",
+					wwzService.getslide(custid, "shopmb-" + shopmb.get("_id").toString()));
+			sortMap.put("sort", -1);
+			// 获取店铺分类
+			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
+			Struts2Utils.getRequest().setAttribute("typelist", typelist);
+		}else{
+			// 加载滚动
+			Struts2Utils.getRequest().setAttribute("roll",
+					wwzService.getRoll(custid, "shopmb-"));
+			// 加载广告
+			Struts2Utils.getRequest().setAttribute("slide",
+					wwzService.getslide(custid, "shopmb-"));
+			whereMap.clear();
+			whereMap.put("parentid", 0L);
+			sortMap.put("sort", -1);
+			// 获取店铺分类
+			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap);
+			Struts2Utils.getRequest().setAttribute("typelist", typelist);
+			
 		}
-
-		sortMap.put("sort", -1);
-		// 加载滚动
-		Struts2Utils.getRequest().setAttribute("roll",
-				wwzService.getRoll(custid, "shopmb-" + shopmb.get("_id").toString()));
-		// 加载广告
-		Struts2Utils.getRequest().setAttribute("slide",
-				wwzService.getslide(custid, "shopmb-" + shopmb.get("_id").toString()));
-		// 获取店铺分类
-		List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("typelist", typelist);
 		DBObject share = new BasicDBObject();
 		share.put("fxtitle", shopmb.get("name"));
 		share.put("fxsummary", shopmb.get("summary"));

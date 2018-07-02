@@ -32,46 +32,17 @@
     </div>
 
     <div class=" button_group1"> 
-            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/protype!classme.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
                 <font size="4">
                     <div class="fa fa-file"></div>
                 </font>
                 <div class=" pt-3">
                     <font size="1">
-                        订单查看
+                      分类管理
                     </font>
                 </div>
             </div> 
     </div>
-    <c:if test="${empty isAgentcom}">
-      <div class=" button_group1" onclick="window.location.href='${ctx}/shop/shop!agent.action?custid=${custid}&lscode=${lscode}&id=${entity._id}&agid=${agid}'"> 
-            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5">
-                <font size="4">
-                    <div class="fa fa-photo"></div>
-                </font>
-                <div class=" pt-3">
-                    <font size="1">
-                       成为代理
-                    </font>
-                </div>
-            </div> 
-    </div>
-    </c:if> 
-    <c:if test="${not empty isAgents}">
-    <div class=" button_group1" onclick="window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=${agid}&lscode=${lscode}'"> 
-            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5">
-                <font size="4">
-                    <div class="fa fa-user"></div>
-                </font>
-                <div class=" pt-3">
-                    <font size="1">
-                      分销管理
-                    </font>
-                </div>
-            </div>
-        
-    </div>
-    </c:if>
     <c:if test="${empty isAgents}">
     <div class=" button_group1" onclick="window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=${agid}&lscode=${lscode}'"> 
             <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5">

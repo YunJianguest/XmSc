@@ -76,11 +76,17 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		    HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		    HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		    custid=SpringSecurityUtils.getCurrentUser().getId();
+		    
 		    if(StringUtils.isNotEmpty(custid))
 			{
-				Pattern pattern = Pattern.compile("^.*" + custid + ".*$",
-						Pattern.CASE_INSENSITIVE);
-				whereMap.put("custid", pattern); 
+		    	if(custid.equals(SysConfig.getProperty("custid"))){
+			    	
+			    }else{
+			    	Pattern pattern = Pattern.compile("^.*" + custid + ".*$",
+							Pattern.CASE_INSENSITIVE);
+					whereMap.put("custid", pattern); 
+			    }
+				
 			} 
 			String  nickname=Struts2Utils.getParameter("nickname");
 			if(StringUtils.isNotEmpty(nickname))
@@ -592,8 +598,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				user.set_id(UUID.randomUUID().toString());
 				user.setTel(tel);
 				user.setPassword(password);
+				System.out.println("---注册----》"+tel);
+				System.out.println("---注册-password---》"+password);
 				basedao.insert(PubConstants.DATA_WXUSER, user);
-				String lscode=wwzservice.createcode(fromUserid);
+				String lscode=wwzservice.createcode(user.get_id().toString());
 				sub_map.put("lscode", lscode);//注册成功
 				sub_map.put("state", 0);//注册成功
 			}
@@ -617,7 +625,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
   		     DBObject user = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
   		     if(user != null){
  			   if(user.get("password").toString().equals(password)) {
-                   String lscode=wwzservice.createcode(fromUserid); 
+                   String lscode=wwzservice.createcode(user.get("_id").toString()); 
                    sub_map.put("state", 0);//登陆成功
                    sub_map.put("lscode", lscode);
  			   }

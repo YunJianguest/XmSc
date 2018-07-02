@@ -111,7 +111,7 @@
 		<script>
 			$(function() {
 
-				var reg = /^0?(13[0-9]|15[012356789]|17[013678]|18[0-9]|14[57])[0-9]{8}$/;
+				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 				$('#phone').blur(function() {
 					if($(this).val() == '') {
 						mui.alert('请输入手机号', )
@@ -124,7 +124,7 @@
 					var timer;
 					if($('#phone').val() == '') {
 						mui.alert('请输入手机号', )
-					} else if(!reg.test($(this).val())) {
+					} else if(!reg.test($('#phone').val())) {
 						mui.alert('手机号码不正确')
 					} else {
 						function countDown() {
@@ -174,6 +174,7 @@
 					}
 				}
 				$('#reg').click(function(){
+					alert('4444');
 					mui($(this)).button('loading');
 					$.ajax({
 						type:"post",
@@ -182,8 +183,9 @@
 						data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val()},
 						success:function(json){
 							if(json){
+								alert(json.state);
 								if(json.state == 0){
-									location.href='${ctx}/shop/shop!index.action?lscode='+lscode;
+									location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 								}
 							}else{
 								mui($(this)).button('reset');

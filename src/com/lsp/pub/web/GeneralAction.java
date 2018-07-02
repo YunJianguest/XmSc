@@ -279,7 +279,10 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 	public String getFromUserid() {
 		String code=Struts2Utils.getParameter("code");
 		Struts2Utils.getRequest().setAttribute("state", Struts2Utils.getParameter("state"));
-		custid=Struts2Utils.getParameter("custid"); 
+		custid=Struts2Utils.getParameter("custid");
+		if(StringUtils.isEmpty(custid)){
+			custid=SysConfig.getProperty("custid");
+		}
 		if(StringUtils.isEmpty(code)){
 			Object fromUser=Struts2Utils.getRequest().getSession().getAttribute("fromUserid"); 
 			if(fromUser!=null){
