@@ -103,7 +103,6 @@ public class PermissionsAction extends GeneralAction<Permissions> {
 	@Override
 	protected void prepareModel() throws Exception {
 		if (_id != null) {
-			// 有custId查出来 用户信息
 			DBObject db = basedao.getMessage(PubConstants.ANDROID_PERMISSIONS, _id);
 
 			entity = JSON.parseObject(db.toString(), Permissions.class);
@@ -115,7 +114,6 @@ public class PermissionsAction extends GeneralAction<Permissions> {
 
 	@Override
 	public String save() throws Exception {
-		// 注册业务逻辑
 		try {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.ANDROID_PERMISSIONS);
