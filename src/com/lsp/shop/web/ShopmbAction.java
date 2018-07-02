@@ -17,6 +17,7 @@ import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.ShopMb;
@@ -52,8 +53,10 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("_id", -1);  
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-	
+		//验证custid
+		if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
+		} 
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPMB,whereMap, sortMap);
 		for (DBObject dbObject : list) {
 			dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
