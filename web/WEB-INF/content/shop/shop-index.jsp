@@ -398,6 +398,23 @@
             <div class="line-left-green"><i class="pl-10 pt-2">推荐商品</i></div>
         </div>
     </font>
+    <div class='div-group-5'>
+    	<div class="col-4" style="padding-right: 5px;">
+    		<a>
+    			<img src=''>
+    		</a>
+        </div>
+        <div class="col-4" style="padding-left: 5px;">
+       		<a>
+    			<img src=''>
+    		</a>
+        </div>
+        <div class="col-4" style="padding-right: 5px;">
+        	<a>
+    			<img src=''>
+    		</a>
+        </div>
+    </div>	
     <div class="div-group-5">
         <div class="col-6" style="padding-right: 5px;" id="ajaxdivleft">
         </div>
