@@ -217,9 +217,9 @@
 <script language="JavaScript">
 
     function textCounter(field, countfield, maxlimit) {
-        // 函数，3个参数，表单名字，表单域积分素名，限制字符；
+        // 函数，3个参数，表单名字，表单域素名，限制字符；
         if (field.value.length > maxlimit)
-        //如果积分素区字符数大于最大字符数，按照最大字符数截断；
+        //如果素区字符数大于最大字符数，按照最大字符数截断；
             field.value = field.value.substring(0, maxlimit);
         else
         //在记数区文本框内显示剩余的字符数；

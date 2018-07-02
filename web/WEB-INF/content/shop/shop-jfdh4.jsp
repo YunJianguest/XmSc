@@ -86,7 +86,7 @@
                                     if(v[i].bq==11){
                                         xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
                                         + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">积分兑换</font>'
+                                        + '<font  size="1">平台币兑换</font>'
                                         + '</div> <div class="">'
                                         + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
                                     } 
@@ -96,7 +96,7 @@
                                     + '</div></div></div>'
                                     + '<div class="col-12 div-group-5 zi-6 bg-bai weight500">'
                                     + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>' 
-                                    + '<div class="pt-3"> 积分:' + v[i].jfdh.toFixed(2) 
+                                    + '<div class="pt-3"> 平台币:' + v[i].jfdh.toFixed(2) 
                                     + '</div></font></div></div></a>';
                                 } else {
                                     xszfright += '<a href="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid=' + v[i]._id + '"><div class="width-10 mt-15 shadow-wai1 overflow-hidden border-radius5 zi-6">'
@@ -105,7 +105,7 @@
                                     if(v[i].bq==11){
                                         xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
                                         + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">积分兑换</font>'
+                                        + '<font  size="1">平台币兑换</font>'
                                         + '</div> <div class="">'
                                         + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
                                     }
@@ -116,7 +116,7 @@
                                     + '</div></div></div>'
                                     + '<div class="col-12 div-group-5 zi-6 bg-bai weight500">'
                                     + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>'
-                                    + '<div class="pt-3"> 积分:' + v[i].jfdh.toFixed(2) 
+                                    + '<div class="pt-3"> 平台币:' + v[i].jfdh.toFixed(2) 
                                     + '</div></font></div></div></a>';
                                 }
                             }
@@ -446,7 +446,7 @@
                                 text+="经验+"+json.expreward+" "
                             }
                             if(json.jfreward>0){
-                                text+="积分+"+json.jfreward
+                                text+="平台币+"+json.jfreward
                             } 
                           swal({
                                 text: text,

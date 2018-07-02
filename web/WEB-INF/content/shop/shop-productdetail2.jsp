@@ -296,7 +296,7 @@
                                 text+="经验+"+json.expreward+" "
                             }
                             if(json.jfreward>0){
-                                text+="积分+"+json.jfreward
+                                text+="平台币+"+json.jfreward
                             } 
                           swal({
                                 text: text,

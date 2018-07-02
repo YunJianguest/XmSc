@@ -296,7 +296,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="mb-20">
-                                <label class="control-label">积分返还比例：</label>
+                                <label class="control-label">平台币返还比例：</label>
                                 <select id="jfbl" name="jfbl" class="select2 hang40" 
                                         data-placeholder="请选择">
                                     <option value="0">不开通</option>

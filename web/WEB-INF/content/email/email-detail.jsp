@@ -299,7 +299,7 @@
                                 text+="经验+"+json.expreward+" "
                             }
                             if(json.jfreward>0){
-                                text+="积分+"+json.jfreward
+                                text+="平台币+"+json.jfreward
                             } 
                             noty({text: text,type:'information', layout: "top", timeout: 1000,callback: { // 回调函数
                             afterClose: function() {
@@ -375,11 +375,11 @@
         function exceptional() {
             var price = parseInt($('#exceptionalprice').val());
             if (isNaN(price)) {
-                alert('请输入正确的积分数');
+                alert('请输入正确的数量');
                 return;
             }
             if ('${user.jf}' < price) {
-                alert('您的积分不够');
+                alert('您的平台币不够');
                 return;
             }
             var submitData = {

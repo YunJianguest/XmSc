@@ -79,7 +79,7 @@
         			   				if(res.err_msg == "get_brand_wcpay_request:ok"){  
         			   					 var text='支付成功！'; 
         			   					 if(json.jffh>0){
-        			   					   text="支付成功！恭喜您获得:"+json.jffh+"积分,您可以去积分商城兑换自己喜欢礼品！";
+        			   					   text="支付成功！恭喜您获得:"+json.jffh+"平台币,您可以去商城兑换自己喜欢礼品！";
         			   					   
         			   					    swal({ 
                                        text:text,
@@ -140,7 +140,7 @@
         	  if(json.state==0){  
         	     window.location.href='${ctx}/shop/shop!index.action?custid=${custid}&agid=${agid}&lscode={lscode}&comid='+json.value;
         	  }else{
-        	       noty({text: "尊敬的用户！暂时没有找到已经开通的积分商城！！",type:'information', layout: "top", timeout: 1000,callback: { // 回调函数
+        	       noty({text: "尊敬的用户！暂时没有找到已经开通的可兑换商城！！",type:'information', layout: "top", timeout: 1000,callback: { // 回调函数
                                               afterClose: function() { 
                                               } // 关闭之后
                                             },});

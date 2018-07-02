@@ -39,7 +39,7 @@
             $('#tanchu').show();
         } 
         function setspec(){ 
-        if(parseFloat($("#totalPrice").html().replace("积分",""))>parseFloat('${jf}')){
+        if(parseFloat($("#totalPrice").html().replace("平台币",""))>parseFloat('${jf}')){
           jfbz_show();
          return;
         };

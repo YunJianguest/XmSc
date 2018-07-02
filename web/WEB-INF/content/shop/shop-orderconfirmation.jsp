@@ -103,7 +103,7 @@
         			   				if(res.err_msg == "get_brand_wcpay_request:ok"){  
         			   					 var text='购买成功！';
         			   					 if(!jQuery.isEmptyObject(json.jffh)){
-        			   					   text="购买成功！获得积分"+json.jffh
+        			   					   text="购买成功！获得平台币"+json.jffh
         			   					 }
         			   					 noty({text: text,type:'alert', layout: "top", timeout: 1000,callback: { // 回调函数
                                               afterClose: function() {
@@ -279,7 +279,7 @@
                        
                       </c:if>
                       <c:if test="${entity.jfdh>0}">
-                      <span class="zi-cheng">积分<fmt:formatNumber value='${entity.jfdh}'  pattern="0.0#"/>
+                      <span class="zi-cheng">平台币<fmt:formatNumber value='${entity.jfdh}'  pattern="0.0#"/>
                       </c:if>
                        <i class="pl-10 zi-6">数量:${count}件</i></span>
                     </div>
@@ -349,7 +349,7 @@ if('${entity.jfdh}'==''||'${entity.jfdh}'==0){
    var totalPrice='${entity.jfdh}'*'${count}';
    jfdh=totalPrice.toFixed(2);
    total='${entity.kdprice}'; 
- $("#totalPrice").parent().html('<i id="totalPrice" class="fa fa-cny pl-5 weight500">'+totalPrice.toFixed(2)+'</i>积分 快递'+parseFloat('${entity.kdprice}').toFixed(2)+'元');
+ $("#totalPrice").parent().html('<i id="totalPrice" class="fa fa-cny pl-5 weight500">'+totalPrice.toFixed(2)+'</i>平台币 快递'+parseFloat('${entity.kdprice}').toFixed(2)+'元');
 }
 
 });

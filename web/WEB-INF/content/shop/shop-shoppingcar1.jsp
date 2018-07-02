@@ -254,7 +254,7 @@ function ajaxjz(){//加载
     <div class="hang40 weight500 zi-hui-tq line-height40 pl-5 pr-5">
         <font size="1">
             <div class="pull-left">
-                    现有积分:<i class="zi-hong">${jf}</i><i class="pl-5">请输入要兑换的积分:</i>
+                    现有平台币:<i class="zi-hong">${jf}</i><i class="pl-5">请输入要兑换的平台币:</i>
             </div>
 
             <div class="col-3 pt-5 pl-5  overflow-hidden">

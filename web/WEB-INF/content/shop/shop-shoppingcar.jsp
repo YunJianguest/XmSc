@@ -138,7 +138,7 @@
         			   				if(res.err_msg == "get_brand_wcpay_request:ok"){ 
         			   					 var text='购买成功！';
         			   					 if(!jQuery.isEmptyObject(json.jffh)){
-        			   					   text="购买成功！获得积分"+json.jffh
+        			   					   text="购买成功！获得平台币"+json.jffh
         			   					 }
         			   					 noty({text: text,type:'alert', layout: "top", timeout: 1000,callback: { // 回调函数
                                               afterClose: function() {
