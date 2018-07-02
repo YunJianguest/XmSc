@@ -5,7 +5,7 @@ import java.util.Date;
 import com.mongodb.ReflectionDBObject;
 
 /**
- * dt结果
+ * 答题结果
  * @author lsp 
  *   
  */

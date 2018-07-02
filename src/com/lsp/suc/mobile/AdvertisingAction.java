@@ -396,7 +396,6 @@ public class AdvertisingAction extends GeneralAction<AdvertisingInfo>{
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
-	 * 打电话
 	 * @throws Exception
 	 */
 	public void payok() throws Exception{

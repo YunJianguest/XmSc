@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 领取的产品
  * @author lsp
  *
  */
@@ -14,7 +15,13 @@ public class FarmYd extends ReflectionDBObject{
 	private Date   createdate;  
 	private FarmProduct obj;
 	private Long   wid;
+	/**
+	 * 成长值
+	 */
 	private int    growth;
+	/**
+	 * 0已支付，1未支付,2已收获
+	 */
 	private int    state;
 	public String getCustid() {
 		return custid;
