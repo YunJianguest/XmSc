@@ -2,6 +2,7 @@ package com.lsp.suc.entity;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 祭奠献词管理
  * @author lsp
  *
  */
@@ -9,9 +10,21 @@ public class MemorialMessage extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid; 
+	/**
+	 * 祭奠ID
+	 */
 	private Long   wid;
+	/**
+	 * 祭奠人名称
+	 */
 	private String nickname;
+	/**
+	 * 祭奠人头像
+	 */
 	private String headimgurl;
+	/**
+	 * 内容
+	 */
 	private String content; 
 	public Long getWid() {
 		return wid;

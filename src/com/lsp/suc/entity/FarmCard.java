@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 农场卡卷
  * @author lsp
  *
  */
@@ -11,10 +12,19 @@ public class FarmCard extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid;
+	/**
+	 * 活动产品ID
+	 */
 	private Long hdid;
 	private Date   createdate; 
 	private String title;
+	/**
+	 * 最后兑奖时间
+	 */
 	private Date enddjdate;
+	/**
+	 * 开始兑奖时间
+	 */
 	private Date startdjdate;
 	/**
 	 * 快递名称
@@ -29,6 +39,9 @@ public class FarmCard extends ReflectionDBObject{
 	 * 0 未对 1 已对 2 过期,3已发货，4已签收
 	 */	
 	private int    state;
+	/**
+	 * 奖品唯一兑换码
+	 */	
 	private String djm;
 	private String summary;
 	/**

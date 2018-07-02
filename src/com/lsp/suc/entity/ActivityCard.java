@@ -4,26 +4,43 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /***
- * 资源管理
+ * 活动卡卷
  * @author lsp
  *
  */
 public class ActivityCard extends ReflectionDBObject{ 
 	private String fromUserid; 
 	private String custid;  
-															
+	/**
+	 * 日期
+	 */															
 	private Date createdate; 
-	
+	/**
+	 * 状态
+	 * 0 未对 1 已对 2 过期
+	 */	
 	private int state; 
-		
+	/**
+	 * 活动id
+	 */	
 	private Long hdid; 
-	
+	/**
+	 * 奖品唯一兑换码
+	 */	
 	private String yhj; 
-	
+	/**
+	 * 奖品
+	 */	
 	private String jp;
 	
+	/**
+	 * 兑奖截止日期
+	 */	
 	private Date djenddate;
-	
+	/**
+	 * 活动名称
+	 * @return
+	 */
 	private String hdtitle;
 	public String getFromUserid() {
 		return fromUserid;

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 祭奠栏目管理
  * @author lsp
  *
  */
@@ -11,18 +12,35 @@ public class Memoriallm extends ReflectionDBObject{
 
 	private String toUser;
 	private int    sort; 
+	/**
+	 * 名称
+	 */
 	private String title;
+	/**
+	 * 祭奠简介
+	 */
 	private String context;
 	private String picurl;
+	/**
+	 * 上香数
+	 */
 	private int    count;
 	private Date   createdate;
 	private int    mb;
+	/**
+	 * 音乐
+	 */
 	private String mp3;
+	/**
+	 * 菜单名称
+	 */
 	private String funcname1;
 	private String funcname2;
 	private String funcname3;
 	private String funcname4;
-	
+	/**
+	 * 菜单连接
+	 */
 	private String funcurl1;
 	private String funcurl2;
 	private String funcurl3;

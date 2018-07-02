@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 祭奠管理
  * @author lsp
  *
  */
@@ -12,11 +13,23 @@ public class MemorialInfo extends ReflectionDBObject{
 	private String custid;
 	private String fromUserid;
 	private int    sort;
+	/**
+	 * 栏目ID
+	 */
 	private Long   wid;
+	/**
+	 * 祭奠名称
+	 */
 	private String title;
+	/**
+	 * 祭奠简介
+	 */
 	private String content;
 	private String picurl;
 	private String summary;
+	/**
+	 * 上香数
+	 */
 	private int    count;
 	/**
 	 * 类别（0单人，1双人，2多人）
@@ -27,11 +40,17 @@ public class MemorialInfo extends ReflectionDBObject{
 	 * 关注量
 	 */
 	private int    focuscount;
+	/**
+	 * 亲友量
+	 */
 	private int    relativescount;
 	/**
 	 * 评论量
 	 */
 	private int    comcount;
+	/**
+	 * 亲情值
+	 */
 	private int     familyValues;
 	private int      mb;
 	 

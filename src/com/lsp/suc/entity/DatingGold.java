@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
  /**
+  * 婚恋金币记录
   * @author lsp
   *
   */

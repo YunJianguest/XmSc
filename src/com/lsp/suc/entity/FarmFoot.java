@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 农场动态
  * @author lsp
  *
  */
@@ -11,10 +12,19 @@ public class FarmFoot extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid;
+	/**
+	 * 农场id
+	 */
 	private String fid;
 	private Date   createdate;  
 	private String summary;
+	/**
+	 * 活动ID
+	 */
 	private String   wid; 
+	/**
+	 * 道具ID
+	 */
 	private Long   pid;
 	public String getCustid() {
 		return custid;
