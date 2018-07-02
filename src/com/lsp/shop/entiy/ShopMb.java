@@ -70,9 +70,7 @@ public class ShopMb  extends ReflectionDBObject{
 	 * 网店类型，0为普通网店，1为积分商城  3-大众区  4-特约区 5-会员区
 	 */
 	private int    type;
-	/**
-	 * 积分比例
-	 */
+	
 	private int    jfbl;
 	/**
      * 总销售额

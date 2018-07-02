@@ -28,7 +28,7 @@ import com.mongodb.DBObject;
 import net.sf.json.JSONArray;
 
 /**
- * 设置
+ * 矿机设置
  * 
  * @author lsp
  * 

@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
- * 砍价统计
+ * 
  * @author lsp
  *
  */

@@ -50,9 +50,9 @@ public class GetAllFunc {
 	public static HashMap<String,List<DBObject>>shopCustService= new HashMap<String,List<DBObject>>();
 	//店铺客服
 	public static HashMap<String,Object>shopCustServicenum= new HashMap<String,Object>();
-	//婚恋客服
+	
 	public static HashMap<String,List<DBObject>>datingCustServicenum= new HashMap<String,List<DBObject>>();
-	//保洁员
+
 	public static HashMap<String, HousewiferyInfo> housewifery = new HashMap<String, HousewiferyInfo>();
     //短信验证码
 	public static HashMap<String, Code>telcode = new HashMap<String, Code>();

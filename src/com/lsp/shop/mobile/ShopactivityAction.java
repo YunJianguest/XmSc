@@ -94,7 +94,6 @@ public class ShopactivityAction extends GeneralAction<ProductInfo>{
 		Map<String, Object> sub_map = new HashMap<String, Object>(); 
 		getLscode();
 		WxToken token=GetAllFunc.wxtoken.get(custid);
-		//Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token.getToUser(),Struts2Utils.getRequest()));
 		 sub_map.put("token",WeiXinUtil.getSignature(token.getToUser(),Struts2Utils.getRequest()));
 		if(token.getSqlx()>0){
 			 token=GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid)); 
@@ -103,31 +102,22 @@ public class ShopactivityAction extends GeneralAction<ProductInfo>{
 		String  url=SysConfig.getProperty("ip")+"/shop/shopactivity!web.action?custid="+custid;  
 		if(StringUtils.isEmpty(fromUserid)){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
-			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			//return "refresh";
 			sub_map.put("inspection",inspection);
 		}else if(fromUserid.equals("register")){ 
 			String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
-			//Struts2Utils.getRequest().setAttribute("inspection",inspection);  
-			//return "refresh";
 			sub_map.put("inspection",inspection);
 		}  
-		//Struts2Utils.getRequest().setAttribute("token", token); 
-		//Struts2Utils.getRequest().setAttribute("custid",custid);
 		sub_map.put("token", token);
 		sub_map.put("custid",custid);
 		//加载广告位
-		//Struts2Utils.getRequest().setAttribute("slide", wwzService.getslide(custid, "shop_activity"));
 		sub_map.put("slide", wwzService.getslide(custid, "shop_activity"));
 		DBObject share=wwzService.getShareFx(custid,"shop_activity_share"); 
 		sub_map.put("share", share);
-		//Struts2Utils.getRequest().setAttribute("share", share); 
-		//return "web";
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length()-1), new String[0]);	
 	}
 	/**
-	 * ajax获取砍价数据
+	 * ajax获取kj数据
 	 */
 	public  void  ajaxkj(){
 		getLscode();

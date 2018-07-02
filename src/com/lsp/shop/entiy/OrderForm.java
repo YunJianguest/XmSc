@@ -24,9 +24,7 @@ public class OrderForm extends ReflectionDBObject{
 	 */
 	private double zfmoney;
 	private double money;
-	/**
-	 * 兑换的积分
-	 */
+	
 	private double jfdh;
 	/**
 	 * 商品编号
@@ -107,9 +105,7 @@ public class OrderForm extends ReflectionDBObject{
 	private String ids;
 	private String counts;
 	private String kjid;
-	/**
-	 * 积分返还
-	 */
+	
 	private double  jffh;
 	/**
 	 * 是否显示（0显示1不显示）
