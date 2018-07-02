@@ -198,9 +198,12 @@ public class ShopAction extends GeneralAction {
 			
 		}
 		DBObject share = new BasicDBObject();
-		share.put("fxtitle", shopmb.get("name"));
-		share.put("fxsummary", shopmb.get("summary"));
-		share.put("fximg", shopmb.get("logo"));
+		if(shopmb!=null) {
+			share.put("fxtitle", shopmb.get("name"));
+			share.put("fxsummary", shopmb.get("summary"));
+			share.put("fximg", shopmb.get("logo"));
+		}
+		
 		if (StringUtils.isNotEmpty(comid)) {
 			share.put("fxurl", url);
 		} else {
@@ -226,10 +229,13 @@ public class ShopAction extends GeneralAction {
 		if (wwzService.checkAgent(custid, fromUserid)) {
 			Struts2Utils.getRequest().setAttribute("isAgents", "ok");
 		}
-		// 检测当前店铺
-		if (StringUtils.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid)))) {
-			Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
+		if(shopmb != null) {
+			// 检测当前店铺
+			if (StringUtils.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid)))) {
+				Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
+			}
 		}
+		
 		if (shopmb != null) {
 			if (shopmb.get("type") != null && Integer.parseInt(shopmb.get("type").toString()) == 1) {
 				return "jfdh" + shopmb.get("mb");
@@ -237,7 +243,8 @@ public class ShopAction extends GeneralAction {
 				return "index" + shopmb.get("mb");
 			}
 		} else {
-			return "index";
+			System.out.println("9999");
+			return "index0";
 		}
 
 	}
@@ -1075,8 +1082,11 @@ public class ShopAction extends GeneralAction {
 				Pattern pattern = Pattern.compile("^.*" + sel + ".*$", Pattern.CASE_INSENSITIVE);
 				whereMap.put("ptitle", pattern);
 			}
-			DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(cid));
-			whereMap.put("comid", Long.parseLong(cid));
+			if(StringUtils.isNotEmpty(cid)) {
+				DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(cid));
+				whereMap.put("comid", Long.parseLong(cid));
+			}
+			
 			sortMap.put("sort", -1);
 			backMap.put("context", 0);
 			List<DBObject> list = baseDao.getList(PubConstants.DATA_PRODUCT, whereMap, fypage, 10, sortMap, backMap);

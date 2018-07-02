@@ -216,7 +216,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	 public String UserDetail(){ 
 		  getLscode();  
 		  Struts2Utils.getRequest().setAttribute("custid",custid );
+		  System.out.println(custid);
 		  WxToken token=GetAllFunc.wxtoken.get(custid);
+		  System.out.println(token);
 			 if(token.getSqlx()>0){
 				 token=GetAllFunc.wxtoken.get(wwzservice.getparentcustid(custid)); 
 			 } 
@@ -296,7 +298,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		  if(mb!=null&&mb.get("mb")!=null){
 			  return "detail"+mb.get("mb");  
 		  }
-		return "detail";   
+		return "detail2";   
 	  }
 	 public String register(){
 		  

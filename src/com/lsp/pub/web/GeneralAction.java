@@ -243,6 +243,12 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 		if(StringUtils.isEmpty(code)){
 			 
 		}else{
+			if(StringUtils.isEmpty(custid)||custid.equals("null")) {
+				System.out.println(SysConfig.getProperty("custid"));
+				custid=SysConfig.getProperty("custid");
+			}
+			System.out.println(SysConfig.getProperty("custid"));
+			System.out.println("custid----"+custid);
 			WxToken wxtoken=GetAllFunc.wxtoken.get(custid);
 			if(wxtoken.getSqlx()==0){ 
 				fromUser=WeiXinUtil.getOpenId(custid,code);	
@@ -280,7 +286,7 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 		String code=Struts2Utils.getParameter("code");
 		Struts2Utils.getRequest().setAttribute("state", Struts2Utils.getParameter("state"));
 		custid=Struts2Utils.getParameter("custid");
-		if(StringUtils.isEmpty(custid)){
+		if(StringUtils.isEmpty(custid)||custid.equals("null")){
 			custid=SysConfig.getProperty("custid");
 		}
 		if(StringUtils.isEmpty(code)){
@@ -372,6 +378,9 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 		}else{  
 	        Struts2Utils.getRequest().setAttribute("lscode",lscode); 
 			fromUserid=wwzService.getfromUseridfromcode(lscode);
+			if(StringUtils.isEmpty(custid)||custid.equals("null")) {
+				custid=SysConfig.getProperty("custid");
+			}
 			Comunit  com=GetAllFunc.wxTouser.get(custid);
 			Struts2Utils.getRequest().setAttribute("com",com); 
 			//加载用户

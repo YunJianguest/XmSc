@@ -130,7 +130,7 @@
 			</form>
 			
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="login()">登录</button>
 				<div class="link-area"><a id='reg' href="${ctx}/login!signup.action">注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
@@ -143,23 +143,24 @@
 		<script src="${ctx}/xmMobile/js/app.js"></script>
 		<script type="text/javascript" >
 		function login(){
+			alert($('#tel').val());
 			var  tel=$('#tel').val();
 			var  password=$('#password').val();
-			if(name.length==0||password.length==0){
+			if(tel.length==0||password.length==0){
 				alert("请输入账号或密码");
 				return;
 			}
 	            jQuery.ajax({  
 	            url:"${ctx}/user/fromuser!signin.action",
 	            dataType:"json",
-	            data:"tel="+name+"&password="+password,
+	            data:"tel="+tel+"&password="+password,
 	            error:function(XMLHttpRequest, textStatus, errorThrown){
 	               alert("登录失败！");
 				},
 	            success:function(data){
 	            	if(data.state==0){
 	            		alert('登陆成功');
-	            		window.location.href ="${ctx}/shop/shop!index.action?lscode="+json.lscode;
+	            		window.location.href ="${ctx}/shop/shop!index.action?lscode="+data.lscode;
 	            	}else{
 	            		 alert("登录失败！");	
 	            	}

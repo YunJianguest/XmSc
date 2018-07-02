@@ -156,8 +156,12 @@
                                     } 
                                     xszfleft+= '</div></div></div>'
                                     + '<div class="col-12 div-group-5 zi-6 bg-bai weight500">'
-                                    + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>'
-                                    + '<div class="pt-3"> 现价:' + v[i].price.toFixed(2);
+                                    + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>';
+                                    if(v[i].price != null){
+                                    	xszfleft+= '<div class="pt-3"> 现价:' + v[i].price.toFixed(2);
+                                    }else{
+                                    	xszfleft+= '<div class="pt-3"> 现价:' + v[i].price;
+                                    }
                                     if(v[i].bq==8){
                                      xszfleft+='<i class="zi-green pl-10">可砍至:' + v[i].lowprice.toFixed(2) + '</i>'
                                     + '</div></font></div></div></a>';
@@ -249,14 +253,24 @@
                                     } 
                                      xszfright+='</div></div></div>'
                                     + '<div class="col-12 div-group-5 zi-6 bg-bai weight500">'
-                                    + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>'
-                                    + '<div class="pt-3"> 现价:' + v[i].price.toFixed(2) ;
+                                    + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>';
+                                    if(v[i].price != null){
+                                    	xszfright+='<div class="pt-3"> 现价:' + v[i].price.toFixed(2) ;
+                                    }else{
+                                    	xszfright+='<div class="pt-3"> 现价:' + v[i].price;
+                                    }
                                     if(v[i].bq==8){
                                      xszfright+='<i class="zi-green pl-10">可砍至:' + v[i].lowprice.toFixed(2) + '</i>'
                                     + '</div></font></div></div></a>';
                                     }else{
-                                    xszfright+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice.toFixed(2) + '</i>'
-                                    + '</div></font></div></div></a>';
+                                    	if(v[i].oldprice!=null){
+                                    		  xszfright+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice.toFixed(2) + '</i>'
+                                              + '</div></font></div></div></a>';
+                                    	}else{
+                                    		  xszfright+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice + '</i>'
+                                              + '</div></font></div></div></a>';
+                                    	}
+                                  
                                     }
                                 }
                             }
