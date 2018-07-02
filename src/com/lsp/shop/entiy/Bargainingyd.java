@@ -3,7 +3,7 @@ package com.lsp.shop.entiy;
 import java.util.Date; 
 import com.mongodb.ReflectionDBObject;
 /**
- * 砍价预定
+ * 
  * @author lsp
  *
  */

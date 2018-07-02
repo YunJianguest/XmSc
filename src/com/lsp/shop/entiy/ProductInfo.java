@@ -141,17 +141,13 @@ public class ProductInfo extends ReflectionDBObject{
 	 * 快递价格
 	 */
 	private float   kdprice;
-	/**
-	 * 积分返还
-	 */
+	
 	private float   jffh;
 	/**
 	 * 是否显示0为显示，1为不显示
 	 */
 	private int      isxs;
-	/**
-	 * 积分兑换
-	 */
+	
 	private float    jfdh;
 	/**
 	 * 代理price
