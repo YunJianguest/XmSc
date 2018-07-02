@@ -84,8 +84,8 @@ public class PubConstants
   public static String SUC_SCENE="suc_scene";
   public static String SUC_SPIRIT="suc_spirit";
   
-  public static String INTEGRAL_INFO="integral_info";//积分
-  public static String INTEGRALLL_INFO="integralll_info";//LL积分
+  public static String INTEGRAL_INFO="integral_info";
+  public static String INTEGRALLL_INFO="integralll_info";
   public static String INTEGRALM="integrallm";
   public static String JF_TOTAL="jf_total";
   
@@ -93,8 +93,8 @@ public class PubConstants
   public static String SUC_ANSREDETAIL="suc_answerdetail";
   public static String SUC_ANSWERRECORD="suc_answerrecord";
   
-  public static String SUC_VOTELM="suc_votolm";//投票栏目
-  public static String SUC_VOTE="suc_vote";//投票内容
+  public static String SUC_VOTELM="suc_votolm";
+  public static String SUC_VOTE="suc_vote";
   
   public static String WEIXIN_SHORTURL="weixin_shorturl";
   public static String WWZ_FLOW = "wwz_flow";
@@ -126,36 +126,36 @@ public class PubConstants
   public static String BBS_PRAISE="bbs_praise";//论坛帖子点赞
   public static String BBS_READING="bbs_reading";//论坛帖子阅读量
   
-  public static String MEMORIAL_INFO="memorial_info";//祭奠实体类
-  public static String MEMORIAL_LM="memorial_lm";//祭奠栏目
-  public static String MEMORIAL_COMMENT="memorial_comment";//祭奠详情
-  public static String MEMORIAL_COMMENTPRAISE="memorial_commentpraise";//祭奠评论点赞
-  public static String MEMORIAL_MSSG="memorial_mssg";//祭奠献词
-  public static String MEMORIAL_FOCUSON="memorial_focuson";//祭奠关注
-  public static String MEMORIAL_CIRCLE="memorial_circle";//祭奠亲友圈
-  public static String MEMORIAL_TRIBUTE="memorial_tribute";//祭奠贡品
-  public static String MEMORIAL_TRIBUTETYPE="memorial_tributetype";//祭奠贡品类型
-  public static String MEMORIAL_TRIBUTECOM="memorial_tributecom";//祭奠贡品祭奠记录
-  public static String MEMORIAL_DEAD="memorial_dead";//祭奠逝者
-  public static String MEMORIAL_EULOGY="memorial_eulogy";//祭奠悼文
-  public static String MEMORIAL_EULOGYREADING="memorial_eulogyreading";//祭奠悼文阅读
-  public static String MEMORIAL_RELATED="memorial_related";//祭奠与我相关
+  public static String MEMORIAL_INFO="memorial_info";
+  public static String MEMORIAL_LM="memorial_lm";
+  public static String MEMORIAL_COMMENT="memorial_comment";
+  public static String MEMORIAL_COMMENTPRAISE="memorial_commentpraise";
+  public static String MEMORIAL_MSSG="memorial_mssg";
+  public static String MEMORIAL_FOCUSON="memorial_focuson";
+  public static String MEMORIAL_CIRCLE="memorial_circle";
+  public static String MEMORIAL_TRIBUTE="memorial_tribute";
+  public static String MEMORIAL_TRIBUTETYPE="memorial_tributetype";
+  public static String MEMORIAL_TRIBUTECOM="memorial_tributecom";
+  public static String MEMORIAL_DEAD="memorial_dead";
+  public static String MEMORIAL_EULOGY="memorial_eulogy";
+  public static String MEMORIAL_EULOGYREADING="memorial_eulogyreading";
+  public static String MEMORIAL_RELATED="memorial_related";
   
   public static String WEIXIN_PAYCONFIG="weixin_payconfig";//微信配置
-  public static String WX_FOOTFUNCTION="wx_footfunction";//黄页底部菜单
-  public static String DATA_WXFUNCTION="data_wxfunction";//黄页菜单
+  public static String WX_FOOTFUNCTION="wx_footfunction";
+  public static String DATA_WXFUNCTION="data_wxfunction";
   public static String DATA_ABOUTUS="data_aboutus";//地区
   
-  public static String WX_COMPANY="wx_company";//黄页
-  public static String DATA_WXNEWS="data_wxnews";//新闻
+  public static String WX_COMPANY="wx_company";
+  public static String DATA_WXNEWS="data_wxnews";
   public static String WX_COMPANYTS="wx_companyts";
   
   public static String DATA_USER="data_user";//管理员
-  public static String WX_COMCOMMENT="wx_comcomment";//黄页评论
+  public static String WX_COMCOMMENT="wx_comcomment";
   
   public static String FOOTPRIT="footprit";//用户足迹
   
-  public static String ANIMATION_INFO="animation_info";//动画
+  public static String ANIMATION_INFO="animation_info";
   public static String WX_VOTE="wx_vote";//投票
   public static String WX_VOTETITLE="wx_votetitle";//投票
   
@@ -166,15 +166,15 @@ public class PubConstants
   public static String SUC_LUCKYDROWYD="suc_luckydrawyd";//报名统计
   
   
-  public static String WHD_WHDCOUNT="whd_whdcount";//微活动统计
-  public static String WHD_DRAWBOX="whd_drawbox";//摇奖
-  public static String WHD_REWARDRECORD="whd_rewardrecord";//中奖统计
+  public static String WHD_WHDCOUNT="whd_whdcount";
+  public static String WHD_DRAWBOX="whd_drawbox";
+  public static String WHD_REWARDRECORD="whd_rewardrecord";
   public static String WHD_YHJJL="whd_yhjjl";
-  public static String WHD_DRAWBOXYZM="whd_drawboxyzm";//抽奖限制
-  public static String WHD_PREFERENTIAL="whd_preferential";//刮刮乐
+  public static String WHD_DRAWBOXYZM="whd_drawboxyzm";
+  public static String WHD_PREFERENTIAL="whd_preferential";
   public static String WHD_PREDETAIL="whd_predetail";
   public static String WX_PHOTOVIEW="wx_photoview";
-  public static String WX_HOUSELIST="wx_houselist";//全景图
+  public static String WX_HOUSELIST="wx_houselist";
   public static String WX_COLLECT="wx_collect";//收藏
   public static String WX_ZAN="wx_zan";//赞
   public static String PRO_BOARD="pro_board";//回复
@@ -200,20 +200,20 @@ public class PubConstants
   public static String WX_EXPERIENCE="wx_experience";//经验
   
   public static String SUC_RANKING="suc_ranking";//排行榜
-  public static String SUC_HOUSETYPE="suc_housetype";//黄页分类
+  public static String SUC_HOUSETYPE="suc_housetype";
   public static String SUC_SHOPTYPE="suc_shoptype";//商品分类
   public static String SUC_SHARECONFIG="suc_shareconfig";//分享和配置
-  public static String SUC_HOUSECOMMENT="suc_housecomment";//黄页评论
-  public static String SUC_HOUSEFUNC="suc_housefunc";//黄页菜单
-  public static String SUC_SIGNINMONTH="suc_signinmonth";//签到月份
-  public static String SUC_SIGNIN="suc_signin";//签到
-  public static String SUC_SIGNINSTATIS="suc_signinstatis";//签到统计
+  public static String SUC_HOUSECOMMENT="suc_housecomment";
+  public static String SUC_HOUSEFUNC="suc_housefunc";
+  public static String SUC_SIGNINMONTH="suc_signinmonth";
+  public static String SUC_SIGNIN="suc_signin";
+  public static String SUC_SIGNINSTATIS="suc_signinstatis";
   public static String SUC_SHOPPINGCART="suc_shoppingcart";//购物车
   
   public static String SHOP_USERADDRESS="shop_useraddress";//用户地址
   public static String EMAIL_EMAIL="email_email";//邮件
-  public static String SUC_TASK="suc_task";//任务
-  public static String SUC_TASKRESULT="suc_taskresult";//任务
+  public static String SUC_TASK="suc_task";
+  public static String SUC_TASKRESULT="suc_taskresult";
   
   
   public static String WEIXIN_WXMESSAGE = "weinxinMessageInfo";
@@ -226,9 +226,9 @@ public class PubConstants
   public static String WX_UNKNOWMESS="wx_unknowmess";//
   
   public static String KF_USER="kf_user";//客服
-  public static String BBS_STICK="bbs_stick";//论坛置顶
-  public static String BBS_AREWARD="bbs_areward";//论坛悬赏
-  public static String SUC_EXCEPTIONAL="bbs_exceptional";//打赏管理
+  public static String BBS_STICK="bbs_stick";
+  public static String BBS_AREWARD="bbs_areward";
+  public static String SUC_EXCEPTIONAL="bbs_exceptional";
   public static String SUC_ORDERNO="suc_orderno";//订单编号
   public static String SET_PRICE="SET_PRICE";//价格
   public static String SET_COURIER="courier";//快递
@@ -244,8 +244,8 @@ public class PubConstants
   public static String PUB_FROMUSERFUNC="pub_fromuserfunc";//个人中心菜单
   public static String PUB_FROMUSERMB="pub_fromusermb";//个人中心模板
   
-  public static String SHOP_BARGAININGSTATI="shop_bargainingstati";//砍价统计
-  public static String SHOP_BARGAININGYD="shop_bargainingyd";//砍价预定 
+  public static String SHOP_BARGAININGSTATI="shop_bargainingstati";
+  public static String SHOP_BARGAININGYD="shop_bargainingyd"; 
   public static String SHOP_ODERFORMPRO="shop_oderformpro";//订单商品 
   public static String WEIXIN_TOKEN="weixin_token";//微信token
   public static String SHOP_BULKYD="shop_bulkyd";//团购预定
@@ -256,49 +256,49 @@ public class PubConstants
   public static String PUB_IOC="pub_ioc";//图标
   public static String PUB_FONT="pub_font";//字体
   public static String SUC_ROLL="suc_roll";//滚动
-  public static String SUC_INTEGRALRECORD="suc_integralrecor";//积分统计
-  public static String USER_USERLOGINDETAIL="user_userlogindetail";//积分统计
+  public static String SUC_INTEGRALRECORD="suc_integralrecor";
+  public static String USER_USERLOGINDETAIL="user_userlogindetail";
   public static String USER_FRIEDSINFO="user_friendsinfo";//好友管理
   
-  public static String SUC_JOBCOMPAY="suc_jobcompay";//招聘求职
-  public static String SUC_JOBEMPLOYMENT="suc_jobemployment";//招聘信息
-  public static String SUC_JOBSEEKERS="suc_jobseekers";//求职信息
-  public static String SUC_JOBSUPPLYDEMAND="suc_jobsupplydemand";//房屋租赁
-  public static String SUC_JOBSEEKERTF="suc_jobseekerstf";//求职信息
-  public static String SUC_JOBTYPE="suc_jobtype";//求职信息类型
-  public static String SUC_JOBCAR="suc_jobcar";//二手车
+  public static String SUC_JOBCOMPAY="suc_jobcompay";
+  public static String SUC_JOBEMPLOYMENT="suc_jobemployment";
+  public static String SUC_JOBSEEKERS="suc_jobseekers";
+  public static String SUC_JOBSUPPLYDEMAND="suc_jobsupplydemand";
+  public static String SUC_JOBSEEKERTF="suc_jobseekerstf";
+  public static String SUC_JOBTYPE="suc_jobtype";
+  public static String SUC_JOBCAR="suc_jobcar";
   
-  public static String SUC_SIGNUP="suc_signup";//报名
-  public static String SUC_SIGNCOMMENT="suc_signcomment";//报名详情
+  public static String SUC_SIGNUP="suc_signup";
+  public static String SUC_SIGNCOMMENT="suc_signcomment";
   
   public static String SUC_ACTIVITYINFO="suc_activityinfo";//活动实体
   public static String SUC_ACTIVITYYD="suc_activityyd";//活动预订
   public static String SUC_ACTIVITYCARD="suc_activitycard";//活动卡卷
   public static String SUC_ACTIVITYDETAIL="suc_activitydetail";//活动详情
   
-  public static String SUC_MARK="suc_mark";//纪念馆通用
-  public static String SUC_MARKCOMMENT="suc_markcomment";//纪念馆通用
+  public static String SUC_MARK="suc_mark";
+  public static String SUC_MARKCOMMENT="suc_markcomment";
  
-  public static String SUC_FARM="farm";//农场
-  public static String SUC_FARMPRODUCT="farmproduct";//农产品
-  public static String SUC_FARMPCARD="farmcard";//农场卡卷
-  public static String SUC_FARMPPROPS="farmprops";//农场道具
-  public static String SUC_FARMPYD="farmyd";//农产品预订
-  public static String SUC_FARMPFOOT="farmfoot";//农场动态
-  public static String SUC_FARMPYDDETAIL="farmyddetail";//农产品预订详情
-  public static String SUC_DATING="suc_dating";//恋爱实体
-  public static String SUC_DATINGFOOT="suc_datingfoot";//恋爱足迹
-  public static String SUC_DATINGPHOTO="suc_datingphoto";//恋爱相册
-  public static String SUC_DATINGCONDITION="suc_datingcondition";//恋爱条件
-  public static String SUC_DATINGGOLD="suc_datinggold";//恋爱金币
-  public static String SUC_DATINGMEMEBER="suc_datingmember";//恋爱会员
-  public static String SUC_DATINGORDER="suc_datingorder";//恋爱订单
-  public static String SUC_DATINGSERVICE="suc_datingservice";//恋爱客服
-  public static String SUC_DATINGSERVICETRUMPET="suc_datingservicetrumpet";//恋爱客服
-  public static String SUC_DATINGAUDIT="suc_datingaudit";//婚恋审核机制
-  public static String SUC_DATINGREWARD="suc_datingreward";//婚恋奖励机制
-  public static String SUC_DATINGSTATISTICAL="suc_datingstatical";//婚恋好友统计
-  public static String SUC_DATINGSTAR="suc_datingstar";//婚恋好友统计
+  public static String SUC_FARM="farm";
+  public static String SUC_FARMPRODUCT="farmproduct";
+  public static String SUC_FARMPCARD="farmcard";
+  public static String SUC_FARMPPROPS="farmprops";
+  public static String SUC_FARMPYD="farmyd";
+  public static String SUC_FARMPFOOT="farmfoot";
+  public static String SUC_FARMPYDDETAIL="farmyddetail";
+  public static String SUC_DATING="suc_dating";
+  public static String SUC_DATINGFOOT="suc_datingfoot";
+  public static String SUC_DATINGPHOTO="suc_datingphoto";
+  public static String SUC_DATINGCONDITION="suc_datingcondition";
+  public static String SUC_DATINGGOLD="suc_datinggold";
+  public static String SUC_DATINGMEMEBER="suc_datingmember";
+  public static String SUC_DATINGORDER="suc_datingorder";
+  public static String SUC_DATINGSERVICE="suc_datingservice";
+  public static String SUC_DATINGSERVICETRUMPET="suc_datingservicetrumpet";
+  public static String SUC_DATINGAUDIT="suc_datingaudit";
+  public static String SUC_DATINGREWARD="suc_datingreward";
+  public static String SUC_DATINGSTATISTICAL="suc_datingstatical";
+  public static String SUC_DATINGSTAR="suc_datingstar";
   public static String PUB_LOCATION="pub_location";//位置
   
   public static String ANDROID_PERMISSIONS="android_permissions";//安卓权限管理
@@ -316,26 +316,26 @@ public class PubConstants
   public static String WEIXIN_REDPACKINFO="weixin_redpackinfo";//微信红包
   public static String SHOP_SHOPMSG="shop_shopmsg";//店铺消息
   public static String SHOP_SHOPCUSTSERVICE="shop_shopcustservice";//店铺客服
-  public static String SUC_SIGNINDRAW="suc_signindraw";//签到摇奖
-  public static String SUC_SIGNINDRAWTJ="suc_signindrawtj";//签到摇奖统计
+  public static String SUC_SIGNINDRAW="suc_signindraw";
+  public static String SUC_SIGNINDRAWTJ="suc_signindrawtj";
   
-  public static String SUC_LAWYERINFO="suc_lawyerinfo";//律师实体
-  public static String SUC_LAWYERBUS="suc_lawyerbus";//律师服务实体
-  public static String SUC_LAWYERGOD="suc_lawyergod";//律师商品实体
-  public static String SUC_LAWYERORD="suc_lawyerord";//律师订单实体
-  public static String SUC_LAWYERCOMMENT="suc_lawyercomment";//律师评论
+  public static String SUC_LAWYERINFO="suc_lawyerinfo";
+  public static String SUC_LAWYERBUS="suc_lawyerbus";
+  public static String SUC_LAWYERGOD="suc_lawyergod";
+  public static String SUC_LAWYERORD="suc_lawyerord";
+  public static String SUC_LAWYERCOMMENT="suc_lawyercomment";
   
-  public static String HOU_HOUSERVE="hou_houserve";//家政服务
-  public static String HOU_SERVETYPE="hou_servetype";//家政分类
-  public static String HOU_HOUSEWIFERYINFO="hou_housewiferyinfo";//保洁员
-  public static String HOU_HOUSEWIFERYADDRESS="hou_housewiferyaddress";//家政地址
-  public static String HOU_HOUSEWIFERYMEMBERS="hou_housewiferymembers";//家政会员
-  public static String HOU_HOUSEWIFERYPROCESS="hou_housewiferyprocess";//家政流程
-  public static String HOU_HOUSEWIFERYORDER="hou_housewiferyorder";//家政订单
-  public static String HOU_HOUSEWIFERYSCOPE="hou_housewiferyscope";//家政范围
-  public static String HOU_HOUSEWIFERYSECURITY="Uhou_housewiferysecurity";//家政保障
-  public static String HOU_HOUSEWIFERYFEATURES="Uhou_housewiferyfeatures";//家政优势
-  public static String HOU_HOUSEWIFERYPROBLEM="Uhou_housewiferyproblem";//家政问题
+  public static String HOU_HOUSERVE="hou_houserve";
+  public static String HOU_SERVETYPE="hou_servetype";
+  public static String HOU_HOUSEWIFERYINFO="hou_housewiferyinfo";
+  public static String HOU_HOUSEWIFERYADDRESS="hou_housewiferyaddress";
+  public static String HOU_HOUSEWIFERYMEMBERS="hou_housewiferymembers";
+  public static String HOU_HOUSEWIFERYPROCESS="hou_housewiferyprocess";
+  public static String HOU_HOUSEWIFERYORDER="hou_housewiferyorder";
+  public static String HOU_HOUSEWIFERYSCOPE="hou_housewiferyscope";
+  public static String HOU_HOUSEWIFERYSECURITY="Uhou_housewiferysecurity";
+  public static String HOU_HOUSEWIFERYFEATURES="Uhou_housewiferyfeatures";
+  public static String HOU_HOUSEWIFERYPROBLEM="Uhou_housewiferyproblem";
   
   
   public static String PARTTIME_ASSETS="parttime_assets";
