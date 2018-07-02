@@ -13,7 +13,7 @@ public class InteProstore extends ReflectionDBObject {
     
 	private String custid;
 	private String  fromUserid;  
-	private float money;
+	private double money;
 	/**
 	 * 预存类型   
 	 * ps_account 开通账户
@@ -24,6 +24,7 @@ public class InteProstore extends ReflectionDBObject {
 	/**
 	 * 0-返金额中
 	 * 1-已返完
+	 * 2-冻结
 	 */
 	private int state;
 	private Date createdate;
@@ -41,7 +42,7 @@ public class InteProstore extends ReflectionDBObject {
 	public void setFromUserid(String fromUserid) {
 		this.fromUserid = fromUserid;
 	}
-	public float getMoney() {
+	public double getMoney() {
 		return money;
 	}
 	public void setMoney(float money) {

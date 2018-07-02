@@ -769,6 +769,41 @@ public class UserAction extends GeneralAction<UserInfo>
 	public void ceshi(){
 		System.out.println("---->"+DateUtil.getTimesnight());
 	}
-	
+	/**
+	 * 手动确认回本state（1.其他异常2.回本ID不存在3.回本账户为空0.冻结回本账户成功）
+	 */
+	public void confirmBack() {
+		HashMap<String, Object>sub_Map=new HashMap<>();
+		sub_Map.put("state",1);
+		SpringSecurityUtils.getCurrentUser().getId();
+		//回本ID
+		String selfromid=Struts2Utils.getParameter("selfromid");
+		if(StringUtils.isNotEmpty(selfromid)) {
+			HashMap<String, Object>whereMap=new HashMap<>();
+			whereMap.put("fromUserid",selfromid);
+			whereMap.put("type","ps_account");
+			DBObject db=basedao.getMessage(PubConstants.INTEGRAL_PROSTORE, whereMap);
+			if(db!=null) {
+				//冻结回本账户
+				InteProstore inteProstore=(InteProstore) UniObject.DBObjectToObject(db, InteProstore.class);
+				inteProstore.setState(2);
+				inteProstore.setEnddate(new Date());
+				basedao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore); 
+				//冻结成功
+				sub_Map.put("state",0);
+				
+			}else {
+				//回本账户不存在
+				sub_Map.put("state",3);
+			}
+		}else {
+			//回本ID为空
+			sub_Map.put("state",2);
+		}
+		 
+		String json = JSONArray.fromObject(sub_Map).toString();
+	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
+	}
 	
 }
