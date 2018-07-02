@@ -170,7 +170,9 @@ public class ShopAction extends GeneralAction {
 		// 加载分类
 		whereMap.clear();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		System.out.println(shopmb);
 		if (shopmb != null) {
+			System.out.println("加载店铺分类");
 			whereMap.put("parentid", Long.parseLong(shopmb.get("_id").toString()));
 			// 加载滚动
 			Struts2Utils.getRequest().setAttribute("roll",
@@ -183,6 +185,7 @@ public class ShopAction extends GeneralAction {
 			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
 			Struts2Utils.getRequest().setAttribute("typelist", typelist);
 		}else{
+			System.out.println("加载商城分类");
 			// 加载滚动
 			Struts2Utils.getRequest().setAttribute("roll",
 					wwzService.getRoll(custid, "shopmb-"));
@@ -191,10 +194,10 @@ public class ShopAction extends GeneralAction {
 					wwzService.getslide(custid, "shopmb-"));
 			whereMap.clear();
 			whereMap.put("parentid", 0L);
-			sortMap.put("sort", -1);
+			sortMap.put("sort",1);
 			// 获取店铺分类
-			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap);
-			Struts2Utils.getRequest().setAttribute("typelist", typelist);
+			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
+			Struts2Utils.getRequest().setAttribute("typelist", typelist); 
 			
 		}
 		DBObject share = new BasicDBObject();
