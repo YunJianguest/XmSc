@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 婚恋实体
  * @author lsp
  *
  */
@@ -34,17 +35,53 @@ public class DatingInfo extends ReflectionDBObject{
 	 * 电话
 	 */
 	private String tel;
+	/**
+	 * 交友目的
+	 */
 	private String purpose;
+	/**
+	 * 恋爱观念
+	 */
 	private String concept;
+	/**
+	 * 首次见面
+	 */
 	private String firstmeet;
+	/**
+	 * 喜欢的约会地点
+	 */
 	private String likeDatingSite;
+	/**
+	 * 身高
+	 */
 	private int height;
+	/**
+	 * 婚姻状态
+	 */
 	private int marriage;
+	/**
+	 * 收入
+	 */
 	private int income;
+	/**
+	 * 学历
+	 */
 	private int record;
+	/**
+	 * 职业
+	 */
 	private String professional;
+	/**
+	 * 体重
+	 */
 	private int weight;
+	/**
+	 * 星座
+	 */
 	private String constellation;
+	/**
+	 * 生日
+	 */
 	private String birthday;
 	private Date   createdate; 
 	/**
