@@ -2,6 +2,7 @@ package com.lsp.suc.entity;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 签到月份管理
  * @author lsp
  *
  */

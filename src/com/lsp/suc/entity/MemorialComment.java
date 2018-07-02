@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.mongodb.ReflectionDBObject;
 /**
+ * 祭奠详情管理
  * @author lsp
  *
  */
@@ -11,11 +12,23 @@ public class MemorialComment extends ReflectionDBObject{
 
 	private String custid;
 	private String fromUserid; 
+	/**
+	 * 祭奠ID
+	 */
 	private Long   wid;
+	/**
+	 * 祭奠人名称
+	 */
 	private String nickname;
+	/**
+	 * 祭奠人头像
+	 */
 	private String headimgurl;
 	private Date   createdate;
 	private String content;
+	/**
+	 * 贡品
+	 */
 	private String tribute; 
 	private int    sort;
 	public Long getWid() {

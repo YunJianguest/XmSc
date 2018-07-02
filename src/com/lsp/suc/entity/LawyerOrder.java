@@ -21,8 +21,17 @@ public class LawyerOrder extends ReflectionDBObject{
 	 private Date createdate;
 	 private Double price;
 	 private int  state;
+	 /**
+	  * 期望结束日期
+	  */
 	 private String enddate;
+	 /**
+	  * 需求
+	  */
 	 private String demand;
+	 /**
+	  * 图片附件，补充资料，以“，”隔开
+	  */
 	 private String attachment;
 	 public String getCustid() {
 		return custid;
