@@ -401,7 +401,7 @@
     <div class='div-group-5'>
     	<div class="col-4" style="padding-right: 5px;">
     		<a>
-    			<img src=''>
+    			<img src='${ctx}/img/admin.jpg'>
     		</a>
         </div>
         <div class="col-4" style="padding-left: 5px;">

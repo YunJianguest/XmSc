@@ -21,9 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.JsonObject;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
+import com.lsp.pub.entity.Code;
 import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.WxToken;
+import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.JmsService;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -550,5 +552,79 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		Struts2Utils.getRequest().setAttribute("user",user);
 		return "commend";
 	}
+	
+	/**
+	 * 生成验证码
+	 */
+	public void   createTelCode() {
+		HashMap<String, Object>sub_map=new HashMap<>();
+		sub_map.put("state",1);
+		String tel=Struts2Utils.getParameter("tel");
+		String code=UserUtil.createVipNo(6);
+		if (code!=null&&tel!=null) {
+			System.out.println(code);
+			Code code2=new Code();
+			code2.setCode(code);
+			code2.setCreatedate(new Date());
+			code2.setType(0);
+			code2.setValue(tel);
+			GetAllFunc.telcode.put(tel, code2);
+			boolean bl=wwzservice.sendSMS(tel, "您的验证码为"+code+"，有效时间10分钟。");
+			if (bl) {
+				sub_map.put("state",0);
+			} 
+		}
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	public void signup() throws Exception{
+		Map<String,Object>sub_map = new HashMap<>();
+		String tel=Struts2Utils.getParameter("tel");
+		String yzcode=Struts2Utils.getParameter("yzcode"); 
+		String password=Struts2Utils.getParameter("password"); 
+		Code code=GetAllFunc.telcode.get(tel); 
+		if (code!=null&&code.getCode().equals(yzcode)) { 
+			 //验证时间
+			if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
+				WxUser user = new WxUser();
+				user.set_id(UUID.randomUUID().toString());
+				user.setTel(tel);
+				user.setPassword(password);
+				basedao.insert(PubConstants.DATA_WXUSER, user);
+				String lscode=wwzservice.createcode(fromUserid);
+				sub_map.put("lscode", lscode);//注册成功
+				sub_map.put("state", 0);//注册成功
+			}
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	/**
+	 * 
+	 * @throws Exception
+	 */
+    public void signin() throws Exception{
+    	 HashMap<String, Object> whereMap = new HashMap<String, Object>();
+   	     Map<String, Object> sub_map = new HashMap<String, Object>(); 
+   	     sub_map.put("state", 1);//操作失败
+   	     String tel =Struts2Utils.getParameter("tel"); 
+   	     String password =Struts2Utils.getParameter("password");
+   	     
+   	     whereMap.put("tel", tel);
+  	     if (StringUtils.isNotEmpty(tel)&&StringUtils.isNotEmpty(password)) {
+  		     DBObject user = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+  		     if(user != null){
+ 			   if(user.get("password").toString().equals(password)) {
+                   String lscode=wwzservice.createcode(fromUserid); 
+                   sub_map.put("state", 0);//登陆成功
+                   sub_map.put("lscode", lscode);
+ 			   }
+  		    }
+	    }
+  	    String json = JSONArray.fromObject(sub_map).toString();
+	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+    }
 	 
 }

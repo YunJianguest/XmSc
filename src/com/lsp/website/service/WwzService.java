@@ -34,6 +34,7 @@ import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Fromusermb;
 import com.lsp.pub.entity.GetAllFunc;
+import com.lsp.pub.entity.HttpClient;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.upload.FtpUtils;
@@ -1240,6 +1241,39 @@ public class WwzService {
 		return false;
 
 	}
+	/**
+	 * 
+	 * 减少冻结积分
+	 */
+	public boolean  delbmtz(String price, String fromUserid, String type, String custid, DBObject wxuser,int isfreeze) throws Exception{
+		try {
+			
+			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			if(StringUtils.isNotEmpty(custid)){
+				whereMap.put("custid", custid);
+			}
+			whereMap.put("fromUserid", fromUserid);
+			whereMap.put("type", type);
+			whereMap.put("isfreeze", isfreeze);
+			
+			DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INFO, whereMap);
+			if (db != null) {
+				IntegralInfo  info = (IntegralInfo) UniObject.DBObjectToObject(db, IntegralInfo.class);
+				info.setValue(info.getValue()-Double.parseDouble(price));
+				baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
+	
 
 	/**
 	 * 根据类型获取价格
@@ -2501,9 +2535,10 @@ public class WwzService {
 	 * @param custid
 	 * @param lx(0为正常交易，1为系统赠送)
 	 * @param jflx(0普通积分，1为PP，2为LL)
+	 * @param isfreeze(0-未冻结   1-已冻结)
 	 * @return
 	 */
-	public boolean addjf(String price, String fromUserid, String type, String custid, int lx, int jflx) {
+	public boolean addjf(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze) {
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if (lx == 0) {
@@ -2517,6 +2552,7 @@ public class WwzService {
 						info.setType(type);
 						info.setState(0);
 						info.setCustid(custid);
+						info.setIsfreeze(isfreeze);
 						baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0, 0)) {
 							return true;
@@ -2553,6 +2589,7 @@ public class WwzService {
 							info.setType(type);
 							info.setState(0);
 							info.setCustid(custid);
+							info.setIsfreeze(isfreeze);
 							baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0, 0)) {
 								if (updateTotalIntegral(jflx, price)) {
@@ -2624,5 +2661,23 @@ public class WwzService {
 		}
 		return null;
 	}
+	
+	/**
+     * 发送短信验证码
+     * @param tel
+     * @param content
+     * @return https://IP+Port/ws/BatchSend2.aspx?CorpID=*&Pwd=*&Mobile=*&Content=*&SendTime=* 
+     */
+
+    public boolean sendSMS(String tel,String content) {
+    	//https://sdk2.028lk.com/sdk2/ 
+    	String url="https://sdk2.028lk.com/sdk2/BatchSend2.aspx?CorpID="+SysConfig.getProperty("lk_sms_id")+"&Pwd="+SysConfig.getProperty("lk_sms_pwd")+"&Mobile="+tel+"&Content="+content;  
+    	String str=HttpClient.http(url, null);
+    	System.out.println(str);
+    	if (Integer.parseInt(str.trim())>0) {
+    		return true; 
+		}
+		return false; 
+    }
 
 }

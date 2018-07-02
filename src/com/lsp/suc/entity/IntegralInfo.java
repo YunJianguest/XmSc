@@ -50,7 +50,11 @@ public class IntegralInfo extends ReflectionDBObject {
      * 积分种类（0为普通积分1为PP币，2为LL币）
      */
     private int jflx;
-    
+    /**
+     * 0未冻结
+     * 1冻结
+     */
+    private int isfreeze;
 	public int getJflx() {
 		return jflx;
 	}
@@ -148,6 +152,14 @@ public class IntegralInfo extends ReflectionDBObject {
 
 	public void setFid(String fid) {
 		this.fid = fid;
+	}
+
+	public int getIsfreeze() {
+		return isfreeze;
+	}
+
+	public void setIsfreeze(int isfreeze) {
+		this.isfreeze = isfreeze;
 	}
 	
 

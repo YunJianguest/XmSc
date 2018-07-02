@@ -83,5 +83,27 @@ public class LoginAction extends ActionSupport
 	return "move";
 	   
   }
+  /***
+   * 登录页面
+   * @return
+   */
+  public String signin(){
+	  return "signin";
+  }
+  /***
+   * 注册页面
+   * @return
+   */
+  public String signup(){
+	  return "signup";
+  }
+  
+  /***
+   * 忘记密码
+   * @return
+   */
+  public String forgetpw(){
+	  return "forgetpw";
+  }
  
 }

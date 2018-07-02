@@ -129,49 +129,7 @@ function getbbscount() {
         <script type="text/javascript">
 		getusercount();
 		</script> 
-        <div class="col-sm-6 col-md-3">
-          <div class="panel panel-primary panel-stat">
-            <div class="panel-heading">
-
-              <div class="stat">
-                <div class="row">
-                  <div class="col-xs-4">
-                    <img src="${ctx }/bracket/images/is-city.png" alt="" />
-                  </div>
-                  <div class="col-xs-4">
-                    <small class="stat-label">黄页数</small>
-                    <span id="housecount">?</span>
-                   
-                  </div>
-                  <div class="col-xs-4">
-                   <small class="stat-label">总流量</small>
-                   <span id="housereading">?</span>
-                  </div>
-                </div><!-- row -->
-
-                <div class="mb15"></div>
-
-                  <div class="row">
-                      <div class="col-xs-6">
-                          <small class="stat-label">昨日增加</small>
-                          <h4>+<span id="housezcount"></span>个</h4>
-                      </div>
-
-                      <div class="col-xs-6">
-                          <small class="stat-label">近30日增加</small>
-                          <h4>+<span id="houseycount"></span>个</h4>
-                      </div>
-                     
-                  </div>
-
-              </div><!-- stat -->
-
-            </div><!-- panel-heading -->
-          </div><!-- panel -->
-        </div><!-- col-sm-6 -->
-        <script type="text/javascript">
-		gethousecount();
-		</script> 
+       
         <div class="col-sm-6 col-md-3">
           <div class="panel panel-dark panel-stat">
             <div class="panel-heading">
@@ -215,45 +173,7 @@ function getbbscount() {
 			getshopcount();
 
 		</script>
-		 
-          <div class="col-sm-6 col-md-3">
-              <div class="panel panel-red panel-stat">
-                  <div class="panel-heading">
-                      <div class="stat">
-                          <div class="row">
-                              <div class="col-xs-4">
-                                  <img src="${ctx }/bracket/images/is-men.png" alt="" />
-                              </div>
-                              <div class="col-xs-4">
-                                  <small class="stat-label">帖子数</small>
-                                  <span id="bbscount">?</span>
-                              </div>
-                               <div class="col-xs-4">
-                               <small class="stat-label">总流量</small>
-                               <span id="bbsreading">?</span>
-                                </div>
-                          </div><!-- row -->
-                          <div class="mb15"></div>
-                          <div class="row">
-                              <div class="col-xs-6">
-                                  <small class="stat-label">昨日增加</small>
-                                  <h4>+<span id="bbszcount"></span></h4>
-                              </div>
-                              <div class="col-xs-6">
-                                  <small class="stat-label">近30日增加</small>
-                                  <h4>+<span id="bbsycount"></span></h4>
-                              </div>
-                          </div>
-
-                      </div><!-- stat -->
-
-                  </div><!-- panel-heading -->
-              </div><!-- panel -->
-          </div><!-- col-sm-6 -->
-          <script type="text/javascript">
-			getbbscount();
-
-			</script>
+        
          <security:authorize ifAllGranted="ROLE_100105">
           <div class="col-sm-6 col-md-3">
               <div class="panel panel-success panel-stat">

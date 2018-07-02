@@ -2,7 +2,7 @@
 <%@ include file="/webcom/taglibs.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"> 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="pragma" content="no-cache">
@@ -380,13 +380,13 @@
              style="z-index: 99;left: 0px;">
             <div class=" overflow-hidden border-radius5 bg-hui-qj line-lu">
                 <div class="col-10 bg-bai" style="height: 25px;">
-                    <input class=" width-10 txt-c line-height35 zi-hui" style="background-color: transparent;line-height: 25px;"
+                    <input class=" width-10 line-height35 zi-hui" style="background-color: transparent;line-height: 25px;"
                            type="text" id="sel" value="搜索" onfocus="if(value=='搜索'){value=''}"
                            onblur="if (value ==''){value='搜索'}">
                 </div>
                 <a href="javascript:ajaxsel()">
                     <div class="col-2 txt-c bg-bai" style="height: 25px;">
-                        <i class="fa fa-search zi-hui" style="line-height: 25px;"></i>
+                        <i class="fa fa-search zi-hui" style="line-height: 25px;font-size:16px;"></i>
                     </div>
                 </a>
             </div>
@@ -395,9 +395,9 @@
     <c:if test="${not empty entity.searchcolor }">
         <div class="pt-5 pb-5 pr-5 overflow-hidden pl-5 cmp640 position-f width-10"
              style="z-index: 99;left: 0px;background-color:#${entity.searchcolor}">
-            <div class=" overflow-hidden border-radius5 bg-hui-qj line-lu">
+            <div class=" overflow-hidden  bg-hui-qj line-lu" style="border-radius:15px;">
                 <div class="col-10 bg-bai" style="height: 25px;">
-                    <input class=" width-10 txt-c line-height35 zi-hui" style="background-color: transparent;line-height: 25px;"
+                    <input class=" width-10 line-height35 zi-hui" style="background-color: transparent;line-height: 25px;padding-left:10px;"
                            type="text" id="sel" value="搜索" onfocus="if(value=='搜索'){value=''}"
                            onblur="if (value ==''){value='搜索'}">
                 </div>
@@ -523,6 +523,23 @@
             </div>
         </div>
     </font>
+       <div class='div-group-5'>
+    	<div class="col-4" style="padding-right: 5px;">
+    		<a>
+    			<img src='${ctx}/img/admin.jpg' style='width:100%;'>
+    		</a>
+        </div>
+        <div class="col-4" style="padding-left: 5px;">
+       		<a>
+    			<img src='${ctx}/img/admin.jpg' style='width:100%;'>
+    		</a>
+        </div>
+        <div class="col-4" style="padding-right: 5px;">
+        	<a>
+    			<img src='${ctx}/img/admin.jpg' style='width:100%;'>
+    		</a>
+        </div>
+    </div>	
     <div class="div-group-5">
         <div class="col-6" style="padding-right: 5px;" id="ajaxdivleft">
         </div>

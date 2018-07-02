@@ -9,6 +9,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.lsp.integral.entity.InteProstore;
 import com.lsp.integral.entity.Miner;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence; 
@@ -18,6 +20,9 @@ import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
+import com.lsp.shop.entiy.OrderFormpro;
+import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.website.service.WwzService;
 import com.mongodb.DBObject;
 
 import net.sf.json.JSONArray;
@@ -37,6 +42,8 @@ public class MinersAction extends GeneralAction<Miner> {
 	private MongoSequence mongoSequence;
 	private Miner entity = new Miner();
 	private Long _id;
+	@Autowired
+	private WwzService wwzService;
 	
 	public void set_id(Long _id) {
 		this._id = _id;
@@ -178,30 +185,41 @@ public class MinersAction extends GeneralAction<Miner> {
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String id = Struts2Utils.getParameter("id");
 		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_MINER, id);
+		
 		if(db != null){
 			if(db.get("price")!=null){
-				whereMap.put("fromUserid", fromUserid);
-		        //type为shop_bmzt是商城收益
-		        whereMap.put("type", "shop_bmzt");
-		        whereMap.put("isfreeze", 1);
-		        DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, whereMap);
-		        
-		        if(dbObject !=null){
-		        	if(dbObject.get("money")!=null){
-		        		if(Double.parseDouble(dbObject.get("money").toString())>Double.parseDouble(db.get("price").toString())){
-		        			//添加预付积分
-		        			
-		        			//减少冻结积分
-		        			
-		        			sub_map.put("state", 1);//兑换成功
-		        		}else{
-		        			sub_map.put("state", 2);//积分不足
-		        		}
-		        	}
-		        	
-		        }else{
-		        	sub_map.put("state", 2);//积分不足
-		        }
+				boolean flag = wwzService.checkTotalIntegral(1,db.get("price").toString());
+				if(flag){
+					
+					whereMap.put("fromUserid", fromUserid);
+			        //type为shop_bmzt是商城收益
+			        whereMap.put("type", "shop_bmzt");
+			        whereMap.put("isfreeze", 1);
+			        DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_INFO, whereMap);
+			       
+			        
+			        if(dbObject !=null){
+			        	IntegralInfo info = (IntegralInfo) UniObject.DBObjectToObject(dbObject, IntegralInfo.class);
+			        		if(info.getValue()>Double.parseDouble(db.get("price").toString())){
+			        			//添加预付积分
+			        			InteProstore prostore = new InteProstore();
+			        			prostore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+			        			prostore.setFromUserid(fromUserid);
+			        			//prostore.set
+			        			
+			        			//减少冻结积分IntegralInfo
+			        			wwzService.delbmtz(db.get("price").toString(), fromUserid, "shop_bmzt", custid, null, 1);
+			        			sub_map.put("state", 1);//兑换成功
+			        		}else{
+			        			sub_map.put("state", 2);//积分不足,无法兑换
+			        		}
+
+			        	
+			        }
+				}else{
+					sub_map.put("state", 3);//无法兑换，pp币发行量已完
+				}
+				
 			}
 		}
 		String json = JSONArray.fromObject(sub_map).toString();

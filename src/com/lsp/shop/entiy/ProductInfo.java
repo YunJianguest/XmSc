@@ -163,7 +163,7 @@ public class ProductInfo extends ReflectionDBObject{
      * */
     private double percent;
     /**
-	 * 商品类型 3-大众区商品  4-特约区商品
+	 * 商品类型 3-大众区商品  4-特约区商品   5-会员区商品
 	 */
     private int    goodstype;
     

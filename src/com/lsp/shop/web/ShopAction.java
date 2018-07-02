@@ -3199,11 +3199,11 @@ public class ShopAction extends GeneralAction {
 				
 				//记录当前购物用户的提成
 				wwzService.addjf(bl+"",fromUserid,
-						"shop_bmzt", custid, 1,1);
+						"shop_bmzt", custid, 1,1,1);
 				wwzService.addjf(wwzService.getGivingPro(bl_ty),fromUserid,
-						"shop_bmzt", custid, 1,2);
+						"shop_bmzt", custid, 1,2,0);
 				wwzService.addjf(wwzService.getGivingPro(bl_hy),fromUserid,
-						"shop_bmzt", custid, 1,2);
+						"shop_bmzt", custid, 1,2,0);
 				bl_ty=Double.parseDouble(BaseDecimal.division(BaseDecimal.multiplication(wwzService.getGivingPro(bl_ty),sett.getDzqtc()+""),"100"));
 				bl_hy=Double.parseDouble(BaseDecimal.division(BaseDecimal.multiplication(wwzService.getGivingPro(bl_hy),sett.getHyqtc()+""),"100"));
 				//获取直推人员 
@@ -3215,11 +3215,11 @@ public class ShopAction extends GeneralAction {
 					if(tjuser!=null) {
 						//记录提成 
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1);
+								"shop_bmzt", custid, 1,1,0);
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl_ty+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,2);
+								"shop_bmzt", custid, 1,2,0);
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl_hy+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,2);
+								"shop_bmzt", custid, 1,2,0);
 						 
 					  	
 					} 
@@ -3229,7 +3229,7 @@ public class ShopAction extends GeneralAction {
 					if(tjuser!=null) {
 						//记录提成
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getBetween()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1);
+								"shop_bmzt", custid, 1,1,0);
 						 
 						
 					} 
@@ -3243,14 +3243,14 @@ public class ShopAction extends GeneralAction {
 					if(tjuser!=null) {
 						//记录提成
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1);
+								"shop_bmzt", custid, 1,1,0);
 						
 					} 
 					//获取间接推荐人员 （当推荐人为管理员时候间接推荐的奖励也发放到管理员账户）
 					if(tjuser!=null) {
 						//记录提成
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getBetween()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1);
+								"shop_bmzt", custid, 1,1,0);
 						
 					} 
 				}
@@ -3262,7 +3262,7 @@ public class ShopAction extends GeneralAction {
 				if (user != null) {
 					// 记录提成
 					wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameDepartment()+""),"100"), user.get("_id").toString(),
-							"shop_bmzt", custid, 1,1);
+							"shop_bmzt", custid, 1,1,0);
 					
 
 					// 获取县级
@@ -3273,7 +3273,7 @@ public class ShopAction extends GeneralAction {
 					if (user != null) {
 						// 记录提成
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameCounty()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-								custid, 1,1);
+								custid, 1,1,0);
 						
 
 						// 县级存在，获取市级
@@ -3284,7 +3284,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1);
+									custid, 1,1,0);
 							
 
 							// 县级存在，市级存在，获取省级 
@@ -3294,7 +3294,7 @@ public class ShopAction extends GeneralAction {
 							if (user != null) {
 								// 记录提成
 								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1);
+										custid, 1,1,0);
 							}
 						}else {
 							
@@ -3307,7 +3307,7 @@ public class ShopAction extends GeneralAction {
 							if (user != null) {
 								// 记录提成
 								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1);
+										custid, 1,1,0);
 								
  
 							}
@@ -3324,7 +3324,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1);
+									custid, 1,1,0);
 							
 
 							// 县级不存在， 市级存在，获取省级 
@@ -3334,7 +3334,7 @@ public class ShopAction extends GeneralAction {
 							if (user != null) {
 								// 记录提成
 								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1);
+										custid, 1,1,0);
 							}
 						}else {
 							//县级不存在，市级不存在， 获取省级
@@ -3346,7 +3346,7 @@ public class ShopAction extends GeneralAction {
 							if (user != null) {
 								// 记录提成
 								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1);
+										custid, 1,1,0);
 							 
 							}
 							
@@ -3363,7 +3363,7 @@ public class ShopAction extends GeneralAction {
 					
 					//县域存在 记录提成
 					wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-							custid, 1,1);
+							custid, 1,1,0);
 					
 					// 县级存在，获取市级
 
@@ -3373,7 +3373,7 @@ public class ShopAction extends GeneralAction {
 					if (user != null) {
 						// 记录提成
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-								custid, 1,1);
+								custid, 1,1,0);
 						
 
 						// 县级存在，市级存在，获取省级 
@@ -3383,7 +3383,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1);
+									custid, 1,1,0);
 						}
 					}else {
 						
@@ -3396,7 +3396,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1);
+									custid, 1,1,0);
 							
 
 						}
@@ -3414,7 +3414,7 @@ public class ShopAction extends GeneralAction {
 					if (user != null) {
 						// 记录提成
 						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-								custid, 1,1);
+								custid, 1,1,0);
 						
 
 						// 县级不存在， 市级存在，获取省级 
@@ -3424,7 +3424,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1);
+									custid, 1,1,0);
 						}
 					}else {
 						//县级不存在，市级不存在， 获取省级
@@ -3436,7 +3436,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1);
+									custid, 1,1,0);
 						 
 						}
 						
@@ -3852,8 +3852,15 @@ public class ShopAction extends GeneralAction {
 
 	}
 	
-	public String main() throws Exception{
-		return "main";
+	public String productlist() throws Exception{
+		getLscode();
+		String goodstype =Struts2Utils.getParameter("goodstype");
+		String ptitle =Struts2Utils.getParameter("ptitle");
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
+		return "productlist";
 	}
+	
 
 }

@@ -337,17 +337,6 @@
                                 </div>
                                 <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        代理价格
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="dlprice" value="<s:property value='dlprice'/>" name="dlprice"
-                                               placeholder="请输入代理价格">
-                                    </div>
-                                </div>
-                                <div class="col-2 pl-10">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         库存数量
                                     </div>
                                     <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
@@ -369,45 +358,6 @@
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
-                                    <div class="size14  weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        每人可购买的次数
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <select id="gmcs" name="gmcs" class="select2" data-placeholder="请选择">
-                                            <option value="0">无限制</option>
-                                            <option value="1">一次</option>
-                                            <option value="2">二次</option>
-                                            <option value="3">三次</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-2 pl-10">
-                                    <div class=" size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        折扣选择
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <select id="bq" name="bq" class="select2" data-placeholder="请选择"
-                                                onchange="changebq()">
-                                            <c:if test="${empty isjf}">
-                                             <option value="0">无</option>
-                                             <option value="1">包邮</option>
-                                             <option value="2">热卖</option>
-                                             <option value="3">定制</option>
-                                             <option value="4">折扣</option>
-                                             <option value="5">下架</option>
-                                             <option value="6">半价</option>
-                                             <option value="7">秒杀</option>
-                                             <option value="8">砍价</option>
-                                             <option value="9">团购</option>
-                                             <option value="10">通用</option>
-                                            </c:if> 
-                                            <c:if test="${not empty isjf}">
-                                              <option value="11">积分兑换</option> 
-                                            </c:if> 
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10"
                                          style="padding-left: 2px;">
                                         快递价格
@@ -417,29 +367,6 @@
                                                type="text"
                                                id="kdprice" value="${entity.kdprice}" name="kdprice"
                                                placeholder="请输入快递价格">
-                                    </div>
-                                </div>
-                                <div class="col-2 pl-10" id="kj">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        最多可砍价到多少钱
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="lowprice" value="<s:property value='lowprice'/>" name="lowprice"
-                                               placeholder="最多可砍价到多少钱">
-                                    </div>
-                                </div>
-                                <div class="col-2 pl-10">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                        返还积分
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="jffh" value="${entity.jffh}" name="jffh"
-                                               placeholder="请输入返还数量">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -454,87 +381,6 @@
                                             <option value="1">隐藏</option>
                                             
                                         </select>
-                                    </div>
-                                </div>
-                                <c:if test="${not empty isjf}">
-                                 <div class="col-2 pl-10">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                        积分兑换
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="jfdh" value="${entity.jfdh}" name="jfdh"
-                                               placeholder="请输入兑换数量">
-                                    </div>
-                                 </div>
-                                </c:if>
-                               
-                                <div class="col-2 pl-10 tgrs">
-                                    <div class="size14 weight500  pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                        参团人数
-                                    </div>
-                                    <div class="overflow-hidden">
-                                        <select id="pcount" name="pcount" class="select2"
-                                                data-placeholder="请选择">
-                                            <option value="0">选请择</option>
-                                            <option value="2">2人</option>
-                                            <option value="5">5人</option>
-                                            <option value="10">10人</option>
-                                            <option value="20">20人</option>
-                                            <option value="30">30人</option>
-                                            <option value="50">50人</option>
-                                            <option value="60">60人</option>
-                                            <option value="70">70人</option>
-                                            <option value="80">80人</option>
-                                            <option value="100">100人</option>
-                                            <option value="300">300人</option>
-                                            <option value="500">500人</option>
-                                            <option value="1000">1000人</option>
-                                            <option value="2000">2000人</option>
-                                            <option value="3000">3000人</option>
-                                            <option value="5000">5000人</option>
-                                            <option value="10000">10000人</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-2 pl-10 tg">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                        发起单位
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="unit" value="${entity.unit}" name="unit"
-                                               placeholder="请输入单位名称">
-                                    </div>
-                                </div>
-                                <div class="col-2 tg">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                        团购价格
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="ppice" value="${entity.ppice}" name="ppice"
-                                               placeholder="请输入团购价格">
-                                    </div>
-                                </div>
-                                
-                <div class="col-2 pl-10">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                       提成百分比(%)
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="percent" value="${entity.percent}" name="percent"
-                                               placeholder="请输入提成百分比">
                                     </div>
                                 </div>
                             </div> 
