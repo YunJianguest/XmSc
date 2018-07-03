@@ -127,7 +127,7 @@
 				
 			</ul>
 		</div>
-		
+		<%@include file="/webcom/shop-foot.jsp" %>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
