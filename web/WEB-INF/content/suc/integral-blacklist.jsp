@@ -159,7 +159,7 @@
             <li class=" button_group1 line-right zhiding">
                 <a href="#" onclick="no1()">
                     <div class="zi-hui-wx txt-c weight500 div2">
-                        积分充值
+                        PP币充值
                     </div>
                 </a>
             </li>
@@ -177,79 +177,79 @@
                 <li class="pt-15 col-3 zhiding">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(1)">
-                        100积分
+                        100PP币
                     </div>
                 </li>
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(3)">
-                        300积分
+                        300PP币
                     </div>
                 </li>
 
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(6)">
-                        600积分
+                        600PP币
                     </div>
                 </li>
 
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(10)">
-                        1000积分
+                        1000PP币
                     </div>
                 </li>
 
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(15)">
-                        1500积分
+                        1500PP币
                     </div>
                 </li>
 
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(20)">
-                        2000积分
+                        2000PP币
                     </div>
                 </li>
 
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(30)">
-                        3000积分
+                        3000PP币
                     </div>
                 </li>
 
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(50)">
-                        5000积分
+                        5000PP币
                     </div>
                 </li>
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(100)">
-                        10000积分
+                        10000PP币
                     </div>
                 </li>
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(200)">
-                        20000积分
+                        20000PP币
                     </div>
                 </li>
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(300)">
-                        30000积分
+                        30000PP币
                     </div>
                 </li>
                 <li class="pt-15 col-3">
                     <div class="div3 width-9_5 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25"
                          onclick="setmoney(500)">
-                        50000积分
+                        50000PP币
                     </div>
                 </li>
 
@@ -272,107 +272,22 @@
         <div class="clear pt-50">
             <div class=" zi-bai pull-left bg-green hang30"
                  style="border-radius: 0px 100px 100px 0px;padding-left:15px;padding-right: 25px; line-height:32px;">
-                <font size="2">积分规则</font>
+                <font size="2">PP币规则</font>
             </div>
         </div>
 
         <div class="zi-hui-tq div-group-10 clear weight500" style="line-height:30px;">
             <font size="2">
-                <div><i class="pr-5">1:</i>1元=100积分</div>
-                <div><i class="pr-5">2:</i>积分充值成功后积分实时到帐。</div>
-                <div><i class="pr-5">3:</i>在商城购买某些商品时可用积分抵现。</div>
-                <div><i class="pr-5">4:</i>积分可以用来在论坛赞赏，兑换物品等。</div>
+                <div><i class="pr-5">1:</i>1元=100PP币</div>
+                <div><i class="pr-5">2:</i>PP币充值成功后PP币实时到帐。</div>
+                <div><i class="pr-5">3:</i>在商城购买某些商品时可用PP币。</div> 
             </font>
         </div>
         <!--结束-->
 
 
     </div>
-
-    <!--第二个-->
-    <div class="display-none" id="no2-tanchu">
-
-        <div class="pl-5 pr-5 maring-a clear pt-40 overflow-hidden">
-            <div class="overflow-hidden weight500">
-                <div class="txt-c zi-hui-wx pl-5 pr-5 line-lu pt-6 border-radius3 overflow-hidden"
-                     style="height:35px;">
-                    <input class="width-10 zi-hui-wx weight500" style="height:20px; line-height:24px" type="text"
-                           name=""
-                           value="请输入提现金币数"
-                           onfocus="if(this.value=='请输入提现金币数'){this.value=''};this.style.color='#666666';"
-                           onblur="if(this.value==''||this.value=='请输入提现金币数'){this.value='请输入提现金币数';this.style.color='#aaa';}">
-                </div>
-            </div>
-        </div>
-
-        <div class="pt-10 pl-5 pr-5 clear zi-hui-tq">
-            <font size="2">
-                <div class="txt-l weight500">
-                    现有:<i class="zi-green pl-5">500</i>金币
-                    <a href="#"><i class="pl-10 zi-cheng ">（全部提现）</i></a>
-                </div>
-            </font>
-        </div>
-
-
-        <div class="clear pt-25">
-
-            <div class=" width-9_5 maring-a overflow-hidden yListr3">
-
-                <li class="pt-15 zhiding">
-                    <div class="div3 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25">
-                        微信帐号：js5512
-                    </div>
-                </li>
-
-                <ul class="pt-15">
-                    <div class="div3 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25">
-                        支付宝帐号：开发中
-                    </div>
-                </ul>
-
-                <ul class="pt-15">
-                    <div class="div3 maring-a txt-c zi-hui-wx line-lu border-radius3 hang25">
-                        银行帐号：开发中
-                    </div>
-                </ul>
-
-            </div>
-        </div>
-
-
-        <div class="pt-45 clear">
-            <a href="#">
-                <div class="btn-green txt-c border-radius5 maring-a width-9_5 zi-bai"
-                     style="height:40px;line-height:42px;">
-                    确认(可兑换人民币4.5元)
-                </div>
-            </a>
-        </div>
-
-        <font size="2">
-            <div class="pt-10 clear zi-hui-tq txt-l width-9_5 maring-a weight500">
-                <a href="#"><i class="zi-green">绑定提现帐号</i></a>
-            </div>
-        </font>
-
-
-        <!--简介-->
-        <div class="pt-50">
-            <div class=" zi-bai pull-left bg-green hang30 line-height30"
-                 style="border-radius: 0px 100px 100px 0px;padding-left:15px;padding-right: 25px; line-height:32px;">
-                <font size="2">提现说明</font>
-            </div>
-        </div>
-
-
-        <div class="zi-hui-tq div-group-10 clear weight500" style="line-height:30px;">
-            <font size="2">
-                <div><i class=""></i>提现功能暂时还没有开启请您谅解</div>
-            </font>
-        </div>
-        <!--结束-->
-    </div>
+ 
 
 </main>
 <script type="text/javascript">
