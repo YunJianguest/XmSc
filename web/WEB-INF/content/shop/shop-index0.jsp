@@ -382,7 +382,7 @@
 			</div>
 			</c:if>
 			<!-- 分类 -->
-			<ul class="mui-table-view mui-grid-view mui-grid-9">
+			<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 20px;">
 			 <c:if test="${not empty typelist}">
 			 <c:forEach items="${typelist}" var="bean"  begin="0" end="7">
                  <c:if test="${not empty bean.url}">
@@ -414,10 +414,15 @@
 						<div class="mui-col-xs-9" style="color: #000;display: flex;">
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul>
-								 <c:if test="${not empty roll}">
-                                          <%@ include file="/webcom/roll.jsp" %>
-                                 </c:if>
+							<ul id='news' style='line-height:30px;'>
+								<c:forEach items="${roll}" var="bean">
+								   <c:if test="${not empty bean.url}">
+								   <li><a href="${bean.url}">${bean.title}</a></li>
+								   </c:if>
+								   <c:if test="${empty bean.url}">
+								   <li><a href="javascript:void(0);">${bean.title}</a></li>
+								   </c:if> 
+								 </c:forEach>  
 							</ul>
 						</div>
 					</div>
@@ -474,6 +479,21 @@
 
 		</script>
 		<script type="text/javascript">
+		
+		/* $(document).ready(function() {
+				setInterval('autoScroll("#news")', 1000)
+		}); 
+		function autoScroll(obj) {
+			var lineh = $(obj).find('li:first').height();
+			$(obj).find('ul:first').animate({
+				marginTop: -lineh
+			}, 500, function() {
+				console.log($(this))
+				$(this).css({
+					marginTop: 0
+				}).find('li:first').appendTo(this)
+			})
+		}  */
     ajaxjz();
     $(window).scroll(function () {
         var offsetY = $(window).scrollTop();

@@ -114,7 +114,7 @@
 				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 				$('#phone').blur(function() {
 					if($(this).val() == '') {
-						mui.alert('请输入手机号', )
+						mui.alert('请输入手机号')
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
@@ -123,7 +123,7 @@
 					var count = 60;
 					var timer;
 					if($('#phone').val() == '') {
-						mui.alert('请输入手机号', )
+						mui.alert('请输入手机号')
 					} else if(!reg.test($('#phone').val())) {
 						mui.alert('手机号码不正确')
 					} else {
@@ -174,7 +174,6 @@
 					}
 				}
 				$('#reg').click(function(){
-					alert('4444');
 					mui($(this)).button('loading');
 					$.ajax({
 						type:"post",
@@ -183,10 +182,18 @@
 						data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val()},
 						success:function(json){
 							if(json){
-								alert(json.state);
 								if(json.state == 0){
 									location.href='${ctx}/integral/miners!list.action?lscode='+json.lscode;
+								}else if(json.state == 1){
+									alert('请求超时，重新注册');
+								}else if(json.state == 2){
+									alert('用户不存在');
+								}else if(json.state == 3){
+									alert('验证码输入错误');
+								}else if(json.state == 4){
+									alert('验证码超时');
 								}
+								
 							}else{
 								mui($(this)).button('reset');
 							}

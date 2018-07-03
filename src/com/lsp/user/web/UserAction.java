@@ -244,7 +244,6 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  roleid=Struts2Utils.getParameter("roleid");
 			String  type=Struts2Utils.getParameter("type");
 			String  funcs=Struts2Utils.getParameter("funcs");
-			System.out.println("funcs--->"+funcs);
 			String  fxmb=Struts2Utils.getParameter("mb");
 			String  area=Struts2Utils.getParameter("area");
 			String  province=Struts2Utils.getParameter("province");

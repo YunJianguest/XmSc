@@ -9,6 +9,9 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
 		<script src="${ctx}/app/js/iosOverlay.js"></script>
         <script src="${ctx}/app/js/spin.min.js"></script>
         <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
@@ -28,13 +31,30 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				
 			}
-			
+			.mui-btn.miner-btnbuy{
+				/*background-color:linear-gradient(to bottom top, #e2a60b,#facd04);*/
+				background: linear-gradient(to bottom right, #e2a60b , #facd04);
+				color: #fff;
+			}
 			.mui-table-view .mui-media-object{
 				margin-top: 15px;
 				max-width: 60px;
 				height: 60px;
 				vertical-align: middle;
+			}
+			.mui-table-view-cell.mui-media{
+				margin-bottom: 2px;
+				color:#fff;
+				background:none;
+			}
+			.mui-table-view-cell.mui-media .miner-txt-cont{
+				font-size:16px;
+			}
+			.mui-table-view-cell.mui-media p.mui-ellipsis{
+				color:#ddd;
+				font-size:12px;
 			}
 		</style>
 		<script type="text/javascript">
@@ -86,7 +106,7 @@
 		    		var v = json.list; 
 		    		 for(var i=0;i<v.length;i++){  
 		    		    xszf+='<li class="mui-table-view-cell mui-media miner-media">'
-							+'<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">'
+							+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].logo+'">'
 						    +'<div class="mui-media-body miner-txt">'
 							+'<div class="miner-txt-cont mui-col-xs-9">'+v[i].ptitle+''
 							+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].price+'</span></p>'
@@ -94,7 +114,7 @@
 							+'<p class="mui-ellipsis"><span>提成百分比:</span><span>'+v[i].percent+'</span></p>'	
 							+'</div>'	
 							+'<div class="miner-buyBtn mui-col-xs-3">'
-							+'<button type="button" class="mui-btn mui-btn-green miner-btnbuy" onclick="rechange('+v[i]._id+')">兑换</button>'
+							+'<button type="button" class="mui-btn miner-btnbuy" onclick="rechange('+v[i]._id+')">兑换</button>'
 							+'</div></div></li>';
 					 }
 		    		fypage++;
@@ -142,12 +162,12 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">矿机购买</h1>
 		</header>
-		<div class="mui-content">
-			<ul class="mui-table-view">
+		<div class="mui-content" style="height: 100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
+			<ul class="mui-table-view" style="background: none;">
 				
 			</ul>
 		</div>
-		<%@include file="/webcom/shop-foot.jsp" %>
+		<%@include file="/webcom/shop-foot3.jsp" %>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -157,6 +177,41 @@
 			})
 			
 			ajaxjz();
+			  wx.config({
+				    debug: false,
+				    appId: '${token.appid}', 
+				    timestamp: '${token.timestamp}', 
+				    nonceStr: '${token.noncestr}', 
+				    signature: '${token.signature}',
+				    jsApiList: [ 'checkJsApi',
+				                 'onMenuShareTimeline',
+				                 'onMenuShareAppMessage',
+				                 'onMenuShareQQ',
+				                 'onMenuShareWeibo',
+				                 'hideMenuItems',
+				                 'showMenuItems'
+				                 ] 
+				});
+				wx.ready(function(){ 
+					var share={
+						    title: '${share.fxtitle}', // 分享标题
+						    desc: '${share.fxsummary}', // 分享描述
+						    link: '${share.fxurl}', // 分享链接
+						    imgUrl: '${filehttp}${share.fximg}', // 分享图标
+						    success: function () { 
+						      
+						    },
+						    cancel: function () { 
+						    	
+						    }
+						};
+					wx.onMenuShareAppMessage(share);
+					wx.onMenuShareTimeline(share);
+					wx.onMenuShareAppMessage(share);
+					wx.onMenuShareQQ(share);
+					wx.onMenuShareWeibo(share);
+				});
+
 		</script>
 	</body>
 

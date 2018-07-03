@@ -295,6 +295,17 @@ public class MinersAction extends GeneralAction<Miner> {
 	  }
 	  
 	  /***
+	   * 个人中心
+	   * @return
+	   */
+	  public String ownperson(){
+		  getLscode();
+		  Struts2Utils.getRequest().setAttribute("custid", custid);
+		  Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		  return "ownperson";
+	  }
+	  
+	  /***
 		 * 注册
 		 * @throws Exception
 		 */

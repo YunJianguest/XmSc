@@ -134,10 +134,10 @@
 						var timer = setInterval(countDown, 1000);
 						$.ajax({
 							type: "post",
-							url: "",
+							url: "${ctx}/user/fromuser!createTelCode.action",
 							async: true,
 							data: {
-								phone: $('#phone').val()
+								tel: $('#phone').val()
 							},
 							success: function(json) {
 
@@ -153,17 +153,25 @@
 						mui($(this)).button('loading');
 						$.ajax({
 							type:'post',
-							url:'',
+							url:'${ctx}/user/fromuser!changepw.action',
 							data:{
 								tel:$('#phone').val(),
 								verCode:$('#verCode').val(),
 								password:$('#password').val()
 							},
 							success:function(json){
-								if (json  == 1) {
-									location.href='login.html'
-								}else{
-									mui.alert('修改密码失败')
+								if (json.state  == 0) {
+									mui.alert('修改密码成功');
+								}else if(json.state ==1){
+									mui.alert('修改密码失败');
+								}else if(json.state ==2){
+									mui.alert('该账户不存在');
+								}else if(json.state ==3){
+									mui.alert('密码错误');
+								}else if(json.state ==4){
+									mui.alert('验证码错误');
+								}else if(json.state ==5){
+									mui.alert('验证码超时');
 								}
 							}
 						})

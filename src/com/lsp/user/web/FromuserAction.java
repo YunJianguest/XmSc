@@ -663,7 +663,6 @@ public class FromuserAction extends GeneralAction<WxUser>{
   	  String tel=Struts2Utils.getParameter("tel");
   	  String yzcode=Struts2Utils.getParameter("yzcode"); 
   	  String password=Struts2Utils.getParameter("password"); 
-  	  String newpassword=Struts2Utils.getParameter("newpassword");
   	  whereMap.put("tel", tel);
   	  DBObject dbObject =basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
   	  if(dbObject!=null){
@@ -673,7 +672,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
   				if (code!=null&&code.getCode().equals(yzcode)) { 
   					 //验证时间
   					if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
-  						user.setPassword(newpassword);
+  						user.setPassword(password);
   						basedao.insert(PubConstants.DATA_WXUSER, user);
   						sub_map.put("state", 0);//修改成功
   					}else{

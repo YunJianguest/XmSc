@@ -161,9 +161,13 @@
 	            	if(data.state==0){
 	            		alert('登陆成功');
 	            		window.location.href ="${ctx}/integral/miners!list.action?lscode="+data.lscode;
-	            	}else{
-	            		 alert("登录失败！");	
-	            	}
+	            	}else if(json.state == 1){
+						alert('请求超时，重新登录');
+					}else if(json.state == 2){
+						alert('用户不存在');
+					}else if(json.state == 3){
+						alert('密码错误');
+					}
 	            }
 	        });
 		} 
