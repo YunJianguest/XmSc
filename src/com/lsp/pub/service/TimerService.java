@@ -87,7 +87,9 @@ public class TimerService {
 					
 					//返回积分到直推用户
 					DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
-					 
+				    if(user.get("parentid")!=null) {
+				    	wwzservice.addjf(Double.parseDouble(price)*0.1+"", user.get("parentid").toString(),user.get("custid").toString(), dbObject.get("type").toString(),1,1,0);
+				    }
 					
 				}
 			}
