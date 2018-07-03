@@ -85,17 +85,20 @@
 	    		var xszf=$('.mui-table-view').html(); 
 		    	if(json.state=='0'){
 		    		var v = json.list; 
-		    		 for(var i=0;i<v.length;i++){  
-		    		    xszf+='<li class="mui-table-view-cell mui-media miner-media">'
-							+'<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">'
-						    +'<div class="mui-media-body miner-txt">'
-							+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].price+'</span></p>'
-						    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
-							+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
-							+'</div>'	
-							+'<div class="miner-buyBtn mui-col-xs-3">'
-							+'<button type="button" class="mui-btn mui-btn-green miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
-							+'</div></div></li>';
+		    		 for(var i=0;i<v.length;i++){ 
+		    			 if(v[i].enddate!=null){
+		    				  xszf+='<li class="mui-table-view-cell mui-media miner-media">'
+									+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].kj.logo+'">'
+								    +'<div class="mui-media-body miner-txt">'
+									+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].kj.price+'</span></p>'
+								    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
+									+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
+									+'</div>'	
+									+'<div class="miner-buyBtn mui-col-xs-3">'
+									+'<button type="button" class="mui-btn mui-btn-green miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
+									+'</div></div></li>';
+		    			 }
+		    		  
 					 }
 		    		fypage++;
 		    	}else{

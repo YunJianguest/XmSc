@@ -2,7 +2,7 @@ package com.lsp.integral.entity;
 
 import java.util.Date;
 
-
+import com.mongodb.DBObject;
 import com.mongodb.ReflectionDBObject;
 /**
  * 预存账单
@@ -29,6 +29,18 @@ public class InteProstore extends ReflectionDBObject {
 	private int state;
 	private Date createdate;
 	private Date enddate;
+	/**
+	 * 矿机Id
+	 */
+	private Long cid;
+	/**
+	 * 矿机运行时间
+	 */
+	private int time;
+	/**
+	 * 矿机
+	 */
+	private DBObject kj;
 
 	public String getCustid() {
 		return custid;
@@ -44,10 +56,7 @@ public class InteProstore extends ReflectionDBObject {
 	}
 	public double getMoney() {
 		return money;
-	}
-	public void setMoney(float money) {
-		this.money = money;
-	}
+	} 
 	public String getType() {
 		return type;
 	}
@@ -72,5 +81,27 @@ public class InteProstore extends ReflectionDBObject {
 	public void setEnddate(Date enddate) {
 		this.enddate = enddate;
 	}
+	public Long getCid() {
+		return cid;
+	}
+	public void setCid(Long cid) {
+		this.cid = cid;
+	}
+	public void setMoney(double money) {
+		this.money = money;
+	}
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
+	public DBObject getKj() {
+		return kj;
+	}
+	public void setKj(DBObject kj) {
+		this.kj = kj;
+	} 
+	 
 	
 }

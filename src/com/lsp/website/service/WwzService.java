@@ -1593,9 +1593,9 @@ public class WwzService {
 	 * @param custid
 	 * @param fromUserid
 	 * @param value
-	 * @param type
+	 * @param type  0增加1减少
 	 * @param isfreeze
-	 *            0--冻结积分增加 1--可使用积分增加
+	 *            0--冻结 1--可使用
 	 * @param lx
 	 *            0--PP 1--LL
 	 */
@@ -1615,30 +1615,70 @@ public class WwzService {
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
 			if (type == 0) {
+				//增加操作
 				if (lx == 0) {
-					if (isfreeze == 1) {// 冻结积分增加
-						ir.setProstore(ir.getProstore() + value);
-						ir.setValue(ir.getValue() + value);
-					} else if (isfreeze == 0) {// 可使用积分增加
-						ir.setUservalue(ir.getUservalue() + value);
-						ir.setValue(ir.getValue() + value);
+					//PP币种计算
+					if (isfreeze == 1) {// 冻结增加
+						ir.setProstore(ir.getProstore() + value); 
+					} else if (isfreeze == 0) {// 可使用增加
+						ir.setUservalue(ir.getUservalue() + value); 
 					}
+					ir.setValue(ir.getValue() + value);
 					baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 					return true;
 				} else if (lx == 1) {
-					if (isfreeze == 1) {// 冻结积分增加
+					//乐乐币种计算
+					if (isfreeze == 1) {// 冻结增加
 						ir.setLldjvalue(ir.getLldjvalue() + value);
-						ir.setLlzvalue(ir.getLlzvalue() + value);
-					} else if (isfreeze == 0) {// 可使用积分增加
-						ir.setLlkyvalue(ir.getLlkyvalue() + value);
-						ir.setLlzvalue(ir.getLlzvalue() + value);
+						
+					} else if (isfreeze == 0) {// 可用增加
+						ir.setLlkyvalue(ir.getLlkyvalue() + value); 
 					}
+					ir.setLlzvalue(ir.getLlzvalue() + value);
 					baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 					return true;
 				}
 
-			} else if (type == 1 && ir.getValue() > value) {
-				ir.setValue(ir.getValue() - value);
+			} else if (type == 1) {
+				//减少操作
+				if(lx==0) {
+					//PP盼盼币种计算
+					if(isfreeze == 1) {
+						if(ir.getProstore()>value) {
+							// 冻结减少
+							ir.setProstore(ir.getProstore()-value);
+						}
+					}else if(isfreeze == 0) {
+						if(ir.getUservalue()>value) {
+							// 可以使用减少
+							ir.setUservalue(ir.getUservalue()-value);
+						}
+					}
+					
+					
+					if(ir.getValue() > value) {
+						ir.setValue(ir.getValue() - value);
+					}
+				}else if(lx==1) {
+					//乐乐币种计算
+					if(isfreeze == 1) {
+						if(ir.getLldjvalue()>value) {
+							// 冻结减少
+							ir.setLldjvalue(ir.getLldjvalue()-value);
+						}
+					}else if(isfreeze == 0) {
+						if(ir.getLlkyvalue()>value) {
+							// 可以使用减少
+							ir.setLlkyvalue(ir.getUservalue()-value);
+						}
+					}
+					 
+					if(ir.getLlzvalue() > value) {
+						ir.setLlzvalue(ir.getLlzvalue() - value);
+					}
+				}
+				
+				
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
 			} else if (type == 2) {
@@ -2482,17 +2522,27 @@ public class WwzService {
 	 */
 	public boolean checkTotalIntegral(int type, String value) {
 		HashMap<String, Object> whereMap = new HashMap<>();
+		whereMap.put("_id",SysConfig.getProperty("custid"));
 		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
+			System.out.println(db);
+			String now="0";
+			String nows="0";
+			if(StringUtils.isNotEmpty(inteSetting.getNownum())) {
+				now=inteSetting.getNownum();
+			}
+			if(StringUtils.isNotEmpty(inteSetting.getNownums())) {
+				now=inteSetting.getNownums();
+			}
 			if (type == 1) {
 				if ((Double.parseDouble(inteSetting.getNum())
-						- Double.parseDouble(BaseDecimal.add(inteSetting.getNownum(), value))) > 0) {
+						- Double.parseDouble(BaseDecimal.add(now, value))) > 0) {
 					return true;
 				}
 			} else if (type == 2) {
 				if ((Double.parseDouble(inteSetting.getNums())
-						- Double.parseDouble(BaseDecimal.add(inteSetting.getNownums(), value))) > 0) {
+						- Double.parseDouble(BaseDecimal.add(nows, value))) > 0) {
 					return true;
 				}
 			}
@@ -2621,6 +2671,44 @@ public class WwzService {
 				}
 
 			}
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	/**
+	 * 减少积分
+	 * 
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param lx(0为正常交易，1为系统赠送)
+	 * @param jflx(0普通积分，1为PP，2为LL)
+	 * @param isfreeze(0-未冻结   1-已冻结)
+	 * @return
+	 */
+	public boolean deljf(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze) {
+		try {
+			//减少冻结积分
+			if(Double.parseDouble(price)>0) {
+				if(changeJf(custid, fromUserid, Double.parseDouble(price),1,isfreeze,0)) {
+					IntegralInfo info = new IntegralInfo();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+					info.setCreatedate(new Date());
+					info.setFromUserid(fromUserid);
+					info.setValue(Double.parseDouble(price));
+					info.setType(type);
+					info.setState(1);
+					info.setCustid(custid);
+					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					return true;
+				}
+			} 
 
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

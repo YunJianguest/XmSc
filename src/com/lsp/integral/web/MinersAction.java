@@ -15,6 +15,7 @@ import com.lsp.integral.entity.Miner;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence; 
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
@@ -179,47 +180,33 @@ public class MinersAction extends GeneralAction<Miner> {
 	public void saveMiner() throws Exception{
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
-		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		HashMap<String, Object> sortMap = new HashMap<String, Object>();
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		Struts2Utils.getRequest().setAttribute("lscode", lscode); 
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String id = Struts2Utils.getParameter("id");
-		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_MINER, id);
-		
+		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_MINER, Long.parseLong(id)); 
 		if(db != null){
-			if(db.get("price")!=null){
-				boolean flag = wwzService.checkTotalIntegral(1,db.get("price").toString());
-				if(flag){
-					
-					whereMap.put("fromUserid", fromUserid);
-			        //type为shop_bmzt是商城收益
-			        whereMap.put("type", "shop_bmzt");
-			        whereMap.put("isfreeze", 1);
-			        DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_INFO, whereMap);
-			       
-			        
-			        if(dbObject !=null){
-			        	IntegralInfo info = (IntegralInfo) UniObject.DBObjectToObject(dbObject, IntegralInfo.class);
-			        		if(info.getValue()>Double.parseDouble(db.get("price").toString())){
-			        			//添加预付积分
-			        			InteProstore prostore = new InteProstore();
-			        			prostore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
-			        			prostore.setFromUserid(fromUserid);
-			        			//prostore.set
-			        			
-			        			//减少冻结积分IntegralInfo
-			        			wwzService.delbmtz(db.get("price").toString(), fromUserid, "shop_bmzt", custid, null, 1);
-			        			sub_map.put("state", 1);//兑换成功
-			        		}else{
-			        			sub_map.put("state", 2);//积分不足,无法兑换
-			        		}
-
-			        	
-			        }
-				}else{
-					sub_map.put("state", 3);//无法兑换，pp币发行量已完
-				}
-				
+			if(db.get("price")!=null){  
+					boolean fag=wwzService.deljf(db.get("price").toString(), fromUserid, "shop_bmzt", custid, 1, 1, 1);
+					if(fag) {
+						Miner miner=(Miner) UniObject.DBObjectToObject(db, Miner.class);
+						InteProstore prostore = new InteProstore();
+						prostore.setCid(Long.parseLong(id));
+						prostore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+						prostore.setCreatedate(new Date());
+						prostore.setCustid(custid);
+						prostore.setFromUserid(fromUserid); 
+						prostore.setMoney(miner.getPrice()); 
+						prostore.setTime(miner.getTime());
+						prostore.setEnddate(DateUtil.addDay(new Date(),miner.getTime()));
+						prostore.setType("shop_bmzt");
+						prostore.setState(0);
+						prostore.setKj(db);
+						baseDao.insert(PubConstants.INTEGRAL_PROSTORE, prostore);
+						sub_map.put("state", 0); 
+					}else {
+						sub_map.put("state", 2);//积分不足
+					}
+				  
 			}
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
@@ -251,12 +238,11 @@ public class MinersAction extends GeneralAction<Miner> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
-		
+		sub_map.put("state", 1);
 		sortMap.put("createdate", -1); 
         whereMap.put("fromUserid", fromUserid);
         //type为shop_bmzt是商城收益
-        whereMap.put("type", "shop_bmzt");
-        whereMap.put("isfreeze", 0);
+        //whereMap.put("type", "shop_bmzt"); 
 		//分页
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
