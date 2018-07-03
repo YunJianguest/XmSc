@@ -55,7 +55,7 @@ import com.mongodb.DBObject;
  * @author lsp
  *
  */
-@Namespace("/suc")
+@Namespace("/wap/suc")
 @Results( { @Result(name ="reload", location = "integral.action", type = "redirect") })
 public class IntegralAction  extends GeneralAction<IntegralInfo>{
 

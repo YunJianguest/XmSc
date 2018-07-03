@@ -14,6 +14,7 @@ public class Fromuserfunc extends ReflectionDBObject{
 	private String ioc;
 	private String color;
 	private int sort;
+
 	public String getTitle() {
 		return title;
 	}
@@ -43,6 +44,7 @@ public class Fromuserfunc extends ReflectionDBObject{
 	}
 	public void setColor(String color) {
 		this.color = color;
-	} 
+	}
+
  
 }

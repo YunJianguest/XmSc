@@ -411,10 +411,10 @@
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
 						<div class="mui-col-xs-3" style="color: #F83111;font-size: 14px;">熊猫快报</div>
-						<div class="mui-col-xs-9" style="color: #000;display: flex;">
+						<div class="mui-col-xs-9" style="color: #000;display: flex;overflow: hidden;">
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul id='news' style='line-height:30px;'>
+							<ul id='news' style='line-height:30px;height:30px;'>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
 								   <li><a href="${bean.url}">${bean.title}</a></li>
@@ -435,17 +435,17 @@
 			<div class="mui-row ">
 				<ul class="mui-table-view mui-grid-view public">
 					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="${ctx}/shop/shoppro!promain.action?goodstype=3">
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3">
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/Public-banner.jpg">
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="${ctx}/shop/shoppro!promain.action?goodstype=4">
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4">
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/member-banner.jpg">
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-12">
-						<a href="${ctx}/shop/shoppro!promain.action?goodstype=5">
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5">
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/vip-banner.jpg">
 						</a>
 					</li>
@@ -480,7 +480,7 @@
 		</script>
 		<script type="text/javascript">
 		
-		/* $(document).ready(function() {
+		 $(document).ready(function() {
 				setInterval('autoScroll("#news")', 1000)
 		}); 
 		function autoScroll(obj) {
@@ -493,7 +493,7 @@
 					marginTop: 0
 				}).find('li:first').appendTo(this)
 			})
-		}  */
+		}  
     ajaxjz();
     $(window).scroll(function () {
         var offsetY = $(window).scrollTop();

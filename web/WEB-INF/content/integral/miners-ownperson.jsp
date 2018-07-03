@@ -127,174 +127,49 @@
     </div>
     </c:if>
    
-    <c:if test="${fn:length(func.lsfunc)>0}">
+    
       <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-    </c:if> 
-
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
+				<div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
+                     <i class="fa   line-height30"></i>
                    </div>
                   <div class="txt-c">
                     <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
+                     <div class="hang40 line-height40 zi-6b6b6b">矿机商城</div>
                     </font>
                   </div>
               </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
+              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
+                     <i class="fa   line-height30"></i>
                    </div>
                   <div class="txt-c">
                     <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
+                     <div class="hang40 line-height40 zi-6b6b6b">我的矿机</div>
                     </font>
                   </div>
               </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
+          <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/suc/integral!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
+                     <i class="fa   line-height30"></i>
+                   </div>
+                  <div class="txt-c">
+                    <font size="2">
+                     <div class="hang40 line-height40 zi-6b6b6b">我的盼盼币收益</div>
+                    </font>
+                  </div>
+              </div>
+              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
+                     <i class="fa   line-height30"></i>
+                   </div>
+                  <div class="txt-c">
+                    <font size="2">
+                     <div class="hang40 line-height40 zi-6b6b6b">我的乐乐币收益</div>
+                    </font>
+                  </div>
+              </div>
    
-     
-      <c:if test="${fn:length(func.lsfunc)>6}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-      </c:if> 
-        <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="6" end="11">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach> 
-    <c:if test="${fn:length(func.lsfunc)>12}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-    </c:if>   
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="12" end="17">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc} line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc} line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
-    <c:if test="${fn:length(func.lsfunc)>18}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-    </c:if>  
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="18" end="23">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
-    <c:if test="${fn:length(func.lsfunc)>24}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-    </c:if> 
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="24" end="29">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc} line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30 ${bean.color } maring-a border-radius5 zi-bai">
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
     <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
     <div class="clear hang10"></div> 
      

@@ -48,7 +48,7 @@ import com.mongodb.DBObject;
  * @author lsp
  *
  */
-@Namespace("/user")
+@Namespace("/wap/user")
 @Results({@org.apache.struts2.convention.annotation.Result(name="reload", location="fromuser.action",params={"fypage", "%{fypage}","nickname", "%{nickname}"}, type="redirect")})
 public class FromuserAction extends GeneralAction<WxUser>{
 	 private static final long serialVersionUID = -6784469775589971579L;

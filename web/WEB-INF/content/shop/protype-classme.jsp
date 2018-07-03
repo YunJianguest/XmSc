@@ -59,7 +59,7 @@
 			            		var list=json.list;
 					    		html+='<ul class="category-branch-list">' 
 					    		 for(var i=0;i<list.length;i++){
-					    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?mintypeid='+list[i]._id+'"><img src="${filehttp}/'+list[i].picurl+'"/><span>'+list[i].name+'</span></a></li>';	
+					    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&mintypeid='+list[i]._id+'"><img src="${filehttp}/'+list[i].picurl+'"/><span>'+list[i].name+'</span></a></li>';	
 					    		  } 
 					    		 html+='</ul>';
 					    	    $('.category-branch-content').html(html);

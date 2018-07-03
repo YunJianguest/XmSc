@@ -109,8 +109,8 @@ public class FromuserfuncAction extends GeneralAction<Fromuserfunc> {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.PUB_FROMUSERFUNC);
 			}
-			entity.set_id(_id); 
-			baseDao.insert(PubConstants.PUB_FROMUSERFUNC, entity); 
+			entity.set_id(_id);
+			baseDao.insert(PubConstants.PUB_FROMUSERFUNC, entity);
 			addActionMessage("成功添加!");
 		} catch (Exception e) {
 			e.printStackTrace();

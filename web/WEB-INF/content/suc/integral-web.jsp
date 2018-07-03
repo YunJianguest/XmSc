@@ -11,7 +11,7 @@
     <meta http-equiv="expires" content="0"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>${title}</title>
+    <title>我的盼盼币</title>
     <script src="${ctx}/app/js/jquery-1.8.3.js"></script>
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/> 
     <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
@@ -42,68 +42,30 @@
 	    		    xszf+='<a href="#"><div class="line-bottom zi-6 overflow-hidden txt-c">'
 	    		    +'<div class="col-3 pt-15 pb-10 sl">';
 	    		  
-	    		     if(v[i].type=='bbscomments'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛回复</font></div>';
+	    		     if(v[i].type=='ps_account'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">开通账户</font></div>';
 	    		    } 
-	    		      if(v[i].type=='bbsadd'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛发帖</font></div>';
+	    		      if(v[i].type=='tj_account'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">推荐平台代理</font></div>';
 	    		    } 
-	    		      if(v[i].type=='bbspraise'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛点赞</font></div>';
-	    		    } 
-	    		      if(v[i].type=='bbsreading'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛阅读</font></div>';
-	    		    } 
-	    		    if(v[i].type=='bbsstick'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛置顶</font></div>';
-	    		    } 
-	    		    if(v[i].type=='bbsareward'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛悬赏</font></div>';
-	    		    }
+	    		      if(v[i].type=='ps_recovery'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">回本后待返</font></div>';
+	    		    }   
 	    		    if(v[i].type=='jfcz'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">积分充值</font></div>';
 	    		    }
-	    		    if(v[i].type=='excep'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛打赏</font></div>';
+	    		    if(v[i].type=='shop_bmzt'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">商城收益</font></div>';
 	    		    }   
-	    		    if(v[i].type=='task'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">完成任务</font></div>';
-	    		     
+	    		    if(v[i].type=='shop_jfdh'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">下单使用</font></div>';
 	    		    } 
-	    		    if(v[i].type=='glycz'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">管理员充值</font></div>';
-	    		     
+	    		    if(v[i].type=='jf_withdraw'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">积分提现</font></div>';
+	    		    } 
+	    		    if(v[i].type=='shop_order'){
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">订单收益</font></div>';
 	    		    }
-	    		    if(v[i].type=='shop-fh'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">商城返还</font></div>';
-	    		    } 
-	    		    if(v[i].type=='luck-xh'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">活动消耗</font></div>';
-	    		    } 
-	    		    if(v[i].type=='luck-zj'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">活动获得</font></div>';
-	    		    } 
-	    		     if(v[i].type=='bbsshare'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">论坛分享</font></div>';
-	    		    } 
-	    		    if(v[i].type=='shop-dh'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">积分兑换</font></div>';
-	    		    } 
-	    		     if(v[i].type=='sczs'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">首次登陆赠送</font></div>';
-	    		    }
-	    		    if(v[i].type=='activity-kj'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">活动消耗</font></div>';
-	    		    }
-	    		    if(v[i].type=='activity-cy'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">活动消耗</font></div>';
-	    		    } 
-	    		    if(v[i].type=='subscribe-wx'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">关注赠送</font></div>';
-	    		    }
-	    		    if(v[i].type=='allshare'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">分享赠送</font></div>';
-	    		    }  
 	    		    xszf+='</div><div class="col-7 pt-15 pb-10"><font size="2">'+Date.prototype.format(v[i].createdate)+'</font></div>';
 	    		   if(v[i].state==1){
 	    		    xszf+='<div class="col-2 pt-15 pb-10"><font size="2">-'+v[i].value+'</font></div></div></a>'; 
@@ -133,12 +95,14 @@
 <main class="lock cmp640" id="section1"> 
     <div class="top_foot bg-hui-92 zi-bai hang40 line-height40 cmp640 line-bottom">
         <a href="#">
-            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的账户：<i class="zi-cheng">${entity.jf}</i></font>
+            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的盼盼币总计：<i class="zi-cheng">${jf.value}</i></font>
+            <font size="2">可用盼盼币：<i class="zi-cheng">${jf.prostore}</i></font>
+            <font size="2">冻结盼盼币：<i class="zi-cheng">${jf.uservalue}</i></font>
             </div>
         </a>
-        <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
+        <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
             <div class="pull-right zi-green weight500 pr-15"><font size="2">充值</font></div>
-        </a>
+        </a> --%>
     </div>
 
     <div class="txt-c zi-cheng  div-group-5 pt-50">

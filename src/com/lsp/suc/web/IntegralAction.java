@@ -416,10 +416,12 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("_id", fromUserid);
 		DBObject wxuser = wwzService.getWxUser(whereMap);
+		
 		Struts2Utils.getRequest().setAttribute("custid", custid);
-		wxuser.put("jf", wwzService.getJf(custid, fromUserid));
+		whereMap.clear();
+		DBObject dbObject =wwzService.getJfObj(custid, fromUserid);
 		Struts2Utils.getRequest().setAttribute("entity", wxuser);
-
+		Struts2Utils.getRequest().setAttribute("jf", dbObject);
 		return "web";
 	}
 

@@ -550,12 +550,16 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	/**
 	 * 推荐用户
 	 */
-	public String commend() throws Exception{
+	public String share() throws Exception{
 		getLscode();  
-		DBObject  user=wwzservice.getWxUser(fromUserid);
+		DBObject  user= basedao.getMessage(PubConstants.DATA_WXUSER, fromUserid);
+		System.out.println("user---->"+user);
 		Struts2Utils.getRequest().setAttribute("user",user);
-		return "commend";
+		Struts2Utils.getRequest().setAttribute("custid",custid);
+		return "share";
 	}
+	
+	
 	
 	/**
 	 * 生成验证码

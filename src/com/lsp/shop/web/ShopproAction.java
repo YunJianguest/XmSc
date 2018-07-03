@@ -355,7 +355,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 	 * 商品列表
 	 * 
 	 */
-	public String prolist() throws Exception{
+	public void prolist() throws Exception{
 		getLscode();
 		HashMap<String, Object>whereMap = new HashMap<>();
 		HashMap<String, Object>sortMap = new HashMap<>();
@@ -368,7 +368,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		String mintypeid =Struts2Utils.getParameter("mintypeid");
 		String goodstype =Struts2Utils.getParameter("goodstype");
 		String ptitle =Struts2Utils.getParameter("ptitle");
-		if(StringUtils.isNotEmpty(goodstype)){
+		/*if(StringUtils.isNotEmpty(goodstype)){
 			whereMap.put("goodstype", Integer.parseInt(goodstype));
 		}
 		if(StringUtils.isNotEmpty(typeid)){
@@ -381,18 +381,18 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 			Pattern pattern = Pattern.compile("^.*" + ptitle + ".*$",
 					Pattern.CASE_INSENSITIVE);
 			whereMap.put("ptitle", pattern);
-		}
+		}*/
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);
+		System.out.println("list--->"+list);
 		if(list.size()>0){
 			sub_map.put("state", 0);
 			sub_map.put("list", list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);		
-		return "promain";
 	}
 	
 }

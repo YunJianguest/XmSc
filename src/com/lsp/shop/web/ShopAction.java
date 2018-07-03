@@ -62,6 +62,7 @@ import com.lsp.suc.entity.Comunit;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxPayConfig;
+import com.lsp.weixin.entity.WxUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -95,6 +96,7 @@ public class ShopAction extends GeneralAction {
 		System.out.println("comid--->" + comid);
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
+		String comnums = Struts2Utils.getParameter("comnums");
 		WxToken token = null;
 		if(StringUtils.isNotEmpty(custid)){
 			token = GetAllFunc.wxtoken.get(custid);
@@ -236,6 +238,18 @@ public class ShopAction extends GeneralAction {
 			// 检测当前店铺
 			if (StringUtils.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid)))) {
 				Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
+			}
+		}
+		if(StringUtils.isNotEmpty(comnums)){
+			DBObject dbObject = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUserid);
+			System.out.println("db---->"+dbObject);
+			if(dbObject != null){
+				 WxUser user = (WxUser) UniObject.DBObjectToObject(dbObject, WxUser.class);
+				 if(user.getReno()==0){
+					 user.setReno(Integer.parseInt(comnums));
+					 System.out.println("userreno---->"+user.getReno());
+					 baseDao.insert(PubConstants.DATA_WXUSER, user);
+				 }
 			}
 		}
 		

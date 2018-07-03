@@ -8,6 +8,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			.mui-table-view .mui-media-object{
@@ -16,6 +17,9 @@
 				height: 60px;
 				vertical-align: middle;
 				border-radius: 5px;
+			}
+			.mui-card .mui-card-content img {
+				height: 124px;
 			}
 		</style>
 		<script type="text/javascript">
@@ -65,28 +69,39 @@
             issend = false;
             $.post('${ctx}/shop/shoppro!prolist.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
-                        var html = $('.mui-table-view').html();
-                        alert(json.state)
+            	console.log(json)
+                        var html = '';
                         if (json.state == 0) {
                             var v = json.list;
+                            /* html+='<div class="mui-content" style="padding-top: 44px;padding-bottom: 50px;background: #fff;">'
+                                +'<div class="mui-row ">'
+                            	+'<ul class="mui-table-view">'; */
                             for (var i = 0; i < v.length; i++) {
                                 if (i & 1 != 0) {
                                 	
-                                	html+='<li class="mui-table-view-cell mui-media">'
-                                	    +'<a href="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid=' + v[i]._id + '">'
-            		    	            +'<img class="mui-media-object mui-pull-left" src="img/banner-01.jpg">'
-            		    	            +'<div class="mui-media-body">'
-            		    	            +'<p class="mui-ellipsis">'+ v[i].ptitle+'</p>'
-            		    	            +'</div></a></li>';
+                                	html +='<li class="mui-table-view-cell mui-media mui-col-xs-6" >'
+                						+'<div class="mui-card" style="margin: 2px;">'
+                						+'<div class="mui-card-content">'
+                						+'<a href="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid=' + v[i]._id + '">'
+                						+'<img src="${filehttp}' + v[i].logo + '" />'
+                						+'</a>'	
+                						+'</div>'
+                						+'<div class="mui-card-footer" style="padding: 10px 5px;display: block;">'
+                						+'<span class="similar-product-text">' + v[i].ptitle + ' </span>'
+                						+'<div class="similar-product-info ">'	
+                						+'<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>'
+                						+'<span class="similar-product-shopCar"></span>'			
+                						+'</div></div></div></li>';		
             		    	              
             					
                                 }
                             }
+                          /*   html+='</ul></div></div>'; */
                             fypage++;
-                            $('.mui-table-view').html(html);
+                            $('.recomend').html(html);
                             
                         } else {
-                        	$('.mui-table-view').html('暂无数据');
+                        	$('.recomend').html('暂无数据');
                         }
                         issend = true;
                     }, "json")
@@ -99,13 +114,13 @@
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
 		    <h1 class="mui-title">商品列表</h1>
 		</header>
-		<div class="mui-content" style="padding-top: 44px;padding-bottom: 50px;background: #fff;">
-		    <div class="mui-row">
-		    	<ul class="mui-table-view">
-		    	  
-		    	   
-		    	</ul>
-		    </div>
+		<!-- <div id="showall"></div> -->
+		<div class='mui-content' >
+			<div class='mui-row'>
+				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;">
+					
+				</ul>
+			</div>
 		</div>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script type="text/javascript">
