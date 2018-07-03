@@ -159,6 +159,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		
 		String sid = Struts2Utils.getParameter("sid");
 		String oid = Struts2Utils.getParameter("oid");
 		String gid = Struts2Utils.getParameter("gid");
@@ -276,13 +277,10 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		String sid=Struts2Utils.getParameter("sid"); 
 		String oid=Struts2Utils.getParameter("oid"); 
 		String gid=Struts2Utils.getParameter("gid");
-		String desIscon=Struts2Utils.getParameter("desIscon"); 
-		String logisService=Struts2Utils.getParameter("logisService"); 
-		String serviceAtt=Struts2Utils.getParameter("serviceAtt"); 
-		String content=Struts2Utils.getParameter("content"); 
-		String picurl=Struts2Utils.getParameter("picurl");
-		String title=Struts2Utils.getParameter("title");
-		
+		String desIscon=Struts2Utils.getParameter("goodsevalulen"); 
+		String logisService=Struts2Utils.getParameter("logisticsEvalu"); 
+		String serviceAtt=Struts2Utils.getParameter("serviceEvalu"); 
+		String content=Struts2Utils.getParameter("cause");
 		ShopComments comments=new ShopComments();
 		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)||StringUtils.isEmpty(content)) {
 			return;
@@ -291,26 +289,22 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		String[] idp = sid.split(",");
 		//商品id
 		String[] isp = gid.split(",");*/
-		
-		
-			comments.set_id(mongoSequence.currval(PubConstants.SHOP_SHOPCOMMENTS));
-			comments.setContent(content);
-			comments.setCreatedate(new Date());
-			comments.setCustid(custid);
-			comments.setFromid(fromUserid);
-			comments.setGid(Long.parseLong(sid));
-			comments.setSid(Long.parseLong(gid));
-			comments.setOid(Long.parseLong(oid));
-			comments.setCreatedate(new Date());
-			comments.setTitle(title);
-			comments.setPicurl(picurl);
-			comments.setDesIscon(Integer.parseInt(desIscon));
-			comments.setLogisService(Integer.parseInt(logisService));
-			comments.setServiceAtt(Integer.parseInt(serviceAtt));
-			baseDao.insert(PubConstants.SHOP_SHOPCOMMENTS, comments);
-		
-		sub_map.put("state", 0);
-		
+		comments.set_id(mongoSequence.currval(PubConstants.SHOP_SHOPCOMMENTS));
+		comments.setContent(content);
+		comments.setCreatedate(new Date());
+		comments.setCustid(custid);
+		comments.setFromid(fromUserid);
+		comments.setGid(Long.parseLong(sid));
+		comments.setSid(Long.parseLong(gid));
+		comments.setOid(Long.parseLong(oid));
+		comments.setCreatedate(new Date());
+		comments.setDesIscon(Integer.parseInt(desIscon));
+		comments.setLogisService(Integer.parseInt(logisService));
+		comments.setServiceAtt(Integer.parseInt(serviceAtt));
+		int i=baseDao.insert(PubConstants.SHOP_SHOPCOMMENTS, comments);
+		if (i>0) {
+			sub_map.put("state", 0);
+		}
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
