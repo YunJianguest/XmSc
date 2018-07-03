@@ -141,13 +141,17 @@ public class ProductInfo extends ReflectionDBObject{
 	 * 快递价格
 	 */
 	private float   kdprice;
-	
+	/**
+	 * 积分返还
+	 */
 	private float   jffh;
 	/**
 	 * 是否显示0为显示，1为不显示
 	 */
 	private int      isxs;
-	
+	/**
+	 * 积分兑换
+	 */
 	private float    jfdh;
 	/**
 	 * 代理price
@@ -162,6 +166,9 @@ public class ProductInfo extends ReflectionDBObject{
 	 * 商品类型 3-大众区商品  4-特约区商品   5-会员区商品
 	 */
     private int    goodstype;
+    
+    private Long    typeid;
+    private Long    mintypeid;
     
 	public String getPtitle() {
 		return ptitle;
@@ -408,6 +415,18 @@ public class ProductInfo extends ReflectionDBObject{
 	}
 	public void setGoodstype(int goodstype) {
 		this.goodstype = goodstype;
+	}
+	public Long getTypeid() {
+		return typeid;
+	}
+	public void setTypeid(Long typeid) {
+		this.typeid = typeid;
+	}
+	public Long getMintypeid() {
+		return mintypeid;
+	}
+	public void setMintypeid(Long mintypeid) {
+		this.mintypeid = mintypeid;
 	}
 	
 	 

@@ -331,4 +331,68 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
+	/**
+	 * 商品列表页面
+	 * 
+	 */
+	public String promain() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String goodstype =Struts2Utils.getParameter("goodstype");
+		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
+		String typeid =Struts2Utils.getParameter("typeid");
+		Struts2Utils.getRequest().setAttribute("typeid", typeid);
+		String mintypeid =Struts2Utils.getParameter("mintypeid");
+		Struts2Utils.getRequest().setAttribute("mintypeid", mintypeid);
+		String ptitle =Struts2Utils.getParameter("ptitle");
+		Struts2Utils.getRequest().setAttribute("ptitle", ptitle);
+		return "promain";
+	}
+	
+	/**
+	 * 商品列表
+	 * 
+	 */
+	public String prolist() throws Exception{
+		getLscode();
+		HashMap<String, Object>whereMap = new HashMap<>();
+		HashMap<String, Object>sortMap = new HashMap<>();
+		Map<String, Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
+		sortMap.put("createdate", -1);
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String typeid =Struts2Utils.getParameter("typeid");
+		String mintypeid =Struts2Utils.getParameter("mintypeid");
+		String goodstype =Struts2Utils.getParameter("goodstype");
+		String ptitle =Struts2Utils.getParameter("ptitle");
+		if(StringUtils.isNotEmpty(goodstype)){
+			whereMap.put("goodstype", Integer.parseInt(goodstype));
+		}
+		if(StringUtils.isNotEmpty(typeid)){
+			whereMap.put("typeid", Long.parseLong(typeid));		
+		}
+		if(StringUtils.isNotEmpty(mintypeid)){
+			whereMap.put("mintypeid", Long.parseLong(mintypeid));
+		}
+		if(StringUtils.isNotEmpty(ptitle)){
+			Pattern pattern = Pattern.compile("^.*" + ptitle + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("ptitle", pattern);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);
+		if(list.size()>0){
+			sub_map.put("state", 0);
+			sub_map.put("list", list);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);		
+		return "promain";
+	}
+	
 }

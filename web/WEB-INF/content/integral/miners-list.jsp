@@ -81,9 +81,10 @@
 	    issend=false;  
 	    $.post('${ctx}/integral/miners!showall.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
 	       	function(json) { 
-	    		var xszf=$('.mui-table-view').html(); 
+	    		var xszf=$('.mui-table-view').html();
 		    	if(json.state=='0'){
 		    		var v = json.list; 
+		    		
 		    		 for(var i=0;i<v.length;i++){  
 		    		    xszf+='<li class="mui-table-view-cell mui-media miner-media">'
 							+'<img class="mui-media-object mui-pull-left" src="http://placehold.it/40x30">'
@@ -157,6 +158,17 @@
 			})
 			
 			ajaxjz();
+			ajaxjz();
+			$(window).scroll(function () {
+
+			    var offsetY = $(window).scrollTop();
+
+			    var section1 = $("#section1").height();
+				if(section1-offsetY<600){
+					ajaxjz(); 
+				}
+			   
+			});
 		</script>
 	</body>
 

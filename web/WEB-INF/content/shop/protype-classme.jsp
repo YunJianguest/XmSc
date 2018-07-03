@@ -59,7 +59,7 @@
 			            		var list=json.list;
 					    		html+='<ul class="category-branch-list">' 
 					    		 for(var i=0;i<list.length;i++){
-					    			html+='<li><a href="javascript:void(0)"><img src="${filehttp}/'+list[i].picurl+'"/><span>'+list[i].name+'</span></a></li>';	
+					    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?mintypeid='+list[i]._id+'"><img src="${filehttp}/'+list[i].picurl+'"/><span>'+list[i].name+'</span></a></li>';	
 					    		  } 
 					    		 html+='</ul>';
 					    	    $('.category-branch-content').html(html);
@@ -93,17 +93,6 @@
 						<div class="search-box-urlBack" onclick="javascript:window.history.back(-1)">
 							<span class="search-box-urlBack-back iconLeft">返回</span>
 						</div>
-						<!-- <form class="search-form" action="" method="post">
-							<div class="search-form-box search-form-box-seek">
-								<span class="search-form-icon search-form-btn"></span>
-								<div class="search-form-input search-form-input-l">
-									<input type="hidden" />
-									<input type="text" maxlength="20" autocomplete="off" name="keyword" value placeholder="" />
-								</div>
-								<a href="javascript:void(0)" class="search-box-icon-close"></a>
-								<a href="javascript:void(0)" class="search-form-action"><span class="search-form-icon"></span></a>
-							</div>
-						</form> -->
 					</div>
 				</div>
 			</div>
