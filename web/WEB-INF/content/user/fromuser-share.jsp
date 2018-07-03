@@ -164,7 +164,7 @@
 				$('#qrcode').qrcode({ 
 					  width : w,
 			          height : w,
-			          text	: '${ctx}/shop/shop!index.action?'
+			          text	: '${ctxurl}/shop/shop!index.action?'
 				     });
 			});
 			

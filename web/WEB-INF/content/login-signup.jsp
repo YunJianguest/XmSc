@@ -9,7 +9,7 @@
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/style.css" rel="stylesheet" />
 		<style>
-			.area {
+						.area {
 				margin: 20px auto 0px auto;
 			}
 			
@@ -43,10 +43,10 @@
 			
 			#reg.mui-btn {
 				padding: 0px;
-				border-radius: 17px;
+				border-radius: 10px;
 				height: 34px;
 				line-height: 34px;
-				background: #F7941D;
+				background: #E4393C;
 				color: #fff;
 				font-size: 16px;
 			}
@@ -114,7 +114,7 @@
 				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 				$('#phone').blur(function() {
 					if($(this).val() == '') {
-						mui.alert('请输入手机号', )
+						mui.alert('请输入手机号' )
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
@@ -123,7 +123,7 @@
 					var count = 60;
 					var timer;
 					if($('#phone').val() == '') {
-						mui.alert('请输入手机号', )
+						mui.alert('请输入手机号')
 					} else if(!reg.test($('#phone').val())) {
 						mui.alert('手机号码不正确')
 					} else {

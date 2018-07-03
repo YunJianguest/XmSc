@@ -9,7 +9,7 @@
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/style.css" rel="stylesheet" />
 		<style>
-			.area {
+						.area {
 				margin: 20px auto 0px auto;
 			}
 			
@@ -43,10 +43,10 @@
 			
 			#reg.mui-btn {
 				padding: 0px;
-				border-radius: 17px;
+				border-radius: 10px;
 				height: 34px;
 				line-height: 34px;
-				background: #F7941D;
+				background: #E4393C;
 				color: #fff;
 				font-size: 16px;
 			}

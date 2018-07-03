@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/webcom/taglibs.jsp" %>
 <!DOCTYPE html>
-<html class="ui-page-login">
-		<head>
+<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>忘记密码</title>
-		<link href="../css/mui.min.css" rel="stylesheet" />
-		<link href="../css/style.css" rel="stylesheet" />
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link href="${ctx}/xmMobile/css/style.css" rel="stylesheet" />
+		<link href="${ctx}/xmMobile/css/common.css" rel="stylesheet" />
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
@@ -73,16 +73,16 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">找回密码</h1>
-		</header>-->
+		</header>
 		<div class="mui-content" style="background: #fff;padding: 0 30px;padding-top: 30px;">
 			<form class="mui-input-group">
 
 				<div class="mui-input-row">
 					<label>手机号</label>
-					<input id='phone' type="tel" minlength='11' maxlength="11" class="mui-input-clear mui-input" placeholder="请输入注册手机号">
+					<input id='phone' type="tel" minlength='11' maxlength="11" class="mui-input-clear mui-input" placeholder="请输入手机号">
 				</div>
 				<div class="mui-input-row" style="position: relative;">
 					<label>验证码</label>
@@ -98,14 +98,14 @@
 				<button id='sendNewpwd' class="mui-btn mui-btn-block"  data-loading-icon= "mui-spinner mui-spinner-custom">提交</button>
 			</div>
 		</div>
-		<script src="../js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../js/mui.min.js"></script>
+		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script>
 			$(function() {
 				var reg =/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 				$('#phone').blur(function() {
 					if($(this).val() == '') {
-						mui.alert('请输入手机号')
+						mui.alert('请输入手机号', )
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
@@ -114,7 +114,7 @@
 					var count = 60;
 					var timer;
 					if($('#phone').val() == '') {
-						mui.alert('请输入手机号')
+						mui.alert('请输入手机号', )
 					} else if(!reg.test($('#phone').val())) {
 						mui.alert('手机号码不正确')
 					} else {
@@ -156,21 +156,21 @@
 							url:'${ctx}/user/fromuser!changepw.action',
 							data:{
 								tel:$('#phone').val(),
-								verCode:$('#verCode').val(),
+								yzcode:$('#verCode').val(),
 								password:$('#password').val()
 							},
 							success:function(json){
 								if (json.state  == 0) {
-									mui.alert('修改密码成功');
-								}else if(json.state ==1){
-									mui.alert('修改密码失败');
-								}else if(json.state ==2){
-									mui.alert('该账户不存在');
-								}else if(json.state ==3){
-									mui.alert('密码错误');
-								}else if(json.state ==4){
-									mui.alert('验证码错误');
-								}else if(json.state ==5){
+									location.href='${ctx}/login!signin.action'
+								}else if(json.state  == 1){
+									mui.alert('操作失败，请重新操作')
+								}else if(json.state  == 2){
+									mui.alert('该账户不存在')
+								}else if(json.state  == 3){
+									mui.alert('密码错误')
+								}else if(json.state  == 4){
+									mui.alert('验证码错误')
+								}else if(json.state  == 5){
 									mui.alert('验证码超时');
 								}
 							}

@@ -164,9 +164,6 @@
                                                     <li><a href="${ctx}/suc/roll.action?type=shopmb-${bean._id}"><i
                                                             class="fa fa-i-cursor"></i>&nbsp;&nbsp;&nbsp;&nbsp;首页滚动字幕添加</a>
                                                     </li>
-                                                    <li><a href="javascript:setadmin('${bean._id}');"><i
-                                                            class="fa fa-institution"></i>&nbsp;&nbsp;&nbsp;设置为官方店</a>
-                                                    </li>
                                                     <li><a href="${ctx }/shop/shoptype.action?parentid=${bean._id}"><i
                                                             class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp;&nbsp;分类配置</a></li>
                                                     <li><a href="${ctx }/shop/shoppro.action?comid=${bean._id}"><i
@@ -178,18 +175,13 @@
                                                     <li><a href="${ctx}/shop/orderform.action?comid=${bean._id}"><i
                                                             class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;订单管理</a></li>
                                                     <li>
-                                                    <li><a href="${ctx}/shop/shopagent.action?wid=${bean._id}"><i
-                                                            class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;代理管理</a></li>
-                                                    <li>
+                                                  
                                                     <li><a href="${ctx}/shop/shopcustservice.action?wid=${bean._id}"><i
                                                             class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;客服管理</a></li>
                                                     <li>
-                                                    <li><a href="${ctx}/shop/shopmsg.action?wid=${bean._id}"><i
+                                                   <%--  <li><a href="${ctx}/shop/shopmsg.action?wid=${bean._id}"><i
                                                             class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;消息管理</a></li>
-                                                    <li>
-                                                    <li><a href="javascript:qrcode('${ctxurl}/shop/shop!storepay.action?custid=${custid}&id=${bean._id}')"><i
-                                                            class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;支付二维码</a></li>
-                                                    <li>
+                                                    <li> --%>
                                                         <a href="javascript:qrcode('${ctxurl}/shop/shop!index.action?comid=${bean._id}&lx=${bean.lx}&custid=${custid}')"><i
                                                                 class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;&nbsp;页面预览</a>
                                                     </li>

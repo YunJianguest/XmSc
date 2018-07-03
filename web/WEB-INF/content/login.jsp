@@ -17,22 +17,73 @@
   <script src="js/html5shiv.js"></script>
   <script src="js/respond.min.js"></script>
   <![endif]-->
+  <style type="text/css">
+  		body.signin{
+  			background: url('${ctx}/pc_gw/images/loginbanner.jpg') no-repeat;
+  			background-size: 100% 100%;
+  		}
+  		.row::after,.row::before{
+  			display: none;
+  		}
+  		.signinpanel form{
+  			background: #75BCF3;
+  			position: relative;
+  			height: 271px;
+  		}
+  		.nomargin{
+  			position: absolute;
+  			top: -12px;
+  			left: 30px;
+  			color: #FFF;
+  			background: url('${ctx}/pc_gw/images/logintit.png') no-repeat;
+  			width: 381px;
+  			height: 60px;
+  			background-size: 100% 100%;
+  			text-align: center;
+  			font-size: 18px;
+  			line-height: 60px;
+  			overflow: hidden;
+  			margin:  0 auto;
+  			display: flex;
+  			justify-content: center;
+  			align-items: center;
+  			margin-bottom: 20px;
+  		}
+  		.logos{
+  			display: block;
+  			float: left;
+  			width: 80px;
+  			height: 30px;
+  			background: url('${ctx}/pc_gw/images/login.png') no-repeat;
+  			background-size: 100% auto;
+  		
+  		}
+  		.signup-footer{
+  			border: none;
+  			text-align: center;
+  		}
+  		#loginform a{
+  			text-align: right;
+  			float: right;
+  			text-decoration: none;
+  		}
+  </style>
 </head>
 
 <body class="signin">
  
 <section>
   
-    <div class="signinpanel">
-        
-        <div class="row">
-            
+    <div class="signinpanel" >
+       
+        <div class="row" style="display: flex;justify-content: center;">
+<!--            
             <div class="col-md-7">
                 
                 <div class="signin-info">
                     <div class="logopanel">
                         <h1><span></span> 资源管理系统 <span></span></h1>
-                    </div><!-- logopanel -->
+                    </div>
                 
                     <div class="mb20"></div>
                 
@@ -42,29 +93,29 @@
                     </ul>
                     <div class="mb20"></div>
                    
-                </div><!-- signin0-info -->
+                </div>
             
-            </div><!-- col-sm-7 -->
+            </div>-->
             
-            <div class="col-md-5">
+            <div style="width: 448px;">
                 
                 <form method="post" id="loginform" name="loginForm"   action="j_spring_security_check">
-                    <h4 class="nomargin">后台登陆</h4>
+                    <div class="nomargin"><i class="logos"></i>熊猫后台登陆系统</div>
                    
                 
-                    <input type="text" id="j_username" onblur="checkName(this.value)" name="j_username" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" class="form-control uname" placeholder="账号" />
+                    <input type="text" maxlength="11" id="j_username" onblur="checkName(this.value)" name="j_username" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" class="form-control uname" placeholder="账号" style="margin-top: 30px;"/>
                     <input type="password" id="j_password" name="j_password" class="form-control pword" placeholder="密码" />
                    
-                    <button class="btn btn-success btn-block">登陆</button>
-                    
+                    <button class="btn btn-block" style="background: #FFFFFF;margin-bottom: 30px;">登陆</button>
+                    <a href="${ctx}/login!pcforgetpw.action">忘记密码</a><span style="float: right;margin: 0 10px;">|</span><a href="${ctx}/register.action">注册</a>
                 </form>
             </div><!-- col-sm-5 -->
             
         </div><!-- row -->
         
         <div class="signup-footer">
-            <div class="pull-left">
-              聚盛网络公司
+            <div style="font-size: 18px;">
+             	上合集团 &copy;
             </div>
             
         </div>
