@@ -62,8 +62,9 @@ public class TimerService {
 	} 
 	/**
 	 * 每日返还
+	 * @throws Exception 
 	 */
-	public synchronized void updProstore(){
+	public synchronized void updProstore() throws Exception{
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
@@ -79,9 +80,14 @@ public class TimerService {
 					if(dbObject.get("type").toString().equals("ps_account")){
 						//积分添加  添加积分类型为冻结
 						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,2,dbObject.get("_id").toString(), null);
+						
 					}else{
 						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,1,dbObject.get("_id").toString(), null);
 					}
+					
+					//返回积分到直推用户
+					DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
+					 
 					
 				}
 			}

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lsp.integral.entity.InteProstore;
 import com.lsp.integral.entity.InteSetting;
 import com.lsp.parttime.entity.Assets;
 import com.lsp.parttime.entity.AssetsRecord;
@@ -1170,9 +1171,10 @@ public class WwzService {
 	 * @param custid
 	 * @param wxuser
 	 * @return
+	 * @throws Exception 
 	 */
 	public boolean addyfjf(String price, String fromUserid, String type, String custid, int jfstate, String fid,
-			DBObject wxuser) {
+			DBObject wxuser) throws Exception {
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if(checkTotalIntegral(1, price)) {
@@ -1189,6 +1191,8 @@ public class WwzService {
 					if (jfstate == 2) {// 冻结积分
 						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 1)) {
 							if (updateTotalIntegral(1, price)) {
+								//判断是否已经返完
+								checkFh(fromUserid,custid,fid);
 								return true;
 							}
 						}
@@ -1209,6 +1213,91 @@ public class WwzService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	/**
+	 * 验证账户情况
+	 * @param fromid
+	 * @param custid 
+	 * @param fid（预返账户）
+	 * @throws Exception 
+	 */
+	public void  checkFh(String fromid,String custid,String fid) throws Exception {
+		//查询冻结积分
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("custid", custid);
+		whereMap.put("fromUserid", fromid);
+		IntegralRecord ir = null;
+		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		DBObject yf=baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, Long.parseLong(fid));
+		//查询总返积分
+		if(db!=null) {
+			ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+			if(ir.getProstore()>=Double.parseDouble(yf.get("money").toString())) {
+				//已经返完，开始解冻
+				InteProstore dd=(InteProstore) UniObject.DBObjectToObject(yf, InteProstore.class);
+				dd.setState(1);
+				baseDao.insert(PubConstants.INTEGRAL_PROSTORE, dd);
+				changeFreezeJf(custid,fromid);
+				
+				if(dd.getType().equals("ps_account")) {
+					//创建新的预返账户
+					whereMap.clear();
+					DBObject jfsz = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+					if(jfsz!=null) {
+						InteSetting sett = (InteSetting) UniObject.DBObjectToObject(jfsz, InteSetting.class);
+						DBObject user=getCustUser(fromid);
+						if(user.get("agentLevel").equals("1")) {
+							//省
+							InteProstore inteProstore=new InteProstore();
+							inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+							inteProstore.setCreatedate(new Date());
+							inteProstore.setFromUserid(fromid);
+							inteProstore.setMoney(sett.getReturnProvince()/3*0.1);
+							inteProstore.setTime(365*3);
+							inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+							inteProstore.setType("ps_recovery");
+							baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+							
+						}else if(user.get("agentLevel").equals("2")) {
+							//市 
+							InteProstore inteProstore=new InteProstore();
+							inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+							inteProstore.setCreatedate(new Date());
+							inteProstore.setFromUserid(fromid);
+							inteProstore.setMoney(sett.getReturnCity()/3*0.1);
+							inteProstore.setTime(365*3);
+							inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+							inteProstore.setType("ps_recovery");
+							baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+						}else if(user.get("agentLevel").equals("3")) {
+							//县 
+							InteProstore inteProstore=new InteProstore();
+							inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+							inteProstore.setCreatedate(new Date());
+							inteProstore.setFromUserid(fromid);
+							inteProstore.setMoney(sett.getReturnCounty()/3*0.1);
+							inteProstore.setTime(365*3);
+							inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+							inteProstore.setType("ps_recovery");
+							baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+						}else if(user.get("agentLevel").equals("4")) {
+							//部 
+							InteProstore inteProstore=new InteProstore();
+							inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+							inteProstore.setCreatedate(new Date());
+							inteProstore.setFromUserid(fromid);
+							inteProstore.setMoney(sett.getReturnDept()/3*0.1);
+							inteProstore.setTime(365*3);
+							inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+							inteProstore.setType("ps_recovery");
+							baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+						}
+					}
+				}
+				
+			}
+		}   
+		
 	}
 
 	/**
