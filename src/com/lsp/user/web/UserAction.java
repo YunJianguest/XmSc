@@ -673,7 +673,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
 					}
 				}
 			}else if(type == 2){
@@ -682,7 +682,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCity").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
 					} 
 				}
 			}else if(type == 3){
@@ -691,7 +691,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCounty").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
 					}
 					
 				}
@@ -701,7 +701,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, null);
+						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
 					}
 				}
 			}

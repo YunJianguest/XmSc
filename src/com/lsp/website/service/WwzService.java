@@ -1175,25 +1175,32 @@ public class WwzService {
 			DBObject wxuser) {
 		try {
 			if (Double.parseDouble(price) > 0) {
-				IntegralInfo info = new IntegralInfo();
-				info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
-				info.setCreatedate(new Date());
-				info.setFromUserid(fromUserid);
-				info.setValue(Double.parseDouble(price));
-				info.setType(type);
-				info.setState(0);
-				info.setCustid(custid);
-				info.setFid(fid);
-				baseDao.insert(PubConstants.INTEGRAL_INFO, info);
-				if (jfstate == 2) {// 冻结积分
-					if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 1)) {
-						return true;
-					}
-				} else {// 可用积分
-					if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0)) {
-						return true;
+				if(checkTotalIntegral(1, price)) {
+					IntegralInfo info = new IntegralInfo();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+					info.setCreatedate(new Date());
+					info.setFromUserid(fromUserid);
+					info.setValue(Double.parseDouble(price));
+					info.setType(type);
+					info.setState(0);
+					info.setCustid(custid);
+					info.setFid(fid);
+					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					if (jfstate == 2) {// 冻结积分
+						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 1)) {
+							if (updateTotalIntegral(1, price)) {
+								return true;
+							}
+						}
+					} else {// 可用积分
+						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0)) {
+							if (updateTotalIntegral(1, price)) {
+								return true;
+							}
+						}
 					}
 				}
+				
 
 			}
 
