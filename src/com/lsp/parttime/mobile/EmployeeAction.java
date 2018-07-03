@@ -39,7 +39,7 @@ import net.sf.json.JSONArray;
  * @author lsp
  * 
  */
-@Namespace("/parttime")
+@Namespace("/wap/parttime")
 @Results({ @Result(name = HoufaetAction.RELOAD, location = "employee.action", params = {"fypage", "%{fypage}" }, type = "redirect") })
 public class EmployeeAction extends GeneralAction<Employee>{
 

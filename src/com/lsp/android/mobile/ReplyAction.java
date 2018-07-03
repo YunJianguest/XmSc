@@ -51,7 +51,7 @@ import com.sun.org.apache.commons.collections.Bag;
  * @author lsp
  * 
  */
-@Namespace("/android")
+@Namespace("/wap/android")
 @Results({ @Result(name = ReplyAction.RELOAD, location = "reply.action", params = {"fypage", "%{fypage}" }, type = "redirect") })
 public class ReplyAction extends GeneralAction<Reply>implements
 ApplicationContextAware {

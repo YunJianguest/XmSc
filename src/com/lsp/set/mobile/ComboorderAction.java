@@ -47,7 +47,7 @@ import com.mongodb.DBObject;
  * @author lsp
  * 
  */
-@Namespace("/set")
+@Namespace("/wap/set")
 @Results({ @Result(name = ComboorderAction.RELOAD, location = "comboorder.action",params={"fypage", "%{fypage}"}, type = "redirect") })
 public class ComboorderAction extends GeneralAction<ComboOrder>{
 	private static final long serialVersionUID = -6784469775589971579L;

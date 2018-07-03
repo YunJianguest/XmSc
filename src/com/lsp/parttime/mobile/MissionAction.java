@@ -48,7 +48,7 @@ import net.sf.json.JSONObject;
  * @author lsp
  *
  */
-@Namespace("/parttime")
+@Namespace("/wap/parttime")
 @Results({ @Result(name = HoufaetAction.RELOAD, location = "mission.action", params = {"fypage", "%{fypage}" }, type = "redirect") })
 public class MissionAction extends GeneralAction<Mission>{
 

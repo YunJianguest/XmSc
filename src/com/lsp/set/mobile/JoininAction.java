@@ -36,7 +36,7 @@ import com.mongodb.util.JSON;
  * @author lsp
  * 
  */
-@Namespace("/set")
+@Namespace("/wap/set")
 @Results({ @Result(name = JoininAction.RELOAD, location = "joinin.action",params={"fypage", "%{fypage}"},  type = "redirect") })
 public class JoininAction extends GeneralAction<Joinin>{
 	private static final long serialVersionUID = -6784469775589971579L;

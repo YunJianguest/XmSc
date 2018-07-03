@@ -39,7 +39,7 @@ import com.mongodb.util.JSON;
  * @author lsp
  * 
  */
-@Namespace("/set")
+@Namespace("/wap/set")
 @Results({ @Result(name = HelpAction.RELOAD, location = "help.action",params={"type","%{type}","fypage", "%{fypage}"}, type = "redirect") })
 public class HelpAction extends GeneralAction<Help>{
 	private static final long serialVersionUID = -6784469775589971579L;

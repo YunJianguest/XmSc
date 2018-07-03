@@ -42,7 +42,7 @@ import com.mongodb.DBObject;
  * @author lsp
  * 
  */
-@Namespace("/android")
+@Namespace("/wap/android")
 @Results({ @Result(name = PermissionsAction.RELOAD, location = "permissions.action", params = {"fypage", "%{fypage}" }, type = "redirect") })
 public class PermissionsAction extends GeneralAction<Permissions> {
 	private static final long serialVersionUID = -6784469775589971579L;

@@ -34,7 +34,7 @@ import net.sf.json.JSONArray;
  * @author lsp
  *
  */
-@Namespace("/parttime")
+@Namespace("/wap/parttime")
 @Results({ @Result(name = HoufaetAction.RELOAD, location = "order.action", params = {"fypage", "%{fypage}" }, type = "redirect") })
 public class OrderAction extends GeneralAction<Order>{
 

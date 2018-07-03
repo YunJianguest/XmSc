@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author lsp 
  *   
  */
-@Namespace("/email")
+@Namespace("/wap/email")
 @Results({@org.apache.struts2.convention.annotation.Result(name="reload", location="email.action",params={"fypage", "%{fypage}"}, type="redirect")})
 public class EmailAction extends GeneralAction<EmailInfo>
 {
