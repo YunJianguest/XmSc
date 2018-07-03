@@ -3501,5 +3501,53 @@ public class ShopAction extends GeneralAction {
 		System.out.println(json);
 		
 	}
+	
+	/**
+	 * 商品列表
+	 * 
+	 */
+	public void prolist() throws Exception{
+		getFromid();
+		HashMap<String, Object>whereMap = new HashMap<>();
+		HashMap<String, Object>sortMap = new HashMap<>();
+		Map<String, Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
+		sortMap.put("createdate", -1);
+		custid=Struts2Utils.getParameter("custid");
+		//Struts2Utils.getRequest().setAttribute("custid", custid);
+		//Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		sub_map.put("custid", custid);
+		sub_map.put("lscode", lscode);
+		
+		String typeid =Struts2Utils.getParameter("typeid");
+		String mintypeid =Struts2Utils.getParameter("mintypeid");
+		String goodstype =Struts2Utils.getParameter("goodstype");
+		String ptitle =Struts2Utils.getParameter("ptitle");
+		if(StringUtils.isNotEmpty(goodstype)){
+			whereMap.put("goodstype", Integer.parseInt(goodstype));
+		}
+		if(StringUtils.isNotEmpty(typeid)){
+			whereMap.put("typeid", Long.parseLong(typeid));		
+		}
+		if(StringUtils.isNotEmpty(mintypeid)){
+			whereMap.put("mintypeid", Long.parseLong(mintypeid));
+		}
+		if(StringUtils.isNotEmpty(ptitle)){
+			Pattern pattern = Pattern.compile("^.*" + ptitle + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("ptitle", pattern);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);
+		if(list.size()>0){
+			sub_map.put("state", 0);
+			sub_map.put("list", list);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		SignFilter.printNoCheck(Struts2Utils.getRequest(),Struts2Utils.getResponse(),sub_map);
+		System.out.println(json);
+	}
      
 }

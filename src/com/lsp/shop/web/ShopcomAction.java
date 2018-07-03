@@ -3,7 +3,9 @@ package com.lsp.shop.web;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
@@ -145,6 +147,31 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	public void set_id(Long _id) {
 		this._id = _id;
 	}
+	/***
+	 * 评论初始化页面
+	 * @return
+	 * @throws Exception
+	 * @author CuiJing
+	 * @version 
+	 * @date 2018年7月3日 下午5:39:47
+	 */
+	public String shopcomadd() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String sid = Struts2Utils.getParameter("sid");
+		String oid = Struts2Utils.getParameter("oid");
+		String gid = Struts2Utils.getParameter("gid");
+		
+		Struts2Utils.getRequest().setAttribute("sid", sid);
+		Struts2Utils.getRequest().setAttribute("oid", oid);
+		Struts2Utils.getRequest().setAttribute("gid", gid);
+		//DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
+		//Struts2Utils.getRequest().setAttribute("db", dbObject);
+		return "shopcomadd";
+	}
+	
+	
 	/**
 	 * 评论回复
 	 * @return
@@ -238,40 +265,54 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	}
 	
 	/**
-	 * ajax添加评论
+	 * ajax添加评论单商品
 	 */
 	public void ajaxSaveCom() {
 		getLscode();
+		Map<String,Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
 		//评论id  
+		//sid和gid在传值的时候以逗号隔开
 		String sid=Struts2Utils.getParameter("sid"); 
 		String oid=Struts2Utils.getParameter("oid"); 
-		String gid=Struts2Utils.getParameter("gid"); 
+		String gid=Struts2Utils.getParameter("gid");
 		String desIscon=Struts2Utils.getParameter("desIscon"); 
 		String logisService=Struts2Utils.getParameter("logisService"); 
 		String serviceAtt=Struts2Utils.getParameter("serviceAtt"); 
 		String content=Struts2Utils.getParameter("content"); 
 		String picurl=Struts2Utils.getParameter("picurl");
 		String title=Struts2Utils.getParameter("title");
+		
 		ShopComments comments=new ShopComments();
 		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)||StringUtils.isEmpty(content)) {
 			return;
 		}
-		comments.set_id(mongoSequence.currval(PubConstants.SHOP_SHOPCOMMENTS));
-		comments.setContent(content);
-		comments.setCreatedate(new Date());
-		comments.setCustid(custid);
-		comments.setFromid(fromUserid);
-		comments.setGid(Long.parseLong(gid));
-		comments.setSid(Long.parseLong(sid));
-		comments.setOid(Long.parseLong(oid));
-		comments.setCreatedate(new Date());
-		comments.setTitle(title);
-		comments.setPicurl(picurl);
-		comments.setDesIscon(Integer.parseInt(desIscon));
-		comments.setLogisService(Integer.parseInt(logisService));
-		comments.setServiceAtt(Integer.parseInt(serviceAtt));
-		baseDao.insert(PubConstants.SHOP_SHOPCOMMENTS, comments);
-		 
+		/*//店铺id
+		String[] idp = sid.split(",");
+		//商品id
+		String[] isp = gid.split(",");*/
+		
+		
+			comments.set_id(mongoSequence.currval(PubConstants.SHOP_SHOPCOMMENTS));
+			comments.setContent(content);
+			comments.setCreatedate(new Date());
+			comments.setCustid(custid);
+			comments.setFromid(fromUserid);
+			comments.setGid(Long.parseLong(sid));
+			comments.setSid(Long.parseLong(gid));
+			comments.setOid(Long.parseLong(oid));
+			comments.setCreatedate(new Date());
+			comments.setTitle(title);
+			comments.setPicurl(picurl);
+			comments.setDesIscon(Integer.parseInt(desIscon));
+			comments.setLogisService(Integer.parseInt(logisService));
+			comments.setServiceAtt(Integer.parseInt(serviceAtt));
+			baseDao.insert(PubConstants.SHOP_SHOPCOMMENTS, comments);
+		
+		sub_map.put("state", 0);
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
 }
