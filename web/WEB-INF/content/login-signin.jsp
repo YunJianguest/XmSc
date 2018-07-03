@@ -8,6 +8,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link href="${ctx}/xmMobile/css/common.css" rel="stylesheet" />
 		<style>
 			.ui-page-login,
 			body {
@@ -16,54 +17,58 @@
 				margin: 0px;
 				padding: 0px;
 			}
-			.mui-content{height: 100%;background: #fff;}
-			.area {
-				margin: 20px auto 0px auto;
+			
+			.mui-content {
+				height: 100%;
+				background: #fff;
 			}
 			
 			.mui-input-group {
-				margin-top: 10px;
+				padding: 0 30px;
 			}
 			
-			.mui-input-group:first-child {
-				margin-top: 20px;
+			.mui-input-group::after,
+			.mui-input-group::before {
+				display: none;
 			}
 			
 			.mui-input-group label {
-				width: 22%;
+				width: 25%;
+				font-size: 14px;
+				color: #020202;
 			}
-			.mui-input-row {
-				width: 80%;
-				margin: 0 auto;
-			}
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
-			}
-			
-			.mui-checkbox input[type=checkbox],
-			.mui-radio input[type=radio] {
-				top: 6px;
+				width: 75%;
 			}
 			
 			.mui-content-padded {
-				margin-top: 25px;
+				margin-top: 30px;
+				padding: 0 30px;
+				margin-right: 0;
 			}
 			
 			.mui-btn {
-				padding: 10px;
+				padding: 0px;
+				border-radius: 10px;
+				height: 34px;
+				line-height: 34px;
+				background: #e4393c;
+				color: #fff;
+				font-size: 16px;
 			}
 			
 			.link-area {
-				display: block;
-				margin-top: 25px;
-				text-align: center;
+				display: flex;
+				margin-top: 22px;
+				justify-content: space-between;
+				font-size: 12px;
 			}
 			
-			.spliter {
-				color: #bbb;
-				padding: 0px 8px;
+			.link-area a {
+				color: #000;
 			}
 			
 			.oauth-area {
@@ -74,6 +79,8 @@
 				width: 100%;
 				padding: 0px;
 				margin: 0px;
+				/*display: flex;
+				justify-content: center;*/
 			}
 			
 			.oauth-area .oauth-btn {
@@ -86,28 +93,61 @@
 				margin: 0px 20px;
 				/*-webkit-filter: grayscale(100%); */
 				border: solid 1px #ddd;
-				border-radius: 25px;
+				border-radius: 50%;
+				border: none;
 			}
 			
-			.oauth-area .oauth-btn:active {
+			/*.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
 			}
-			
+			*/
 			.oauth-area .oauth-btn.disabled {
 				background-color: #ddd;
 			}
-			.login-logo{
+			
+			.login-logo {
+				width: 100%;
 				height: 200px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
 			}
-			.login-logo img{
-				width: 150px;
-				height: 100px;
+			
+			.login-logo img {
+				width: 104px;
+				height: 104px;
+			}
+			
+			.title-txt {
+				position: relative;
+				display: -webkit-box;
+				/*margin: 14px 30px;*/
+				font-size: 14px;
+				-webkit-box-pack: center;
+			}
+			
+			.title-txt::after {
+				content: '';
+				width: 100%;
+				height: 1px;
+				position: absolute;
+				top: 50%;
+				left: 0;
+				background: #E1DFDD;
+			}
+			
+			.title-txt .title-layout {
+				background-color: #fff;
+				z-index: 10;
+				position: relative;
+				display: block;
+				padding: 0 10px;
+			}
+			.wx-icon{
+				background: url('${ctx}/xmMobile/images/weixin.png') no-repeat; 
+				/*border: none;*/
 			}
 		</style>
-
 	</head>
 
 	<body>
@@ -130,12 +170,22 @@
 			</form>
 			
 			<div class="mui-content-padded">
-				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="login()">登录</button>
-				<div class="link-area"><a id='reg' href="${ctx}/login!signup.action">注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				<button id='login' class="mui-btn mui-btn-block" onclick="login()">登录</button>
+				<div class="link-area">
+					<a id='reg' href="${ctx}/login!signup.action">注册</a>
+					<a id='forgetPassword' href="${ctx}/login!forgetpw.action">忘记密码</a>
+				</div>
+			</div>
+			<div class="mui-content-padded">
+				<div class="title-txt">
+					<span class="title-layout">
+						<span class="title-txt-txt">其他方式登录</span>
+					</span>
 				</div>
 			</div>
 			<div class="mui-content-padded oauth-area">
-
+				<button class="oauth-btn wx-icon"></button>
+				
 			</div>
 		</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
