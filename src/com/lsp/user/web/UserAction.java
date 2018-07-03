@@ -453,58 +453,7 @@ public class UserAction extends GeneralAction<UserInfo>
 		} 
 		
 	}
-	/**
-	 * 获取黄页数据
-	 */
-	public  void   gethousecount(){
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		int usertype=SpringSecurityUtils.getCurrentUser().getType();
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-		if(usertype==2){
-		 whereMap.put("custid", custid);
-		 Long count=basedao.getCount(PubConstants.WX_COMPANY, whereMap);
-		 sub_map.put("count", count);
-		 String rq=BaseDate.RelativeDate(BaseDate.getDate(),-1);
-		 whereMap.put("createdate",  new BasicDBObject("$lte",DateFormat.getFormat(rq + " 23:59:59")).append("$gte", DateFormat.getFormat(rq + " 00:00:00")));
-		 long zrcount=basedao.getCount(PubConstants.WX_COMPANY, whereMap);
-		 sub_map.put("zcount", zrcount);
-		 whereMap.put("createdate", new BasicDBObject("$gt", BaseDate.getDay(new Date(), -30)));
-	     long bycount=basedao.getCount(PubConstants.WX_COMPANY, whereMap);
-		 sub_map.put("ycount", bycount);
-		 sub_map.put("reading", wwzservice.getFlow(custid, "house"));
-		 String json = JSONArray.fromObject(sub_map).toString();
-	     Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-		 
-		} 
-		
-	}
-	/**
-	 * 获取论坛数据
-	 */
-	public  void   getbbscount(){
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		int usertype=SpringSecurityUtils.getCurrentUser().getType();
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-		if(usertype==2){
-		 whereMap.put("custid",custid );
-		 Long count=basedao.getCount(PubConstants.BBS_INFO, whereMap);
-		 sub_map.put("count", count);
-		 String rq=BaseDate.RelativeDate(BaseDate.getDate(),-1);
-		 whereMap.put("createdate",  new BasicDBObject("$lte",DateFormat.getFormat(rq + " 23:59:59")).append("$gte", DateFormat.getFormat(rq + " 00:00:00")));
-		 long zrcount=basedao.getCount(PubConstants.BBS_INFO, whereMap);
-		 sub_map.put("zcount", zrcount);
-		 whereMap.put("createdate", new BasicDBObject("$gt", BaseDate.getDay(new Date(), -30)));
-	     long bycount=basedao.getCount(PubConstants.BBS_INFO, whereMap);
-		 sub_map.put("ycount", bycount);
-		 sub_map.put("reading", wwzservice.getFlow(custid, "bbs"));
-		 String json = JSONArray.fromObject(sub_map).toString();
-	     Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-		 
-		} 
-		
-	}
+	
 	/**
 	 * 获取商城数据
 	 */

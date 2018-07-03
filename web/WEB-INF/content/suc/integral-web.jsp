@@ -133,7 +133,7 @@
 <main class="lock cmp640" id="section1"> 
     <div class="top_foot bg-hui-92 zi-bai hang40 line-height40 cmp640 line-bottom">
         <a href="#">
-            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的积分：<i class="zi-cheng">${entity.jf}</i></font>
+            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的账户：<i class="zi-cheng">${entity.jf}</i></font>
             </div>
         </a>
         <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
@@ -165,7 +165,7 @@
             <a href="#">
                 <div class="zi-hui zi-green overflow-hidden txt-c"
                      style="border-radius:5px 5px 0px 0px ;">
-                    <div class="col-15 pt-15 pb-10"><font size="2">以上是您的积分获得/消费明细</font></div>
+                    <div class="col-15 pt-15 pb-10"><font size="2">以上是您的PP币获得/消费明细</font></div>
                 </div>
             </a>
         </div>
