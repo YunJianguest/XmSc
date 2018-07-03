@@ -543,11 +543,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	 * @throws Exception
 	 */
 	public void ajaxsave() throws Exception{
-		/*String _id = UUID.randomUUID().toString();
-		WxUser user = new WxUser();
-		user.set_id(_id);
-		System.out.println("---->"+_id);
-		basedao.insert(PubConstants.DATA_WXUSER, user); */
+
 		System.err.println();
 	}
 	
@@ -586,33 +582,48 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String json = JSONArray.fromObject(sub_map).toString();
 	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	
+	/***
+	 * 注册
+	 * @throws Exception
+	 */
 	public void signup() throws Exception{
 		Map<String,Object>sub_map = new HashMap<>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		sub_map.put("state", 1);
 		String tel=Struts2Utils.getParameter("tel");
 		String yzcode=Struts2Utils.getParameter("yzcode"); 
 		String password=Struts2Utils.getParameter("password"); 
+		whereMap.put("tel", tel);
+		Long count =basedao.getCount(PubConstants.DATA_WXUSER, whereMap);
+		
 		Code code=GetAllFunc.telcode.get(tel); 
-		if (code!=null&&code.getCode().equals(yzcode)) { 
-			 //验证时间
-			if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
-				WxUser user = new WxUser();
-				user.set_id(UUID.randomUUID().toString());
-				user.setTel(tel);
-				user.setPassword(password);
-				System.out.println("---注册----》"+tel);
-				System.out.println("---注册-password---》"+password);
-				basedao.insert(PubConstants.DATA_WXUSER, user);
-				String lscode=wwzservice.createcode(user.get_id().toString());
-				sub_map.put("lscode", lscode);//注册成功
-				sub_map.put("state", 0);//注册成功
+		if(count == 0){
+			if (code!=null&&code.getCode().equals(yzcode)) {
+				//验证时间
+				if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
+					WxUser user = new WxUser();
+					user.set_id(UUID.randomUUID().toString());
+					user.setTel(tel);
+					user.setPassword(password);
+					basedao.insert(PubConstants.DATA_WXUSER, user);
+					String lscode=wwzservice.createcode(user.get_id().toString());
+					sub_map.put("lscode", lscode);//注册成功
+					sub_map.put("state", 0);//注册成功
+				}else{
+					sub_map.put("state", 4);//验证码超时
+				}
+			}else{
+				sub_map.put("state", 3);//验证码输入错误
 			}
+		}else{
+			sub_map.put("state", 2);//用户名已存在
 		}
+		
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	/**
-	 * 
+	 * 登录
 	 * @throws Exception
 	 */
     public void signin() throws Exception{
@@ -630,11 +641,56 @@ public class FromuserAction extends GeneralAction<WxUser>{
                    String lscode=wwzservice.createcode(user.get("_id").toString()); 
                    sub_map.put("state", 0);//登陆成功
                    sub_map.put("lscode", lscode);
+ 			   }else{
+ 				  sub_map.put("state", 3);//密码错误
  			   }
+  		    }else{
+  		    	sub_map.put("state", 2);//用户不存在
   		    }
 	    }
   	    String json = JSONArray.fromObject(sub_map).toString();
 	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+    }
+    
+    /**
+     * 忘记密码
+     * @throws Exception
+     */
+    public void changepw() throws Exception{
+  	  Map<String,Object>sub_map = new HashMap<>();
+  	  sub_map.put("state", 1);
+  	  HashMap<String,Object>whereMap = new HashMap<>();
+  	  String tel=Struts2Utils.getParameter("tel");
+  	  String yzcode=Struts2Utils.getParameter("yzcode"); 
+  	  String password=Struts2Utils.getParameter("password"); 
+  	  String newpassword=Struts2Utils.getParameter("newpassword");
+  	  whereMap.put("tel", tel);
+  	  DBObject dbObject =basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+  	  if(dbObject!=null){
+  		  WxUser user = (WxUser) UniObject.DBObjectToObject(dbObject, WxUser.class);
+  		  if(user.getPassword().equals(password)){
+  			  Code code=GetAllFunc.telcode.get(tel); 
+  				if (code!=null&&code.getCode().equals(yzcode)) { 
+  					 //验证时间
+  					if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
+  						user.setPassword(newpassword);
+  						basedao.insert(PubConstants.DATA_WXUSER, user);
+  						sub_map.put("state", 0);//修改成功
+  					}else{
+  						sub_map.put("state", 5);//验证码超时
+  					}
+  				}else{
+  					sub_map.put("state", 4);//验证码错误
+  				} 
+  		  }else{
+  			  sub_map.put("state", 3);//密码错误
+  		  }
+  	  }else{
+  		  sub_map.put("state", 2);//该账户不存在
+  	  }
+  	  
+  		String json = JSONArray.fromObject(sub_map).toString();
+  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     }
 	 
 }
