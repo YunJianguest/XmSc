@@ -1,7 +1,18 @@
 package com.lsp.pub.util; 
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory; 
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -33,8 +44,7 @@ public class PayCommonUtil {
 		return res;
 	}
 	/**
-	 * @author 李欣桦
-	 * @date 2014-12-5下午2:29:34
+	 * 
 	 * @Description：sign签名
 	 * @param characterEncoding 编码格式
 	 * @param parameters 请求参数
@@ -57,9 +67,8 @@ public class PayCommonUtil {
 		String sign = MD5Util.MD5Encode(sb.toString(), characterEncoding).toUpperCase();
 		return sign;
 	}
+	 
 	/**
-	 * @author 李欣桦
-	 * @date 2014-12-5下午2:32:05
 	 * @Description：将请求参数转换为xml格式的string
 	 * @param parameters  请求参数
 	 * @return
@@ -83,8 +92,6 @@ public class PayCommonUtil {
 		return sb.toString();
 	}
 	/**
-	 * @author 李欣桦
-	 * @date 2014-12-3上午10:17:43
 	 * @Description：返回给微信的参数
 	 * @param return_code 返回编码
 	 * @param return_msg  返回信息
@@ -94,6 +101,7 @@ public class PayCommonUtil {
 		return "<xml><return_code><![CDATA[" + return_code
 				+ "]]></return_code><return_msg><![CDATA[" + return_msg
 				+ "]]></return_msg></xml>";
-	} 
+	}
+	 
 
 }

@@ -1,9 +1,12 @@
 package com.lsp.shop.web;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +19,7 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -37,6 +41,7 @@ import com.lsp.pub.util.DictionaryUtil;
 import com.lsp.pub.util.JmsService;
 import com.lsp.pub.util.PayCommonUtil;
 import com.lsp.pub.util.RelativeDate;
+import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.TenpayUtil;
@@ -99,9 +104,9 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		String comnums = Struts2Utils.getParameter("comnums");
 		WxToken token = null;
-		if(StringUtils.isNotEmpty(custid)){
+		if (StringUtils.isNotEmpty(custid)) {
 			token = GetAllFunc.wxtoken.get(custid);
-		}else{
+		} else {
 			token = GetAllFunc.wxtoken.get(SysConfig.getProperty("custid"));
 		}
 		if (token.getSqlx() > 0) {
@@ -187,29 +192,27 @@ public class ShopAction extends GeneralAction {
 			// 获取店铺分类
 			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
 			Struts2Utils.getRequest().setAttribute("typelist", typelist);
-		}else{
+		} else {
 			System.out.println("加载商城分类");
 			// 加载滚动
-			Struts2Utils.getRequest().setAttribute("roll",
-					wwzService.getRoll(custid, "shopmb-"));
+			Struts2Utils.getRequest().setAttribute("roll", wwzService.getRoll(custid, "shopmb-"));
 			// 加载广告
-			Struts2Utils.getRequest().setAttribute("slide",
-					wwzService.getslide(custid, "shopmb-"));
+			Struts2Utils.getRequest().setAttribute("slide", wwzService.getslide(custid, "shopmb-"));
 			whereMap.clear();
 			whereMap.put("parentid", 0L);
-			sortMap.put("sort",1);
+			sortMap.put("sort", 1);
 			// 获取店铺分类
 			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
-			Struts2Utils.getRequest().setAttribute("typelist", typelist); 
-			
+			Struts2Utils.getRequest().setAttribute("typelist", typelist);
+
 		}
 		DBObject share = new BasicDBObject();
-		if(shopmb!=null) {
+		if (shopmb != null) {
 			share.put("fxtitle", shopmb.get("name"));
 			share.put("fxsummary", shopmb.get("summary"));
 			share.put("fximg", shopmb.get("logo"));
 		}
-		
+
 		if (StringUtils.isNotEmpty(comid)) {
 			share.put("fxurl", url);
 		} else {
@@ -235,25 +238,26 @@ public class ShopAction extends GeneralAction {
 		if (wwzService.checkAgent(custid, fromUserid)) {
 			Struts2Utils.getRequest().setAttribute("isAgents", "ok");
 		}
-		if(shopmb != null) {
+		if (shopmb != null) {
 			// 检测当前店铺
-			if (StringUtils.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid)))) {
+			if (StringUtils
+					.isNotEmpty(wwzService.getAgid(shopmb.get("_id").toString(), wwzService.getVipNo(fromUserid)))) {
 				Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
 			}
 		}
-		if(StringUtils.isNotEmpty(comnums)){
+		if (StringUtils.isNotEmpty(comnums)) {
 			DBObject dbObject = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUserid);
-			System.out.println("db---->"+dbObject);
-			if(dbObject != null){
-				 WxUser user = (WxUser) UniObject.DBObjectToObject(dbObject, WxUser.class);
-				 if(user.getReno()==0){
-					 user.setReno(Integer.parseInt(comnums));
-					 System.out.println("userreno---->"+user.getReno());
-					 baseDao.insert(PubConstants.DATA_WXUSER, user);
-				 }
+			System.out.println("db---->" + dbObject);
+			if (dbObject != null) {
+				WxUser user = (WxUser) UniObject.DBObjectToObject(dbObject, WxUser.class);
+				if (user.getReno() == 0) {
+					user.setReno(Integer.parseInt(comnums));
+					System.out.println("userreno---->" + user.getReno());
+					baseDao.insert(PubConstants.DATA_WXUSER, user);
+				}
 			}
 		}
-		
+
 		if (shopmb != null) {
 			if (shopmb.get("type") != null && Integer.parseInt(shopmb.get("type").toString()) == 1) {
 				return "jfdh" + shopmb.get("mb");
@@ -661,7 +665,7 @@ public class ShopAction extends GeneralAction {
 				shopmb.setSales(shopmb.getSales() + Double.parseDouble(entity.getZfmoney() + ""));
 				baseDao.insert(PubConstants.SHOP_SHOPMB, shopmb);
 			}
-			
+
 			if (StringUtils.isNotEmpty(jffh) && Double.parseDouble(jffh) > 0) {
 				wwzService.addjf(jffh, fromUserid, "shop-fh", custid, null);
 			}
@@ -777,7 +781,6 @@ public class ShopAction extends GeneralAction {
 			proid = Long.parseLong(Struts2Utils.getParameter("proid"));// 14
 		}
 
-		
 		double jffh = 0;
 
 		// 四位随机数
@@ -999,7 +1002,7 @@ public class ShopAction extends GeneralAction {
 					}
 				}
 			}
-			
+
 			if (StringUtils.isNotEmpty(jffh) && Double.parseDouble(jffh) > 0) {
 				wwzService.addjf(jffh, fromUserid, "shop-fh", custid, null);
 			}
@@ -1100,11 +1103,11 @@ public class ShopAction extends GeneralAction {
 				Pattern pattern = Pattern.compile("^.*" + sel + ".*$", Pattern.CASE_INSENSITIVE);
 				whereMap.put("ptitle", pattern);
 			}
-			if(StringUtils.isNotEmpty(cid)) {
+			if (StringUtils.isNotEmpty(cid)) {
 				DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(cid));
 				whereMap.put("comid", Long.parseLong(cid));
 			}
-			
+
 			sortMap.put("sort", -1);
 			backMap.put("context", 0);
 			List<DBObject> list = baseDao.getList(PubConstants.DATA_PRODUCT, whereMap, fypage, 10, sortMap, backMap);
@@ -1307,7 +1310,7 @@ public class ShopAction extends GeneralAction {
 		if (spelist.size() > 0) {
 			Struts2Utils.getRequest().setAttribute("spelist", spelist);
 		}
-		
+
 		Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(custid, fromUserid));
 		DBObject share = new BasicDBObject();
 		share.put("fxtitle", db.get("ptitle"));
@@ -1358,7 +1361,7 @@ public class ShopAction extends GeneralAction {
 		if (StringUtils.isNotEmpty(wwzService.getAgid(db.get("comid").toString(), wwzService.getVipNo(fromUserid)))) {
 			Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
 		}
-		System.out.println(db.get("bq"));
+
 		return "productdetail" + db.get("bq");
 
 	}
@@ -1640,16 +1643,16 @@ public class ShopAction extends GeneralAction {
 					List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, wheresMap, sortsMap);
 
 					if (lists.size() > 0) {
-						for(DBObject obj : lists) {
+						for (DBObject obj : lists) {
 							System.out.println(obj.get("_id").toString());
 							whereMap.clear();
-							whereMap.put("oid",Long.parseLong(obj.get("_id").toString()));
+							whereMap.put("oid", Long.parseLong(obj.get("_id").toString()));
 							DBObject com = baseDao.getMessage(PubConstants.SHOP_SHOPCOMMENTS, whereMap);
 							System.out.println(com);
-							if(com!=null) {
-								obj.put("states", 1);//代表已评价
-							}else {
-								obj.put("states", 0);//代表未评价
+							if (com != null) {
+								obj.put("states", 1);// 代表已评价
+							} else {
+								obj.put("states", 0);// 代表未评价
 							}
 						}
 						dbObject.put("list", lists);
@@ -2383,7 +2386,6 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
-	
 	public void jfpay() {
 		getLscode();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
@@ -3243,85 +3245,87 @@ public class ShopAction extends GeneralAction {
 			order.setState(4);// 确认收货
 			order.setDeliveryDate(new Date());
 			baseDao.insert(PubConstants.WX_ORDERFORM, order);
-			//开始返利结算
-			//1.特约区
+			// 开始返利结算
+			// 1.特约区
 			Double bl = (double) order.getContri_money();
-			//2.大众区
+			// 2.大众区
 			Double bl_ty = (double) order.getPublic_money();
-			//3.会员区
+			// 3.会员区
 			Double bl_hy = (double) order.getMembers_money();
 			HashMap<String, Object> whereMap = new HashMap<>();
 			DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
-			if (db != null) { 
+			if (db != null) {
 				InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
-				
-				//记录当前购物用户的提成
-				wwzService.addjf(bl+"",fromUserid,
-						"shop_bmzt", custid, 1,1,1);
-				wwzService.addjf(wwzService.getGivingPro(bl_ty),fromUserid,
-						"shop_bmzt", custid, 1,2,0);
-				wwzService.addjf(wwzService.getGivingPro(bl_hy),fromUserid,
-						"shop_bmzt", custid, 1,2,0);
-				bl_ty=Double.parseDouble(BaseDecimal.division(BaseDecimal.multiplication(wwzService.getGivingPro(bl_ty),sett.getDzqtc()+""),"100"));
-				bl_hy=Double.parseDouble(BaseDecimal.division(BaseDecimal.multiplication(wwzService.getGivingPro(bl_hy),sett.getHyqtc()+""),"100"));
-				//获取直推人员 
-				DBObject wxuser=wwzService.getWxUser(fromUserid); 
-				
-				if(Integer.parseInt(wxuser.get("tjlx").toString())==0) {
-					//会员推荐
-					DBObject tjuser=wwzService.getWXuserVipNo(wxuser.get("reno").toString());
-					if(tjuser!=null) {
-						//记录提成 
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1,0);
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl_ty+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,2,0);
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl_hy+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,2,0);
-						 
-					  	
-					} 
 
-					//获取间接推荐人员
-					tjuser=wwzService.getWXuserVipNo(tjuser.get("reno").toString());
-					if(tjuser!=null) {
-						//记录提成
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getBetween()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1,0);
-						 
-						
-					} 
-					
-					
-				}else if(Integer.parseInt(wxuser.get("tjlx").toString())==1) {
-					//管理员推荐 
+				// 记录当前购物用户的提成
+				wwzService.addjf(bl + "", fromUserid, "shop_bmzt", custid, 1, 1, 1);
+				wwzService.addjf(wwzService.getGivingPro(bl_ty), fromUserid, "shop_bmzt", custid, 1, 2, 0);
+				wwzService.addjf(wwzService.getGivingPro(bl_hy), fromUserid, "shop_bmzt", custid, 1, 2, 0);
+				bl_ty = Double.parseDouble(BaseDecimal.division(
+						BaseDecimal.multiplication(wwzService.getGivingPro(bl_ty), sett.getDzqtc() + ""), "100"));
+				bl_hy = Double.parseDouble(BaseDecimal.division(
+						BaseDecimal.multiplication(wwzService.getGivingPro(bl_hy), sett.getHyqtc() + ""), "100"));
+				// 获取直推人员
+				DBObject wxuser = wwzService.getWxUser(fromUserid);
+
+				if (Integer.parseInt(wxuser.get("tjlx").toString()) == 0) {
+					// 会员推荐
+					DBObject tjuser = wwzService.getWXuserVipNo(wxuser.get("reno").toString());
+					if (tjuser != null) {
+						// 记录提成
+						wwzService.addjf(
+								BaseDecimal.division(BaseDecimal.multiplication(bl + "", sett.getDirect() + ""), "100"),
+								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl_ty + "", sett.getDirect() + ""), "100"),
+								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 2, 0);
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl_hy + "", sett.getDirect() + ""), "100"),
+								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 2, 0);
+
+					}
+
+					// 获取间接推荐人员
+					tjuser = wwzService.getWXuserVipNo(tjuser.get("reno").toString());
+					if (tjuser != null) {
+						// 记录提成
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
+								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+					}
+
+				} else if (Integer.parseInt(wxuser.get("tjlx").toString()) == 1) {
+					// 管理员推荐
 					whereMap.clear();
-					whereMap.put("number",Long.parseLong( wxuser.get("reno").toString()));
-					DBObject tjuser=baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-					if(tjuser!=null) {
-						//记录提成
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDirect()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1,0);
-						
-					} 
-					//获取间接推荐人员 （当推荐人为管理员时候间接推荐的奖励也发放到管理员账户）
-					if(tjuser!=null) {
-						//记录提成
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getBetween()+""),"100"), tjuser.get("_id").toString(),
-								"shop_bmzt", custid, 1,1,0);
-						
-					} 
+					whereMap.put("number", Long.parseLong(wxuser.get("reno").toString()));
+					DBObject tjuser = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+					if (tjuser != null) {
+						// 记录提成
+						wwzService.addjf(
+								BaseDecimal.division(BaseDecimal.multiplication(bl + "", sett.getDirect() + ""), "100"),
+								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+					}
+					// 获取间接推荐人员 （当推荐人为管理员时候间接推荐的奖励也发放到管理员账户）
+					if (tjuser != null) {
+						// 记录提成
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
+								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+					}
 				}
-				 
+
 				// 获取部门人员;
 				whereMap.clear();
 				whereMap.put("number", order.getDeptCode());
 				DBObject user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 				if (user != null) {
 					// 记录提成
-					wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameDepartment()+""),"100"), user.get("_id").toString(),
-							"shop_bmzt", custid, 1,1,0);
-					
+					wwzService.addjf(BaseDecimal
+							.division(BaseDecimal.multiplication(bl + "", sett.getSameDepartment() + ""), "100"),
+							user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 					// 获取县级
 
@@ -3330,9 +3334,9 @@ public class ShopAction extends GeneralAction {
 					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameCounty()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-								custid, 1,1,0);
-						
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getSameCounty() + ""), "100"),
+								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 						// 县级存在，获取市级
 
@@ -3341,88 +3345,92 @@ public class ShopAction extends GeneralAction {
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
-							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1,0);
-							
+							wwzService.addjf(BaseDecimal
+									.division(BaseDecimal.multiplication(bl + "", sett.getSameCity() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
-							// 县级存在，市级存在，获取省级 
+							// 县级存在，市级存在，获取省级
 							whereMap.clear();
 							whereMap.put("_id", user.get("parentId").toString());
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1,0);
+								wwzService.addjf(BaseDecimal.division(
+										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 							}
-						}else {
-							
-							//县级存在，市级不存在， 获取省级
+						} else {
+
+							// 县级存在，市级不存在， 获取省级
 
 							whereMap.clear();
 							whereMap.put("agentLevel", 1);
-							whereMap.put("province",user.get("province").toString());
+							whereMap.put("province", user.get("province").toString());
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1,0);
-								
- 
+								wwzService.addjf(BaseDecimal.division(
+										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
 							}
-							
+
 						}
-						
-					}else { 
-						//县级不存在， 获取市级
+
+					} else {
+						// 县级不存在， 获取市级
 
 						whereMap.clear();
 						whereMap.put("agentLevel", 2);
-						whereMap.put("county",user.get("county").toString());
+						whereMap.put("county", user.get("county").toString());
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
-							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1,0);
-							
+							wwzService.addjf(BaseDecimal
+									.division(BaseDecimal.multiplication(bl + "", sett.getSameCity() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
-							// 县级不存在， 市级存在，获取省级 
+							// 县级不存在， 市级存在，获取省级
 							whereMap.clear();
 							whereMap.put("_id", user.get("parentId").toString());
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1,0);
+								wwzService.addjf(BaseDecimal.division(
+										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 							}
-						}else {
-							//县级不存在，市级不存在， 获取省级
+						} else {
+							// 县级不存在，市级不存在， 获取省级
 
 							whereMap.clear();
 							whereMap.put("agentLevel", 1);
-							whereMap.put("province",user.get("province").toString());
+							whereMap.put("province", user.get("province").toString());
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getSameProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-										custid, 1,1,0);
-							 
+								wwzService.addjf(BaseDecimal.division(
+										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
 							}
-							
+
 						}
-						 
+
 					}
 				}
-				
-				//获取异地县域
+
+				// 获取异地县域
 				whereMap.clear();
-				whereMap.put("county",user.get("county").toString());
+				whereMap.put("county", user.get("county").toString());
 				user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 				if (user != null) {
-					
-					//县域存在 记录提成
-					wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-							custid, 1,1,0);
-					
+
+					// 县域存在 记录提成
+					wwzService.addjf(BaseDecimal
+							.division(BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
+							user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
 					// 县级存在，获取市级
 
 					whereMap.clear();
@@ -3430,78 +3438,82 @@ public class ShopAction extends GeneralAction {
 					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-								custid, 1,1,0);
-						
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getDiffCity() + ""), "100"),
+								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
-						// 县级存在，市级存在，获取省级 
+						// 县级存在，市级存在，获取省级
 						whereMap.clear();
 						whereMap.put("_id", user.get("parentId").toString());
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
-							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1,0);
+							wwzService.addjf(
+									BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 						}
-					}else {
-						
-						//县级存在，市级不存在， 获取省级
+					} else {
+
+						// 县级存在，市级不存在， 获取省级
 
 						whereMap.clear();
 						whereMap.put("agentLevel", 1);
-						whereMap.put("province",user.get("province").toString());
+						whereMap.put("province", user.get("province").toString());
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
-							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1,0);
-							
+							wwzService.addjf(
+									BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 						}
-						
+
 					}
-					
-					
-				 
-				}else {
-					//县域不存在获取市级 
+
+				} else {
+					// 县域不存在获取市级
 					whereMap.clear();
 					whereMap.put("agentLevel", 2);
-					whereMap.put("county",user.get("county").toString());
+					whereMap.put("county", user.get("county").toString());
 					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
-						wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffCity()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-								custid, 1,1,0);
-						
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getDiffCity() + ""), "100"),
+								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
-						// 县级不存在， 市级存在，获取省级 
+						// 县级不存在， 市级存在，获取省级
 						whereMap.clear();
 						whereMap.put("_id", user.get("parentId").toString());
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
-							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1,0);
+							wwzService.addjf(
+									BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 						}
-					}else {
-						//县级不存在，市级不存在， 获取省级
+					} else {
+						// 县级不存在，市级不存在， 获取省级
 
 						whereMap.clear();
 						whereMap.put("agentLevel", 1);
-						whereMap.put("province",user.get("province").toString());
+						whereMap.put("province", user.get("province").toString());
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
-							wwzService.addjf(BaseDecimal.division(BaseDecimal.multiplication(bl+"",sett.getDiffProvince()+""),"100"), user.get("_id").toString(), "shop_bmzt",
-									custid, 1,1,0);
-						 
+							wwzService.addjf(
+									BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
 						}
-						
+
 					}
-					 
+
 				}
-				
 
 			}
 
@@ -3615,7 +3627,7 @@ public class ShopAction extends GeneralAction {
 		entity.setTotal(total);// 6
 		entity.setKjid(kjid);
 		if (StringUtils.isNotEmpty(jfdh)) {
-			
+
 			entity.setJfdh(Double.parseDouble(jfdh));
 		}
 		entity.setZfmoney(Double.parseDouble(price));// 7
@@ -3722,22 +3734,22 @@ public class ShopAction extends GeneralAction {
 		entity.setTel(tel);
 		entity.setAddress(address);
 		entity.setInsDate(new Date());
- 
+
 		entity.setComid(comid);// 14
 		entity.setCounts(num);// 15
 		entity.setTotal(total);// 6
 
-		//entity.setZfmoney(Double.parseDouble(price));// 7
+		// entity.setZfmoney(Double.parseDouble(price));// 7
 		entity.setIds(recordid);
 		entity.setRemark(remark);
 
 		String cost = "0";
 		String zfmoney = "0";
-		//大众区支付金额
+		// 大众区支付金额
 		String public_money = "0";
-		//特约区支付金额
+		// 特约区支付金额
 		String contri_money = "0";
-		//会员区支付金额
+		// 会员区支付金额
 		String members_money = "0";
 
 		String[] ids = recordid.split(",");
@@ -3748,14 +3760,13 @@ public class ShopAction extends GeneralAction {
 				HashMap<String, Object> backMap = new HashMap<String, Object>();
 				backMap.put("context", 0);
 				backMap.put("summary", 0);
-				DBObject pro=null;
+				DBObject pro = null;
 				if (Struts2Utils.getParameter("isgwc").equals("1")) {
-					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(ids[i]),
-							backMap);
-				}else {
+					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(ids[i]), backMap);
+				} else {
 					System.out.println(ids[i]);
 					DBObject shop = baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
-					
+
 					System.out.println(shop.get("pid"));
 					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),
 							backMap);
@@ -3784,7 +3795,7 @@ public class ShopAction extends GeneralAction {
 				}
 
 				if (pro.get("price") != null) {
-					String zfmoneys = zfmoney; 
+					String zfmoneys = zfmoney;
 					System.out.println("赋值的钱数---》" + zfmoneys);
 					// 商品价格
 					zfmoney = BaseDecimal.multiplication(pro.get("price").toString(), nums[i]);
@@ -3800,17 +3811,20 @@ public class ShopAction extends GeneralAction {
 						cost = BaseDecimal.add(cost, costs);
 						System.out.println("当前商品的成本1---》" + cost);
 					}
-					if(pro.get("goodstype")!=null) {
-						if(pro.get("goodstype").toString().equals("3")) {
-							//大众区
-							public_money= BaseDecimal.add(public_money, BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
-							
-						}else if(pro.get("goodstype").toString().equals("4")){
-							//特约区
-							contri_money= BaseDecimal.add(contri_money, BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
-						}else if(pro.get("goodstype").toString().equals("5")) {
-							//会员区
-							members_money= BaseDecimal.add(members_money, BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
+					if (pro.get("goodstype") != null) {
+						if (pro.get("goodstype").toString().equals("3")) {
+							// 大众区
+							public_money = BaseDecimal.add(public_money,
+									BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
+
+						} else if (pro.get("goodstype").toString().equals("4")) {
+							// 特约区
+							contri_money = BaseDecimal.add(contri_money,
+									BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
+						} else if (pro.get("goodstype").toString().equals("5")) {
+							// 会员区
+							members_money = BaseDecimal.add(members_money,
+									BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
 						}
 					}
 				}
@@ -3909,16 +3923,106 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
-	
-	public String productlist() throws Exception{
+
+	public String productlist() throws Exception {
 		getLscode();
-		String goodstype =Struts2Utils.getParameter("goodstype");
-		String ptitle =Struts2Utils.getParameter("ptitle");
+		String goodstype = Struts2Utils.getParameter("goodstype");
+		String ptitle = Struts2Utils.getParameter("ptitle");
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
 		return "productlist";
 	}
-	
+
+	/**
+	 * 交易测试 笑我一世沉沦: 传入参数的格式 {"data":
+	 * 
+	 * {"eth":"0xed188d6257ab4adbaf266cd5be3b563e11696882","num":1,"username":
+	 * 
+	 * "admin","key":"82bd7f241cc6d151de1c0aa26713c60e","orderid":"A1245649846
+	 * 
+	 * 57846"}} 笑我一世沉沦: key是eth+num+username+orderid+密钥
+	 */
+	public void testjy() {
+
+		SortedMap<Object, Object> parameters = new
+
+		TreeMap<Object, Object>();
+		parameters.put
+
+		("eth", "0x" + SpringSecurityUtils.getCurrentUser().getId());
+		parameters.put("num", 1);
+		parameters.put
+
+		("username", SpringSecurityUtils.getCurrentUser().getCustname());
+		parameters.put("orderid", "2018070417180011");
+		String sign = PayCommonUtil.createSign("UTF-8",
+
+				parameters, "uskdpro6623");
+		parameters.put("key", sign);
+		String requestXML = PayCommonUtil.getRequestXml
+
+		(parameters);
+
+		String result = CommonUtil.httpsRequest
+
+		("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", requestXML);
+		System.out.println(result);
+
+	}
+
+	/**
+	 * 交易测试 笑我一世沉沦: 传入参数的格式 {"data":
+	 * 
+	 * {"eth":"0xed188d6257ab4adbaf266cd5be3b563e11696882","num":1,"username":
+	 * 
+	 * "admin","key":"82bd7f241cc6d151de1c0aa26713c60e","orderid":"A1245649846
+	 * 
+	 * 57846"}} 笑我一世沉沦: key是eth+num+username+orderid+密钥
+	 * 
+	 * @throws IOException
+	 */
+	public void testjr() throws IOException {
+
+		InputStream input = Struts2Utils.getRequest
+
+		().getInputStream();
+		BufferedReader br = new BufferedReader(new
+
+		InputStreamReader(input, "utf-8"));
+		String line = null;
+		StringBuilder sb = new StringBuilder();
+		while ((line = br.readLine()) != null) {
+			line = new String(line.getBytes(), "utf-8");
+			sb.append(line);
+		}
+		JSONObject jsonObject = JSONObject.fromObject
+
+		(URLDecoder.decode(sb.toString(), "utf-8"));
+
+		SortedMap<Object, Object> parameters = new
+
+		TreeMap<Object, Object>();
+		parameters.put("eth", jsonObject.get("eth"));
+		parameters.put("num", jsonObject.get("num"));
+		parameters.put("username", jsonObject.get("username"));
+		parameters.put("orderid", jsonObject.get("orderid"));
+		// 验证签名
+		String sign = PayCommonUtil.createSign("UTF-8",
+
+				parameters, "uskdpro6623");
+		System.out.println(sign);
+		System.out.println(jsonObject.get("key"));
+		if (sign.equals(jsonObject.get("key"))) {
+			Struts2Utils.getResponse().getWriter().print
+
+			(URLEncoder.encode("ok", "utf-8"));
+		} else {
+			Struts2Utils.getResponse().getWriter().print
+
+			(URLEncoder.encode("error", "utf-8"));
+		}
+
+	}
 
 }
