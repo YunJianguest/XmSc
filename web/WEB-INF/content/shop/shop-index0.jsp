@@ -308,9 +308,7 @@
                         
                         if (json.state == 0) {
                             var v = json.list;
-                            for (var i = 0; i < v.length; i++) {
-                                if (i & 1 != 0) {
-                                	
+                            for (var i = 0; i < v.length; i++) { 
                                 	xszfleft +='<li class="mui-table-view-cell mui-media mui-col-xs-6" >'
             						+'<div class="mui-card" style="margin: 2px;">'
             						+'<div class="mui-card-content">'
@@ -323,9 +321,7 @@
             						+'<div class="similar-product-info ">'	
             						+'<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>'
             						+'<span class="similar-product-shopCar"></span>'			
-            						+'</div></div></div></li>';		
-            					
-                                }
+            						+'</div></div></div></li>';	 
                             }
                             fypage++;
                             $('.recomend').html(xszfleft);
