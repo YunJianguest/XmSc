@@ -273,6 +273,17 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
+	public String find() throws Exception{
+		getLscode();
+		String sid = Struts2Utils.getParameter("sid");
+		String orderid = Struts2Utils.getParameter("orderid");
+        DBObject dbObject =baseDao.getMessage(PubConstants.WX_ORDERFORM, orderid);
+        DBObject dbObject2 =baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, sid);
+        Struts2Utils.getRequest().setAttribute("order", dbObject);
+        Struts2Utils.getRequest().setAttribute("service", dbObject2);
+        return "find";
+	}
+	
 	/**
 	 * 退换货审批
 	 */
