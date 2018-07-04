@@ -95,6 +95,15 @@ public class UserAction extends GeneralAction<UserInfo>
     List<DBObject> list = this.basedao.getList(PubConstants.USER_INFO, whereMap, sortMap); 
     for (DBObject dbObject : list) {
 		dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
+		if(dbObject.get("roleid") != null){
+			DBObject dbObject2 =basedao.getMessage(PubConstants.ROLE_INFO, Long.parseLong(dbObject.get("roleid").toString()));
+		    if(dbObject2 != null){
+		    	if(dbObject2.get("rolename") != null){
+		    		//dbObject.put("rolename", dbObject2.get("rolename").toString());
+		    	}
+		    }
+		}
+		dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
 	}
     Struts2Utils.getRequest().setAttribute("userList", list);
     this.fycount = this.basedao.getCount(PubConstants.USER_INFO,whereMap);

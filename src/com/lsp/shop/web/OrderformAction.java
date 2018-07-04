@@ -129,6 +129,10 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		return SUCCESS;
 	}
 	
+	public void delall(){
+		baseDao.delete(PubConstants.DATA_PRODUCT);
+	}
+	
 	
 	@Override
 	public String delete() throws Exception {
@@ -234,12 +238,24 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
 	}
-	public void orderinfo() throws Exception {
+	/*public void orderinfo() throws Exception {
 		Long orderid=Long.parseLong(Struts2Utils.getParameter("orderid"));
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
 		whereMap.put("orderid", orderid);
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		List<DBObject> orderList = baseDao.getList(PubConstants.WX_ORDERBUY, whereMap,null);
+		sub_map.put("list", orderList);
+		String json = JSONArray.fromObject(sub_map).toString();
+		
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}*/
+	public void orderinfo() throws Exception {
+		String  orderid=Struts2Utils.getParameter("orderid");
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		whereMap.put("orderid", orderid);
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		List<DBObject> orderList = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
+		System.out.println("list--->"+orderList);
 		sub_map.put("list", orderList);
 		String json = JSONArray.fromObject(sub_map).toString();
 		

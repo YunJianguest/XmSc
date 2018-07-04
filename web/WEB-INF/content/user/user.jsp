@@ -59,7 +59,6 @@
                         }
                         cke();
                         $('#mb').val(json.mb);
-                        alert('--->'+json.type);
                         if(json.type == '1'){
                         	$("#agentLevel_show").show();
                         }else if(json.type == '2'){
@@ -72,7 +71,12 @@
             });
         }
         function submint() {
-        	alert($('#funcs').val());
+        	var agentLevel_show = '';
+        	if($("#type").val() == 1){
+        		agentLevel_show = $('#agentLevel').val();
+        	}else{
+        		agentLevel_show = 0;
+        	}
             var submitData = {
                 id: $('#_id').val(),
                 funcs: $('#funcs').val(),
@@ -85,7 +89,7 @@
                 city: $('#city').val(),
                 nickname: $('#nickname').val(),
                 mb: $('#mb').val(),
-                agentLevel: $('#agentLevel').val(),
+                agentLevel: agentLevel_show,
                 number: $('#number').val(),
                 renumber: $('#renumber').val(),
                 upIds: $('#upIds').val()
@@ -128,6 +132,7 @@
         }
         function selrole(){
         	var type = $("#type").val();
+        	
         	if(type == '1'){
         		$("#agentLevel_show").show();
         	}else if(type == '2'){
@@ -233,15 +238,15 @@
                                         <td>${bean.password}</td>
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm'
                                                             value='${bean.createdate}'/></td>
-                                        <td>${bean.roleid}</td>
+                                        <td>${bean.rolename}</td>
                                         <td>
                                         <c:choose>
-										   <c:when test="${bean.agentLevel==1}">${bean.agentLevel}省级代理商</c:when>
+										   <c:when test="${bean.agentLevel==1}">省级代理商</c:when>
 										   <c:when test="${bean.agentLevel==2}">市级代理商</c:when>
 										   <c:when test="${bean.agentLevel==3}">县级代理商</c:when>
 										   <c:when test="${bean.agentLevel==4}">部门代理商</c:when>
 										   <c:when test="${bean.agentLevel==5 || bean.agentLevel==6}">会员</c:when>
-										   <c:otherwise>${bean.agentLevel}管理员</c:otherwise>
+										   <c:otherwise>非代理商</c:otherwise>
 										</c:choose>
 										</td>
 										<th class="th8">${bean.number}</th>
@@ -327,6 +332,7 @@
                                 <label class="control-label">角色:</label>
                                 <select id="roleid" class="select2 form-control" style="line-height: 28px!important;"
                                         required data-placeholder="县域管理员" >
+                                    <option value="">请选择</option> 
                                     <c:forEach items="${rolelist}" var="bean">
                                         <option value="${bean._id }">${bean.rolename }</option>
                                     </c:forEach>
@@ -341,6 +347,7 @@
                                 <label class="control-label">类型:</label>
                                 <select id="type" class="select2 form-control" style="line-height: 28px!important;"
                                         required data-placeholder="管理员" onchange="selrole()">
+                                    <option value="">请选择</option>
                                     <option value="1">普通用户</option>
                                     <option value="2">管理员</option>
                                 </select>
@@ -352,6 +359,7 @@
                                 <label class="control-label">代理类型:</label>
                                 <select id="agentLevel" class="select2 form-control" style="line-height: 28px!important;"
                                         required data-placeholder="代理类型">
+                                    <option value="">请选择</option>
                                     <option value="1">省</option>
                                     <option value="2">市</option>
                                     <option value="3">县</option>

@@ -59,7 +59,7 @@ function wxpay(id){
 	});
 	
 } 
-function orderinfo(id){
+/* function orderinfo(id){
 	var submitData = {
 			orderid:id
 	};
@@ -80,7 +80,31 @@ function orderinfo(id){
 	    show:true
 	});
 	
-} 
+}  */
+
+function orderinfo(id){
+	var submitData = {
+			orderid:id
+	};
+	$.post('${ctx}/shop/orderform!orderinfo.action', submitData,
+		function(json) {
+			var xszf='';
+			var v = json.list;
+			
+			for(var i=0;i<v.length;i++){
+				xszf=xszf+'<div class="form-group"><label class="col-sm-12 control-label">'+v[i].pro.ptitle+'  价格 ：'+v[i].pro.price+'  数量： '+v[i].count+'</label>'+
+				'</div>';
+			}
+			$('#orderxs').html(xszf);
+			
+				
+	},"json")
+	$('#orderdiv').modal({ 
+	    show:true
+	});
+	
+}
+
 function page_submit(num){
 	
 	if(num==-1){
@@ -206,7 +230,7 @@ function page_submit(num){
                         	<c:if test="${bean.state=='2'}">已购买</c:if>
 							<c:if test="${bean.state=='3'}"><span style="color:#F00">已发货</span></c:if>
 							<c:if test="${bean.state=='4'}"><span style="color:#F00">已收货</span></c:if>
-							<c:if test="${bean.state=='5'}"><span style="color:#F00">已退货</span></c:if></td>
+							<%-- <c:if test="${bean.state=='5'}"><span style="color:#F00">已退货</span></c:if> --%></td>
 							 
 						
 					
