@@ -81,13 +81,23 @@
 		<div class="mui-content">
 		    <div class="mui-row">
 		    	<div class="tip-msg">
-		    		<p class="tip-txt">待您反馈</p>
-		    		<p class="mui-ellipsis">服务受理中</p>
+		    	    <c:if test="${service.type == 1||service.type == 2}">
+		    			<p class="tip-txt">待您反馈</p>
+		    		    <p class="mui-ellipsis">服务受理中</p>
+		    		</c:if>
+		    		<c:if test="${service.type == 3||service.type == 4}">
+		    			<p class="tip-txt"></p>
+		    		    <p class="mui-ellipsis">服务已受理</p>
+		    		</c:if>
+		    		<c:if test="${service.type == 5}">
+		    			<p class="tip-txt"></p>
+		    		    <p class="mui-ellipsis">已取消</p>
+		    		</c:if>
 		    	</div>
 		    </div>
 		    <div class="mui-row">
 		    	<div class="service-num">
-		    		<span>服务单号  ${service._id}</span><span>申请时间${service.createdate}</span>
+		    		<span>服务单号  ${service._id}</span><span>申请时间${service.date}</span>
 		    	</div>
 		    </div>
 		    <div class="mui-row">
@@ -102,22 +112,42 @@
 		    	<div class="service-detaile">
 		    		<div class="service-detaile-tit">服务单信息</div>
 		    		<div class="service-detaile-cont">
-		    			<div>服务类型：维修</div>
-		    			<div>申请原因：质量问题</div>
-		    			<div>联系人：   </div>
-		    			<div>联系电话：</div>
-		    			<div>收货地址：</div>
+		    		<c:if test="${service.type == 1}">
+		    			<div>服务类型：退货</div>
+		    		</c:if>
+		    		<c:if test="${service.type == 2}">
+		    			<div>服务类型：换货</div>
+		    		</c:if>
+		    			<!-- <div>申请原因：质量问题</div> -->
+		    			<div>联系人： ${order.name}  </div>
+		    			<div>联系电话：${order.tel}</div>
+		    			<div>收货地址：${order.address}</div>
 		    		</div>
 		    	</div>
 		    </div>
 		    <div class="mui-row">
 		    	<div style="width: 100%;height: auto;padding: 10px 0;padding-top: 30px;background: #fff;text-align: right;">
-		    		<button class="mui-btn" style="margin-right: 20px;">取消申请</button>
+		    		<button class="mui-btn" style="margin-right: 20px;" onclick="cancal('${service._id}')">取消申请</button>
 		    	</div>
 		    </div>
 		</div>
 		<script type="text/javascript">
-			
+		function cancal(id) {
+			  alert(id);
+		    var submitData = {
+		    	 id:id
+		    };
+
+		    $.post('${ctx}/shop/service!cancel.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+		    	function (json) {
+		    	
+		        	if(json.state==0){ 	
+		        	 alert("取消成功");
+		        	 window.location.reload();
+		        	}
+		        },"json");
+		  
+		} 
 		</script>
 	</body>
 

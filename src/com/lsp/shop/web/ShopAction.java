@@ -202,8 +202,8 @@ public class ShopAction extends GeneralAction {
 			whereMap.put("parentid", 0L);
 			sortMap.put("sort", 1);
 			// 获取店铺分类
-			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
-			Struts2Utils.getRequest().setAttribute("typelist", typelist);
+			List<DBObject> typelists = baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap);
+			Struts2Utils.getRequest().setAttribute("typelists", typelists);
 
 		}
 		DBObject share = new BasicDBObject();
@@ -1626,7 +1626,7 @@ public class ShopAction extends GeneralAction {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			sortMap.put("insDate", -1);
-			whereMap.put("custid", custid);
+			//whereMap.put("custid", custid);
 			whereMap.put("isxs", new BasicDBObject("$ne", 1));
 			whereMap.put("fromUserid", fromUserid);
 
@@ -1646,7 +1646,7 @@ public class ShopAction extends GeneralAction {
 						for (DBObject obj : lists) {
 							System.out.println(obj.get("_id").toString());
 							whereMap.clear();
-							whereMap.put("oid", Long.parseLong(obj.get("_id").toString()));
+							whereMap.put("oid", obj.get("_id").toString());
 							DBObject com = baseDao.getMessage(PubConstants.SHOP_SHOPCOMMENTS, whereMap);
 							System.out.println(com);
 							if (com != null) {

@@ -2,6 +2,7 @@ package com.lsp.shop.web;
 
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
- 
+import com.lsp.integral.entity.InteProstore;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
@@ -279,6 +280,12 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		String orderid = Struts2Utils.getParameter("orderid");
         DBObject dbObject =baseDao.getMessage(PubConstants.WX_ORDERFORM, orderid);
         DBObject dbObject2 =baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, sid);
+        if(dbObject2 != null){
+        	AfterService service = (AfterService) UniObject.DBObjectToObject(dbObject2, AfterService.class);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String date = formatter.format(service.getCreatedate());
+			dbObject2.put("date", date);
+        }
         Struts2Utils.getRequest().setAttribute("order", dbObject);
         Struts2Utils.getRequest().setAttribute("service", dbObject2);
         return "find";
@@ -360,10 +367,11 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		if(dbObject !=null){
 			AfterService info = (AfterService) UniObject.DBObjectToObject(dbObject, AfterService.class);
 			if(info.getState()==0){
+				info.set_id(id);
 				info.setState(3);
 				DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
 				if(dbObjects != null){
-					OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+					OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObjects, OrderFormpro.class);
 					pro.setState(0);//将订单变成正常订单
 					baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
 				}

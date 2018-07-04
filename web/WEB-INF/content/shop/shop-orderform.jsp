@@ -121,16 +121,14 @@ function ajaxjz(){//加载
 	    		         +'<div class="col-9">共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+v[i].zfmoney.toFixed(2)+'元</i></div>';
 	    		         if(v[i].state==1){
 	    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
-	    		          	  if(list[j].pro.goodstype !=4){
-	    		          		  
-	    		          		if(list[j].state==1 || list[j].state==3){
-			    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb">退货查看</div>';
-			    		          }else if(list[j].state==2 || list[j].state==4){
-			    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb">换货查看</div>';
-			    		          }else {
-			    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
-			    		          }
-	    		          	  }
+		    		          if(list[j].state==1 || list[j].state==3){
+		    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')">退货查看</div>';
+		    		          }else if(list[j].state==2 || list[j].state==4){
+		    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')">退货查看</div>';
+		    		          }else {
+		    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
+		    		          }
+	    		          
 	    		         }else if(v[i].state==2){
 	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">待发货</div>'
 	    		              +'<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
@@ -169,6 +167,10 @@ function ajaxjz(){//加载
 			 
 	},"json")
 	
+}
+
+function find(oid,sid){
+	window.location.href="${ctx}/shop/service!find.action?custid=${custid}&agid=${agid}&lscode=${lscode}&orderid="+oid+"&sid="+sid;
 }
 
 function service(orderproId){

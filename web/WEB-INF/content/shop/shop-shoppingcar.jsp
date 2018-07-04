@@ -128,7 +128,7 @@
         			kjid:kd
         	}; 
         	loading();
-        	$.post('${ctx}/shop/shop!wxcarpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+        	/* $.post('${ctx}/shop/shop!wxcarpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
         		function(json) { 
         			if (json.state == 0) {
         				WeixinJSBridge.invoke('getBrandWCPayRequest',{
@@ -160,9 +160,26 @@
         			  alert("购买次数已完");
         			}
         		},
-        		"json")
-        	 
-        }
+        		"json") */
+        	$.post('${ctx}/shop/shop!COrderFromCar.action?agid=${agid}&lscode=${lscode}&isgwc=0', submitData,
+            		function(json) { 
+            		     loading.hide();
+            		     alert(json.state);
+            		 	if (json.state == 0) {
+            				alert("购买成功！");
+            				window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+            			}else if(json.state == 1) {
+            				alert("该账号没有开通支付"); 
+            			}else if(json.state == 3){
+            			  alert("没有登录");
+            			}else if(json.state==10){
+            			  alert("购买次数已完");
+            			}
+            		},
+            		"json")
+    	 
+           } 
+ 
     </script>
        <script>
     

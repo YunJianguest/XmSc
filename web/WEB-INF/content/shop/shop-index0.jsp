@@ -387,6 +387,27 @@
 			 <c:forEach items="${typelist}" var="bean"  begin="0" end="7">
                  <c:if test="${not empty bean.url}">
 				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
+						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+						<div class="mui-media-body">${bean.name}</div>
+					</a>
+				</li>
+		   </c:if>
+            <c:if test="${empty bean.url}"> 
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+					<a href="javascript:fxsel('${bean.type}')">
+						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+						<div class="mui-media-body">${bean.name}</div>
+					</a>
+				</li>
+			</c:if>
+             </c:forEach>
+             
+             </c:if>
+             <c:if test="${not empty typelists}">
+			 <c:forEach items="${typelist}" var="bean"  begin="0" end="7">
+                 <c:if test="${not empty bean.url}">
+				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
 					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&typeid=${bean._id}">
 						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
 						<div class="mui-media-body">${bean.name}</div>
