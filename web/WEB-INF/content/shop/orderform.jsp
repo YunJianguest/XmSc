@@ -41,7 +41,13 @@ function fh(id){
 	    show:true
 	});
 }
- 
+
+//商家回复
+function huifu(orderId){
+	   
+}
+
+
 function wxpay(id){
 	var submitData = {
 			payid:id
@@ -244,13 +250,14 @@ function page_submit(num){
                                    
                                       <li><a href="javascript:fh('${bean._id}');">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;发货</a></li>
-                                    
+                                      <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId= ${bean._id}">
+                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;回复</a></li>
                                   </ul>
                               </div>
                           </td>
                       </tr>
                       </c:forEach>
- 
+
                 </table>
                 <%@include file="/webcom/bracket-page.jsp"%>
                 
@@ -416,6 +423,7 @@ function page_submit(num){
         </div>
     </div>
 </div>
+
 <script type="text/javascript"> 
 if('${state}'!=0){ 
 $('#sel_state').val('${state}'); 
