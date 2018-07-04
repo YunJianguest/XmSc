@@ -305,6 +305,7 @@
     <div class="clear hang10"></div> 
      
 </main>
+<%@include file="/webcom/shop-foot.jsp" %>
 <script>
  
   wx.config({
