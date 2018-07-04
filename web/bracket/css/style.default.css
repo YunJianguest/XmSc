@@ -71,10 +71,7 @@
 @import url('lato.css');
 @import url('roboto.css');
 
-.btn{
-	background-color:#005EAC !important;
-	border-color:#005eac !important;
-}
+
 .btn-primary{
 	background-color:#005EAC !important;
 	border-color:#005eac !important;
