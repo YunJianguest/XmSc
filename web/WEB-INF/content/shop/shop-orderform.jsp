@@ -78,7 +78,7 @@ function ajaxjz(){//加载
     }
    
    	var submitData = {
-   		states:'${states}'
+   		state:'${state}'
     }; 
    
     issend=false; 
