@@ -49,17 +49,17 @@
 
             ps_show('inszc');
         }
-        function page_submit(num) {
+        function page_submit(num){
+        	
+        	if(num==-1){
+        		$("#fypage").val(0);	
+        	}else if(num==-2){
+        		$("#fypage").val($("#fypage").val()-1);	
+        	}else{
+        		$("#fypage").val(num);	
+        	}
 
-            if (num == -1) {
-                $("#fypage").val(0);
-            } else if (num == -2) {
-                $("#fypage").val($("#fypage").val() - 1);
-            } else {
-                $("#fypage").val(num);
-            }
-
-            $("#custinfoForm").submit();
+        	$("#custinfoForm").submit();
         }
     </script>
 </head>
@@ -73,7 +73,7 @@
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
 
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/suc/slide.action?type=${type}&fypage=${fypage}&width=${width}&height=${height}">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/suc/slide.action?type=${type}&fypage=${fypage}">
 
             <div class="pageheader">
 

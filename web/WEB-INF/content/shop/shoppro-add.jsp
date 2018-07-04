@@ -163,7 +163,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="form-horizontal" id="custinfoForm" method="post"
-                      action="${contextPath}/shop/shoppro!save.action?fypage=${fypage}">
+                      action="${contextPath}/shop/shoppro!save.action?fypage=${fypage}&&comid=${comid}">
                     <input id="_id" name="_id" value="<s:property value='_id'/>" type="hidden"/>
                     <input type="hidden" id="logo" value="<s:property value='logo'/>" name="logo"/>
                     <input type="hidden" id="comid" value="${comid }" name="comid"/>

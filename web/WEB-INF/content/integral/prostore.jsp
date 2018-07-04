@@ -101,22 +101,9 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/inteaccount.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/prostore.action?">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i> 账户管理 <span>账户列表</span></h2>
-                  <div class="breadcrumb-wrapper1">
-                    <div class="input-group ">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            菜单 <span class="caret"style="color: white;"></span>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li> <a href="javascript:add();">
-                                 <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp; 添加店铺</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-             
             </div>
             <div class="panel-body">
                 <div class="row">

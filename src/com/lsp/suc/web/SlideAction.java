@@ -75,11 +75,9 @@ public class SlideAction extends GeneralAction<Slide>{
 			whereMap.put("title", pattern);
 			Struts2Utils.getRequest().setAttribute("title",  title);
 		}
-	 
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		
 		List<DBObject> list=baseDao.getList(PubConstants.SUC_SLIDE,whereMap,fypage,10,sortMap,backMap);
 		fycount=baseDao.getCount(PubConstants.SUC_SLIDE,whereMap);
 		Struts2Utils.getRequest().setAttribute("list", list);

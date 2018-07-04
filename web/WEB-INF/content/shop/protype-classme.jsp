@@ -124,7 +124,7 @@
 					</div>
 				</div>
 			</div>
-
+          <%@include file="/webcom/shop-foot.jsp" %>
 		</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>

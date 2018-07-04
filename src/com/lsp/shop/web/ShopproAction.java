@@ -108,7 +108,11 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		entity.setSort(0);
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
-		whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("comid"))); 
+		
+		String comid = Struts2Utils.getParameter("comid");
+		Struts2Utils.getRequest().setAttribute("comid", comid);
+		
+		whereMap.put("parentid", Long.parseLong(comid)); 
 		sortMap.put("sort", -1);
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
@@ -133,6 +137,8 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 	public String update() throws Exception {	
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
+		String comid = Struts2Utils.getParameter("comid");
+		Struts2Utils.getRequest().setAttribute("comid", comid);
 		whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("comid"))); 
 		sortMap.put("sort", -1);
 		//获取店铺分类 

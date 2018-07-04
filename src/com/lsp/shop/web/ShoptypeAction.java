@@ -2,9 +2,11 @@ package com.lsp.shop.web;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -48,12 +50,29 @@ public class ShoptypeAction extends GeneralAction<ShopType> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("sort", 1);
-		 
+		
+		String title=Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title)){
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("name", pattern);
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
+		String parentid=Struts2Utils.getParameter("parentid");
+		if(StringUtils.isNotEmpty(parentid)){
+			whereMap.put("parentid", Long.parseLong(parentid));
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
 		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-	    whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("parentid")));
-		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPTYPE,whereMap, sortMap);
+	    
+		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPTYPE,whereMap,fypage,10,sortMap);
+		fycount=baseDao.getCount(PubConstants.SHOP_SHOPTYPE,whereMap);
 		Struts2Utils.getRequest().setAttribute("funcList", list);
 		Struts2Utils.getRequest().setAttribute("parentid",whereMap.get("parentid"));
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		return SUCCESS;
 	}
 
