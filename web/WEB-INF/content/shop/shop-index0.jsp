@@ -279,6 +279,10 @@
 			.swiper-pagination-bullet.swiper-pagination-bullet-active{
 				background: #fff;
 			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body{
+				text-overflow: initial;
+				font-size:12px;
+			}
 		</style>
 		<script type="text/javascript">
 		var issend = true;
@@ -411,10 +415,10 @@
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
 						<div class="mui-col-xs-3" style="color: #F83111;font-size: 14px;">熊猫快报</div>
-						<div class="mui-col-xs-9" style="color: #000;display: flex;overflow: hidden;">
+						<div class="mui-col-xs-9" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul id='news' style='line-height:30px;height:30px;'>
+							<ul  style='line-height:30px;height:30px;'>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
 								   <li><a href="${bean.url}">${bean.title}</a></li>
