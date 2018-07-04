@@ -424,11 +424,7 @@
 <script>
 	//弹出支付二维码
 	function popcode(val){
-		console.log(val)
-//		$(this).click(function(){
-			console.log($(this))
-			$('.modal').css('display','block')
-//		})
+		$('.modal').css('display','block')
 	}
 $(function(){ 
 	$('#ConfirmPay').click(function(){

@@ -17,6 +17,8 @@
     <script src="${ctx }/app/js/jquery-1.8.3.js"></script>
     <script src="${ctx}/app/js/iosOverlay.js"></script>
     <script src="${ctx}/app/js/spin.min.js"></script>
+    <script type="text/javascript" src="${ctx}/app/js/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="${ctx}/app/js/qrcode.js"></script> 
     <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
     <script type="text/javascript" src="${ctx }/app/js/jquery.Spinner.js"></script>
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
@@ -289,6 +291,79 @@ function delcar(id){
             height: 2px;
             background-image: url(${ctx}/img/scdz-xz.png);
         }
+         .mask,.modal{
+        	width: 100%;
+        	height: 100%;
+        	background: rgba(0,0,0,.1);
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	z-index: 100;
+        	display: none;
+        }
+        .mask-cont{
+        	width: 100%;
+        	height: auto;
+        	background: #fff;
+        	position: absolute;
+        	bottom: 50px;
+        	left: 0;
+        	padding: 0 10px;
+        	z-index: 101;
+        }
+        .mask-cont-tit{
+        	width: 100%;
+        	height: 30px;
+        	line-height: 30px;
+        	text-align: center;
+        	position: relative;
+        }
+        .mask-cont-tit::after{
+        	content: '';
+        	width: 100%;
+        	height: 0.5px;
+        	position: absolute;
+			bottom: 0;
+			left: 0;
+			background: #ddd;
+        }
+        .mask-cont-cont{
+        	width: 100%;
+        	height: auto;
+        	padding-bottom: 10px;
+        }
+        .mask-cont-cont button{
+        	width: 100%;
+        	height: 34px;
+        	line-height: 34px;
+        	background: none;
+        	border: 1px solid #000;
+        	border-radius: 5px;
+        	display: block;
+        	margin-top: 10px;
+        }
+        .modal{
+        	z-index: 1001;
+        	background: rgba(0,0,0,.3);
+        	
+        }
+        .modal-cont{
+        	width: 100%;
+        	height: 100%;
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        	z-index: 1002;
+        }
+        #qrcode{
+        	width: auto;
+        	height: auto;
+        	border-radius: 5px;
+        	background: #fff;
+        	padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -351,17 +426,39 @@ function delcar(id){
             </font>
         </div>
         <div class="col-4 zi-bai size14 weight500 txt-c pull-right">
-            <a href="javascript:moneypay()">
+            <!--<a href="javascript:moneypay()">-->
                 <div class=" hang40 ">
-                    <div class="hang40 line-height40 btn-lu border-radius3">确认付款</div>
+                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay">确认付款</div>
                 </div>
-            </a>
+            <!--</a>-->
         </div>
     </div>
-</div> 
+</div>
+<div class="mask">
+	<div class="mask-cont">
+		<div class="mask-cont-tit">
+			付款方式
+			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
+		</div>
+		<div class="mask-cont-cont">
+			<button onclick="popcode(0)" class="currency">比特币</button>
+			<button onclick="popcode(1)" class="currency">以太坊</button>
+			<button onclick="popcode(2)" class="currency">盼盼币</button>
+		</div>
+	</div>
+</div>
+<div class="modal">
+	<div class="modal-cont" >
+		<div id="qrcode">
+			
+		</div>
+	</div>
+</div>
 </body>
 <script>
-ajaxjz();  
+ajaxjz();
+//获取屏幕宽度
+	var w= $(window).width()/2; 
 $(window).scroll(function () {
 
         var offsetY = $(window).scrollTop();
@@ -372,6 +469,25 @@ $(window).scroll(function () {
         }
 
 });
-
+$('#ConfirmPay').click(function(){
+		$('.mask').css('display','block')
+	})
+	$('#close').click(function(){
+		$('.mask').css('display','none')
+	})
+	$('.modal').click(function(){
+		$('.modal').css('display','none')
+	})
+	//弹出支付二维码
+	function popcode(val){
+		$('.modal').css('display','block')
+	}
+	
+	//二维码生成
+	$('#qrcode').qrcode({ 
+	  width : w,
+      height : w,
+      text	: '${ctxurl}/shop/shop!index.action?'
+    });
 </script> 
 </html>

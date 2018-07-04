@@ -81,9 +81,9 @@ function getbbscount() {
   <div class="mainpanel">
 	<%@include file="/webcom/header-headerbar.jsp"%>
     
-	
+	<div style="width: 100%;height: 100%;background: url('${ctx}/xmMobile/img/pc-banner.jpg') no-repeat;background-size: 100% 100%;"></div>
     
-    <div class="pageheader">
+    <%-- <div class="pageheader">
       
       <h2><i class="fa fa-user"></i> 概况 <span>网站统计</span></h2>
 
@@ -433,7 +433,7 @@ function getbbscount() {
 	  </c:forEach> 
       
       
-	</div>
+	</div> --%>
 	
       
       
