@@ -3637,8 +3637,6 @@ public class ShopAction extends GeneralAction {
 			o.setSpec(spec);
 			o.setFromUserid(fromUserid);
 			o.setPid(Long.parseLong(pro.get("_id").toString()));
-			//评价初始状态默认0
-			o.setComstate(0);
 			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, o);
 		}
 
