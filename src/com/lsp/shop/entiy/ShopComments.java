@@ -26,7 +26,7 @@ public class ShopComments extends ReflectionDBObject {
 	/**
 	 * 订单ID
 	 */
-	private Long oid;
+	private String oid;
 	/**
 	 * 商品id
 	 */
@@ -74,10 +74,11 @@ public class ShopComments extends ReflectionDBObject {
 	public void setSid(Long sid) {
 		this.sid = sid;
 	}
-	public Long getOid() {
+	 
+	public String getOid() {
 		return oid;
 	}
-	public void setOid(Long oid) {
+	public void setOid(String oid) {
 		this.oid = oid;
 	}
 	public Long getGid() {

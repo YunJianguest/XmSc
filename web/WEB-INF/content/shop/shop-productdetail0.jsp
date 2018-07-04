@@ -121,6 +121,27 @@
                 }
             })
         })
+        
+         function getcom() {
+
+            var submitData = {
+                gid: '${entity._id}', 
+            };
+            jQuery.post('${ctx}/shop/shopcom!getCom.action?lscode=${lscode}', submitData,
+                    function (json) {
+                        if (json.state == 0) {
+                             var list=json.list;
+                             var html;
+                             for(var i=0;i<list.length;i++){
+                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
+                            	 +'<div class="cmt_cnt">'+list[i].content+'</div></li>';
+                            	  
+                             }
+                             $('#cmt_list').html(html);
+                        }  
+                    }, "json");
+        }
+       
       </script>
        <style>
          .img-100 img{
@@ -360,10 +381,10 @@
    			<span class="logo_wrap "><img class="shopLogo" src="${ctx}/xmMobile/img/Public-banner.jpg" /></span>
    		</div>
    		<div class="shop-name">
-   			我的我的我我的我的订单多
+   			${entity.comname}
    		</div>
    		<div class="shop-go">
-   			<a href="">进入店铺</a>
+   			<a href="${ctx}/shop/shop!index.action?lscode=${lscode}&comid=${entity.comid}">进入店铺</a>
    		</div>
    	</div>
 	<ul class="tab-switch">
@@ -377,11 +398,7 @@
     	<div class="detail_row detail_cmt">
     		<div class="cmt_list_wrap">
     			<ul class="cmt_list">
-    				<li>
-    					<div class="cmt_user"><span class="user">昵称</span><span class="date">2018-06-30</span></div>
-    					<div class="cmt_cnt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium nulla delectus aliquam praesentium quae velit laborum deleniti! Provident consequuntur expedita illum nam rem officiis nostrum odit molestias enim error magni.</div>
-    					<div class="cmt_sku"><span>测试</span></div>
-    				</li>
+    				
     			</ul>
     		</div>
     	</div>
@@ -481,6 +498,7 @@
 </script> 
 <%@ include file="/webcom/shop-spec.jsp" %>  
 <script>
+getcom();
   wx.config({
     debug: false,
     appId: '${token.appid}', 

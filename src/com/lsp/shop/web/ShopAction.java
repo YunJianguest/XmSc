@@ -3831,6 +3831,14 @@ public class ShopAction extends GeneralAction {
 
 				// 生成信息
 				if (pro != null) {
+					List<Long>lscom=new ArrayList<>();
+					if(entity.getComids()!=null) {
+						lscom=entity.getComids();
+					}
+					if(!lscom.contains(Long.parseLong(pro.get("comid").toString()))) {
+						lscom.add(Long.parseLong(pro.get("comid").toString()));
+					} 
+					entity.setComids(lscom);
 					if (pro.get("jffh") != null) {
 						jffh = jffh + Double.parseDouble(pro.get("jffh").toString());
 					}

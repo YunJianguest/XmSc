@@ -48,10 +48,24 @@
         }
         .mine-headbox{
         	min-height:200px;
-        	background:url(${ctx}/mvccol/img/mine-header.jpg);
+        	background:url(${ctx}/mvccol/img/mine-headerback.jpg);
+        	background-size:100% 100%;
         }
         .line-height30 {
     		line-height: 24px !important;
+		}
+		.tab-nav{
+			width:100%;height:80px;display:flex;padding-top:20px;
+		}
+		.tab-nav li{
+			flex:1;
+			width:1%;
+			text-align: center;
+		}
+		.tab-nav li i{
+			font-size:20px;
+			margin-bottom:10px;
+			color:#fff;
 		}
     </style>
      
@@ -59,7 +73,7 @@
 <body class="cmp640">
 <main>
    <div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
-   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;'></i></div>
+   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i></div>
         <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 50%;margin-left:-35px;margin-top:-70px;">
           <c:if test="${empty entity.headimgurl}">
             <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius50"/>
@@ -89,10 +103,10 @@
                         </div>
                     </font>
                     
-                    <div class="hang25 line-height20 pt-5" style="color:#888888">
+                    <%-- <div class="hang25 line-height20 pt-5" style="color:#888888">
                         <div class="txt-c"><i class="pr-10 zi-cheng">积分<i class="pl-2 zi-cheng">${entity.jf}</i></i><c:if test="${not empty  entity.email}">${entity.email}</c:if><c:if test="${empty entity.email}">这家伙很懒，没有邮箱！</c:if></div>
-                        <%-- <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'"><i class="zi-lan-tq">修改</i></div> --%>
-                    </div>
+                        <<div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'"><i class="zi-lan-tq">修改</i></div> 
+                    </div> --%>
                 </font>
             </div>
         </div>
@@ -136,7 +150,27 @@
     <c:if test="${fn:length(func.lsfunc)>0}">
       <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
     </c:if> 
-
+	<ul class='tab-nav'>
+	<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+                     <i class="fa fa-bars  line-height30"></i>
+                   </div>全部订单</li>
+		<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+                     <i class="fa fa-credit-card  line-height30"></i>
+                   </div>待付款</li>
+                   <li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
+                     <i class="fa fa-truck  line-height30"></i>
+                   </div>待发货</li>
+		<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+                     <i class="fa fa-envelope  line-height30"></i>
+                   </div>待收货</li>
+		
+		<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
+                     <i class="fa fa-commenting-o  line-height30"></i>
+                   </div>待评价</li>
+	</ul>
+	<c:if test="${fn:length(func.lsfunc)>0}">
+      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+    </c:if> 
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
