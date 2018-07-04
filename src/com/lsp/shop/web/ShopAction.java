@@ -1358,7 +1358,7 @@ public class ShopAction extends GeneralAction {
 		if (StringUtils.isNotEmpty(wwzService.getAgid(db.get("comid").toString(), wwzService.getVipNo(fromUserid)))) {
 			Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
 		}
-
+		System.out.println(db.get("bq"));
 		return "productdetail" + db.get("bq");
 
 	}

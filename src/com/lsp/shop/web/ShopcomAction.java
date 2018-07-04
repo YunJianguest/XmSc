@@ -22,6 +22,7 @@ import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
+import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.shop.entiy.ProType;
 import com.lsp.shop.entiy.ProductInfo;
 import com.lsp.shop.entiy.ShopComReply;

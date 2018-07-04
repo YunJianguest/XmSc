@@ -351,6 +351,30 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		ouputStream.flush();
 		ouputStream.close();
 	}
-	
+	/***
+	 * 商家回复评论
+	 * @return
+	 * @throws Exception
+	 * @author CuiJing
+	 * @version 
+	 * @date 2018年7月4日 下午4:56:51
+	 */
+	public String orderDetailsById() throws Exception{
+		getLscode();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortsMap = new HashMap<String, Object>();
+		String orderId = Struts2Utils.getParameter("orderId");
+		whereMap.put("orderid", orderId);
+		
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		fycount=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO, whereMap);
+		List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO,whereMap,fypage,10,sortsMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
+		Struts2Utils.getRequest().setAttribute("list", lists);
+		
+		return "sjreply";
+	}
 	
 }
