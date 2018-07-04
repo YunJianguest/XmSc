@@ -146,7 +146,7 @@
                                     <tr>
                                         <td>${bean._id}</td>
                                         <td>${bean.name}</td>
-                                        <td><c:if test="${bean.type==0}">普通店</c:if><c:if test="${bean.type==1}">官方店</c:if><c:if test="${bean.type==2}">商家店</c:if>
+                                        <td><c:if test="${bean.type==3}">大众区</c:if><c:if test="${bean.type==4}">特约区</c:if><c:if test="${bean.type==5}">会员区</c:if>
                                         </td>
                                         <td>${bean.mb}</td>
                                         <td class="table-action">
@@ -277,6 +277,7 @@
                                     <option value="2">商家店铺</option>  -->
                                     <option value="3">大众区</option>
                                     <option value="4">特约区</option>
+                                    <option value="5">会员区</option>
                                 </select>
                                 <label class="error" for="color"></label>
                             </div>

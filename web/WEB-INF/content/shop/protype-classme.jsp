@@ -83,7 +83,7 @@
 
 	<body>
 		<div class="page">
-			<div class="search search-h">
+			<!-- <div class="search search-h">
 
 				<div class="search-box">
 					<div class="search-back on-blur"></div>
@@ -96,7 +96,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="category">
 							<!-- 左侧总分类 -->
 			    <div class="category-tab">
