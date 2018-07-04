@@ -357,13 +357,13 @@
 			<!-- <div class="mui-pull-left">
 				<span></span>
 			</div> -->
-			<div class="mui-title" style="left: 10px;">
+			<div class="mui-title" style="left: 10px;right:10px;">
 				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;left: 25px;"></span>
 				<input type="search" class="mui-search" name="" id="sel" value="" />
 			</div>
-			<div class="mui-pull-right">
+			<!-- <div class="mui-pull-right">
 				<span></span>
-			</div>
+			</div> -->
 		</div>
 		<!-- 轮播 -->
 		
@@ -492,7 +492,6 @@
 			$(obj).find('ul:first').animate({
 				marginTop: -lineh
 			}, 500, function() {
-				console.log($(this))
 				$(this).css({
 					marginTop: 0
 				}).find('li:first').appendTo(this)
