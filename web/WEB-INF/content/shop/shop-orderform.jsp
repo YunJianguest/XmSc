@@ -86,7 +86,8 @@ function ajaxjz(){//加载
     		var xszf=$('#ajaxdiv').html();  
     		
 	    	if(json.state=='0'){
-	    		var v = json.list;  
+	    		var v = json.list; 
+	    		
 	    		 for(var i=0;i<v.length;i++){  
 	    		  xszf+='<div class="pl-10 pr-10 pt-10 overflow-hidden">'
 	    		      +'<div class="bg-bai border-radius5">'
@@ -123,7 +124,10 @@ function ajaxjz(){//加载
 	    		         }else if(v[i].state==2){
 	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">待发货</div>';
 	    		         }else if(v[i].state==3){
-	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">已发货</div>'; 
+	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">确认收货</div>';
+	    		         }else if(v[i].state==4){
+		    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
+		    		          		+'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+','+v[i].comid+')">评价</div>'; 
 	    		         }else if(v[i].state==5){
 	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">已退款</div>';
 	    		         } 
@@ -150,6 +154,10 @@ function ajaxjz(){//加载
 
 function service(orderproId){
 	window.location.href="${ctx}/shop/service!serviceadd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&orderproId="+orderproId;
+}
+
+function shopcom(oid,gid,sid){
+	window.location.href="${ctx}/shop/shopcom!shopcomadd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&oid="+oid+"&gid="+gid+"&sid="+sid;
 }
 function del(id) {
 	  
