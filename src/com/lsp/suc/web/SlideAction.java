@@ -37,7 +37,7 @@ import com.mongodb.DBObject;
  *
  */
 @Namespace("/suc")
-@Results( { @Result(name ="reload", location = "slide.action",params={"type","%{type}","fypage","%{fypage}","width","%{width}","height","%{height}"}, type = "redirect") })
+@Results( { @Result(name ="reload", location = "slide.action",params={"fypage","%{fypage}","type","%{type}","width","%{width}","height","%{height}"}, type = "redirect") })
 public class SlideAction extends GeneralAction<Slide>{
 
 	private static final long serialVersionUID = -6784469775589971579L;
