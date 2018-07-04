@@ -45,7 +45,7 @@
 	    		var v = json.list; 
 	    		
 	    		 for(var i=0;i<v.length;i++){ 
-	    		 xszf+='<ul  class="mui-table-view"><li class="pl-10 pr-10 pt-5 mui-table-view-cell hang60" style="line-height:30px;">'
+	    		 xszf+='<ul  class="mui-table-view" onclick="setadmin('+v[i]._id+')"><li class="pl-10 pr-10 pt-5 mui-table-view-cell hang60" style="line-height:30px;">'
 	    		     +'<div class="mui-slider-right mui-disabled"><a href="javascript:setadmin('+v[i]._id+')" class="mui-btn mui-btn-yellow">设置默认</a>'
 	    		     +'<a href="javascript:del('+v[i]._id+')" class="mui-btn mui-btn-red">删除</a></div>'
 	    		     +'<div class="mui-slider-handle"><a href="#">'
