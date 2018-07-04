@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ include file="/webcom/taglibs.jsp"%>
 
-
+<style type="text/css">
+	.btn.btn-default.dropdown-toggle:hover{color: #3D3D3D;}
+</style>
 <div class="headerbar">
 
       <a class="menutoggle"><i class="fa fa-bars"></i></a>
