@@ -149,6 +149,7 @@
             </div>
         </font>
     </div>
+    <%@include file="/webcom/shop-foot.jsp" %>
 </main>
 <script src="${ctx}/mvccol/mui-js/mui.min.js"></script>
 <script>

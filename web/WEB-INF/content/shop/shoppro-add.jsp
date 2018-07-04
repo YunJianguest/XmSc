@@ -169,7 +169,7 @@
                     <input id="_id" name="_id" value="<s:property value='_id'/>" type="hidden"/>
                     <input type="hidden" id="logo" value="<s:property value='logo'/>" name="logo"/>
                     <input type="hidden" id="comid" value="${comid}" name="comid"/>
-					<input type="hidden" id="goodstype" value="${goodstype}" name="goodstype"/>
+					<%-- <input type="hidden" id="goodstype" value="${goodstype}" name="goodstype"/> --%>
                     <div class="div-group-10 overflow-hidden">
                         <!--左边项目-->
                         <div class="overflow-hidden">

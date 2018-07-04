@@ -11,6 +11,8 @@
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
 		
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
+		<link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			.mui-table-view .mui-media-object{
