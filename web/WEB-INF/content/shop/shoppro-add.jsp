@@ -176,8 +176,7 @@
                             <div class=" div-group-10 pb-25 bg-bai border-radius5 overflow-hidden">
                                 <div class="clear col-2 pl-10 overflow-hidden">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        商品logo<i
-                                            class="size12 zi-hui">（仅需一张）</i></div>
+                                        商品logo<i class="size12 zi-hui">（仅需一张）</i></div>
                                     <div class="line-bottom line-right line-left1 div-group-5 pt-10 pb-10 overflow-hidden">
                                         <div class="col-6">
                                             <c:if test="${empty entity.logo}">

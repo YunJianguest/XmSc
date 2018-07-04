@@ -9,6 +9,8 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<style type="text/css">
 			.mui-table-view .mui-media-object{
@@ -122,6 +124,8 @@
 				</ul>
 			</div>
 		</div>
+		
+		<%@include file="/webcom/shop-foot.jsp" %>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script type="text/javascript">
 			mui.init();

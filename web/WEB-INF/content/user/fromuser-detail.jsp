@@ -229,6 +229,7 @@
         </div>
     </div>
 </main>
+<%@include file="/webcom/shop-foot.jsp" %>
 <script>
 jQuery(document).ready(function($) {
 
