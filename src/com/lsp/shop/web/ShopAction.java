@@ -55,6 +55,7 @@ import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.shop.entiy.Paymentorder;
 import com.lsp.shop.entiy.ProductInfo;
 import com.lsp.shop.entiy.ShopAgent;
+import com.lsp.shop.entiy.ShopComments;
 import com.lsp.shop.entiy.ShopMb;
 import com.lsp.shop.entiy.Shoppingcart;
 import com.lsp.shop.entiy.Useraddress;
@@ -1639,6 +1640,18 @@ public class ShopAction extends GeneralAction {
 					List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, wheresMap, sortsMap);
 
 					if (lists.size() > 0) {
+						for(DBObject obj : lists) {
+							System.out.println(obj.get("_id").toString());
+							whereMap.clear();
+							whereMap.put("oid",Long.parseLong(obj.get("_id").toString()));
+							DBObject com = baseDao.getMessage(PubConstants.SHOP_SHOPCOMMENTS, whereMap);
+							System.out.println(com);
+							if(com!=null) {
+								obj.put("states", 1);//代表已评价
+							}else {
+								obj.put("states", 0);//代表未评价
+							}
+						}
 						dbObject.put("list", lists);
 						lsodb.add(dbObject);
 					} else {
@@ -1658,6 +1671,7 @@ public class ShopAction extends GeneralAction {
 			e.printStackTrace();
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
+		System.out.println(json);
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
@@ -3623,6 +3637,8 @@ public class ShopAction extends GeneralAction {
 			o.setSpec(spec);
 			o.setFromUserid(fromUserid);
 			o.setPid(Long.parseLong(pro.get("_id").toString()));
+			//评价初始状态默认0
+			o.setComstate(0);
 			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, o);
 		}
 

@@ -171,11 +171,11 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		whereMap.put("_id", Long.parseLong(gid));
 		DBObject dbObject = baseDao.getMessage(PubConstants.DATA_PRODUCT,whereMap);
 		sid=dbObject.get("comid").toString();
-		System.out.println(sid);
+		
 		Struts2Utils.getRequest().setAttribute("sid", sid);
 		Struts2Utils.getRequest().setAttribute("oid", oid);
 		Struts2Utils.getRequest().setAttribute("gid", gid);
-		//Struts2Utils.getRequest().setAttribute("db", dbObject);
+		
 		return "shopcomadd";
 	}
 	
@@ -277,9 +277,9 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	public void ajaxSaveCom() {
 		getLscode();
 		Map<String,Object>sub_map = new HashMap<>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sub_map.put("state", 1);
-		//评论id  
-		//sid和gid在传值的时候以逗号隔开
+		//评论id
 		String sid=Struts2Utils.getParameter("sid"); 
 		String oid=Struts2Utils.getParameter("oid"); 
 		String gid=Struts2Utils.getParameter("gid");
@@ -287,8 +287,9 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		String logisService=Struts2Utils.getParameter("logisticsEvalu"); 
 		String serviceAtt=Struts2Utils.getParameter("serviceEvalu"); 
 		String content=Struts2Utils.getParameter("cause");
+		whereMap.put("_id", Long.parseLong(oid));
 		ShopComments comments=new ShopComments();
-		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)||StringUtils.isEmpty(content)) {
+		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)) {
 			return;
 		}
 		
@@ -306,6 +307,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		comments.setServiceAtt(Integer.parseInt(serviceAtt));
 		int i=baseDao.insert(PubConstants.SHOP_SHOPCOMMENTS, comments);
 		if (i>0) {
+			
 			sub_map.put("state", 0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
