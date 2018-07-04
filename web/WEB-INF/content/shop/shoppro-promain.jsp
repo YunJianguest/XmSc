@@ -87,7 +87,7 @@
                 						+'</a>'	
                 						+'</div>'
                 						+'<div class="mui-card-footer" style="padding: 10px 5px;display: block;">'
-                						+'<span class="similar-product-text">' + v[i].ptitle + ' </span>'
+                						+'<span class="similar-product-text" style="height:40px;text-align: left;">' + v[i].ptitle + ' </span>'
                 						+'<div class="similar-product-info ">'	
                 						+'<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>'
                 						+'<span class="similar-product-shopCar"></span>'			
@@ -110,10 +110,10 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<!--<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
 		    <h1 class="mui-title">商品列表</h1>
-		</header>
+		</header>-->
 		<!-- <div id="showall"></div> -->
 		<div class='mui-content' >
 			<div class='mui-row'>
