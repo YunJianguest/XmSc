@@ -242,7 +242,7 @@
                                         <td>${bean.rolename}</td>
                                         </c:if>
                                         <c:if test="${bean.rolename==null}"> --%>
-                                        <td>${bean.roleid}</td>
+                                        <td>${bean.rolename}</td>
                                         <%-- </c:if> --%>
                                         <td>
                                         <c:choose>
