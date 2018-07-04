@@ -11,9 +11,9 @@
         <ul class="headermenu">
           <li>
             <div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="color: #fff;">
                 <img src="${ctx }/bracket/images/photos/loggeduser.png" alt="" /><%=custName%>
-                <span class="caret"></span>
+                <span class="caret" style="color: #fff;"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
                 <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i> 使用帮助</a></li>

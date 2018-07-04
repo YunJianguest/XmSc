@@ -75,6 +75,10 @@
 	background-color:#005EAC !important;
 	border-color:#005eac !important;
 }
+.btn-primary{
+	background-color:#005EAC !important;
+	border-color:#005eac !important;
+}
 /********** 2. RESET STYLES **********/
 /*************************************/
 
@@ -281,7 +285,7 @@ strong {
 }
 
 .headermenu .dropdown-menu:after {
-    border-bottom: 6px solid #3D3D3D;
+    border-bottom: 6px solid #fff;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     content: "";
@@ -312,7 +316,7 @@ strong {
 }
 
 .headermenu .dropdown-menu li a {
-    color: #94989d;
+    color: #ddd;
     font-size: 13px;
     padding: 7px 10px;
     -moz-border-radius: 2px;
@@ -359,7 +363,7 @@ strong {
 }
 
 .headermenu .dropdown-menu-usermenu {
-    background: #3D3D3D;
+    background: #005EAC;
     min-width: 200px;
 }
 
@@ -370,7 +374,7 @@ strong {
 }
 
 .headermenu .dropdown-menu-head li a {
-    color: #333;
+    color: #fff;
     padding: 0;
     opacity: 1;
 }
@@ -682,7 +686,7 @@ strong {
 .nav-bracket .children > li > a:active,
 .nav-bracket .children > li > a:focus {
     text-decoration: none;
-    color: #90b721;
+    color: #fff;
 }
 
 .nav-bracket .children > li .fa {
@@ -764,7 +768,7 @@ strong {
 .mainpanel {
     margin-left: 240px;
     background: #e4e7ea;
-    min-height: 1000px;/********ÉèÖÃÆÁÄ»×Ü¸ß¶È********/
+    min-height: 1000px;/********ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½Ü¸ß¶ï¿½********/
 }
 
 .pageheader {
