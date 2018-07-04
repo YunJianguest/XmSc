@@ -95,6 +95,7 @@ public class UserAction extends GeneralAction<UserInfo>
     List<DBObject> list = this.basedao.getList(PubConstants.USER_INFO, whereMap, sortMap); 
     for (DBObject dbObject : list) {
 		dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
+		System.out.println("---->"+dbObject.get("roleid"));
 		if(dbObject.get("roleid") != null){
 			DBObject dbObject2 =basedao.getMessage(PubConstants.ROLE_INFO, Long.parseLong(dbObject.get("roleid").toString()));
 		    if(dbObject2 != null){

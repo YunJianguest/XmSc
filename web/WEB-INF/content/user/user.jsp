@@ -238,7 +238,12 @@
                                         <td>${bean.password}</td>
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm'
                                                             value='${bean.createdate}'/></td>
+                                      <%--   <c:if test="${bean.rolename!=null}">
                                         <td>${bean.rolename}</td>
+                                        </c:if>
+                                        <c:if test="${bean.rolename==null}"> --%>
+                                        <td>${bean.roleid}</td>
+                                        <%-- </c:if> --%>
                                         <td>
                                         <c:choose>
 										   <c:when test="${bean.agentLevel==1}">省级代理商</c:when>
