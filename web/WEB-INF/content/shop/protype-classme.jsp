@@ -22,6 +22,7 @@
 		<meta name="apple-mobile-web-app-title" content="熊猫商城">
 		<title>熊猫商城</title>
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/swiper.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/jfyMobilePro.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mediaJfyPro.css" />
