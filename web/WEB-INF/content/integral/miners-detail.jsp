@@ -98,17 +98,17 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav" style="background: #fff;">
+		<!-- <header class="mui-bar mui-bar-nav" style="background: #fff;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">标题</h1>
-		</header>
+		</header> -->
 		<div class="mui-content">
 			<div class="animation-back"></div>
 			<div class="animation-cont">运行中</div>
 			<div class="mui-row mui-col-xs-12" style="position: absolute;bottom: 20px;padding-left: 20px;box-sizing: border-box;">
 				<div class="miner-txt">
 					<p class="miner-tit">${db.money}</p>
-					<p>我的算力：${db.money}/${db.time}GH/d</p>
+					<p>我的算力：<span id="mycount"></span>GH/d</p>
 					<!-- <p>累计获得：305.4664646JRL</p> -->
 					<p>全网算力：${setting.num}GHS</p>
 					<p>结束时间：${db.end}</p>
@@ -117,6 +117,9 @@
 		</div>
 
 		<script type="text/javascript">
+		$(function(){
+			$("#mycount").html(${db.money}/${db.time});
+		});
 		  wx.config({
 			    debug: false,
 			    appId: '${token.appid}', 

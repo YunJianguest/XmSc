@@ -320,10 +320,14 @@ public class ShopAction extends GeneralAction {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String state=Struts2Utils.getParameter("state");
+		
+		Struts2Utils.getRequest().setAttribute("state", state);
 		// 加载订单量
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("fromUserid", fromUserid);
 		whereMap.put("custid", custid);
+		whereMap.put("state", state);
 		Struts2Utils.getRequest().setAttribute("ordercount", baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));
 		return "orderform";
 	}
@@ -1625,11 +1629,15 @@ public class ShopAction extends GeneralAction {
 			}
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
+			String state=Struts2Utils.getParameter("state").toString();
+			if(state!=null) {
+				whereMap.put("state", Integer.parseInt(state));
+			}
 			sortMap.put("insDate", -1);
 			//whereMap.put("custid", custid);
 			whereMap.put("isxs", new BasicDBObject("$ne", 1));
 			whereMap.put("fromUserid", fromUserid);
-
+			
 			List<DBObject> list = baseDao.getList(PubConstants.WX_ORDERFORM, whereMap, fypage, 10, sortMap);
 			List<DBObject> lsodb = new ArrayList<DBObject>();
 			if (list.size() > 0) {

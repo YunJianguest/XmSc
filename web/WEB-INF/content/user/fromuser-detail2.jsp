@@ -73,7 +73,8 @@
 <body class="cmp640">
 <main>
    <div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
-   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i></div>
+   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'>
+   <i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i></div>
         <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 50%;margin-left:-35px;margin-top:-70px;">
           <c:if test="${empty entity.headimgurl}">
             <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius50"/>
@@ -151,22 +152,42 @@
       <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
     </c:if> 
 	<ul class='tab-nav'>
-	<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
-                     <i class="fa fa-bars  line-height30"></i>
-                   </div>全部订单</li>
-		<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
-                     <i class="fa fa-credit-card  line-height30"></i>
-                   </div>待付款</li>
-                   <li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
-                     <i class="fa fa-truck  line-height30"></i>
-                   </div>待发货</li>
-		<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
-                     <i class="fa fa-envelope  line-height30"></i>
-                   </div>待收货</li>
+		<li>
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}">
+				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+	            <i class="fa fa-bars  line-height30"></i>
+	            </div>全部订单
+            </a>
+          </li>
+		<li>
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+0>	
+				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+	              <i class="fa fa-credit-card  line-height30"></i>
+	            </div>待付款
+              </a>     
+        </li>
+        <li>
+        	<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+2>	
+		       <div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
+		         <i class="fa fa-truck  line-height30"></i>
+		       </div>待发货
+	       </a> 
+        </li>
+		<li>
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+3>	
+				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+                  <i class="fa fa-envelope  line-height30"></i>
+                </div>待收货
+            </a>
+        </li>
 		
-		<li><div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
-                     <i class="fa fa-commenting-o  line-height30"></i>
-                   </div>待评价</li>
+		<li>
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+4>	
+				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
+	            	<i class="fa fa-commenting-o  line-height30"></i>
+	          	</div>待评价
+          	</a>
+        </li>
 	</ul>
 	<c:if test="${fn:length(func.lsfunc)>0}">
       <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>

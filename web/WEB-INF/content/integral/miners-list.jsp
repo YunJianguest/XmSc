@@ -110,7 +110,7 @@
 						    +'<div class="mui-media-body miner-txt">'
 							+'<div class="miner-txt-cont mui-col-xs-9">'+v[i].ptitle+''
 							+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].price+'</span></p>'
-						    +'<p class="mui-ellipsis"><span>运行周期:</span><span>'+v[i].time+'年</span></p>'
+						    +'<p class="mui-ellipsis"><span>运行周期:</span><span>'+v[i].time+'天</span></p>'
 							+'<p class="mui-ellipsis"><span>提成百分比:</span><span>'+v[i].percent+'</span></p>'	
 							+'</div>'	
 							+'<div class="miner-buyBtn mui-col-xs-3">'
@@ -158,10 +158,10 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<!-- <header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">矿机购买</h1>
-		</header>
+		</header> -->
 		<div class="mui-content" style="overflow: scroll;height: 100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
 			<ul class="mui-table-view" style="background: none;">
 				

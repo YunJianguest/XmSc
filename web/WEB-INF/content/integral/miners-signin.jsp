@@ -193,7 +193,6 @@
 		<script src="${ctx}/xmMobile/js/app.js"></script>
 		<script type="text/javascript" >
 		function login(){
-			alert($('#tel').val());
 			var  tel=$('#tel').val();
 			var  password=$('#password').val();
 			if(tel.length==0||password.length==0){
@@ -209,7 +208,6 @@
 				},
 	            success:function(data){
 	            	if(data.state==0){
-	            		alert('登陆成功');
 	            		window.location.href ="${ctx}/integral/miners!list.action?lscode="+data.lscode;
 	            	}else if(json.state == 1){
 						alert('请求超时，重新登录');

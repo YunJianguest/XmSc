@@ -77,7 +77,8 @@ function ajaxjz(){//加载
     	return;
     }
    
-   	var submitData = {  
+   	var submitData = {
+   		states:'${states}'
     }; 
    
     issend=false; 
@@ -89,25 +90,12 @@ function ajaxjz(){//加载
 	    		var v = json.list; 
 	    		
 	    		 for(var i=0;i<v.length;i++){  
-	    			 console.log(v[i]._id)
 	    		  xszf+='<div class="pl-10 pr-10 pt-10 overflow-hidden">'
 	    		      +'<div class="bg-bai border-radius5">'
 	    		      +'<div class="hang30 line-bottom-98 zi-hui-tq weight500 overflow-hidden line-height30 pl-5 pr-5 zi-353535">'
 	    		      +'<font size="1"><div class="col-9 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>'
-	    		      if(v[i].state==1){
-    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
-    		         }else if(v[i].state==2){
-    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">待发货</div>'
-    		         }else if(v[i].state==3){
-    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">确认收货</div>'
-    		         }else if(v[i].state==4){
-    		        		 xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
-    		        	/*   xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
-    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
-    		         }else if(v[i].state==5){
-    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">已退款</div>'
-    		         } 
-	    		      xszf+='</font></div>';
+	    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+	    		      +'</font></div>';
 	    		      if(v[i].list!=null){
 	    		       var list=v[i].list; 
 	    		       for(var j=0;j<list.length;j++){
@@ -118,7 +106,7 @@ function ajaxjz(){//加载
 	    		         +'<font size="2">'
 	    		         +'<div class="zi-6 weight500 sl">'+list[j].pro.ptitle+'</div>'
 	    		         +'</font>'
-	    		         +'<div class=" pull-left weight500 width-10" style="position: relative;">'
+	    		         +'<div class=" pull-left weight500 width-10">'
 	    		         +'<font size="1">';
 	    		         if(v[i].kdcom!=null){
 	    		           xszf+='<div class="clear sl hang30 weight100" style="line-height:35px;" onclick="getkd('+v[i].kdno+')">'
@@ -131,8 +119,9 @@ function ajaxjz(){//加载
 	    		               +'</div>';
 	    		         }
 	    		         xszf+='<div class=" hang30 width-10 line-height30 zi-6">'  
-	    		         +'<div class="col-9">共'+list[j].count+'件商品<i class="pl-10 zi-hong" style="position:absolute;top:0px;right:0px;">￥'+v[i].zfmoney.toFixed(2)+'元</i></div>';
+	    		         +'<div class="col-9">共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+v[i].zfmoney.toFixed(2)+'元</i></div>';
 	    		         if(v[i].state==1){
+	    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
 		    		          if(list[j].state==1 || list[j].state==3){
 		    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')">退货查看</div>';
 		    		          }else if(list[j].state==2 || list[j].state==4){
@@ -142,14 +131,18 @@ function ajaxjz(){//加载
 		    		          }
 	    		          
 	    		         }else if(v[i].state==2){
-	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
+	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">待发货</div>'
+	    		              +'<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 	    		         }else if(v[i].state==3){
-	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
+	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">确认收货</div>'
+	    		              +'<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 	    		         }else if(v[i].state==4){
 	    		        	  if(list[j].states==0){
-	    		        		 xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
+	    		        		 xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
+		    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
 	    		        	 }else if(list[j].states==1){
-	    		        		 xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">已评价</div>'; 
+	    		        		 xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
+		    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">已评价</div>'; 
 	    		        	 } 
 	    		        	/*   xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
 	    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
