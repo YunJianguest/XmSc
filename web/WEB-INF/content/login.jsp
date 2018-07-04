@@ -83,7 +83,7 @@
 </head>
 
 <body class="signin">
- 	<video autoplay loop style="width: 100%;">
+ 	<video autoplay loop muted="true" style="width: 100%;">
  		<source src="${ctx}/xmMobile/login.mp4" type="video/mp4"></source>
  	</video>
 <section>
