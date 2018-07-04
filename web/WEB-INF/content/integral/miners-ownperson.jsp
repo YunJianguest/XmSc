@@ -49,31 +49,33 @@
         .line-height22 {
             line-height: 22px;
         }
+        .mine-headbox{
+        	min-height:200px;
+        	background:url(${ctx}/mvccol/img/mine-headerback.jpg);
+        	background-size:100% 100%;
+        }
     </style>
      
 </head>
 <body class="cmp640">
 <main>
-   <div class="hang90 overflow-hidden width-10 position-r line-bottom-dddddd">
-        <div class="pull-left img-wh70 position-a" style="top: 10px;left: 10px;">
+   <div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
+   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i></div>
+        <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 50%;margin-left:-35px;margin-top:-70px;">
           <c:if test="${empty entity.headimgurl}">
-            <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius3"/>
+            <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius50"/>
           </c:if>
           <c:if test="${not empty entity.headimgurl}">
-            <img src="${filehttp}/${entity.headimgurl}" class="width-10 border-radius3"/>
+            <img src="${filehttp}/${entity.headimgurl}" class="width-10 border-radius50"/>
           </c:if>
            
         </div>
-        <div class="pt-10 pr-10 width-10" style="padding-left:95px;">
+        <div class="width-10" style='position:absolute;bottom:20px;'>
             <div class=" hang70">
                 <font size="2">
-                    <div class="hang25 line-height25 zi-hei-tq weight500">${entity.nickname}</div>
-                    <div class="hang25 line-height20" style="color:#888888">
-                        <div class="pull-left"><i class="pr-10 zi-cheng">积分<i class="pl-2 zi-cheng">${entity.jf}</i></i><c:if test="${not empty  entity.email}">${entity.email}</c:if><c:if test="${empty entity.email}">这家伙很懒，没有邮箱！</c:if></div>
-                        <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'"><i class="zi-lan-tq">修改</i></div>
-                    </div>
+                    <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
                     <font size="1">
-                        <div class="clear">
+                        <div class="clear txt-c pt-5" style='display:flex;justify-content: center;'>
                             <div class="pull-left hang20 line-height22 bg-green zi-bai border-radius3 pl-5 pr-5 mr-5">LV<i
                                     class="pl-2">${entity.level}</i></div>
                             <c:if test="${empty isAgent}">
@@ -87,6 +89,11 @@
                            
                         </div>
                     </font>
+                    
+                    <div class="hang25 line-height20 pt-5" style="color:#888888">
+                        <div class="txt-c"><i class="pr-10 zi-cheng">积分<i class="pl-2 zi-cheng">${entity.jf}</i></i><c:if test="${not empty  entity.email}">${entity.email}</c:if><c:if test="${empty entity.email}">这家伙很懒，没有邮箱！</c:if></div>
+                        <%-- <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'"><i class="zi-lan-tq">修改</i></div> --%>
+                    </div>
                 </font>
             </div>
         </div>

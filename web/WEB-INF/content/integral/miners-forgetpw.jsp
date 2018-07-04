@@ -58,6 +58,7 @@
 				right: 0;
 				top: 8px;
 				padding: 5px 10px;
+				background:#214979;
 			}
 			
 			#sendNewpwd {
@@ -121,10 +122,11 @@
 						function countDown() {
 							if(count == 0) {
 								clearInterval(timer);
+								$('.verbtn').css('background','#214979')
 								$('.verBtn').removeAttr('disabled', true);
 								$('.verBtn').html('重新发送');
 							} else {
-								
+								$('.verbtn').css('background','#ddd')
 								$('.verBtn').removeAttr('disabled', false);
 								$('.verBtn').html(count + 's');
 								count--;

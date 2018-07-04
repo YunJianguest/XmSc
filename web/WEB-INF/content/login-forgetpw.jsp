@@ -58,6 +58,7 @@
 				right: 0;
 				top: 8px;
 				padding: 5px 10px;
+				background:#214979;
 			}
 			
 			#sendNewpwd {
@@ -95,7 +96,7 @@
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='sendNewpwd' class="mui-btn mui-btn-block"  data-loading-icon= "mui-spinner mui-spinner-custom">提交</button>
+				<button id='sendNewpwd' class="mui-btn mui-btn-block">提交</button>
 			</div>
 		</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
@@ -103,13 +104,13 @@
 		<script>
 			$(function() {
 				var reg =/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-				$('#phone').blur(function() {
+			/* 	$('#phone').blur(function() {
 					if($(this).val() == '') {
 						mui.alert('请输入手机号')
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
-				})
+				}) */
 				$('.verBtn').click(function() {
 					var count = 60;
 					var timer;
@@ -121,11 +122,13 @@
 						function countDown() {
 							if(count == 0) {
 								clearInterval(timer);
+								$('.verbtn').css('background','#214979')
 								$('.verBtn').removeAttr('disabled', true);
 								$('.verBtn').html('重新发送');
 							} else {
 								
 								$('.verBtn').removeAttr('disabled', false);
+								$('.verbtn').css('background','#ddd')
 								$('.verBtn').html(count + 's');
 								count--;
 								console.log(count)

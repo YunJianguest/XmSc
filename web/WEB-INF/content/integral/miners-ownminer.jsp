@@ -39,7 +39,6 @@
 				color: #fff;
 			}
 			.mui-table-view .mui-media-object{
-				margin-top: 15px;
 				max-width: 60px;
 				height: 60px;
 				vertical-align: middle;

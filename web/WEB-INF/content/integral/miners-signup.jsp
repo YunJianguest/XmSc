@@ -57,6 +57,7 @@
 				right: 0;
 				top: 8px;
 				padding: 5px 10px;
+				background:#214979;
 			}
 			
 			.mui-popup-title {
@@ -110,9 +111,9 @@
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script>
 			$(function() {
-/* 
+ 
 				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-				$('#phone').blur(function() {
+				/*$('#phone').blur(function() {
 					if($(this).val() == '') {
 						mui.alert('请输入手机号')
 					} else if(!reg.test($(this).val())) {
@@ -130,10 +131,12 @@
 						function countDown() {
 							if(count == 0) {
 								clearInterval(timer);
+								$('.verbtn').css('background','#214979')
 								$('.verBtn').removeAttr('disabled', true);
 								$('.verBtn').html('重新发送');
 							} else {
 								count--;
+								$('.verbtn').css('background','#ddd')
 								$('.verBtn').removeAttr('disabled', false);
 								$('.verBtn').html(count + 's');
 

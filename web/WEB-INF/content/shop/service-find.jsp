@@ -68,7 +68,9 @@
 				width: 100%;
 				height: auto;
 				font-size: 14px;
-				line-height: 30px;
+				white-space: normal;
+				overflow:hidden;
+				word-wrap: break-word;
 			}
 		</style>
 	</head>
