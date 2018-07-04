@@ -21,7 +21,9 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.web.GeneralAction;
+import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.ProType;
+import com.lsp.shop.entiy.ProductInfo;
 import com.lsp.shop.entiy.ShopComReply;
 import com.lsp.shop.entiy.ShopComments;
 import com.lsp.shop.entiy.ShopType;
@@ -157,21 +159,25 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	 */
 	public String shopcomadd() throws Exception{
 		getLscode();
+		
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		
-		String sid = Struts2Utils.getParameter("sid");
+		String sid;
 		String oid = Struts2Utils.getParameter("oid");
 		String gid = Struts2Utils.getParameter("gid");
+		
+		whereMap.put("_id", Long.parseLong(gid));
+		DBObject dbObject = baseDao.getMessage(PubConstants.DATA_PRODUCT,whereMap);
+		sid=dbObject.get("comid").toString();
 		
 		Struts2Utils.getRequest().setAttribute("sid", sid);
 		Struts2Utils.getRequest().setAttribute("oid", oid);
 		Struts2Utils.getRequest().setAttribute("gid", gid);
-		//DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
-		//Struts2Utils.getRequest().setAttribute("db", dbObject);
+		
 		return "shopcomadd";
 	}
-	
 	
 	/**
 	 * 评论回复
@@ -271,9 +277,9 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	public void ajaxSaveCom() {
 		getLscode();
 		Map<String,Object>sub_map = new HashMap<>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sub_map.put("state", 1);
-		//评论id  
-		//sid和gid在传值的时候以逗号隔开
+		//评论id
 		String sid=Struts2Utils.getParameter("sid"); 
 		String oid=Struts2Utils.getParameter("oid"); 
 		String gid=Struts2Utils.getParameter("gid");
@@ -281,14 +287,12 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		String logisService=Struts2Utils.getParameter("logisticsEvalu"); 
 		String serviceAtt=Struts2Utils.getParameter("serviceEvalu"); 
 		String content=Struts2Utils.getParameter("cause");
+		whereMap.put("_id", Long.parseLong(oid));
 		ShopComments comments=new ShopComments();
-		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)||StringUtils.isEmpty(content)) {
+		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)) {
 			return;
 		}
-		/*//店铺id
-		String[] idp = sid.split(",");
-		//商品id
-		String[] isp = gid.split(",");*/
+		
 		comments.set_id(mongoSequence.currval(PubConstants.SHOP_SHOPCOMMENTS));
 		comments.setContent(content);
 		comments.setCreatedate(new Date());
@@ -303,6 +307,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		comments.setServiceAtt(Integer.parseInt(serviceAtt));
 		int i=baseDao.insert(PubConstants.SHOP_SHOPCOMMENTS, comments);
 		if (i>0) {
+			
 			sub_map.put("state", 0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
