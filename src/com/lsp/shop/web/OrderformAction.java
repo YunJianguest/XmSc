@@ -33,6 +33,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.website.service.WwzService;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBObject;
@@ -65,7 +66,9 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		String  comid=Struts2Utils.getParameter("comid");
 		if(StringUtils.isNotEmpty(comid))
 		{  
-			whereMap.put("comid", Long.parseLong(comid));
+			BasicDBList dbList = new BasicDBList();
+			dbList.add(Long.parseLong(comid));
+			whereMap.put("comids",Long.parseLong(comid));
 			Struts2Utils.getRequest().setAttribute("comid",  comid);
 		} 
 		String  name=Struts2Utils.getParameter("name");

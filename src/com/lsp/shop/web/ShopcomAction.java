@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.web.GeneralAction;
@@ -28,6 +29,8 @@ import com.lsp.shop.entiy.ProductInfo;
 import com.lsp.shop.entiy.ShopComReply;
 import com.lsp.shop.entiy.ShopComments;
 import com.lsp.shop.entiy.ShopType;
+import com.lsp.website.entity.WwzFlowInfo;
+import com.lsp.website.service.WwzService;
 import com.mongodb.DBObject;
  
 
@@ -47,6 +50,8 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	private Long _id;
 
 	private MongoSequence mongoSequence;
+	@Autowired
+	private WwzService wwzService;
 
 	@Autowired
 	public void setMongoSequence(MongoSequence mongoSequence) {
@@ -287,8 +292,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		String desIscon=Struts2Utils.getParameter("goodsevalulen"); 
 		String logisService=Struts2Utils.getParameter("logisticsEvalu"); 
 		String serviceAtt=Struts2Utils.getParameter("serviceEvalu"); 
-		String content=Struts2Utils.getParameter("cause");
-		whereMap.put("_id", Long.parseLong(oid));
+		String content=Struts2Utils.getParameter("cause"); 
 		ShopComments comments=new ShopComments();
 		if(StringUtils.isEmpty(gid)||StringUtils.isEmpty(sid)||StringUtils.isEmpty(oid)) {
 			return;
@@ -301,7 +305,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		comments.setFromid(fromUserid);
 		comments.setGid(Long.parseLong(sid));
 		comments.setSid(Long.parseLong(gid));
-		comments.setOid(Long.parseLong(oid));
+		comments.setOid(oid);
 		comments.setCreatedate(new Date());
 		comments.setDesIscon(Integer.parseInt(desIscon));
 		comments.setLogisService(Integer.parseInt(logisService));
@@ -315,4 +319,45 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
+	/**
+	 * 获取评论列表
+	 */
+	public void getCom() {
+		getLscode();
+		Map<String,Object>sub_map = new HashMap<>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		sortMap.put("createdate",-1);
+		sub_map.put("state", 1);
+		//评论id
+		String sid=Struts2Utils.getParameter("sid"); 
+		String oid=Struts2Utils.getParameter("oid"); 
+		String gid=Struts2Utils.getParameter("gid");
+		if (StringUtils.isNotEmpty(gid)) {
+			whereMap.put("gid", gid);
+		}
+		if (StringUtils.isNotEmpty(oid)) {
+			whereMap.put("oid", oid);
+		}
+		if (StringUtils.isNotEmpty(sid)) {
+			whereMap.put("sid", sid);
+		}
+		
+		List<DBObject>list=baseDao.getList(PubConstants.SHOP_SHOPCOMMENTS, whereMap, sortMap);
+		if(list.size()>0) {
+			sub_map.put("state",0);
+			for (DBObject dbObject : list) {
+				if(dbObject.get("ceatedate")!=null) {
+					dbObject.put("ceatedate", DateFormat.getDate(DateFormat.getFormat(dbObject.get("ceatedate").toString())));
+				}
+				if(dbObject.get("fromid")!=null) {
+					dbObject.put("nickname",wwzService.getWxUser(dbObject.get("fromid").toString()).get("nickname"));
+				}
+				
+			}
+			sub_map.put("list",list);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
 }

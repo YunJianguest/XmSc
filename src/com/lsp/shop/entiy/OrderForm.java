@@ -130,7 +130,11 @@ public class OrderForm extends ReflectionDBObject{
 	/**
 	 * 会员区支付金额
 	 */
-	private Double members_money; 
+	private Double members_money;
+	/**
+	 * 所有的店铺ID
+	 */
+	private List<Long> comids;
 	
 	public Double getPublic_money() {
 		return public_money;
@@ -416,6 +420,13 @@ public class OrderForm extends ReflectionDBObject{
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
-	
+	public List<Long> getComids() {
+		return comids;
+	}
+	public void setComids(List<Long> comids) {
+		this.comids = comids;
+	}
+	 
+	 
 	 
 }
