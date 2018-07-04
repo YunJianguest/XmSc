@@ -241,8 +241,48 @@
         .detail_shop_box_v3 .shop_info {
 		    overflow: hidden;
 		    margin-bottom: 10px;
+		    width: 80px;
+		    height: 50px;
+		    vertical-align: middle;
+		    
 		}
-		
+		.detail_shop_box_v3 .shop_info .logo_wrap{
+			width:100%;
+			height: 100%;
+			display: flex;
+		    justify-content: center;
+		}
+		.detail_shop_box_v3 .shop_info .logo_wrap img{
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			margin-top: 5px;
+		}
+		.shop-go{
+			width: 100px;
+			height: 50px;
+			justify-content: center;
+			align-items: center;
+			display: flex;
+		}
+		.shop-name{
+			width: 100%;
+			height: 50px;
+			line-height: 50px;
+			padding-left: 10px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			box-sizing: border-box;
+		}
+		.shop-go a{
+			display: inline-block;
+			width: 80px;
+			height: 36px;
+			line-height: 36px;
+			margin-top: 7px;
+			text-align: center;
+		}
     </style>
 </head>
 <body class="cmp640">
@@ -317,10 +357,13 @@
    	<div class="hang10 clear bg-hui-92"></div>
    	<div class="detail_shop_box_v3">
    		<div class="shop_info">
-   			<span class="logo_wrap"><img class="shopLogo" src="${ctx}/xmMobile/img/Public-banner.jpg" /></span>
+   			<span class="logo_wrap "><img class="shopLogo" src="${ctx}/xmMobile/img/Public-banner.jpg" /></span>
    		</div>
-   		<div class="">
-   			
+   		<div class="shop-name">
+   			我的我的我我的我的订单多
+   		</div>
+   		<div class="shop-go">
+   			<a href="">进入店铺</a>
    		</div>
    	</div>
 	<ul class="tab-switch">
@@ -346,7 +389,7 @@
 </main>
  
 
-<%@include file="/webcom/foot.jsp" %>
+<!--<%@include file="/webcom/foot.jsp" %>-->
 
 <div class="hang50 clear"></div>
 
