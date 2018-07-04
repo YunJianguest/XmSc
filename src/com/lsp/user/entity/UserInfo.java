@@ -76,7 +76,14 @@ public class UserInfo extends ReflectionDBObject {
 	private Long renumber;
 	//推荐部门编号
 	private Long deptnumber;
+	private String rolename; 
+	public String getRolename() {
+		return rolename;
+	}
 
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
+	}
 
 	public Long getOrgid() {
 		return this.orgid;
