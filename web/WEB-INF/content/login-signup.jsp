@@ -177,7 +177,6 @@
 					}
 				} */
 				$('#reg').click(function(){
-					alert('4444');
 					mui($(this)).button('loading');
 					$.ajax({
 						type:"post",
@@ -186,7 +185,6 @@
 						data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val()},
 						success:function(json){
 							if(json){
-								alert(json.state);
 								if(json.state == 0){
 									location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 								}
