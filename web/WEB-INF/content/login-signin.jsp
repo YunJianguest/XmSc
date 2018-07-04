@@ -72,7 +72,7 @@
 			}
 			
 			.oauth-area {
-				position: absolute;
+				position: fixed;
 				bottom: 20px;
 				left: 0px;
 				text-align: center;

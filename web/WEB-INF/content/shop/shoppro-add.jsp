@@ -102,6 +102,7 @@
         var getid;
         var mintypeid;
         function getchild(id) {
+        	
             var submitData = {
            		 pid: id
             };
@@ -111,7 +112,7 @@
                        	var list=json.list;
                        	var options="<option  value=''>请选择</option>"; 
                        	for (var i = 0; i < list.length; i++) {	
-                       		options+="<option  value="+list[i].id+">"+list[i].name+"</option>";	
+                       		options+="<option  value="+list[i]._id+">"+list[i].name+"</option>";	
    						}
                           $("#mintypeid").html(options); 
                           if("${entity.typeid}"==$("#typeid").val()){ 
@@ -126,6 +127,7 @@
                     	   $("#mintypeid").html("<option  value=''>暂无数据</option>"); 
                        }
                     }, "json")
+                    
         }
         function clear(){
          	('#mintypeid').val('').trigger("change");
@@ -163,7 +165,7 @@
         <div class="row">
             <div class="col-md-12">
                 <form class="form-horizontal" id="custinfoForm" method="post"
-                      action="${contextPath}/shop/shoppro!save.action?fypage=${fypage}&&comid=${comid}">
+                      action="${contextPath}/shop/shoppro!save.action?fypage=${fypage}">
                     <input id="_id" name="_id" value="<s:property value='_id'/>" type="hidden"/>
                     <input type="hidden" id="logo" value="<s:property value='logo'/>" name="logo"/>
                     <input type="hidden" id="comid" value="${comid }" name="comid"/>
@@ -244,7 +246,7 @@
                                         </select>
                                     </div>
                                 </div>
-                    <div class="col-2 pl-10">
+                    <div class="col-2 pl-10" id="show_mintype">
                                     <div class="size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         商品二级分类
                                     </div>
@@ -335,6 +337,7 @@
                                                placeholder="请输入市场价格">
                                     </div>
                                 </div>
+    
                                 <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         库存数量
@@ -357,18 +360,8 @@
                                                placeholder="请输入已售数量">
                                     </div>
                                 </div>
-                                <div class="col-2 pl-10">
-                                    <div class="size14 line-bottom weight500 pt-10 pb-10"
-                                         style="padding-left: 2px;">
-                                        快递价格
-                                    </div>
-                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
-                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
-                                               type="text"
-                                               id="kdprice" value="${entity.kdprice}" name="kdprice"
-                                               placeholder="请输入快递价格">
-                                    </div>
-                                </div>
+       
+     
                                 <div class="col-2 pl-10">
                                     <div class="size14 weight500 pt-10 pb-10"
                                          style="padding-left: 2px;">
@@ -383,9 +376,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div> 
-
-                        </div>
+                   
                     </div>
 
                     <!--下部编辑器-->
@@ -440,7 +431,7 @@
    var editor=CKEDITOR.replace('context');
 
     function checksubmit() {
-        $("#context").val(editor.getData());
+        $("#context").val(editor.getData()); 
         $('#custinfoForm').submit();
     }
 </script>

@@ -153,6 +153,96 @@
         .line-bottom-c3c3c6 {
             border-bottom: 1px solid #c3c3c6;
         }
+        .detail_row {
+		    position: relative;
+		    padding: 0 10px;
+		    display: block;
+		    font-size: 12px;
+		}
+		.detail_cmt .cmt_list {
+		    font-size: 12px;
+		    color: #333;
+		    margin-bottom: -1px;
+		}
+		.detail_cmt .cmt_list li {
+		    position: relative;
+		    padding: 10px 0;
+		}
+		.detail_cmt .cmt_cnt {
+		    position: relative;
+		    line-height: 1.3;
+		    margin: 5px 0;
+		    word-break: break-all;
+		    overflow: hidden;
+		}
+		.detail_cmt .cmt_user .user {
+		    display: inline-block;
+		    color: #999;
+		    max-width: 8.2em;
+		    vertical-align: middle;
+		}
+		.detail_cmt .cmt_user .credit {
+		    display: inline-block;
+		    width: 75px;
+		    margin-right: 8px;
+		    height: 15px;
+		    background-position: 0 -215px;
+		    position: relative;
+		    margin: -2px 0;
+		    vertical-align: middle;
+		}
+		.detail_cmt .cmt_user .date {
+		    float: right;
+		    color: #999;
+		    margin-left: -60px;
+		}
+		.detail_cmt .cmt_sku {
+		    color: #999;
+		}
+        .tab-switch{
+        	width: 100%;
+        	height: 30px;
+        	line-height: 30px;
+        	display: flex;
+        	padding: 0 10px;
+        }
+        
+        .tab-switch li{
+        	flex: 1;
+        	width: 1%;
+        	text-align: center;
+        	line-height: 30px;
+        }
+        a{
+        	text-decoration: none;
+        	color: #000;
+        }
+        .tab-switch li.up a{
+         	color: #000;
+         	
+        }
+        .tab-switch li.on a{
+        	color: #E4393C;
+        }
+        .goodsdetails{
+        	display: none;
+        }
+        .goodsdetailson{
+        	display: block;
+        }
+        .detail_shop_box_v3{
+        	padding: 10px;
+		    font-size: 14px;
+		    color: #333;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+        }
+        .detail_shop_box_v3 .shop_info {
+		    overflow: hidden;
+		    margin-bottom: 10px;
+		}
+		
     </style>
 </head>
 <body class="cmp640">
@@ -224,10 +314,34 @@
             </font>
         </div>
     </a>
-   <div class="hang10 clear bg-hui-92"></div>
-
-    <div class="width-10 clear pl-5 pr-5 pt-5 img-100">
+   	<div class="hang10 clear bg-hui-92"></div>
+   	<div class="detail_shop_box_v3">
+   		<div class="shop_info">
+   			<span class="logo_wrap"><img class="shopLogo" src="${ctx}/xmMobile/img/Public-banner.jpg" /></span>
+   		</div>
+   		<div class="">
+   			
+   		</div>
+   	</div>
+	<ul class="tab-switch">
+		<li class="on"><a href="#contxt">商品详情</a></li>
+		<li class="up"><a href="#assess">商品评价</a></li>
+	</ul>
+    <div class="width-10 clear pl-5 pr-5 pt-5 img-100 goodsdetails goodsdetailson" id="contxt">
         ${entity.context}
+    </div>
+    <div class="width-10 clear pt-5 goodsdetails" id="assess">
+    	<div class="detail_row detail_cmt">
+    		<div class="cmt_list_wrap">
+    			<ul class="cmt_list">
+    				<li>
+    					<div class="cmt_user"><span class="user">昵称</span><span class="date">2018-06-30</span></div>
+    					<div class="cmt_cnt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium nulla delectus aliquam praesentium quae velit laborum deleniti! Provident consequuntur expedita illum nam rem officiis nostrum odit molestias enim error magni.</div>
+    					<div class="cmt_sku"><span>测试</span></div>
+    				</li>
+    			</ul>
+    		</div>
+    	</div>
     </div>
 </main>
  
@@ -283,6 +397,12 @@
 </div>
  
 <script>
+	$('.tab-switch li a').click(function(){
+		$(this).parent().addClass('on').siblings('.on').removeClass('on');
+		var id = $(this).attr('href');
+		console.log(id)
+		$(id).addClass('goodsdetailson').siblings('.goodsdetailson').removeClass('goodsdetailson')
+	})
     function  check_task(){
        var submitData = { 
                 type:"allshare",
