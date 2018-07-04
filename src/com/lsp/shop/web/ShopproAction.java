@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.record.formula.functions.Product;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -81,6 +82,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		 for (DBObject dbObject : list) {
 				dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
 			}
+		System.out.println(list);
 		Struts2Utils.getRequest().setAttribute("custid",SpringSecurityUtils.getCurrentUser().getId());
 		
 		Struts2Utils.getRequest().setAttribute("ProductInfoList", list);
@@ -117,12 +119,12 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("typelist",typelist); 
-		
 		//获取店铺分类 
 		List<DBObject> prolist=baseDao.getList(PubConstants.SHOP_PROTYPE, null, sortMap);
 		Struts2Utils.getRequest().setAttribute("prolist",prolist); 
 		Struts2Utils.getRequest().setAttribute("bq",Struts2Utils.getParameter("bq"));
 		DBObject  db=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(Struts2Utils.getParameter("comid")));
+		Struts2Utils.getRequest().setAttribute("goodstype",db.get("type"));
 		if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){
 			Struts2Utils.getRequest().setAttribute("isjf",1); 
 		}
@@ -143,6 +145,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		sortMap.put("sort", -1);
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
+		System.out.println(typelist);
 		Struts2Utils.getRequest().setAttribute("typelist",typelist);
 		DBObject pro=baseDao.getMessage(PubConstants.DATA_PRODUCT, _id); 
 		Struts2Utils.getRequest().setAttribute("entity",pro);
@@ -178,7 +181,6 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 			if(_id == null){
 				_id=mongoSequence.currval(PubConstants.DATA_PRODUCT);	
 			}
-			
 			entity.set_id(_id); 
 			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
 			entity.setCreatedate(new Date());
