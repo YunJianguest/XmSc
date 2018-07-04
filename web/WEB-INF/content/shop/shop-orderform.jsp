@@ -127,7 +127,7 @@ function ajaxjz(){//加载
 	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">确认收货</div>';
 	    		         }else if(v[i].state==4){
 		    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
-		    		          		+'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+','+v[i].comid+')">评价</div>'; 
+		    		          		+'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
 	    		         }else if(v[i].state==5){
 	    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">已退款</div>';
 	    		         } 
@@ -156,8 +156,8 @@ function service(orderproId){
 	window.location.href="${ctx}/shop/service!serviceadd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&orderproId="+orderproId;
 }
 
-function shopcom(oid,gid,sid){
-	window.location.href="${ctx}/shop/shopcom!shopcomadd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&oid="+oid+"&gid="+gid+"&sid="+sid;
+function shopcom(oid,gid){
+	window.location.href="${ctx}/shop/shopcom!shopcomadd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&oid="+oid+"&gid="+gid;
 }
 function del(id) {
 	  

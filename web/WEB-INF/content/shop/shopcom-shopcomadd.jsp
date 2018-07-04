@@ -136,7 +136,6 @@
 				console.log('物流运输'+logisticsEvalu)
 			})
 			$('#assessBtn').click(function(){
-				alert(goodsevalulen);
 				$.ajax({
 					type:"post",
 					url:"${ctx}/shop/shopcom!ajaxSaveCom.action?custid=${custid}&agid=${agid}&lscode=${lscode}",
@@ -151,8 +150,8 @@
 						cause:$('#cause').val()
 					},
 					success:function(json){
-						alert(json);
 						if(json.state==0){
+							
 							alert('提交成功');
 		            		window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 						}else{
