@@ -224,7 +224,7 @@ function page_submit(num){
                        <td>${bean.nickname}</td>
                       	<td>${bean._id}</td>
 						<td>${bean.kdno}</td> 
-						<td><c:if test="${bean.zfmoney>0.0}"><a href="javascript:wxpay('${bean.payid}')" ><fmt:formatNumber value='${bean.zfmoney }' pattern="0.0#"/></a></c:if></td>
+						<td><c:if test="${bean.zfmoney>0.0}"><fmt:formatNumber value='${bean.zfmoney }' pattern="0.0#"/></c:if></td>
 						 
 						<td><a href="javascript:orderinfo('${bean._id}')" >${bean.count}</a></td>
 						<td>${bean.name}</td>
@@ -250,8 +250,8 @@ function page_submit(num){
                                    
                                       <li><a href="javascript:fh('${bean._id}');">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;发货</a></li>
-                                      <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId= ${bean._id}">
-                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;回复</a></li>
+                                      <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId=${bean._id}">
+                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;订单详情</a></li>
                                   </ul>
                               </div>
                           </td>

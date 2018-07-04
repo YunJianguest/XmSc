@@ -36,7 +36,7 @@
         <%@include file="/webcom/header-headerbar.jsp" %>
         <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/intecurrency.action?">
               <div class="pageheader">
-                <h2><i class="fa"></i>订单详情<span>商品列表</span></h2>
+                <h2><i class="fa"></i>评论详情<span>评论列表</span></h2>
                 <div class="breadcrumb-wrapper1">
                     <div class="input-group ">
                      
@@ -47,7 +47,7 @@
                 <div class="panel-body fu10">
                     <div class="row-pad-5">
                         <div class="form-group col-sm-1d">
-                            <input type="text" name="title" value="${title }" placeholder="商品名称" class="form-control"/>
+                            <input type="text" name="title" value="${title }" placeholder="名称" class="form-control"/>
                         </div>
                         <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
                          
@@ -61,27 +61,25 @@
                             <table class="table table-striped table-action table-primary mb30">
                                 <thead>
                                 <tr>
-                                    <th class="table-action">商品名称</th>
-                                    <th class="table-action">单价</th>
-                                    <th class="table-action">数量</th>
-                                    <th class="table-action">规格</th>
+                                    <th class="table-action">昵称</th>
+                                    <th class="table-action">评论内容</th>
+                                    <th class="table-action">时间</th> 
                                     <th class="table-action">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${list}" var="bean">
                                     <tr>
-                                        <td>${bean.pro.ptitle}</td>
-                                        <td>${bean.pro.price}</td>
-                                        <td>${bean.count}</td>
-                                        <td>${bean.spec}</td>
+                                        <td>${bean.nickname}</td>
+                                        <td>${bean.content}</td>
+                                        <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bean.createdate}" /></td> 
                                         <td class="table-action">
                                             <div class="btn-group1">
                                                 <a data-toggle="dropdown" class="dropdown-toggle">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                                 <ul role="menu" class="dropdown-menu pull-right"> 
-                                                    <li><a href="${ctx}/shop/orderform!ordercom.action?gid=${bean.pro._id}">
+                                                    <li><a href="javascript:void();">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;评论列表</a>
                                                     </li>  
                                                     <li><a href="javascript:huifu('${bean._id}',2);">

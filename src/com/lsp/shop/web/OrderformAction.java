@@ -355,7 +355,7 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		ouputStream.close();
 	}
 	/***
-	 * 商家回复评论
+	 * 订单详情
 	 * @return
 	 * @throws Exception
 	 * @author CuiJing
@@ -378,6 +378,85 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		Struts2Utils.getRequest().setAttribute("list", lists);
 		
 		return "sjreply";
+	}
+	/***
+	 * 评论列表
+	 * @return
+	 * @throws Exception
+	 * @author CuiJing
+	 * @version 
+	 * @date 2018年7月4日 下午4:56:51
+	 */
+	public String ordercom() throws Exception{
+		getLscode();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortsMap = new HashMap<String, Object>();
+		String gid = Struts2Utils.getParameter("gid");
+		whereMap.put("gid",Long.parseLong(gid));
+		
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		fycount=baseDao.getCount(PubConstants.SHOP_SHOPCOMMENTS, whereMap);
+		List<DBObject> lists = baseDao.getList(PubConstants.SHOP_SHOPCOMMENTS,whereMap,fypage,10,sortsMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
+		
+		for (DBObject dbObject : lists) {
+
+			if (dbObject.get("fromid") != null) {
+			 
+			 DBObject  user=wwzService.getWxUser(dbObject.get("fromid").toString());
+			 dbObject.put("nickname", user.get("nickname"));
+			 dbObject.put("headimgurl", user.get("headimgurl"));
+				 
+			 dbObject.put("createdate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("createdate").toString())));
+			 
+			 
+			} 
+		 
+		}
+		Struts2Utils.getRequest().setAttribute("list", lists);
+		
+		return "ordercom";
+	}
+	
+	/***
+	 * 回复列表
+	 * @return
+	 * @throws Exception
+	 * @author CuiJing
+	 * @version 
+	 * @date 2018年7月4日 下午4:56:51
+	 */
+	public String orderreply() throws Exception{
+		getLscode();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortsMap = new HashMap<String, Object>();
+		String parentid = Struts2Utils.getParameter("parentid");
+		whereMap.put("parentid",Long.parseLong(parentid)); 
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		fycount=baseDao.getCount(PubConstants.SHOP_SHOPCOMREPLY, whereMap);
+		List<DBObject> lists = baseDao.getList(PubConstants.SHOP_SHOPCOMREPLY,whereMap,fypage,10,sortsMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
+		for (DBObject dbObject : lists) {
+
+			if (dbObject.get("fromid") != null) {
+			 
+			 DBObject  user=wwzService.getWxUser(dbObject.get("fromid").toString());
+			 dbObject.put("nickname", user.get("nickname"));
+			 dbObject.put("headimgurl", user.get("headimgurl"));
+				 
+			 dbObject.put("createdate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("createdate").toString())));
+			 
+			 
+			} 
+		 
+		}
+		Struts2Utils.getRequest().setAttribute("list", lists);
+		
+		return "orderreply";
 	}
 	
 }
