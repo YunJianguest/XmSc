@@ -15,7 +15,7 @@
 function del(id) {
 	if (confirm('确实要删除吗?')) {
 		location.href = "${contextPath}/shop/orderform!delete.action?_id="
-				+ id+"&fypage=${fypage}&comid=${comid}&state=${state}";
+				+ id+"&fypage=${fypage}&comid=${comid}";
 	}
 }
 function exp() {

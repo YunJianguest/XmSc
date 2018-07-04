@@ -17,3 +17,6 @@ header.mui-bar.mui-bar-nav{
 html,body{
 	height: 100%;
 }
+.mui-content>.mui-table-view{
+	padding-bottom: 60px;
+}

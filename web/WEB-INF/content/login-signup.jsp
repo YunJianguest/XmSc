@@ -57,6 +57,7 @@
 				right: 0;
 				top: 8px;
 				padding: 5px 10px;
+				background:#214979;
 			}
 			
 			.mui-popup-title {
@@ -87,7 +88,7 @@
 				<div class="mui-input-row" style="position: relative;">
 					<label>验证码</label>
 					<input id="verCode" type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" />
-					<span class="mui-btn mui-btn-grey verBtn">获取验证码</span>
+					<span class="mui-btn  verBtn">获取验证码</span>
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -112,13 +113,13 @@
 			$(function() {
 
 				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-				$('#phone').blur(function() {
+				/* $('#phone').blur(function() {
 					if($(this).val() == '') {
 						mui.alert('请输入手机号' )
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
-				})
+				}) */
 				$('.verBtn').click(function() {
 					var count = 60;
 					var timer;
@@ -130,10 +131,12 @@
 						function countDown() {
 							if(count == 0) {
 								clearInterval(timer);
+								$('.verbtn').css('background','#214979')
 								$('.verBtn').removeAttr('disabled', true);
 								$('.verBtn').html('重新发送');
 							} else {
 								count--;
+								$('.verbtn').css('background','#ddd')
 								$('.verBtn').removeAttr('disabled', false);
 								$('.verBtn').html(count + 's');
 
@@ -157,7 +160,7 @@
 						});
 					}
 				});
-				$('#password').blur(function(){
+				/* $('#password').blur(function(){
 					pwd($(this).val())
 				});
 				$('#password_confirm').blur(function(){
@@ -166,13 +169,13 @@
 					}else if($('#password_confirm').val() !=$('#password').val() ){
 						mui.alert('两次输入的密码不一致')
 					}
-				});
-				function pwd(val){
+				}); */
+				/* function pwd(val){
 					var pwdVal = val;
 					if (pwdVal == '') {
 						mui.alert('密码不能为空');
 					}
-				}
+				} */
 				$('#reg').click(function(){
 					alert('4444');
 					mui($(this)).button('loading');

@@ -2,67 +2,120 @@
 <%@ include file="/webcom/taglibs.jsp" %>
 <!doctype html>
 <html>
-
-	<head>
+<head>
 		<meta charset="UTF-8">
-		<title>矿机购买</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
-		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
-		<link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
-        <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
-		<script src="${ctx}/app/js/iosOverlay.js"></script>
-        <script src="${ctx}/app/js/spin.min.js"></script>
-        <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
-        <script src="${ctx}/mvccol/js/fomatdate.js"></script>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mui.min.css" />
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+			}
+			
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+			
 			.mui-content {
-				padding-top: 44px;
+				width: 100%;
+				height: 100%;
+				background: url('${ctx}/xmMobile/img/minerbanner.jpg') no-repeat;
+				background-size: 100% 100%;
+				position: relative;
 			}
 			
+			.animation-back {
+				width: 150px;
+				height: 150px;
+				margin: 0 auto;
+				margin-top: -150px;
+				background: url(${ctx}/xmMobile/img/animation-back.png) no-repeat;
+				background-size: 100% 100%;
+				border-radius: 50%;
+				-webkit-animation: rotation 6s linear infinite;
+				animation: rotation 6s linear infinite;
+				position: absolute;
+				top: 50%;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				
+			}
+			
+			@-webkit-keyframes rotation {
+				from {
+					-webkit-transform: rotate(0deg);
+					transform: rotate(0deg);
+				}
+				to {
+					-webkit-transform: rotate(360deg);
+					transform: rotate(360deg);
+				}
+			}
+			
+			@keyframes rotation {
+				from {
+					-webkit-transform: rotate(0deg);
+					transform: rotate(0deg);
+				}
+				to {
+					-webkit-transform: rotate(360deg);
+					transform: rotate(360deg);
+				}
+			}
+			.animation-cont{
+				width: 100px;
+				height: 100px;
+				margin:  0 auto;
+				margin-top: -125px;
+				background: #2c7088 ;
+				position: absolute;
+				border-radius: 50%;
+				line-height: 100px;
+				text-align: center;
+				color: #fff;
+				font-size: 24px;
+				top: 50%;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
 			.miner-txt{
-				display: flex;
-				justify-content: space-between;
+				color: #fff;
 			}
-			.miner-txt-cont{
-				overflow: hidden;
+			.miner-tit{
+				font-size: 28px;
 			}
-			.miner-buyBtn{
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			
-			.mui-table-view .mui-media-object{
-				margin-top: 15px;
-				max-width: 60px;
-				height: 60px;
-				vertical-align: middle;
+			.miner-txt p{
+				color: #fff;
 			}
 		</style>
-		<script type="text/javascript">
-	
-		
-		</script>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav" style="background: #fff;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">矿机详情</h1>
+			<h1 class="mui-title">标题</h1>
 		</header>
 		<div class="mui-content">
-			<ul class="mui-table-view">
-				${db._id}
-				价值：${db.price}
-				开始时间：${db.createdate}
-				结束时间：${db.enddate}
-			</ul>
+			<div class="animation-back"></div>
+			<div class="animation-cont">运行中</div>
+			<div class="mui-row mui-col-xs-12" style="position: absolute;bottom: 20px;padding-left: 20px;box-sizing: border-box;">
+				<div class="miner-txt">
+					<p class="miner-tit">${db.money}</p>
+					<p>我的算力：${db.money}/${db.time}GH/d</p>
+					<!-- <p>累计获得：305.4664646JRL</p> -->
+					<p>全网算力：${setting.num}GHS</p>
+					<p>结束时间：${db.end}</p>
+				</div>
+			</div>
 		</div>
-		<%@include file="/webcom/shop-foot3.jsp" %>
-		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
-		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+
 		<script type="text/javascript">
 		  wx.config({
 			    debug: false,

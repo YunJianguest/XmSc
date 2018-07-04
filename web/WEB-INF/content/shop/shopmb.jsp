@@ -175,10 +175,12 @@
                                                     <li><a href="${ctx}/shop/orderform.action?comid=${bean._id}"><i
                                                             class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;订单管理</a></li>
                                                     <li>
-                                                  
-                                                    <li><a href="${ctx}/shop/shopcustservice.action?wid=${bean._id}"><i
-                                                            class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;客服管理</a></li>
+                                                     <li><a href="${ctx}/shop/service.action?comid=${bean._id}"><i
+                                                            class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;售后服务</a></li>
                                                     <li>
+                                                    <%-- <li><a href="${ctx}/shop/shopcustservice.action?wid=${bean._id}"><i
+                                                            class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;客服管理</a></li>
+                                                    <li> --%>
                                                    <%--  <li><a href="${ctx}/shop/shopmsg.action?wid=${bean._id}"><i
                                                             class="fa fa-tag"></i>&nbsp;&nbsp;&nbsp;&nbsp;消息管理</a></li>
                                                     <li> --%>

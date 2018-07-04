@@ -315,7 +315,7 @@
             						+'</a>'	
             						+'</div>'
             						+'<div class="mui-card-footer" style="padding: 10px 5px;display: block;">'
-            						+'<span class="similar-product-text">' + v[i].ptitle + ' </span>'
+            						+'<span class="similar-product-text" style="height:40px;text-align: left;">' + v[i].ptitle + ' </span>'
             						+'<div class="similar-product-info ">'	
             						+'<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>'
             						+'<span class="similar-product-shopCar"></span>'			
@@ -382,7 +382,7 @@
 			</div>
 			</c:if>
 			<!-- 分类 -->
-			<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 20px;">
+			<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
 			 <c:if test="${not empty typelist}">
 			 <c:forEach items="${typelist}" var="bean"  begin="0" end="7">
                  <c:if test="${not empty bean.url}">

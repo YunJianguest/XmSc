@@ -32,7 +32,7 @@
     }; 
    
     issend=false; 
-    $.post('${ctx}/suc/integral!ajaxweb.action?custid=${custid}&lscode=${lscode}&fypage='+fypage, submitData,
+    $.post('${ctx}/suc/integralll!ajaxweb.action?custid=${custid}&lscode=${lscode}&fypage='+fypage, submitData,
        	function(json) { 
     		var xszf=$('#ajaxdiv').html();
     		 
@@ -95,9 +95,9 @@
 <main class="lock cmp640" id="section1"> 
     <div class="top_foot bg-hui-92 zi-bai hang40 line-height40 cmp640 line-bottom">
         <a href="#">
-            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font>
-            <font size="2">可用${setting.name}：<i class="zi-cheng">${jf.prostore}</i></font>
-            <font size="2">冻结${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font>
+            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的${setting.names}总计：<i class="zi-cheng">${jf.llzvalue}</i></font>
+            <font size="2">可用${setting.names}：<i class="zi-cheng">${jf.llkyvalue}</i></font>
+            <font size="2">冻结${setting.names}：<i class="zi-cheng">${jf.lldjvalue}</i></font>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">

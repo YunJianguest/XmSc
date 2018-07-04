@@ -159,7 +159,7 @@
                     </font>
                   </div>
               </div>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/suc/integralll!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
                    <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
                      <i class="fa   line-height30"></i>
                    </div>

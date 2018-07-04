@@ -60,8 +60,8 @@ import com.mongodb.DBObject;
  *
  */
 @Namespace("/suc")
-@Results({ @Result(name = "reload", location = "integral.action", type = "redirect") })
-public class IntegralAction extends GeneralAction<IntegralInfo> {
+@Results({ @Result(name = "reload", location = "integralll.action", type = "redirect") })
+public class IntegralllAction extends GeneralAction<IntegralInfo> {
 
 	private static final long serialVersionUID = -6784469775589971579L;
 	@Autowired
@@ -123,10 +123,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		return SUCCESS;
 	}
 
-	/**
-	 * 收入
-	 * 
-	 */
+	
 	public String profit() throws Exception {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
@@ -408,7 +405,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	}
 
 	/**
-	 * 积分详情
+	 * ll积分详情
 	 * 
 	 * @return
 	 */
@@ -431,7 +428,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	}
 
 	/**
-	 * 获取个人积分详情列表
+	 * 获取个人ll积分详情列表
 	 * 
 	 * @return
 	 * @throws Exception
@@ -449,7 +446,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 
-		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap);
+		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 13, sortMap);
 
 		if (comList.size() > 0) {
 			sub_map.put("state", 0);

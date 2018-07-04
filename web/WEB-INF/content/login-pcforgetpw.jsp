@@ -60,13 +60,13 @@
 				
 				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 			
-				$('#tel').blur(function() {
+				/* $('#tel').blur(function() {
 					if($(this).val() == '') {
 						confirm('请输入手机号')
 					} else if(!reg.test($(this).val())) {
 						confirm('手机号码不正确')
 					}
-				})
+				}) */
 				$('.verBtn').click(function() {
 					var count = 60;
 					var timer;

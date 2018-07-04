@@ -33,12 +33,28 @@
 				justify-content: center;
 				align-items: center;
 			}
-			
+			.mui-btn.miner-btnbuy{
+				/*background-color:linear-gradient(to bottom top, #e2a60b,#facd04);*/
+				background: linear-gradient(to bottom right, #e2a60b , #facd04);
+				color: #fff;
+			}
 			.mui-table-view .mui-media-object{
 				margin-top: 15px;
 				max-width: 60px;
 				height: 60px;
 				vertical-align: middle;
+			}
+			.mui-table-view-cell.mui-media{
+				margin-bottom: 2px;
+				color:#fff;
+				background:none;
+			}
+			.mui-table-view-cell.mui-media .miner-txt-cont{
+				font-size:16px;
+			}
+			.mui-table-view-cell.mui-media p.mui-ellipsis{
+				color:#ddd;
+				font-size:12px;
 			}
 		</style>
 		<script type="text/javascript">
@@ -93,12 +109,13 @@
 		    				  xszf+='<li class="mui-table-view-cell mui-media miner-media">'
 									+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].kj.logo+'">'
 								    +'<div class="mui-media-body miner-txt">'
+								    +'<div class="miner-txt-cont mui-col-xs-9">'
 									+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].kj.price+'</span></p>'
 								    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
 									+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
 									+'</div>'	
 									+'<div class="miner-buyBtn mui-col-xs-3">'
-									+'<button type="button" class="mui-btn mui-btn-green miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
+									+'<button type="button" class="mui-btn miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
 									+'</div></div></li>';
 		    			 }
 		    		  
@@ -125,8 +142,8 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">我的矿机</h1>
 		</header>
-		<div class="mui-content">
-			<ul class="mui-table-view">
+		<div class="mui-content"  style="overflow: scroll;height:100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
+			<ul class="mui-table-view"  style="background: none;">
 				
 			</ul>
 		</div>

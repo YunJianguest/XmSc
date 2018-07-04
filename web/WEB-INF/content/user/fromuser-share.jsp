@@ -24,7 +24,7 @@
 			.share{
 				width: 100%;
 				padding: 58px 38px 35px 38px;
-				background: linear-gradient(to bottom right,#f5d2c3,#f881af);
+				background: #a5e8e7;
 				border-radius: 5px;
 				display: flex;
 				flex-wrap: wrap;

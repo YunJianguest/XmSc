@@ -52,6 +52,7 @@
                 function submit(){
                 	alert($('input[name="state"]:checked').val());
                 	alert($('#remark').val());
+                	alert($('#orderproId').val());
 		         var submitData = {  
 		       		 orderproId:$('#orderproId').val(),
 		       		 type:$('input[name="state"]:checked').val(),

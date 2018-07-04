@@ -130,7 +130,8 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 	}
 	
 	public void delall(){
-		baseDao.delete(PubConstants.DATA_PRODUCT);
+		baseDao.delete(PubConstants.WX_ORDERFORM);
+		baseDao.delete(PubConstants.SHOP_ODERFORMPRO);
 	}
 	
 	
@@ -255,7 +256,6 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		whereMap.put("orderid", orderid);
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		List<DBObject> orderList = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
-		System.out.println("list--->"+orderList);
 		sub_map.put("list", orderList);
 		String json = JSONArray.fromObject(sub_map).toString();
 		

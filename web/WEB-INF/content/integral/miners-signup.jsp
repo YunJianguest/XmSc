@@ -110,7 +110,7 @@
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script>
 			$(function() {
-
+/* 
 				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 				$('#phone').blur(function() {
 					if($(this).val() == '') {
@@ -118,7 +118,7 @@
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
-				})
+				}) */
 				$('.verBtn').click(function() {
 					var count = 60;
 					var timer;
@@ -157,7 +157,7 @@
 						});
 					}
 				});
-				$('#password').blur(function(){
+			/* 	$('#password').blur(function(){
 					pwd($(this).val())
 				});
 				$('#password_confirm').blur(function(){
@@ -172,7 +172,7 @@
 					if (pwdVal == '') {
 						mui.alert('密码不能为空');
 					}
-				}
+				} */
 				$('#reg').click(function(){
 					mui($(this)).button('loading');
 					$.ajax({

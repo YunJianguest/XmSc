@@ -71,7 +71,10 @@
 @import url('lato.css');
 @import url('roboto.css');
 
-
+.btn{
+	background-color:#005EAC !important;
+	border-color:#005eac !important;
+}
 /********** 2. RESET STYLES **********/
 /*************************************/
 
@@ -81,7 +84,9 @@ body {
     line-height: 21px;
     color: #636e7b;
 }
-
+body{
+	background:#241979;
+}
 body.notfound,
 body.signin {
     background: #e4e7ea;
@@ -666,7 +671,9 @@ strong {
     -webkit-transition: all 0.2s ease-out 0s;
     transition: all 0.2s ease-out 0s;
 }
-
+.nav-bracket .children > li > a{
+	color: #fff;
+}
 .nav-bracket .children > li > a > span {
     margin-top: 2px;
 }

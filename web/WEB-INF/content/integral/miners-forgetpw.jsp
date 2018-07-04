@@ -73,10 +73,10 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
+		<!-- <header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">找回密码</h1>
-		</header>
+		</header> -->
 		<div class="mui-content" style="background: #fff;padding: 0 30px;padding-top: 30px;">
 			<form class="mui-input-group">
 
@@ -103,18 +103,18 @@
 		<script>
 			$(function() {
 				var reg =/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
-				$('#phone').blur(function() {
+				/* $('#phone').blur(function() {
 					if($(this).val() == '') {
 						mui.alert('请输入手机号', )
 					} else if(!reg.test($(this).val())) {
 						mui.alert('手机号码不正确')
 					}
-				})
+				}) */
 				$('.verBtn').click(function() {
 					var count = 60;
 					var timer;
 					if($('#phone').val() == '') {
-						mui.alert('请输入手机号', )
+						mui.alert('请输入手机号')
 					} else if(!reg.test($('#phone').val())) {
 						mui.alert('手机号码不正确')
 					} else {

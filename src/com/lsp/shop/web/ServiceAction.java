@@ -113,13 +113,12 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
 
 		}
-		
-		sortMap.put("insDate", -1);
+
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		fycount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
-		List<DBObject> list=baseDao.getList(PubConstants.WX_ORDERFORM,whereMap,fypage,10, sortMap);
+		fycount=baseDao.getCount(PubConstants.SHOP_AFTERSERVICE, whereMap);
+		List<DBObject> list=baseDao.getList(PubConstants.SHOP_AFTERSERVICE,whereMap,fypage,10, sortMap);
 		for(DBObject db:list){
 			if(db.get("fromUserid")!=null){
 				 DBObject  user=wwzService.getWxUser(db.get("fromUserid").toString());
@@ -128,13 +127,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			}
 		 
 		} 
-		Struts2Utils.getRequest().setAttribute("OrderFormList", list);
-		whereMap.clear();
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-		sortMap.clear();
-		sortMap.put("createdate",-1);
-		List<DBObject>lskd=baseDao.getList(PubConstants.SET_COURIER, whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("lskd", lskd);
+		Struts2Utils.getRequest().setAttribute("list", list);
  
 		return SUCCESS;
 	}
@@ -237,11 +230,14 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		// 四位随机数
 		String strRandom = TenpayUtil.buildRandom(4) + "";
 		String serviceno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.SHOP_AFTERSERVICE);
+		System.out.println("---->"+serviceno);
 		AfterService info = new AfterService();
 		info.set_id(serviceno);
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
 		if(dbObject != null){
 			OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+			System.out.println("pro---->"+dbObject);
+			pro.set_id(Long.parseLong(orderproId));
 			pro.setState(Integer.parseInt(type));//异常订单  1-退货   2-换货
 			pro.setSid(info.get_id().toString());
 			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
@@ -270,6 +266,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			}
 			info.setPrice(price);
 			baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
+			System.out.println("info--->"+info.getRemark());
 			sub_map.put("state", 0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();

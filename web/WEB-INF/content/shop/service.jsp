@@ -32,9 +32,8 @@
             });
         });
        
-        //同意
-        function agree(id) {
-        	var state=1;
+        //审批
+        function apply(id,state) {
         	var	submitData = {
                     "id": id,
                     "state": state,
@@ -43,21 +42,8 @@
                     function (json) {
         			if(json.state==0){
         				location.reload();
-        			}
-              }, "json");
-        }
-        
-        //拒绝
-         function noagree(id) {
-        	var state=2;
-        	var	submitData = {
-                    "id": id,
-                    "state": state,
-                };
-        	$.post('${ctx}/shop/service!approval.action',submitData,
-                    function (json) {
-        			if(json.state==0){
-        				location.reload();
+        			}else{
+        				alert('操作失败');
         			}
               }, "json");
         }
@@ -109,9 +95,9 @@
                                     <th class="table-action">订单编号</th>
                                     <th class="table-action">商品名称</th>
                                     <th class="table-action">商品数量</th>
-                                    <th class="table-action">退货原因</th>
-                                    <th class="table-action">退款金额</th>
-                                    <th class="table-action">退货状态</th>
+                                    <th class="table-action">售后类型</th>
+                                    <th class="table-action">售后状态</th>
+                                    <th class="table-action">金额</th>
                                     <th class="table-action">添加时间</th>
                                     <th class="table-action">备注</th>
                                     <th class="table-action">操作</th>
@@ -122,7 +108,7 @@
                                     <tr>
                                         <td>${bean.nickname}</td>
                                         <td>${bean.oid}</td>
-                                        <td>${bean.product}</td>
+                                        <td>${bean.product.ptitle}</td>
                                         <td>${bean.num}</td>
                                         <td>${bean.resource}</td>
                                         <td>${bean.price}</td>
@@ -139,11 +125,11 @@
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                                 <ul role="menu" class="dropdown-menu pull-right">
-                                                    <li><a href="javascript:agree('${bean._id}');">
+                                                    <li><a href="javascript:apply('${bean._id}',1);">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;同意</a>
                                                     </li>
                                                     
-                                                    <li><a href="javascript:noagree('${bean._id}');"><i
+                                                    <li><a href="javascript:apply('${bean._id}',2);"><i
                                                             class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;拒绝</a>
                                                     </li>
                                                 </ul>
