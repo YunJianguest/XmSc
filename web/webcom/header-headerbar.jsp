@@ -2,7 +2,7 @@
 <%@ include file="/webcom/taglibs.jsp"%>
 
 <style type="text/css">
-	.btn.btn-default.dropdown-toggle:hover{color: #3D3D3D !important;}
+	.btn.btn-default.dropdown-toggle:hover{background: #999;}
 </style>
 <div class="headerbar">
 
