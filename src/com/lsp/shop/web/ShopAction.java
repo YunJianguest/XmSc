@@ -1630,6 +1630,7 @@ public class ShopAction extends GeneralAction {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			String state=Struts2Utils.getParameter("state").toString();
+			System.out.println("++++++++++++++"+state);
 			if(state!=null&&state!="") {
 				whereMap.put("state", Integer.parseInt(state));
 			}
