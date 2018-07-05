@@ -62,6 +62,9 @@
 			width:1%;
 			text-align: center;
 		}
+		.tab-nav li a{
+			color: #000;
+		}
 		.tab-nav li i{
 			font-size:20px;
 			margin-bottom:10px;
