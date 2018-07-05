@@ -321,13 +321,12 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		String state=Struts2Utils.getParameter("state");
-		
 		Struts2Utils.getRequest().setAttribute("state", state);
 		// 加载订单量
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("fromUserid", fromUserid);
 		whereMap.put("custid", custid);
-		whereMap.put("state", state);
+		whereMap.put("state", Integer.parseInt(state));
 		Struts2Utils.getRequest().setAttribute("ordercount", baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));
 		return "orderform";
 	}
@@ -1630,7 +1629,6 @@ public class ShopAction extends GeneralAction {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			String state=Struts2Utils.getParameter("state").toString();
-			System.out.println("++++++++++++++"+state);
 			if(state!=null&&state!="") {
 				whereMap.put("state", Integer.parseInt(state));
 			}

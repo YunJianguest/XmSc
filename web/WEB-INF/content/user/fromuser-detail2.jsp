@@ -163,21 +163,21 @@
             </a>
           </li>
 		<li>
-			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+0>	
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=0">	
 				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
 	              <i class="fa fa-credit-card  line-height30"></i>
 	            </div>待付款
               </a>     
         </li>
         <li>
-        	<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+2>	
+        	<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=2">	
 		       <div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
 		         <i class="fa fa-truck  line-height30"></i>
 		       </div>待发货
 	       </a> 
         </li>
 		<li>
-			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+3>	
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=3">	
 				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
                   <i class="fa fa-envelope  line-height30"></i>
                 </div>待收货
@@ -185,7 +185,7 @@
         </li>
 		
 		<li>
-			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state="+4>	
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=4">	
 				<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
 	            	<i class="fa fa-commenting-o  line-height30"></i>
 	          	</div>待评价
