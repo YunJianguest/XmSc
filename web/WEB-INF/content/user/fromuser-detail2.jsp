@@ -479,6 +479,12 @@
           		</c:otherwise> 
 	       	</c:choose>
     	</c:forEach>
+    	<li class="my_cate_item">
+    		<a href="">
+    			<span class="my_cate_item_logo  bg-cheng"><i class="fa fa-diamond"></i></span>
+    			<p class="my_cate_item_name ">币世界</p>
+    		</a>
+    	</li>
     </ul>
 </main>
 <div class="modal">
