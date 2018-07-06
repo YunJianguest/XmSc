@@ -33,10 +33,10 @@
   		.nomargin{
   			position: absolute;
   			top: -12px;
-  			left: 30px;
+  			left: 50%;
   			color: #FFF;
   			background: url('${ctx}/pc_gw/images/logintit.png') no-repeat;
-  			width: 381px;
+  			width: 382px;
   			height: 60px;
   			background-size: 100% 100%;
   			text-align: center;
@@ -48,6 +48,7 @@
   			justify-content: center;
   			align-items: center;
   			margin-bottom: 20px;
+  			margin-left: -191px;
   		}
   		.logos{
   			display: block;
@@ -75,7 +76,7 @@
   			right: 0;
   			bottom: 0;
   			left: 0;
-  			z-index: -100;
+  			z-index: -9999;
   			display: block;
   			object-fit: fill;
   		}
@@ -111,7 +112,7 @@
             
             </div>-->
             
-            <div style="width: 448px;">
+            <div style="width: 600px;">
                 
                 <form method="post" id="loginform" name="loginForm"   action="j_spring_security_check">
                     <div class="nomargin"><i class="logos"></i>熊猫后台登陆系统</div>

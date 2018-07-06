@@ -103,7 +103,7 @@
 			.news::after {
 				content: '';
 				width: 100%;
-				height: 1px;
+				height: 0.5px;
 				background: #E1DFDD;
 				position: absolute;
 				top: 0;
@@ -113,7 +113,7 @@
 			.news::before {
 				content: '';
 				width: 100%;
-				height: 1px;
+				height: 0.5px;
 				background: #E1DFDD;
 				position: absolute;
 				bottom: 0;
@@ -404,27 +404,7 @@
              </c:forEach>
              
              </c:if>
-             <c:if test="${not empty typelists}">
-			 <c:forEach items="${typelist}" var="bean"  begin="0" end="7">
-                 <c:if test="${not empty bean.url}">
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
-					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&typeid=${bean._id}">
-						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-						<div class="mui-media-body">${bean.name}</div>
-					</a>
-				</li>
-		   </c:if>
-            <c:if test="${empty bean.url}"> 
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
-					<a href="javascript:fxsel('${bean.type}')">
-						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-						<div class="mui-media-body">${bean.name}</div>
-					</a>
-				</li>
-			</c:if>
-             </c:forEach>
-             
-             </c:if>
+            
             
 			</ul>
 			<!-- 新闻 -->
@@ -454,39 +434,42 @@
 			</div>
 			<!-- 大众、特约区 -->
 			<div class="mui-row ">
-				<ul class="mui-table-view mui-grid-view public">
-					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3">
+				<ul class="mui-table-view mui-grid-view public" style="padding-left: 10px;">
+					<li class="mui-table-view-cell mui-media mui-col-xs-12">
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3" style="padding: 0;">
+							<div class="mui-media-body" style="line-height: 30px;font-weight: 600;height: 30px;font-size: 16px;">大众区</div>
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/Public-banner.jpg">
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-6">
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4">
+					<li class="mui-table-view-cell mui-media mui-col-xs-12">
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
+							<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/member-banner.jpg">
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-12">
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5">
+					<li class="mui-table-view-cell mui-media mui-col-xs-12" >
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5"style="padding: 0;">
+							<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height:30px;">会员区</div>
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/vip-banner.jpg">
 						</a>
 					</li>
 				</ul>
 			</div>
 			<!-- 推荐商品 -->
-			<div class="mui-row">
+			<!--<div class="mui-row">-->
 				<!-- 标题 -->
-				<div class="title-txt">
+				<!--<div class="title-txt">
 					<span class="title-layout">
 						<span class="title-txt-imgl"></span>
 					<span class="title-txt-txt">为你推荐</span>
 					<span class="title-txt-imgr"></span>
 					</span>
-				</div>
+				</div>-->
 				<!-- 商品 -->
-				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;">
+				<!--<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;">
 					
 				</ul>
-			</div>
+			</div>-->
 			 <%@include file="/webcom/shop-foot.jsp" %>
 		</div>
 		

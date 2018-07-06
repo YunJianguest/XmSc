@@ -25,6 +25,9 @@
 			.mui-card .mui-card-content img {
 				height: 124px;
 			}
+			.mui-table-view:after{
+				display: none;
+			}
 		</style>
 		<script type="text/javascript">
 		var loading;
@@ -119,7 +122,7 @@
 		    <h1 class="mui-title">商品列表</h1>
 		</header>-->
 		<!-- <div id="showall"></div> -->
-		<div class='mui-content' >
+		<div class='mui-content' style="height: 100%;background-color: #fff;">
 			<div class='mui-row'>
 				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;">
 					
