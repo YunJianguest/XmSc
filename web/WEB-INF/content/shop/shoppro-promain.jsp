@@ -9,11 +9,15 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
-		
+		<link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
 		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
 		<link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="${ctx}/app/js/iosOverlay.js"></script>
+    	<script src="${ctx}/app/js/spin.min.js"></script>
+    	<script type="text/javascript" src="${ctx }/app/js/jquery.Spinner.js"></script>
 		<style type="text/css">
 			.mui-table-view .mui-media-object{
 				margin-top: 10px;
@@ -27,6 +31,41 @@
 			}
 			.mui-table-view:after{
 				display: none;
+			}
+			.similar-product-text {
+				line-height: 33px;
+				font-size: 12px;
+				overflow: hidden;
+				-o-text-overflow: ellipsis;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				word-break: break-word;
+				color: #232326;
+				margin-top: 5px;
+				line-height: 17px;
+				margin-bottom: 3px;
+				padding: 0 4px;
+			}
+			
+			.similar-product-info {
+				display: block;
+				position: relative;
+				overflow: hidden;
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.similar-product-shopCar {
+				width: 18px;
+				height: 18px;
+				display: block;
+				background: url(${ctx}/xmMobile/img/icon/icon-shopCar.png) no-repeat;
+				background-size: 100% auto
+			}
+			.similar-product-price{
+				color: #fd0707;
 			}
 		</style>
 		<script type="text/javascript">
@@ -64,6 +103,7 @@
         var lx = "";
         var sel = "";
         function ajaxjz() {//加载
+        	loading()
             if (!issend) {
                 return;
             }
@@ -76,7 +116,9 @@
             issend = false;
             $.post('${ctx}/shop/shoppro!prolist.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
+                    	loading.hide();
             	console.log(json)
+            	
                         var html = '';
                         if (json.state == 0) {
                             var v = json.list;
@@ -84,7 +126,7 @@
                                 +'<div class="mui-row ">'
                             	+'<ul class="mui-table-view">'; */
                             for (var i = 0; i < v.length; i++) {
-                                if (i & 1 != 0) {
+//                              if (i & 1 != 0) {
                                 	
                                 	html +='<li class="mui-table-view-cell mui-media mui-col-xs-6" >'
                 						+'<div class="mui-card" style="margin: 2px;">'
@@ -101,7 +143,7 @@
                 						+'</div></div></div></li>';		
             		    	              
             					
-                                }
+//                              }
                             }
                           /*   html+='</ul></div></div>'; */
                             fypage++;

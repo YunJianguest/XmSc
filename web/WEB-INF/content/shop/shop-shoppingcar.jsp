@@ -197,7 +197,7 @@ function ajaxjz(){//加载
     if(!issend){
     	return;
     }
-   
+   loading()
    	var submitData = { 
       sel:$('#sel').val()
     }; 
@@ -206,6 +206,7 @@ function ajaxjz(){//加载
     
     $.post('${ctx}/shop/shop!ajaxshopcarweb.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
        	function(json) { 
+       		loading.hide();
     		var xszf=$('#ajaxdiv').html(); 
 	    	if(json.state=='0'){
 	    		var v = json.list;  

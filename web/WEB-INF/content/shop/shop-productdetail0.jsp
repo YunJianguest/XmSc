@@ -22,14 +22,44 @@
     <link href="${ctx}/mvccol/SweetAlert2/css/sweetalert2.min.css" rel="stylesheet"/>
     <link href="${ctx}/mvccol/SweetAlert2/css/animo.css" rel="stylesheet"/>
     <link href="${ctx}/mvccol/SweetAlert2/css/buttons.css" rel="stylesheet"/>
+    <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
     <script src="${ctx}/mvccol/js/fomatdate1.js"></script>
     <script src="${ctx}/mvccol/SweetAlert2/js/sweetalert2.min.js"></script>
     <script src="${ctx}/mvccol/SweetAlert2/js/promise.js"></script>
+    <script src="${ctx}/app/js/iosOverlay.js"></script>
+    <script src="${ctx}/app/js/spin.min.js"></script>
     <!-- Resource style -->
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
     <script> 
+    	var loading;
+        function  loading(){
+        var opts = {
+		lines: 13, // The number of lines to draw
+		length: 8, // The length of each line
+		width: 4, // The line thickness
+		radius: 13, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		color: '#FFF', // #rgb or #rrggbb
+		speed: 1, // Rounds per second
+		trail: 60, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: 'auto', // Top position relative to parent in px
+		left: 'auto' // Left position relative to parent in px
+	}; 
+	   var target = document.createElement("div");
+	   document.body.appendChild(target);
+	   var spinner = new Spinner(opts).spin(target);
+	  loading=iosOverlay({
+		text: "Loading", 
+		spinner: spinner
+	   });
+     }
         var state=0;
         var spec='';
         var price=0;
@@ -123,12 +153,13 @@
         })
         
          function getcom() {
-
+			loading()
             var submitData = {
                 gid: '${entity._id}', 
             };
             jQuery.post('${ctx}/shop/shopcom!getCom.action?lscode=${lscode}', submitData,
                     function (json) {
+                    	loading.hide()
                         if (json.state == 0) {
                              var list=json.list;
                              var html;
