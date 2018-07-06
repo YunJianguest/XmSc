@@ -67,6 +67,44 @@ public class PayCommonUtil {
 		String sign = MD5Util.MD5Encode(sb.toString(), characterEncoding).toUpperCase();
 		return sign;
 	}
+	/**
+	 * 
+	 * @Description：sign签名
+	 * @param characterEncoding 编码格式
+	 * @param parameters 请求参数
+	 * @return
+	 */
+	public static String createKey(String characterEncoding,SortedMap<Object,Object> parameters,String partner_key){
+		StringBuffer sb = new StringBuffer();
+		Set es = parameters.entrySet();
+		Iterator it = es.iterator();
+		while(it.hasNext()) {
+			Map.Entry entry = (Map.Entry)it.next();
+			String k = (String)entry.getKey();
+			Object v = entry.getValue();
+			if(null != v && !"".equals(v) 
+					&& !"sign".equals(k) && !"key".equals(k)) {
+				sb.append(v+"+");
+			}
+		}
+		sb.append(partner_key);
+		System.out.println("加密前key："+"key="+sb.toString());
+		String sign = MD5Util.MD5Encode("key="+sb.toString(), characterEncoding).toUpperCase();
+		return sign;
+	}
+	/**
+	 * 
+	 * @Description：sign签名
+	 * @param characterEncoding 编码格式
+	 * @param parameters 请求参数
+	 * @return
+	 */
+	public static String createKey(String characterEncoding,String parameters,String partner_key){
+		String key=parameters+partner_key;
+		System.out.println("加密前key:"+key);
+		String sign = MD5Util.MD5Encode(key, characterEncoding).toUpperCase();
+		return sign;
+	}
 	 
 	/**
 	 * @Description：将请求参数转换为xml格式的string

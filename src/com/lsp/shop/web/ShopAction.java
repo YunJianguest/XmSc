@@ -26,11 +26,13 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.JsonObject;
 import com.lsp.android.entity.MessageInfo;
 import com.lsp.integral.entity.InteSetting;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.GetAllFunc;
+import com.lsp.pub.entity.HttpClient;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.BaseDecimal;
@@ -3958,30 +3960,23 @@ public class ShopAction extends GeneralAction {
 	 * 
 	 * 57846"}} 笑我一世沉沦: key是eth+num+username+orderid+密钥
 	 */
-	public void testjy() {
+	public void testjy() {//2018070417180011
 
 		SortedMap<Object, Object> parameters = new
 
 		TreeMap<Object, Object>();
-		parameters.put
-
-		("eth", "0x" + SpringSecurityUtils.getCurrentUser().getId());
+		parameters.put("eth", "0x063d0aa3160fdcc85214761e2bfaa43e3e82cf5d");
 		parameters.put("num", 1);
-		parameters.put
-
-		("username", SpringSecurityUtils.getCurrentUser().getCustname());
-		parameters.put("orderid", "2018070417180011");
-		String sign = PayCommonUtil.createSign("UTF-8",
-
-				parameters, "uskdpro6623");
+		parameters.put("username","admin");
+		parameters.put("orderid", Struts2Utils.getParameter("orderid"));
+	
+		String sign = PayCommonUtil.createKey("UTF-8","0x063d0aa3160fdcc85214761e2bfaa43e3e82cf5d1admin"+Struts2Utils.getParameter("orderid"), "uskdpro6623");
 		parameters.put("key", sign);
-		String requestXML = PayCommonUtil.getRequestXml
+		HashMap<String,Object>map=new HashMap<>();
+		map.put("data", parameters);
 
-		(parameters);
-
-		String result = CommonUtil.httpsRequest
-
-		("https://api.mch.weixin.qq.com/pay/unifiedorder", "POST", requestXML);
+		
+		String result =HttpClient.doHttpPost("http://test.zzfzf.com/home/api/api",JSONObject.fromObject(parameters).toString());
 		System.out.println(result);
 
 	}
