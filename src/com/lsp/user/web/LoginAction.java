@@ -164,7 +164,6 @@ public class LoginAction extends ActionSupport
 		
 		if(count == 0){
 			Code code=GetAllFunc.telcode.get(tel); 
-			
 			if (code!=null&&code.getCode().equals(yzcode)) { 
 				 //验证时间
 				if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
@@ -174,6 +173,7 @@ public class LoginAction extends ActionSupport
 					user.setTel(tel);
 					user.setPassword(password);
 					user.setNickname(nickname);
+					user.setCustid(SysConfig.getProperty("custid"));
 					user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
 					basedao.insert(PubConstants.USER_INFO, user);
 					sub_map.put("state", 0);//注册成功
@@ -189,6 +189,12 @@ public class LoginAction extends ActionSupport
 		
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+  }
+  public void del(){
+	  String tel = Struts2Utils.getParameter("tel");
+	  HashMap<String,Object>whereMap = new HashMap<>();
+	  whereMap.put("tel", tel);
+	  basedao.delete(PubConstants.USER_INFO, whereMap);
   }
   
   /**

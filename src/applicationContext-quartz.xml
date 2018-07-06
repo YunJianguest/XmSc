@@ -28,7 +28,7 @@
 		</property> 
 		<!-- cron表达式 --> 
 		<property name="cronExpression"> 
-			<value>59 59 23 * * ?</value> 
+			<value>0 */1 * * * ?</value> 
 		</property> 
 	</bean>
 	
@@ -50,7 +50,7 @@
 		</property> 
 		<!-- cron表达式 --> 
 		<property name="cronExpression"> 
-			<value>59 59 23 * * ?</value> 
+			<value>0 */1 * * * ?</value> 
 		</property> 
 	</bean>
 	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序   --> 
@@ -58,7 +58,7 @@
 		<property name="triggers"> 
 			<list> 
 			    <ref bean="freeMarkerSales"/>
-			    <ref bean="freeMarkerProstore"/>
+			    <!-- <ref bean="freeMarkerProstore"/> -->
 			</list> 
 		</property> 
 	</bean> 

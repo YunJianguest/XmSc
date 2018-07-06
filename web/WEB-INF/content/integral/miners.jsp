@@ -74,7 +74,7 @@
                                     <th class="th5 table-action">LOGO</th>
                                     <th class="th8 table-action">标题</th>
                                     <th class="th8 table-action">价值</th>
-                                    <th class="th8 table-action">运行周期(单位：年)</th> 
+                                    <th class="th8 table-action">运行周期(单位：天)</th> 
                                     <th class="th5 table-action">操作</th>
                                 </tr>
                                 </thead>

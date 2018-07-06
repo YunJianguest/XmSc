@@ -299,7 +299,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		sub_map.put("state", 1);//操作失败
 		String id = Struts2Utils.getParameter("id");
 		String state =Struts2Utils.getParameter("state");
-		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(id));
+		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, id);
 		if(dbObject !=null){
 			AfterService info = (AfterService) UniObject.DBObjectToObject(dbObject, AfterService.class);
 			DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
@@ -363,7 +363,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		Map<String,Object>sub_map = new HashMap<>();
 		sub_map.put("state", 1);//操作失败
 		String id = Struts2Utils.getParameter("id");
-		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, Long.parseLong(id));
+		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, id);
 		if(dbObject !=null){
 			AfterService info = (AfterService) UniObject.DBObjectToObject(dbObject, AfterService.class);
 			if(info.getState()==0){

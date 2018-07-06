@@ -2588,7 +2588,12 @@ public class WwzService {
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 			if (type == 1) {
-				inteSetting.setNownum(BaseDecimal.add(inteSetting.getNownum(), value));
+				if(inteSetting.getNownum() == null){
+					inteSetting.setNownum(BaseDecimal.add("0", value));
+				}else{
+					inteSetting.setNownum(BaseDecimal.add(inteSetting.getNownum(), value));
+				}
+				
 				baseDao.insert(PubConstants.INTEGRAL_INTESETTING, inteSetting);
 				return true;
 			} else if (type == 2) {

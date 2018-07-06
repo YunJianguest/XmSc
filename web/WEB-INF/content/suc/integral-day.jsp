@@ -124,14 +124,14 @@ function share(url) {
 	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral!day.action" >
     
     <div class="pageheader">
-      <h2><i class="fa fa-user"></i>系统管理 <span>积分管理</span></h2>
+      <h2><i class="fa fa-user"></i>系统管理 <span>盼盼币管理</span></h2>
     </div>
    <div class="panelss ">
                 <div class="panel-body fu10">
                     <div class="row-pad-5">
 			            <div class="form-group col-sm-2">
-			            	<select  id="sel_type"  name="type" class="form-control "  data-placeholder="请选择积分类型 ">
-			            	                <option value="">请选择积分类型</option>
+			            	<select  id="sel_type"  name="type" class="form-control "  data-placeholder="请选择盼盼币类型 ">
+			            	                <option value="">请选择盼盼币类型</option>
 			            	 				<option value="ps_account">开通账户收益</option>
 			                    			<option value="ps_recovery">回本后待返收益</option>
 			                    			<option value="shop_bmzt">利润提成</option>
@@ -178,8 +178,8 @@ function share(url) {
                       	  <c:when test="${bean.type == 'ps_recovery'}">回本后待返收益</c:when>
                       	  <c:when test="${bean.type == 'shop_bmzt'}">利润提成</c:when>
                       	  <c:when test="${bean.type == 'shop_jfdh'}">下单支出</c:when>
-                      	  <c:when test="${bean.type == 'jfcz'}">积分充值</c:when>
-                      	  <c:when test="${bean.type == 'jf_withdraw'}">积分提现</c:when>
+                      	  <c:when test="${bean.type == 'jfcz'}">盼盼币充值</c:when>
+                      	  <c:when test="${bean.type == 'jf_withdraw'}">盼盼币提现</c:when>
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>

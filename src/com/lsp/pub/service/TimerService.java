@@ -65,17 +65,30 @@ public class TimerService {
 	 * @throws Exception 
 	 */
 	public synchronized void updProstore() throws Exception{
+		System.out.println("进入这个方法1");
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
 		BasicDBObject dateCondition = new BasicDBObject();
 		dateCondition.append("$gte",new Date());
 		whereMap.put("enddate", dateCondition);
-		whereMap.put("state", 0);
+		//whereMap.put("state", 0);
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
+		System.out.println("list---->"+list);
 		for (DBObject dbObject : list) {
+			System.out.println("money---->"+dbObject.get("money"));
 			if(dbObject.get("money")!=null){
-				String price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
+				String price = "0";
+                if(dbObject.get("money").toString().equals("4500000.0")||dbObject.get("money").toString().equals("1500000.0")||dbObject.get("money").toString().equals("450000.0")||dbObject.get("money").toString().equals("90000.0")||dbObject.get("money").toString().equals("0.0")){
+                	price = BaseDecimal.division(dbObject.get("money").toString(),"365",6);
+					price = BaseDecimal.division(price,"3",6);
+                }else{
+                	price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
+                }
+				
+				
+				System.out.println("fromUserid---->"+dbObject.get("fromUserid"));
+				System.out.println("type---->"+dbObject.get("type"));
 				if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 					if(dbObject.get("type").toString().equals("ps_account")){
 						//积分添加  添加积分类型为冻结
@@ -85,11 +98,13 @@ public class TimerService {
 						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,1,dbObject.get("_id").toString(), null);
 					}
 					
-					//返回积分到直推用户
+					
+					
+					/*//返回积分到直推用户
 					DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
 				    if(user.get("parentid")!=null) {
 				    	wwzservice.addjf(Double.parseDouble(price)*0.1+"", user.get("parentid").toString(),user.get("custid").toString(), dbObject.get("type").toString(),1,1,0);
-				    }
+				    }*/
 					
 				}
 			}
@@ -100,6 +115,7 @@ public class TimerService {
 	 * 更新返还账户
 	 */
 	public synchronized void delProstore() throws Exception{
+		System.out.println("进入这个方法2");
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
@@ -108,6 +124,7 @@ public class TimerService {
 		whereMap.put("createdate", dateCondition);
 		whereMap.put("state", 0);
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
+		System.out.println("--list-->"+list);
 		for (DBObject dbObject : list) {
 			InteProstore prostore = (InteProstore)UniObject.DBObjectToObject(dbObject,InteProstore.class);
 			prostore.setState(1);//1-已返完

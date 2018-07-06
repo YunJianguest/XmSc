@@ -4,7 +4,7 @@
 <div class=" button_foot bg-bai shadow-wai cmp640">
 
     <div class=" button_group1"> 
-            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/shop!index.action?custid=${custid}&agid=${agid}&lscode=${lscode}&comid=${entity._id}'">
+            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/shop!index.action?lscode=${lscode}&comid=${comid}'">
                 <font size="4">
                     <div class="fa fa-home"></div>
                 </font>

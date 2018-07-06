@@ -61,8 +61,8 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-		sortMap.put("sort", -1);   
+		//custid=SpringSecurityUtils.getCurrentUser().getId();
+		sortMap.put("createdate", -1);   
 		/*whereMap.put("fromUserid", custid);*/
 		String  title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title))

@@ -86,8 +86,10 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		sortMap.put("createdate", -1);
+        if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
+        	whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+        }
 		String state = Struts2Utils.getParameter("state");
 		if (StringUtils.isNotEmpty(state)) {
 			if (!state.equals("2")) {
@@ -118,7 +120,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		}
 
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO,whereMap);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return SUCCESS;
 	}
@@ -1103,5 +1105,64 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
+	
+	
+	/**
+	 * ll积分详情
+	 * 
+	 * @return
+	 */
+	public String webll() {
+		getLscode();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("_id", fromUserid);
+		DBObject wxuser = wwzService.getWxUser(whereMap);
+		
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		whereMap.clear();
+		DBObject dbObject =wwzService.getJfObj(custid, fromUserid);
+		Struts2Utils.getRequest().setAttribute("entity", wxuser);
+		Struts2Utils.getRequest().setAttribute("jf", dbObject);
+		
+		DBObject dbObject2 =baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("setting", dbObject2);
+		
+		return "web";
+	}
+
+	/**
+	 * 获取个人ll积分详情列表
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void ajaxwebll() throws Exception {
+		getLscode();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		sortMap.put("createdate", -1);
+		whereMap.put("fromUserid", fromUserid);
+		whereMap.put("custid", custid);
+		if (Struts2Utils.getParameter("fypage") != null) {
+			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+
+		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 13, sortMap);
+
+		if (comList.size() > 0) {
+			sub_map.put("state", 0);
+		} else {
+			sub_map.put("state", 1);
+		}
+
+		sub_map.put("list", comList);
+		String json = JSONArray.fromObject(sub_map).toString();
+
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
+	}
+
 
 }

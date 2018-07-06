@@ -65,6 +65,18 @@ public class IntesettingAction extends GeneralAction<InteSetting> {
 			}
 			entity.set_id(_id); 
 			entity.setCreatedate(new Date());
+			if(entity.getNum() == null){
+				entity.setNum("0");
+			}
+			if(entity.getNums() == null){
+				entity.setNums("0");
+			}
+			if(entity.getNownum() == null){
+				entity.setNownum("0");
+			}
+			if(entity.getNownums() == null){
+				entity.setNownums("0");
+			}
 			baseDao.insert(PubConstants.INTEGRAL_INTESETTING, entity); 
 			addActionMessage("成功添加!");
 		} catch (Exception e) {

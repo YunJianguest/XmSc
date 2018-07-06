@@ -107,7 +107,7 @@
 					var count = 60;
 					var timer;
 					if($('#tel').val() == '') {
-						confirm('请输入手机号', )
+						confirm('请输入手机号')
 					} else if(!reg.test($('#tel').val())) {
 						confirm('手机号码不正确')
 					} else {
@@ -138,7 +138,7 @@
 						});
 					}
 				});
-				$('#password').blur(function(){
+				/* $('#password').blur(function(){
 					pwd($(this).val())
 				});
 				$('#password_confirm').blur(function(){
@@ -147,7 +147,7 @@
 					}else if($('#password_confirm').val() !=$('#password').val() ){
 						confirm('两次输入的密码不一致')
 					}
-				});
+				}); */
 				function pwd(val){
 					var pwdVal = val;
 					if (pwdVal == '') {
@@ -161,11 +161,12 @@
 						async:true,
 						data:{
 							tel:$('#tel').val(),
-							zycode:$('#verCode').val(),
+							yzcode:$('#verCode').val(),
 							password:$('#password').val(),
 							nickname:$('#nickname').val()
 						},
 						success:function(json){
+							console.log(json.state)
 							if(json.state == 1){
 								confirm('网络超时，请重新操作')
 							}else if(json.state == 2){
@@ -178,6 +179,7 @@
 								location.href='${ctx}/login.action';
 							}
 						}
+						
 					});
 				})
 				

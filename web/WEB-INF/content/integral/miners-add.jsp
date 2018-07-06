@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        运行周期(年)
+                                        运行周期(天)
                                     </div>
                                     <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"

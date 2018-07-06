@@ -656,6 +656,9 @@ public class UserAction extends GeneralAction<UserInfo>
 		HashMap<String,Object> whereMap = new HashMap<>();
 		whereMap.put("number", number);
 		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+		
+		System.out.println("user---->"+user.get("_id").toString());
+		
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
 
 		if(db!=null){
@@ -667,12 +670,13 @@ public class UserAction extends GeneralAction<UserInfo>
 			Calendar calendar = Calendar.getInstance();
 	        Date date = new Date(System.currentTimeMillis());
 	        calendar.setTime(date);
-	        calendar.add(Calendar.YEAR, +1);
+	        calendar.add(Calendar.YEAR, +3);
 	        date = calendar.getTime();
 	        info.setCreatedate(new Date());
 	        info.setEnddate(date);
 			info.setFromUserid(custid);
 			info.setState(0);
+			info.setTime(1095);
 			//1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
 			String any = "";
 			if(db.get("any")!=null){
@@ -681,6 +685,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			if(type == 1){
 				if(db.get("returnProvince")!=null){
 					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnProvince").toString(), "3")));
+					System.out.println("钱数----》"+info.getMoney());
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
