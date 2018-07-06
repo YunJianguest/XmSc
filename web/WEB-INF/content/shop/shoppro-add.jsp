@@ -245,12 +245,22 @@
                                         </select>
                                     </div>
                                 </div>
-                    <div class="col-2 pl-10" id="show_mintype">
+                             <div class="col-2 pl-10" id="show_mintype">
                                     <div class="size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         商品二级分类
                                     </div>
                                     <div class="overflow-hidden">
                                          <select id="mintypeid" name="mintypeid" class="select2" data-placeholder="请选择" >
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+                             <div class="col-2 pl-10" id="show_thirdtype">
+                                    <div class="size14 weight500 pt-10 pb-10" style="padding-left: 2px;">
+                                        商品三级分类
+                                    </div>
+                                    <div class="overflow-hidden">
+                                         <select id="thirdtypeid" name="thirdtypeid" class="select2" data-placeholder="请选择" >
                                         
                                         </select>
                                     </div>
@@ -415,6 +425,16 @@
     	var id=$("#typeid").val();
     	if(isNaN(id)||id==null||id==''){
     		$("#mintypeid").html("<option  value=''>请选择</option>"); 
+    	}else{ 
+    		getchild(id); 	
+    	}
+    	
+    	
+    });
+    $('#mintypeid').change(function(){ 
+    	var id=$("#mintypeid").val();
+    	if(isNaN(id)||id==null||id==''){
+    		$("#thirdtypeid").html("<option  value=''>请选择</option>"); 
     	}else{ 
     		getchild(id); 	
     	}

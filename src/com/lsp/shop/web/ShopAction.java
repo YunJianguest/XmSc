@@ -144,17 +144,17 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("advertising", list);
 		List<DBObject> list1 = wwzService.slide(custid, "shopmb-" + comid);
 		Struts2Utils.getRequest().setAttribute("slide", list1);
-
+		DBObject shopmb =null;
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		if (StringUtils.isNotEmpty(comid)) {
 			whereMap.put("_id", Long.parseLong(comid));
+			shopmb=baseDao.getMessage(PubConstants.SHOP_SHOPMB, whereMap);
 		} else {
 			// whereMap.put("lx",1);
 		}
-		System.out.println("comid--->" + comid);
-		whereMap.put("custid", custid);
+		System.out.println("comid--->" + comid); 
 		System.out.println("custid--->" + custid);
-		DBObject shopmb = baseDao.getMessage(PubConstants.SHOP_SHOPMB, whereMap);
+		
 		System.out.println("shopmb--->" + shopmb);
 		if (StringUtils.isEmpty(agid) || agid.equals("")) {
 			// agid=wwzService.getAgid(shopmb.get("_id").toString(),
@@ -206,6 +206,12 @@ public class ShopAction extends GeneralAction {
 			// 获取店铺分类
 			List<DBObject> typelists = baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap);
 			Struts2Utils.getRequest().setAttribute("typelists", typelists);
+		 
+			// 获取店铺分类
+			List<DBObject> typelist = baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
+			Struts2Utils.getRequest().setAttribute("typelist", typelist);
+			
+			
 
 		}
 		DBObject share = new BasicDBObject();

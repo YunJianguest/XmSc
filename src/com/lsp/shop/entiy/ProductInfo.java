@@ -166,9 +166,18 @@ public class ProductInfo extends ReflectionDBObject{
 	 * 商品类型 3-大众区商品  4-特约区商品   5-会员区商品
 	 */
     private int    goodstype;
-    
+    /**
+     * 一级分类
+     */
     private Long    typeid;
+    /**
+     * 二级分类
+     */
     private Long    mintypeid;
+    /**
+     * 三级分类
+     */
+    private Long    thirdtypeid;
     
 	public String getPtitle() {
 		return ptitle;
@@ -427,6 +436,12 @@ public class ProductInfo extends ReflectionDBObject{
 	}
 	public void setMintypeid(Long mintypeid) {
 		this.mintypeid = mintypeid;
+	}
+	public Long getThirdtypeid() {
+		return thirdtypeid;
+	}
+	public void setThirdtypeid(Long thirdtypeid) {
+		this.thirdtypeid = thirdtypeid;
 	}
 	
 	 
