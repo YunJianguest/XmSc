@@ -72,15 +72,15 @@
 			}
 			
 			.oauth-area {
-				position: fixed;
+				/*position: fixed;
 				bottom: 20px;
-				left: 0px;
+				left: 0px;*/
 				text-align: center;
 				width: 100%;
 				padding: 0px;
 				margin: 0px;
-				/*display: flex;
-				justify-content: center;*/
+				display: flex;
+				justify-content: center;
 			}
 			
 			.oauth-area .oauth-btn {
@@ -150,7 +150,7 @@
 		</style>
 	</head>
 
-	<body>
+	<body style="background: #fff;">
 		<!-- <header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
 		</header> -->
@@ -183,7 +183,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="mui-content-padded oauth-area">
+			<div class="mui-content-padded oauth-area" style="margin-top: 50px;">
 				<button class="oauth-btn wx-icon"></button>
 				
 			</div>

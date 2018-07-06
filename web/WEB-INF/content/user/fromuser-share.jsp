@@ -90,12 +90,12 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav" style="background: #fff;box-shadow: none;">
+		<!--<header class="mui-bar mui-bar-nav" style="background: #fff;box-shadow: none;">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
-		    <h1 class="mui-title">分享</h1>
+		    <h1 class="mui-title">分享</h1>-->
 		    <!--<span class="mui-pull-right">保存到手机</span>-->
-		</header>
-		<div class="mui-content">
+		<!--</header>-->
+		<div class="mui-content" style="padding-top: 10px;">
 		    <div class="mui-row">
 		    	<div class="share">
 		    		<div class="share-canvas" id="qrcode">

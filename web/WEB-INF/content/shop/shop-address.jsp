@@ -24,22 +24,54 @@
     <link rel="stylesheet" href="${ctx}/mvccol/mui-css/mui.min.css"/>
     <!--App自定义的css-->
     <link rel="stylesheet" type="text/css" href="${ctx}/mvccol/mui-css/app.css"/>
+    <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+    <script src="${ctx}/app/js/iosOverlay.js"></script>
+    <script src="${ctx}/app/js/spin.min.js"></script>
     <script>
     var issend=true;
     var fypage=0;
     var xszf="";
 	var type="";
-	 
+	//loding
+	var loading;
+	function  loading(){
+	    var opts = {
+		lines: 13, // The number of lines to draw
+		length: 8, // The length of each line
+		width: 4, // The line thickness
+		radius: 13, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		color: '#FFF', // #rgb or #rrggbb
+		speed: 1, // Rounds per second
+		trail: 60, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: 'auto', // Top position relative to parent in px
+		left: 'auto' // Left position relative to parent in px
+	}; 
+	   var target = document.createElement("div");
+	   document.body.appendChild(target);
+	   var spinner = new Spinner(opts).spin(target);
+	  loading=iosOverlay({
+		text: "Loading", 
+		spinner: spinner
+	   });
+	 }
     function ajaxjz(){//加载 
     if(!issend){
     	return;
     } 
    	var submitData = {  
     }; 
-   
+   loading()
     issend=false; 
     $.post('${ctx}/shop/shop!ajaxuseraddress.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
        	function(json) { 
+       		console.log(json)
+       		loading.hide()
     		var xszf=$('#ajaxdiv').html(); 
 	    	if(json.state=='0'){
 	    		var v = json.list; 

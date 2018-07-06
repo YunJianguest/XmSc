@@ -161,13 +161,13 @@
 			}
 			
 			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-object {
-				height: 124px;
+				height: 180px;
 			}
 			
 			.title-txt {
 				position: relative;
 				display: -webkit-box;
-				margin: 14px 30px;
+				margin: 14px 0px;
 				font-size: 14px;
 				-webkit-box-pack: center;
 			}
@@ -266,7 +266,7 @@
 			}
 			
 			.mui-card .mui-card-content img {
-				height: 124px;
+				height: 180px;
 			}
 			
 			#slider .swiper-container .swiper-wrapper img{
@@ -437,19 +437,42 @@
 				<ul class="mui-table-view mui-grid-view public" style="padding-left: 10px;">
 					<li class="mui-table-view-cell mui-media mui-col-xs-12">
 						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3" style="padding: 0;">
-							<div class="mui-media-body" style="line-height: 30px;font-weight: 600;height: 30px;font-size: 16px;">大众区</div>
+							<!--<div class="mui-media-body" style="line-height: 30px;font-weight: 600;height: 30px;font-size: 16px;">-->
+								<!-- 标题 -->
+								<div class="title-txt">
+									<span class="title-layout">
+										<span class="title-txt-imgl"></span>
+									<span class="title-txt-txt">大众区</span>
+									<span class="title-txt-imgr"></span>
+									</span>
+								</div>
+							<!--</div>-->
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/Public-banner.jpg">
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-12">
 						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
-							<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>
+							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>-->
+							<div class="title-txt">
+								<span class="title-layout">
+									<span class="title-txt-imgl"></span>
+								<span class="title-txt-txt">特约区</span>
+								<span class="title-txt-imgr"></span>
+								</span>
+							</div>
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/member-banner.jpg">
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-12" >
 						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5"style="padding: 0;">
-							<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height:30px;">会员区</div>
+							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height:30px;">会员区</div>-->
+							<div class="title-txt">
+								<span class="title-layout">
+									<span class="title-txt-imgl"></span>
+								<span class="title-txt-txt">会员区</span>
+								<span class="title-txt-imgr"></span>
+								</span>
+							</div>
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/vip-banner.jpg">
 						</a>
 					</li>
