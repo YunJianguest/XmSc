@@ -116,6 +116,7 @@ public class ShoptypeAction extends GeneralAction<ShopType> {
 	@Override
 	protected void prepareModel() throws Exception {
 		if (_id != null) {
+			
 			// 有custId查出来 用户信息
 			DBObject db = baseDao.getMessage(PubConstants.SHOP_SHOPTYPE, _id);
 
