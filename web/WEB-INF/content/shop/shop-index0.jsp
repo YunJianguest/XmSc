@@ -113,7 +113,7 @@
 			.news::before {
 				content: '';
 				width: 100%;
-				height: 0.5px;
+				height: 1px;
 				background: #E1DFDD;
 				position: absolute;
 				bottom: 0;
@@ -418,10 +418,10 @@
 							<ul  style='line-height:30px;height:30px;'>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
-								   <li><a href="${bean.url}">${bean.title}</a></li>
+								   <li><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></li>
 								   </c:if>
 								   <c:if test="${empty bean.url}">
-								   <li><a href="javascript:void(0);">${bean.title}</a></li>
+								   <li><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></li>
 								   </c:if> 
 								 </c:forEach>  
 							</ul>
@@ -498,17 +498,19 @@
 		
 		<script src="${ctx}/xmMobile/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
-			var mySwiper = new Swiper('#slider .swiper-container', {
-				autoplay: 1000, //可选选项，自动滑动
-				pagination:'.swiper-pagination',
+			var mySwiper = new Swiper('.swiper-container', {
+				autoplay: true, //可选选项，自动滑动
+				pagination: {
+			   		el: '.swiper-pagination',
+			  	},
 				loop : true,
 			})
-
+			console.log(mySwiper)
 		</script>
 		<script type="text/javascript">
 		
 		 $(document).ready(function() {
-				setInterval('autoScroll("#news")', 1000)
+				setInterval('autoScroll("#news")', 2000)
 		}); 
 		function autoScroll(obj) {
 			var lineh = $(obj).find('li:first').height();

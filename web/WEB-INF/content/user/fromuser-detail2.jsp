@@ -487,7 +487,7 @@
 			提示
 		</div>
 		<div class="modal-cont-cont">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos temporibus inventore quos magnam nostrum consequatur adipisci laboriosam laborum nisi molestiae mollitia reprehenderit assumenda maxime sequi perspiciatis corrupti non voluptas expedita.
+			提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示
 		</div>
 		<div class="modal-cont-foot">
 			<span class="fa fa-close"></span>

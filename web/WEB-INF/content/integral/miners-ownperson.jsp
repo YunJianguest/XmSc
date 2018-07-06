@@ -54,6 +54,94 @@
         	background:url(${ctx}/mvccol/img/mine-headerback.jpg);
         	background-size:100% 100%;
         }
+        .my_cate{
+			/*position: relative;*/
+    		padding-top: 13px;
+    		padding-bottom: 10px;
+    		overflow: hidden;
+		}
+		.my_cate_item {
+		    box-sizing: border-box;
+		    float: left;
+		    width: 25%;
+		    margin-bottom: 10px;
+		}
+		.my_cate_item a{
+			text-decoration: none;
+			color: #000;
+		}
+		.my_cate_item_logo {
+		    display: block;
+		    margin: 0 auto 7px;
+		    width: 30px;
+		    height: 30px;
+		    padding: 5px;
+		    border-radius: 5px;
+		    text-align: center;
+		    line-height: 20px;
+		    color: #fff;
+		}
+		.my_cate_item_name {
+		    font-size: 12px;
+		    color: #666;
+		    text-align: center;
+		}
+		.modal{
+        	width: 100%;
+        	height: 100%;
+        	background: rgba(0,0,0,.7);
+        	position: fixed;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	bottom: 0;
+        	z-index: 1001;
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+       }
+        .modal-cont{
+        	width: 80%;
+        	height: 150px;
+        	background: #fff;
+        	border-radius: 10px;
+        	z-index: 1002;
+        	position: relative;
+        	margin-top: -150px;
+        }
+        .modal-cont-tit{
+        	width: 100%;
+        	height: 30px;
+        	line-height: 30px;
+        	text-align: center;
+        }
+        .modal-cont-cont{
+        	width: 100%;
+        	height: 120px;
+        	line-height: 20px;
+        	font-size: 16px;
+        	overflow-y: auto;
+        	padding: 0 10px;
+        }
+        .modal-cont-foot{
+        	width: 100%;
+        	height: 30px;
+        	line-height: 30px;
+        	text-align: center;
+        	position: absolute;
+        	bottom: -50px;
+        	left: 0;
+        	color: #fff;
+        }
+        .modal-cont-foot span{
+        	display: block;
+        	margin: 0 auto;
+        	border-radius: 50%;
+        	width: 24px;
+        	height: 24px;
+        	line-height: 24px;
+        	border: 1px solid #fff;
+        }
     </style>
      
 </head>
@@ -135,10 +223,10 @@
     </c:if>
    
     
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+      <!--<div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
 				<div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
-                     <i class="fa   line-height30"></i>
+                   <div class="txt-c img-wh30 bg-cheng maring-a border-radius5 zi-bai">
+                     <i class="fa fa-diamond  line-height30"></i>
                    </div>
                   <div class="txt-c">
                     <font size="2">
@@ -147,8 +235,8 @@
                   </div>
               </div>
               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
-                     <i class="fa   line-height30"></i>
+                   <div class="txt-c img-wh30 bg-cheng maring-a border-radius5 zi-bai">
+                     <i class="fa fa-diamond   line-height30"></i>
                    </div>
                   <div class="txt-c">
                     <font size="2">
@@ -157,8 +245,8 @@
                   </div>
               </div>
           <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/suc/integral!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
-                     <i class="fa   line-height30"></i>
+                   <div class="txt-c img-wh30 bg-cheng maring-a border-radius5 zi-bai">
+                     <i class="fa fa-diamond  line-height30"></i>
                    </div>
                   <div class="txt-c">
                     <font size="2">
@@ -166,9 +254,9 @@
                     </font>
                   </div>
               </div>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/suc/integralll!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
-                   <div class="txt-c img-wh30  maring-a border-radius5 zi-bai">
-                     <i class="fa   line-height30"></i>
+              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" >
+                   <div class="txt-c img-wh30 bg-cheng maring-a border-radius5 zi-bai">
+                     <i class="fa fa-diamond  line-height30"></i>
                    </div>
                   <div class="txt-c">
                     <font size="2">
@@ -176,13 +264,92 @@
                     </font>
                   </div>
               </div>
+               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd">
+                   <div class="txt-c img-wh30 bg-cheng maring-a border-radius5 zi-bai">
+                     <i class="fa fa-diamond  line-height30"></i>
+                   </div>
+                  <div class="txt-c">
+                    <font size="2">
+                     <div class="hang40 line-height40 zi-6b6b6b">我的待定</div>
+                    </font>
+                  </div>
+              </div>
    
-    <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-    <div class="clear hang10"></div> 
-     
+               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd">
+                   <div class="txt-c img-wh30 bg-cheng maring-a border-radius5 zi-bai">
+                     <i class="fa fa-diamond  line-height30"></i>
+                   </div>
+                  <div class="txt-c">
+                    <font size="2">
+                     <div class="hang40 line-height40 zi-6b6b6b">我的待定</div>
+                    </font>
+                  </div>
+              </div>
+   -->
+   <!-- 个人中心导航 -->
+    <ul class="my_cate">
+    	
+    	<li class="my_cate_item">
+    		<a href="${ctx}/integral/miners!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+    			<span class="my_cate_item_logo  bg-cheng">
+    				<i class="fa fa-diamond"></i>
+    			</span>
+    			<p class="my_cate_item_name ">矿机商城</p>
+    		</a>
+    	</li>
+    	<li class="my_cate_item">
+    		<a href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+    			<span class="my_cate_item_logo  bg-cheng">
+    				<i class="fa fa-diamond"></i>
+    			</span>
+    			<p class="my_cate_item_name ">我的矿机</p>
+    		</a>
+    	</li>
+		<li class="my_cate_item">
+    		<a href="${ctx}/suc/integral!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+    			<span class="my_cate_item_logo  bg-cheng"><i class="fa fa-diamond"></i></span>
+    			<p class="my_cate_item_name ">我的盼盼币收益</p>
+    		</a>
+    	</li>
+    	<li class="my_cate_item">
+    		<a href="${ctx}${bean.url}?custid=${custid}&lscode=${lscode}">
+    			<span class="my_cate_item_logo bg-cheng"><i class="fa fa-diamond"></i></span>
+    			<p class="my_cate_item_name ">我的乐乐币收益</p>
+    		</a>
+    	</li>
+    	<li class="my_cate_item">
+    		<a href="">
+    			<span class="my_cate_item_logo bg-cheng"><i class="fa fa-diamond"></i></span>
+    			<p class="my_cate_item_name ">我的待定</p>
+    		</a>
+    	</li>
+    	<li class="my_cate_item">
+    		<a href="">
+    			<span class="my_cate_item_logo  bg-cheng"><i class="fa fa-diamond"></i></span>
+    			<p class="my_cate_item_name ">我的待定</p>
+    		</a>
+    	</li>
+    </ul>
+    <!--<div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+    <div class="clear hang10"></div> -->
+     <div class="modal">
+	<div class="modal-cont">
+		<div class="modal-cont-tit">
+			提示
+		</div>
+		<div class="modal-cont-cont">
+			提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示提示
+		</div>
+		<div class="modal-cont-foot">
+			<span class="fa fa-close"></span>
+		</div>
+	</div>
+</div>
 </main>
 <script>
- 
+  $('.modal-cont-foot span').click(function(){
+ 	$('.modal').css('display','none')
+ })
   wx.config({
     debug: false,
     appId: '${token.appid}', 
