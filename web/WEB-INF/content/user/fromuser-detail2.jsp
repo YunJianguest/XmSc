@@ -455,6 +455,7 @@
     </c:forEach>
     <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
     <div class="clear hang10"></div> 
+    <!-- 个人中心导航 -->
     <ul class="my_cate">
     	<c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
 	        <c:choose>

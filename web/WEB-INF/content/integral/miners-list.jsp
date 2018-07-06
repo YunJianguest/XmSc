@@ -16,9 +16,6 @@
         <script src="${ctx}/app/js/spin.min.js"></script>
         <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
 		<style type="text/css">
-			.mui-content {
-				padding-top: 44px;
-			}
 			
 			.miner-txt{
 				display: flex;
@@ -55,6 +52,18 @@
 			.mui-table-view-cell.mui-media p.mui-ellipsis{
 				color:#ddd;
 				font-size:12px;
+			}
+			.mui-content>.mui-table-view{
+				padding-bottom: 0;
+			}
+			.coin{
+				width: 100%;
+				height: 44px;
+				line-height: 44px;
+				display: flex;
+				justify-content: space-between;
+				padding: 0 15px;
+				color: #fff;
 			}
 		</style>
 		<script type="text/javascript">
@@ -93,7 +102,7 @@
 	    if(!issend){
 	    	return;
 	    }
-	   
+	   loading()
 	   	var submitData = { 
 	   			
 	    }; 
@@ -101,6 +110,7 @@
 	    issend=false;  
 	    $.post('${ctx}/integral/miners!showall.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
 	       	function(json) { 
+	       		loading.hide()
 	    		var xszf=$('.mui-table-view').html(); 
 		    	if(json.state=='0'){
 		    		var v = json.list; 
@@ -163,9 +173,14 @@
 			<h1 class="mui-title">矿机购买</h1>
 		</header> -->
 		<div class="mui-content" style="overflow: scroll;height: 100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
-			<ul class="mui-table-view" style="background: none;">
-				
-			</ul>
+			<div class="mui-row">
+				<div class="coin">
+					<span>盼盼币:</span><span>150</span>
+				</div>
+			</div>
+			<div class="mui-row">
+				<ul class="mui-table-view" style="background: none;margin-top: 0;"></ul>
+			</div>
 		</div>
 		<%@include file="/webcom/shop-foot3.jsp" %>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
