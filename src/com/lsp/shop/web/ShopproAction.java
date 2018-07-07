@@ -187,11 +187,16 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 			String comid=Struts2Utils.getParameter("comid");
 			if(StringUtils.isNotEmpty(comid)){
 				entity.setComid(Long.parseLong(comid));	
+				DBObject comboj=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(comid));
+				if(comboj.get("type")!=null) {
+					entity.setGoodstype(Integer.parseInt(comboj.get("type").toString()));
+				}
 			} 
 			String price=Struts2Utils.getParameter("price");
 			if(StringUtils.isNotEmpty(price)){
 				entity.setPrice(Double.parseDouble(price));
 			}
+			 
 			
 			baseDao.insert(PubConstants.DATA_PRODUCT,entity);
 			addActionMessage("成功添加!");

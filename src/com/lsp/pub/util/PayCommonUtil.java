@@ -102,7 +102,7 @@ public class PayCommonUtil {
 	public static String createKey(String characterEncoding,String parameters,String partner_key){
 		String key=parameters+partner_key;
 		System.out.println("加密前key:"+key);
-		String sign = MD5Util.MD5Encode(key, characterEncoding).toUpperCase();
+		String sign = MD5Util.MD5Encode(key, characterEncoding);
 		return sign;
 	}
 	 

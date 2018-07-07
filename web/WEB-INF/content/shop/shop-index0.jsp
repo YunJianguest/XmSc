@@ -17,12 +17,18 @@
          <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		 <script src="${ctx }/mvccol/js/mtlb.js"></script>
+    <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
+    <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
 		<style type="text/css">
 			.mui-bar-nav {
 				box-shadow: none;
 				padding: 0 26px;
 				/*display: flex;
 				justify-content: space-between;*/
+			}
+			.flickity-page-dots{
+			  display: none;
 			}
 			
 			.mui-bar.mui-bar-nav.mui-bar-transparent.mui-active {
@@ -382,11 +388,13 @@
 			</div>
 			</c:if>
 			<!-- 分类 -->
+			<div class="hero-gallery js-flickity pb-5" data-js-module="hero-gallery">
 			<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+			<div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
 			 <c:if test="${not empty typelist}">
-			 <c:forEach items="${typelist}" var="bean"  begin="0" end="7">
+			 <c:forEach items="${typelist}" var="bean"  begin="0" end="9">
                  <c:if test="${not empty bean.url}">
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media" style="width: 20%">
 					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
 						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
 						<div class="mui-media-body">${bean.name}</div>
@@ -394,19 +402,43 @@
 				</li>
 		   </c:if>
             <c:if test="${empty bean.url}"> 
-				<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+				<li class="mui-table-view-cell mui-media" style="width: 20%">
 					<a href="javascript:fxsel('${bean.type}')">
 						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
 						<div class="mui-media-body">${bean.name}</div>
 					</a>
 				</li>
-			</c:if>
+			  </c:if>
              </c:forEach>
              
-             </c:if>
-            
-            
-			</ul>
+             </c:if> 
+             </div>
+             
+             <div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
+			 <c:if test="${not empty typelist}">
+			 <c:forEach items="${typelist}" var="bean"  begin="10" end="19">
+                 <c:if test="${not empty bean.url}">
+				<li class="mui-table-view-cell mui-media" style="width: 20%">
+					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
+						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+						<div class="mui-media-body">${bean.name}</div>
+					</a>
+				</li>
+		   </c:if>
+            <c:if test="${empty bean.url}"> 
+				<li class="mui-table-view-cell mui-media" style="width: 20%">
+					<a href="javascript:fxsel('${bean.type}')">
+						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+						<div class="mui-media-body">${bean.name}</div>
+					</a>
+				</li>
+			  </c:if>
+             </c:forEach>
+             
+             </c:if> 
+             </div>
+			</ul> 
+			</div>
 			<!-- 新闻 -->
 			<div class="mui-row" style="padding: 0 16px;background: #fff;">
 				<div class="news">
@@ -441,41 +473,38 @@
 								<!-- 标题 -->
 								<div class="title-txt">
 									<span class="title-layout">
-										<span class="title-txt-imgl"></span>
-									<span class="title-txt-txt">大众区</span>
-									<span class="title-txt-imgr"></span>
+									 
+									<span class="title-txt-txt" style="font-weight: 900;font-size: 16px;">大众区</span> 
 									</span>
 								</div>
 							<!--</div>-->
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/Public-banner.jpg">
 						</a>
 					</li>
-					<li class="mui-table-view-cell mui-media mui-col-xs-12">
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
-							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>-->
-							<div class="title-txt">
-								<span class="title-layout">
-									<span class="title-txt-imgl"></span>
-								<span class="title-txt-txt">特约区</span>
-								<span class="title-txt-imgr"></span>
-								</span>
-							</div>
-							<img class="mui-media-object" src="${ctx}/xmMobile/img/member-banner.jpg">
-						</a>
-					</li>
+					
 					<li class="mui-table-view-cell mui-media mui-col-xs-12" >
 						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5"style="padding: 0;">
 							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height:30px;">会员区</div>-->
 							<div class="title-txt">
-								<span class="title-layout">
-									<span class="title-txt-imgl"></span>
-								<span class="title-txt-txt">会员区</span>
-								<span class="title-txt-imgr"></span>
+								<span class="title-layout"> 
+								<span class="title-txt-txt" style="font-weight: 900;font-size: 16px;color: #c7c729;">会员区</span> 
 								</span>
 							</div>
 							<img class="mui-media-object" src="${ctx}/xmMobile/img/vip-banner.jpg">
 						</a>
 					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-12">
+						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
+							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>-->
+							<div class="title-txt">
+								<span class="title-layout"> 
+								<span class="title-txt-txt" style="font-weight: 900;font-size: 16px;color: #3acc21;">特约区</span> 
+								</span>
+							</div>
+							<img class="mui-media-object" src="${ctx}/xmMobile/img/member-banner.jpg">
+						</a>
+					</li>
+					
 				</ul>
 			</div>
 			<!-- 推荐商品 -->

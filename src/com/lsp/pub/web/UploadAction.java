@@ -131,8 +131,7 @@ public class UploadAction extends ActionSupport {
 		}
 		JSONObject jsonObject =null;
 		String sign=null;
-		sb.toString();
-		map.put("data",sb.toString());
+		sb.toString(); 
 		if(sb.length()>0) {
 			jsonObject = JSONObject.fromObject
 
@@ -145,22 +144,27 @@ public class UploadAction extends ActionSupport {
 					parameters.put("username", jsonObject.get("username"));
 					parameters.put("orderid", jsonObject.get("orderid"));
 					// 验证签名
-					sign= PayCommonUtil.createSign("UTF-8",
-
-							parameters, "uskdpro6623");
+					sign= PayCommonUtil.createKey("UTF-8", jsonObject.getString("eth")+jsonObject.getString("num")+jsonObject.getString("username")+jsonObject.getString("orderid"), "uskdpro6623");
 					System.out.println(sign);
 					System.out.println(jsonObject.get("key"));
+		}else {
+			map.put("state", "10001");
+			map.put("msg", "数据错误");
+			String json = JSONArray.fromObject(map).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			return;
 		}
 		 
 		if (sign!=null&&sign.equals(jsonObject.get("key"))) {
-			Struts2Utils.getResponse().getWriter().print
-
-			(URLEncoder.encode("ok", "utf-8"));
+			map.put("state", "10005");
+			map.put("msg", "成功！");
 		} else {
-			map.put("state", "error");
-			String json = JSONArray.fromObject(map).toString();
-			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			map.put("state", "10002");
+			map.put("msg", "key错误");
+		
 		}
+		String json = JSONArray.fromObject(map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
 

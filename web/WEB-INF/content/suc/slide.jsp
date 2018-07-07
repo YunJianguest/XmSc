@@ -219,7 +219,7 @@
                                 </div>
                                 <c:if test="${width<=0}">
                                  <div class="col-sm-3 mb-20" style="padding: 0px;position: relative;"
-                                     onclick="pz('picurl','450','200',false)">
+                                     onclick="pz('picurl','375','200',false)">
                                     <div class="btn btn-primary"
                                          style="width: 100%;line-height: 20px;height:40px;">
                                         上传

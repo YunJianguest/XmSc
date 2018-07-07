@@ -50,12 +50,12 @@
 	  		<% 
 	  		if(module2.getUrl().replace("**","").contains("?")){
 	  		%>
-	  		 <li id="cate_<%=module2.get_id().toString() %>"><a href="${ctx}<%=module2.getUrl().replace("**","") %>&cate_id=<%=module2.get_id().toString() %>"><i class="fa fa-caret-right"style="color: #666"></i> <%=module2.getName()%></a></li>
+	  		 <li id="cate_<%=module2.get_id().toString() %>"><a href="${ctx}<%=module2.getUrl().replace("**","") %>&cate_id=<%=module2.get_id().toString() %>" style="font-size: 9px;"><i class="fa fa-caret-right"style="color: #666"></i> <%=module2.getName()%></a></li>
 	  		
 	  		<% 
 	  		}else{
 	  		%>
-	  		 <li id="cate_<%=module2.get_id().toString() %>"><a href="${ctx}<%=module2.getUrl().replace("**","") %>?cate_id=<%=module2.get_id().toString() %>"><i class="fa fa-caret-right"style="color: #666"></i> <%=module2.getName()%></a></li>
+	  		 <li id="cate_<%=module2.get_id().toString() %>"><a href="${ctx}<%=module2.getUrl().replace("**","") %>?cate_id=<%=module2.get_id().toString() %>" style="font-size: 9px;"><i class="fa fa-caret-right"style="color: #666"></i> <%=module2.getName()%></a></li>
 	  		
 	  		<% 
 	  		
