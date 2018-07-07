@@ -116,7 +116,8 @@
    						}
                           $("#mintypeid").html(options); 
                           if("${entity.typeid}"==$("#typeid").val()){ 
-                       	   $("#mintypeid").val("${entity.mintypeid}").trigger("change"); 
+                       	      $("#mintypeid").val("${entity.mintypeid}").trigger("change"); 
+                       	      getminchild('${entity.mintypeid}');
                           }else{ 
                        	   $("#mintypeid").val("").trigger("change"); 
                           }
@@ -125,6 +126,35 @@
                        }else{
                     	   $("#mintypeid").val("").trigger("change"); 
                     	   $("#mintypeid").html("<option  value=''>暂无数据</option>"); 
+                       }
+                    }, "json")
+                    
+        }
+        
+     function getminchild(id) {
+        	
+            var submitData = {
+           		 pid: id
+            };
+            $.post('${ctx}/shop/shoppro!get.action', submitData,
+                    function (json) {
+                       if(json.state==0){ 
+                       	var list=json.list;
+                       	var options="<option  value=''>请选择</option>"; 
+                       	for (var i = 0; i < list.length; i++) {	
+                       		options+="<option  value="+list[i]._id+">"+list[i].name+"</option>";	
+   						}
+                          $("#thirdtypeid").html(options); 
+                          if("${entity.mintypeid}"==$("#mintypeid").val()){ 
+                       	   $("#thirdtypeid").val("${entity.thirdtypeid}").trigger("change"); 
+                          }else{ 
+                       	   $("#thirdtypeid").val("").trigger("change"); 
+                          }
+                         
+                          
+                       }else{
+                    	   $("#thirdtypeid").val("").trigger("change"); 
+                    	   $("#thirdtypeid").html("<option  value=''>暂无数据</option>"); 
                        }
                     }, "json")
                     
@@ -425,6 +455,8 @@
     	var id=$("#typeid").val();
     	if(isNaN(id)||id==null||id==''){
     		$("#mintypeid").html("<option  value=''>请选择</option>"); 
+    		console.log($("#thirdtypeid").html());
+    		$("#thirdtypeid").html("<option  value=''>请选择</option>"); 
     	}else{ 
     		getchild(id); 	
     	}
@@ -436,7 +468,7 @@
     	if(isNaN(id)||id==null||id==''){
     		$("#thirdtypeid").html("<option  value=''>请选择</option>"); 
     	}else{ 
-    		getchild(id); 	
+    		getminchild(id); 	
     	}
     	
     	
