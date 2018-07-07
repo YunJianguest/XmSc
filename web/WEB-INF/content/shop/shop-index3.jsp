@@ -161,7 +161,7 @@
                                      xszfleft+='<i class="zi-green pl-10">可砍至:' + v[i].lowprice.toFixed(2) + '</i>'
                                     + '</div></font></div></div></a>';
                                     }else{
-                                    xszfleft+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice.toFixed(2) + '</i>'
+                                    xszfleft+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice+ '</i>'
                                     + '</div></font></div></div></a>';
                                     }
                                 } else {
@@ -253,8 +253,8 @@
                                     if(v[i].bq==8){
                                      xszfright+='<i class="zi-green pl-10">可砍至:' + v[i].lowprice.toFixed(2) + '</i>'
                                     + '</div></font></div></div></a>';
-                                    }else{
-                                    xszfright+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice.toFixed(2) + '</i>'
+                                    }else{ 
+                                    xszfright+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice + '</i>'
                                     + '</div></font></div></div></a>';
                                     }
                                 }
@@ -459,8 +459,7 @@
         </div>
         <div class="col-6" style="padding-left: 5px;" id="ajaxdivright">
         </div>
-    </div>
-    <%@include file="/webcom/foot.jsp" %>
+    </div> 
 </main>
 <%@include file="/webcom/return-top.jsp" %>
 <div class="hang50 clear"></div>
@@ -599,20 +598,18 @@
 
 
 <c:if test="${not empty com.ewmurl}">
- <c:if test="${com.ewmxs==0}">
-  <%@ include file="/webcom/focus-page.jsp" %>
+ <c:if test="${com.ewmxs==0}"> 
  </c:if>
 </c:if>
 <%@ include file="/webcom/toast.jsp" %>
 <c:if test="${com.zsjf>0}">
-  <c:if test="${sczs==1}">
-  <%@ include file="/webcom/jfts-page.jsp" %>
+  <c:if test="${sczs==1}"> 
   </c:if> 
 </c:if>
-<!--客服-->
+<!--客服-
     <div class="position-f img-wh35 txt-c bj-lan1 zi-bai border-radius50"style="bottom:60px; right: 3px;" onclick="window.location.href='${ctx}/android/reply!index.action?custid=${custid}&lscode=${lscode}&id=${entity._id}'">
         <i class="fa fa-commenting"style="line-height: 35px;"></i>
     </div>
-<!--客服结束--> 
+-客服结束--> 
 </body>
 </html> 
