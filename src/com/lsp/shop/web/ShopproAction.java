@@ -379,9 +379,10 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		String typeid =Struts2Utils.getParameter("typeid");
 		String mintypeid =Struts2Utils.getParameter("mintypeid");
+		String thirdtypeid =Struts2Utils.getParameter("thirdtypeid");
 		String goodstype =Struts2Utils.getParameter("goodstype");
 		String ptitle =Struts2Utils.getParameter("ptitle");
-		/*if(StringUtils.isNotEmpty(goodstype)){
+		if(StringUtils.isNotEmpty(goodstype)){
 			whereMap.put("goodstype", Integer.parseInt(goodstype));
 		}
 		if(StringUtils.isNotEmpty(typeid)){
@@ -390,16 +391,18 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		if(StringUtils.isNotEmpty(mintypeid)){
 			whereMap.put("mintypeid", Long.parseLong(mintypeid));
 		}
+		if(StringUtils.isNotEmpty(thirdtypeid)){
+			whereMap.put("thirdtypeid", Long.parseLong(thirdtypeid));
+		}
 		if(StringUtils.isNotEmpty(ptitle)){
 			Pattern pattern = Pattern.compile("^.*" + ptitle + ".*$",
 					Pattern.CASE_INSENSITIVE);
 			whereMap.put("ptitle", pattern);
-		}*/
+		}
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);
-		System.out.println("list--->"+list);
+		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);  
 		if(list.size()>0){
 			sub_map.put("state", 0);
 			sub_map.put("list", list);

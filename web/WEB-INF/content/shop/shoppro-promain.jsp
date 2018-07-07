@@ -110,7 +110,7 @@
             var submitData = {
                 "goodstype": '${goodstype}',
                 "typeid": '${typeid}',
-                "mintypeid": '${mintypeid}',
+                "thirdtypeid": '${mintypeid}', 
                 "ptitle": '${ptitle}'
             };
             issend = false;
