@@ -72,6 +72,7 @@
 					            		     }
 					            		     html+='</ul>'; 
 			            		 }  
+			            		 html+='<div class="hang40"></div>';
 					    	
 					    	    $('.category-branch-content').html(html);
 			            	}else{
