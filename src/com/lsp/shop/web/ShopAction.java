@@ -332,9 +332,10 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("state", state);
 		// 加载订单量
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		whereMap.put("fromUserid", fromUserid);
-		whereMap.put("custid", custid);
-		whereMap.put("state", Integer.parseInt(state));
+		whereMap.put("fromUserid", fromUserid); 
+		if(StringUtils.isNotEmpty(state)) {
+			whereMap.put("state", Integer.parseInt(state));
+		} 
 		Struts2Utils.getRequest().setAttribute("ordercount", baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));
 		return "orderform";
 	}
