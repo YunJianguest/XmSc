@@ -60,11 +60,19 @@
 	                    function (json) {
 			            	if(json.state == 0){
 			            		var list=json.list;
-					    		html+='<ul class="category-branch-list">' 
-					    		 for(var i=0;i<list.length;i++){
-					    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&mintypeid='+list[i]._id+'"><img src="${filehttp}/'+list[i].picurl+'"/><span>'+list[i].name+'</span></a></li>';	
-					    		  } 
-					    		 html+='</ul>';
+			            		 for(var j=0;j<list.length;j++){ 
+					            		html+='<li style="margin-top:10px">'+list[j].name+'</li>';
+					            		html+='<ul class="category-branch-list">';
+					            		     var obj=list[j].list;
+					            		     if(obj!=null){
+					            		    	 for(var i=0;i<obj.length;i++){
+										    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&mintypeid='+obj[i]._id+'"><img src="${filehttp}/'+obj[i].picurl+'"/><span>'+obj[i].name+'</span></a></li>';	
+										    		  } 
+										    		
+					            		     }
+					            		     html+='</ul>'; 
+			            		 }  
+					    	
 					    	    $('.category-branch-content').html(html);
 			            	}else{
 			            		$('.category-branch-content').html('<div>暂无数据</div>');

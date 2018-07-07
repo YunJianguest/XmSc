@@ -161,6 +161,16 @@ public class ProtypeAction extends GeneralAction<ProType> {
 		List<DBObject>list=baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap,  sortMap);
 		System.out.println("进入这个方法---->"+list.size());
 		if(list.size()>0){
+			for (DBObject dbObject : list) {
+				whereMap.clear();
+				whereMap.put("parentid", Long.parseLong(dbObject.get("_id").toString()));
+				List<DBObject>clist=baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap);
+				if(clist.size()>0) {
+					dbObject.put("list", clist);
+				}else {
+					dbObject.put("list", null);
+				}
+			}
 			sub_map.put("state", 0);
 			sub_map.put("list", list);
 		}
