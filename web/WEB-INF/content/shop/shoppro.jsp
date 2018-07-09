@@ -203,7 +203,7 @@
                                                             class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;砍价管理</a></li>
                                                      <li>
                                                      </c:if>
-                                                        <a href="javascript:qrcode('${ctxurl}/shop/shop!shopproduct.action?custid=${custid}&pid=${bean._id}')"><i
+                                                        <a href="javascript:qrcode('${ctxurl}/shop/shop!shopproduct.action?pid=${bean._id}')"><i
                                                                 class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;&nbsp;页面预览</a>
                                                     </li>
                                                 </ul>

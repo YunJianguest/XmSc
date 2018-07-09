@@ -1251,6 +1251,9 @@ public class ShopAction extends GeneralAction {
 	public String shopproduct() {
 		getLscode();
 		String pid = Struts2Utils.getParameter("pid");
+		if(StringUtils.isEmpty(custid)) {
+			custid=SysConfig.getProperty("custid");
+		} 
 		WxToken token = GetAllFunc.wxtoken.get(custid);
 		if (token.getSqlx() > 0) {
 			token = GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid));
