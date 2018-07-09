@@ -11,6 +11,9 @@ public class PubConstants
   public static String INTEGRAL_INTEACCOUNT = "integral_inteaccount";//账户
   public static String INTEGRAL_PROSTORE = "integral_prostore";//预付账单
   public static String INTEGRAL_MINER = "integral_miner";//矿机产品
+  public static String INTEGRAL_TOPUPORDER = "integral_topuporder";//充值订单
+  public static String INTEGRAL_TRANSFERORDER = "integral_transferorder";//转账订单
+  public static String INTEGRAL_WITHDRAWALORDER = "integral_withdrawalorder";//提现订单
 	
   public static String EMAIL_EMALIINFO = "email_emailinfo";
   public static String EMAIL_EMALIOUTINFO = "email_emaioutlinfo";

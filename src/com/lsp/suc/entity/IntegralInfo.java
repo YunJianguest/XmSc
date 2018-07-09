@@ -24,6 +24,7 @@ public class IntegralInfo extends ReflectionDBObject {
 	 * jfcz 充值
 	 * jf_withdraw 提现
 	 * shop_order 订单收益
+	 * shop_zz 转账
 	 */
 	private String type;
 	
