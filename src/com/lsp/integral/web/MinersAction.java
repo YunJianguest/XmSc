@@ -39,7 +39,6 @@ import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxUser;
 import com.mongodb.DBObject;
-import com.mongodb.util.Hash;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -157,10 +156,6 @@ public class MinersAction extends GeneralAction<Miner> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		HashMap<String, Object>whereMap = new HashMap<>();
-		whereMap.put("fromUserid", fromUserid);
-		DBObject dbObject =baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
-		Struts2Utils.getRequest().setAttribute("dbobjct", dbObject);
 		return "list";
 	}
 	
