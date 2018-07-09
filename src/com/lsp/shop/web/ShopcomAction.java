@@ -167,20 +167,18 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	 * @date 2018年7月3日 下午5:39:47
 	 */
 	public String shopcomadd() throws Exception{
-		getLscode();
-
-		Struts2Utils.getRequest().setAttribute("custid", custid);
-		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		
+		getLscode();  
 		String oid = Struts2Utils.getParameter("oid");
 		String gid = Struts2Utils.getParameter("gid");
-		
-		DBObject dbObject = baseDao.getMessage(PubConstants.DATA_PRODUCT,Long.parseLong(gid));
-		if(dbObject != null){
-			if(dbObject.get("comid") !=null){
-				Struts2Utils.getRequest().setAttribute("sid", dbObject.get("comid").toString());
+		if(StringUtils.isNotEmpty(gid)) {
+			DBObject dbObject = baseDao.getMessage(PubConstants.DATA_PRODUCT,Long.parseLong(gid));
+			if(dbObject != null){
+				if(dbObject.get("comid") !=null){
+					Struts2Utils.getRequest().setAttribute("sid", dbObject.get("comid").toString());
+				}
 			}
 		}
+		
 		Struts2Utils.getRequest().setAttribute("oid", oid);
 		Struts2Utils.getRequest().setAttribute("gid", gid);
 		
