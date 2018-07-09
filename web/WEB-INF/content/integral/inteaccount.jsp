@@ -42,7 +42,6 @@
         	$.post('${ctx}/integral/inteaccount!selintecurrency.action',
                     function (json) {
 		        		var mess=json.list;
-		        		alert(mess[0].name);
 		        		 $("#cid").html('');
 		        		 var html='';  
 			        		for(var i=0;i<mess.length;i++){
