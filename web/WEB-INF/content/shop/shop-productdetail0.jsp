@@ -32,7 +32,6 @@
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
-    <script src="${ctx}/mvccol/js/fomatdate.js"></script>
     <script> 
     	var loading;
         function  loading(){
@@ -155,26 +154,123 @@
         
          function getcom() {
 			loading()
-
             var submitData = {
-                gid: '${entity._id}'
+                gid: '${entity._id}', 
             };
             jQuery.post('${ctx}/shop/shopcom!getCom.action?lscode=${lscode}', submitData,
                     function (json) {
-            	console.log(json)
                     	loading.hide()
                         if (json.state == 0) {
                              var list=json.list;
                              var html;
                              for(var i=0;i<list.length;i++){
-                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+Date.prototype.format(list[i].createdate)+'</span></div>'
+                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
                             	 +'<div class="cmt_cnt">'+list[i].content+'</div></li>';
                             	  
                              }
-                             $('.cmt_list').html(html);
+                             $('#cmt_list').html(html);
                         }  
                     }, "json");
         }
+        
+        
+        
+        
+      //取消商品关注
+    	function productAttentDel(productId)
+    	{
+    		var submitData = {
+                    "productId": productId,
+                    "_id": productId,
+            };
+    		
+    		 $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+                     function (json) {
+    			 		console.log(json);
+                      if(json.state =="1"){
+                    	  $.post('${ctx}/shop/productattention!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
+                                  function (json1) {
+                    		 	 	alert("取消关注成功!");
+                              }, "json");
+                      }else{
+                   	   alert("该商品还未关注!");
+                      }
+                   }, "json");
+    	}
+    
+    	//商品关注
+    	function productAttent(productId)
+    	{
+    		var submitData = {
+                    "productId": productId
+                };
+    		
+    		 $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+              function (json) {
+                 if(json.state =="0"){
+              	   //alert("关注成功");
+                	 $.post('${ctx}/shop/productattention!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
+                             function (json) {
+                            if(json.state =="1"){
+                         	   alert("关注成功");
+                            }else{
+                         	   alert("抱歉,添加过程中出现异常!");
+                            }
+                         }, "json");
+              	   
+                 }else{
+              	   alert("该商品已关注!");
+                 }
+              }, "json");
+    	}
+    	
+    	//商品收藏
+    	function productCollect(productId)
+    	{
+    		var submitData = {
+                    "productId": productId
+                };
+    		
+    		 $.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+              function (json) {
+                 if(json.state =="0"){
+              	   //alert("关注成功");
+                	 $.post('${ctx}/shop/productcollect!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
+                             function (json) {
+                            if(json.state =="1"){
+                         	   alert("收藏成功");
+                            }else{
+                         	   alert("抱歉,添加过程中出现异常!");
+                            }
+                         }, "json");
+              	   
+                 }else{
+              	   alert("该商品已收藏!");
+                 }
+              }, "json");
+    	}
+    	
+    	//取消商品收藏
+    	function productCollectDel(productId)
+    	{
+    		var submitData = {
+                    "productId": productId,
+                    "_id": productId,
+            };
+    		
+    		 $.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+                     function (json) {
+    			 		console.log(json);
+                      if(json.state =="1"){
+                    	  $.post('${ctx}/shop/productcollect!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
+                                  function (json1) {
+                    		 	 	alert("取消收藏成功!");
+                              }, "json");
+                      }else{
+                   	   alert("该商品还未收藏!");
+                      }
+                   }, "json");
+    	}
        
       </script>
        <style>
@@ -377,7 +473,9 @@
             <font size="1">
                 <font size="3">
                     <div class="clear zi-6 weight500 line-height25" style="color:#333333;">
-                      ${entity.ptitle}
+                      ${entity.ptitle}           
+                      <span onclick="productCollect(${entity._id});">收藏</span> <span onclick="productAttent(${entity._id})">关注</span>  
+                      <span onclick="productCollectDel(${entity._id});">取消收藏</span> <span onclick="productAttentDel(${entity._id})">取消关注</span>   
                     </div>
                 </font>
 
