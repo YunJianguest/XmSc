@@ -293,6 +293,21 @@ public class MinersAction extends GeneralAction<Miner> {
 		return "detail";
 	} 
 	
+	public String pcdetail() throws Exception{
+		String id = Struts2Utils.getParameter("id");
+		DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, Long.parseLong(id));
+		if(dbObject != null){
+			InteProstore prostore = (InteProstore) UniObject.DBObjectToObject(dbObject, InteProstore.class);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String end = formatter.format(prostore.getEnddate());
+			dbObject.put("end", end);
+		}
+		Struts2Utils.getRequest().setAttribute("db", dbObject);
+		DBObject setting =baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("setting", setting);
+		return "pcdetail";
+	} 
+	
 	/***
 	   * 移动端登录页面
 	   * @return

@@ -61,6 +61,52 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		
+		custid=SpringSecurityUtils.getCurrentUser().getId();
+		sortMap.put("createdate", -1);   
+		if(!custid.equals(SysConfig.getProperty("custid"))){
+			whereMap.put("fromUserid", custid);
+		}
+		String  title=Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title))
+		{
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("name", pattern);
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		//查询全部带分页的
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap,fypage,10,sortMap);
+		Struts2Utils.getRequest().setAttribute("list", list);
+		for (DBObject dbObject : list) {
+			if(dbObject.get("fromUserid")!=null){
+				DBObject db = baseDao.getMessage(PubConstants.USER_INFO, dbObject.get("fromUserid").toString());
+				if(db!=null){
+					if(db.get("account")!=null){
+						dbObject.put("account", db.get("account").toString());
+					}
+				}
+			}
+		}
+		System.out.println(list);
+		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
+		DBObject dbs = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		if(dbs!=null){
+			if(dbs.get("name")!=null){
+				Struts2Utils.getRequest().setAttribute("jfname", dbs.get("name").toString());
+			}
+		}
+		return SUCCESS;
+	}
+	
+
+	public String list() throws Exception {
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		
 		//custid=SpringSecurityUtils.getCurrentUser().getId();
 		sortMap.put("createdate", -1);   
 		/*whereMap.put("fromUserid", custid);*/
