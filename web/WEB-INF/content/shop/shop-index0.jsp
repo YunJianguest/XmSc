@@ -292,6 +292,28 @@
 				text-overflow: initial;
 				font-size:12px;
 			}
+			.collectbox{
+				position: fixed;
+				right: 15px;
+				bottom: 70px;
+				z-index: 999;
+			}
+			.collectbox span{
+				cursor: pointer;
+				display: block;
+				width: 50px;
+				height: 30px;
+				font-size: 12px;
+				margin-top: 10px;
+				/*border: 1px solid #e3e3e3;*/
+				text-align: center;
+			}
+			.collectbox span i{
+				font-size: 18px;
+			}
+			.collectbox span.on{
+				color: #E4393C;
+			}
 		</style>
 		<script type="text/javascript">
 		var issend = true;
@@ -525,6 +547,13 @@
 					
 				</ul>
 			</div>-->
+			<!-- 店铺关注收藏 -->
+			<div class="collectbox">
+				<span ><i class="mui-icon mui-icon-star "></i>关注</span>
+				<span class="on">
+					<i class="mui-icon mui-icon-star-filled "></i>收藏
+				</span>
+			</div>
 			 <%@include file="/webcom/shop-foot.jsp" %>
 		</div>
 		
