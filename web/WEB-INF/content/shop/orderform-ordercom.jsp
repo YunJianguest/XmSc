@@ -34,7 +34,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/intecurrency.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/shop/orderform!ordercom.action?fypage=${fypage}">
               <div class="pageheader">
                 <h2><i class="fa"></i>评论详情<span>评论列表</span></h2>
                 <div class="breadcrumb-wrapper1">
@@ -62,6 +62,9 @@
                                 <thead>
                                 <tr>
                                     <th class="table-action">昵称</th>
+                                    <th class="table-action">商品评价</th>
+                                    <th class="table-action">客服态度</th>
+                                    <th class="table-action">物流运输</th>
                                     <th class="table-action">评论内容</th>
                                     <th class="table-action">时间</th> 
                                     <th class="table-action">操作</th>
@@ -71,6 +74,9 @@
                                 <c:forEach items="${list}" var="bean">
                                     <tr>
                                         <td>${bean.nickname}</td>
+                                        <td>${bean.desIscon}星</td>
+                                        <td>${bean.serviceAtt}星</td>
+                                        <td>${bean.logisService}星</td>
                                         <td>${bean.content}</td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bean.createdate}" /></td> 
                                         <td class="table-action">

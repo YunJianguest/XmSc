@@ -107,18 +107,20 @@
             if (!issend) {
                 return;
             }
+        	
             var submitData = {
-                "goodstype": '${goodstype}',
-                "typeid": '${typeid}',
-                "thirdtypeid": '${mintypeid}', 
-                "ptitle": '${ptitle}'
+                goodstype: '${goodstype}',
+                typeid: '${typeid}',
+                mintypeid: '${mintypeid}',
+                thirdtypeid: '${thirdtypeid}',
+                ptitle: '${ptitle}'
             };
+            console.log(${thirdtypeid});
+            console.log(${goodstype});
             issend = false;
             $.post('${ctx}/shop/shoppro!prolist.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
                     	loading.hide();
-            	console.log(json)
-            	
                         var html = '';
                         if (json.state == 0) {
                             var v = json.list;
@@ -139,7 +141,7 @@
                 						+'<span class="similar-product-text" style="height:40px;text-align: left;">' + v[i].ptitle + ' </span>'
                 						+'<div class="similar-product-info ">'	
                 						+'<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>'
-                						+'<span class="similar-product-shopCar"></span>'			
+                						+'<span class="similar-product-shopCar" onclick="cart('+v[i]._id+')"></span>'			
                 						+'</div></div></div></li>';		
             		    	              
             					
@@ -155,6 +157,22 @@
                         issend = true;
                     }, "json")
               }
+        function cart(pid){
+        	var submitData = {
+                   pid: pid
+                    
+            };
+        	 $.post('${ctx}/shop/shoppro!getSpec.action?agid=${agid}', submitData,
+                     function (json) {
+                         var html = '';
+                         if (json.state == 0) {
+                        	     window.location.href='${ctx}/shop/shop!orderconfirmation.action?agid=${agid}&lscode=${lscode}&pid='+pid+'&spec=${dbspec.title}&count=1';
+                             }else{
+                            	 window.location.href='${ctx}/shop/shop!orderconfirmation.action?agid=${agid}&lscode=${lscode}&pid='+pid+'&spec=默认&count=1'; 
+                             }
+                     }, "json")
+        	
+        }
 		</script>
 	</head>
 

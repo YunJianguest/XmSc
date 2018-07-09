@@ -364,6 +364,8 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		Struts2Utils.getRequest().setAttribute("typeid", typeid);
 		String mintypeid =Struts2Utils.getParameter("mintypeid");
 		Struts2Utils.getRequest().setAttribute("mintypeid", mintypeid);
+		String thirdtypeid =Struts2Utils.getParameter("thirdtypeid");
+		Struts2Utils.getRequest().setAttribute("thirdtypeid", thirdtypeid);
 		String ptitle =Struts2Utils.getParameter("ptitle");
 		Struts2Utils.getRequest().setAttribute("ptitle", ptitle);
 		return "promain";
@@ -388,7 +390,9 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		String goodstype =Struts2Utils.getParameter("goodstype");
 		String ptitle =Struts2Utils.getParameter("ptitle");
 		if(StringUtils.isNotEmpty(goodstype)){
-			whereMap.put("goodstype", Integer.parseInt(goodstype));
+			if(!goodstype.equals("0")){
+				whereMap.put("goodstype", Integer.parseInt(goodstype));
+			}
 		}
 		if(StringUtils.isNotEmpty(typeid)){
 			whereMap.put("typeid", Long.parseLong(typeid));		
@@ -411,6 +415,23 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		if(list.size()>0){
 			sub_map.put("state", 0);
 			sub_map.put("list", list);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);		
+	}
+	
+	public void getSpec() throws Exception{
+		Map<String,Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
+		String pid = Struts2Utils.getParameter("pid");
+		HashMap<String,Object>whereMap = new HashMap<>();
+		HashMap<String,Object>sortMap = new HashMap<>();
+		sortMap.put("sort", 1);
+		whereMap.put("parentid", Long.parseLong(pid));
+		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SPECIFICATION, whereMap,sortMap);
+		if(list.size()>0){
+			sub_map.put("dbspec", list.get(0));
+			sub_map.put("state", 0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);		

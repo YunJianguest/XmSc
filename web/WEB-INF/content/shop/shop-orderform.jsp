@@ -174,7 +174,7 @@
 			    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
 		    		        	 }else if(list[j].states==1){
 		    		        		 xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
-			    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">已评价</div>'; 
+			    		          		 +'<div class="col-3 txt-r zi-bbbbbb" >已评价</div>'; 
 		    		        	 } 
 		    		        	/*   xszf+='<div class="col-3 txt-r zi-bbbbbb">订单完成</div>'
 		    		          		 +'<div class="col-3 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */

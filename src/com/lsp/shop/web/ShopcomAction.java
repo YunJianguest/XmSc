@@ -21,6 +21,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.OrderFormpro;
@@ -29,8 +30,10 @@ import com.lsp.shop.entiy.ProductInfo;
 import com.lsp.shop.entiy.ShopComReply;
 import com.lsp.shop.entiy.ShopComments;
 import com.lsp.shop.entiy.ShopType;
+import com.lsp.shop.entiy.Useraddress;
 import com.lsp.website.entity.WwzFlowInfo;
 import com.lsp.website.service.WwzService;
+import com.lsp.weixin.entity.WxUser;
 import com.mongodb.DBObject;
  
 
@@ -62,15 +65,15 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	public String execute() throws Exception {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		sortMap.put("sort", 1);
+		//sortMap.put("sort", 1);
 		 
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId()); 
+		//whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId()); 
 		//商品id
-		String gid=Struts2Utils.getParameter("gid");
+		/*String gid=Struts2Utils.getParameter("gid");
 		if(StringUtils.isNotEmpty(gid)) {
 			whereMap.put("gid", Long.parseLong(gid));
-		}
-		//店铺id
+		}*/
+		/*//店铺id
 		String sid=Struts2Utils.getParameter("sid");
 		if(StringUtils.isNotEmpty(sid)) {
 			whereMap.put("sid", Long.parseLong(sid));
@@ -79,7 +82,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		String oid=Struts2Utils.getParameter("oid");
 		if(StringUtils.isNotEmpty(oid)) {
 			whereMap.put("oid", Long.parseLong(oid));
-		}
+		}*/
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPCOMMENTS,whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("list", list); 
 		return SUCCESS;
@@ -165,20 +168,19 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	 */
 	public String shopcomadd() throws Exception{
 		getLscode();
-		
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		
-		String sid;
 		String oid = Struts2Utils.getParameter("oid");
 		String gid = Struts2Utils.getParameter("gid");
 		
-		whereMap.put("_id", Long.parseLong(gid));
-		DBObject dbObject = baseDao.getMessage(PubConstants.DATA_PRODUCT,whereMap);
-		sid=dbObject.get("comid").toString();
-		
-		Struts2Utils.getRequest().setAttribute("sid", sid);
+		DBObject dbObject = baseDao.getMessage(PubConstants.DATA_PRODUCT,Long.parseLong(gid));
+		if(dbObject != null){
+			if(dbObject.get("comid") !=null){
+				Struts2Utils.getRequest().setAttribute("sid", dbObject.get("comid").toString());
+			}
+		}
 		Struts2Utils.getRequest().setAttribute("oid", oid);
 		Struts2Utils.getRequest().setAttribute("gid", gid);
 		
@@ -303,8 +305,8 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		comments.setCreatedate(new Date());
 		comments.setCustid(custid);
 		comments.setFromid(fromUserid);
-		comments.setGid(Long.parseLong(sid));
-		comments.setSid(Long.parseLong(gid));
+		comments.setGid(Long.parseLong(gid));
+		comments.setSid(Long.parseLong(sid));
 		comments.setOid(oid);
 		comments.setCreatedate(new Date());
 		comments.setDesIscon(Integer.parseInt(desIscon));
@@ -330,34 +332,23 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 		sortMap.put("createdate",-1);
 		sub_map.put("state", 1);
 		//评论id
-		String sid=Struts2Utils.getParameter("sid"); 
-		String oid=Struts2Utils.getParameter("oid"); 
 		String gid=Struts2Utils.getParameter("gid");
 		if (StringUtils.isNotEmpty(gid)) {
-			whereMap.put("gid", gid);
+			whereMap.put("gid", Long.parseLong(gid));
 		}
-		if (StringUtils.isNotEmpty(oid)) {
-			whereMap.put("oid", oid);
-		}
-		if (StringUtils.isNotEmpty(sid)) {
-			whereMap.put("sid", sid);
-		}
-		
 		List<DBObject>list=baseDao.getList(PubConstants.SHOP_SHOPCOMMENTS, whereMap, sortMap);
+		System.out.println("list---->"+list);
 		if(list.size()>0) {
 			sub_map.put("state",0);
 			for (DBObject dbObject : list) {
-				if(dbObject.get("ceatedate")!=null) {
-					dbObject.put("ceatedate", DateFormat.getDate(DateFormat.getFormat(dbObject.get("ceatedate").toString())));
-				}
 				if(dbObject.get("fromid")!=null) {
 					dbObject.put("nickname",wwzService.getWxUser(dbObject.get("fromid").toString()).get("nickname"));
 				}
-				
 			}
 			sub_map.put("list",list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
 }

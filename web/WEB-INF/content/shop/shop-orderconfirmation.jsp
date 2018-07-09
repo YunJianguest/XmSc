@@ -409,7 +409,7 @@
 		<div class="mask-cont-cont">
 			<button onclick="popcode(0)" class="currency">比特币</button>
 			<button onclick="popcode(1)" class="currency">以太坊</button>
-			<button onclick="popcode(2)" class="currency">盼盼币</button>
+			<button onclick="moneypay()" class="currency">盼盼币</button>
 		</div>
 	</div>
 </div>

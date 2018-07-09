@@ -141,9 +141,9 @@
 					url:"${ctx}/shop/shopcom!ajaxSaveCom.action?custid=${custid}&agid=${agid}&lscode=${lscode}",
 					async:true,
 					data:{
-						sid:'${sid}',
 						oid:'${oid}',
 						gid:'${gid}',
+						sid:'${sid}',
 						goodsevalulen:goodsevalulen,
 						serviceEvalu:serviceEvalu,
 						logisticsEvalu:logisticsEvalu,

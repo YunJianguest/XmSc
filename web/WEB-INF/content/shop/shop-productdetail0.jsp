@@ -32,6 +32,7 @@
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
+    <script src="${ctx}/mvccol/js/fomatdate.js"></script>
     <script> 
     	var loading;
         function  loading(){
@@ -154,21 +155,23 @@
         
          function getcom() {
 			loading()
+
             var submitData = {
-                gid: '${entity._id}', 
+                gid: '${entity._id}'
             };
             jQuery.post('${ctx}/shop/shopcom!getCom.action?lscode=${lscode}', submitData,
                     function (json) {
+            	console.log(json)
                     	loading.hide()
                         if (json.state == 0) {
                              var list=json.list;
                              var html;
                              for(var i=0;i<list.length;i++){
-                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
+                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+Date.prototype.format(list[i].createdate)+'</span></div>'
                             	 +'<div class="cmt_cnt">'+list[i].content+'</div></li>';
                             	  
                              }
-                             $('#cmt_list').html(html);
+                             $('.cmt_list').html(html);
                         }  
                     }, "json");
         }

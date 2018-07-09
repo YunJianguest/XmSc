@@ -159,7 +159,6 @@ public class ProtypeAction extends GeneralAction<ProType> {
 		}
 		sortMap.put("sort", Long.valueOf(1));
 		List<DBObject>list=baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap,  sortMap);
-		System.out.println("进入这个方法---->"+list.size());
 		if(list.size()>0){
 			for (DBObject dbObject : list) {
 				whereMap.clear();

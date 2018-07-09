@@ -10,6 +10,9 @@ public class Specification extends ReflectionDBObject{
 
 	private String  title;
 	private String  custid;
+	/**
+	 * 商品id
+	 */
 	private Long  parentid;
 	private float   price;
 	private String  sort;

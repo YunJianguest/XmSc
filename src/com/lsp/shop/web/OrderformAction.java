@@ -391,15 +391,17 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		getLscode();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> sortsMap = new HashMap<String, Object>();
+		sortsMap.put("createdate", -1);
 		String gid = Struts2Utils.getParameter("gid");
-		whereMap.put("gid",Long.parseLong(gid));
-		
+		 if(StringUtils.isNotEmpty(gid)){
+			 whereMap.put("gid",Long.parseLong(gid));
+		 }
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		fycount=baseDao.getCount(PubConstants.SHOP_SHOPCOMMENTS, whereMap);
 		List<DBObject> lists = baseDao.getList(PubConstants.SHOP_SHOPCOMMENTS,whereMap,fypage,10,sortsMap);
-		Struts2Utils.getRequest().setAttribute("fycount", fycount);
+		System.out.println("lists---->"+lists);
 		
 		for (DBObject dbObject : lists) {
 
@@ -409,14 +411,12 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			 dbObject.put("nickname", user.get("nickname"));
 			 dbObject.put("headimgurl", user.get("headimgurl"));
 				 
-			 dbObject.put("createdate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("createdate").toString())));
-			 
-			 
+
 			} 
 		 
 		}
 		Struts2Utils.getRequest().setAttribute("list", lists);
-		
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		return "ordercom";
 	}
 	
