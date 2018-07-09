@@ -42,13 +42,14 @@
         	$.post('${ctx}/integral/inteaccount!selintecurrency.action',
                     function (json) {
 		        		var mess=json.list;
-		        		 $("#mb").html('');
+		        		alert(mess[0].name);
+		        		 $("#cid").html('');
 		        		 var html='';  
 			        		for(var i=0;i<mess.length;i++){
-			        			html+="<option  value='"+ mess[i]['_id']+"'>"+ mess[i]['name']+"</option>";
+			        			html+="<option  value='"+ mess[i]._id+"'>"+ mess[i].name+"</option>";
 							}
 			        		
-		        		$("#mb").append(html); 
+		        		$("#cid").append(html); 
 
               }, "json")
         	
