@@ -27,6 +27,7 @@
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/swiper.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/jfyMobilePro.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mediaJfyPro.css" />
+		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		   
 		var ttid='';
@@ -42,7 +43,7 @@
 					    		 ttid=list[0]._id; 
 					    		  for(var i=0;i<list.length;i++){ 
 					    			  if(list[i].parentid==0){
-					    				  html+='<li><a href="javascript:detail('+list[i]._id+')">'+list[i].name+'</a></li>';
+					    				  html+='<li id="li_'+list[i]._id+'"><a href="javascript:detail('+list[i]._id+')">'+list[i].name+'</a></li>';
 					    			  }  
 					    		  }
 					    		$('.category-tab-list').html(html); 
@@ -51,7 +52,9 @@
 	                    }, "json")       
 	        }
 		 function detail(id) { 
-			 $('.category-branch-content').html('');
+			 $('.category-tab-list').find('li').removeClass('opt');
+			 $('#li_'+id).addClass('opt');
+			 $('.category-branch-content').attr('href');
 			 var html= '';
 	            var submitData = {
 	            		parentId:id
@@ -139,7 +142,7 @@
           
 		</div>
 		<%@include file="/webcom/shop-foot.jsp" %>
-		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script src="${ctx}/xmMobile/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/jfyMobilePro.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">

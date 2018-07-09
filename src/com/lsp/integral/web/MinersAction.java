@@ -549,5 +549,15 @@ public class MinersAction extends GeneralAction<Miner> {
 	    public void   topup() {
 	    	
 	    }
-
+	    /**
+	     * 获取可提现金额
+	     */
+	    public void   getTxje() {
+	    	double price=wwzService.getSprice();
+	    	if(price>0) {
+	    		//获取
+	    		
+	    	}
+	    }
+	    
 }
