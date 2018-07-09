@@ -360,7 +360,7 @@
 				</span>
 			</a>
 	</div>
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
+    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="7">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
                <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
@@ -391,142 +391,7 @@
         </c:choose>
        
     </c:forEach>
-   <c:if test="${fn:length(func.lsfunc)>6}">
-      <div class="clear hang10 bg-f5f5f9 "></div>
-      </c:if> 
-        <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="6" end="11">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-3 hang100  pt-10 " onclick="window.location.href='${bean.url}'">
-              
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-3  pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach> 
-    <c:if test="${fn:length(func.lsfunc)>12}">
-      <div class="clear hang10 bg-f5f5f9 "></div>
-    </c:if>   
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="12" end="17">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-3 hang100  pt-10 " onclick="window.location.href='${bean.url}'">
-               	
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc} line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-3  pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc} line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
-    <c:if test="${fn:length(func.lsfunc)>18}">
-      <div class="clear hang10 bg-f5f5f9 "></div>
-    </c:if>  
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="18" end="23">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
-              
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-3  pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-              	
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
-    <c:if test="${fn:length(func.lsfunc)>24}">
-      <div class="clear hang10 bg-f5f5f9 "></div>
-    </c:if> 
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="24" end="29">
-        <c:choose>
-          <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc} line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          </c:when>
-          <c:otherwise>
-              <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-          
-          </c:otherwise> 
-        </c:choose>
-       
-    </c:forEach>
+   
     <!--<div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>-->
     <div class="clear hang10"></div> 
     <!-- 个人中心导航 -->
