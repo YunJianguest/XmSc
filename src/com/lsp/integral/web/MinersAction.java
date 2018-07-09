@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
@@ -14,15 +16,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lsp.integral.entity.InteProstore;
 import com.lsp.integral.entity.Miner;
+import com.lsp.integral.entity.TransferOrder;
+import com.lsp.integral.entity.WithdrawalOrder;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Code;
 import com.lsp.pub.entity.GetAllFunc;
+import com.lsp.pub.entity.HttpClient;
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.BaseDecimal;
+import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
+import com.lsp.pub.util.PayCommonUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
+import com.lsp.pub.util.TenpayUtil;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderFormpro;
@@ -33,6 +42,7 @@ import com.mongodb.DBObject;
 import com.mongodb.util.Hash;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 矿机设置
@@ -423,6 +433,126 @@ public class MinersAction extends GeneralAction<Miner> {
 	  	  
 	  		String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    }
+	    /**
+	     * 转账
+	     */
+	    public void   transfer() {
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+	    	String toid=Struts2Utils.getParameter("toid");
+	    	String price=Struts2Utils.getParameter("price");
+	    	String remark=Struts2Utils.getParameter("remark");
+	    	if(StringUtils.isNotEmpty(price)) {
+	    		TransferOrder transferOrder=new TransferOrder();
+		    	// 四位随机数
+				String strRandom = TenpayUtil.buildRandom(4) + "";
+				// 10位序列号,可以自行调整。
+				String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.INTEGRAL_TRANSFERORDER);
+		    	transferOrder.set_id(orderno);
+		    	transferOrder.setCreatedate(new Date());
+		    	transferOrder.setCustid(custid);
+		    	transferOrder.setFromid(fromUserid);
+		    	transferOrder.setPrice(Double.parseDouble(price));
+		    	transferOrder.setToid(toid);
+		    	transferOrder.setRemark(remark);
+		    	transferOrder.setState(0);
+		    	baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    	
+		    	//开始转账 
+		    	if(wwzService.deljf(price, fromUserid, "shop_zz", custid, 0, 1, 0)) {  
+		    		String pro=BaseDecimal.subtract(price, BaseDecimal.multiplication(BaseDecimal.division(price, "100",6),"0.2"));
+		    		if(wwzService.addjf(pro, toid, "shop_zz", custid, 0, 1, 0)) {
+		    			sub_map.put("state", 0);
+		    			transferOrder.setState(1);
+		    			transferOrder.setUpdatedate(new Date());
+			    		baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    		}else {
+		    			//转账失败
+		    			transferOrder.setState(2);
+		    			transferOrder.setUpdatedate(new Date());
+			    		baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    			sub_map.put("state", 3);
+		    		} 
+		    	}else {
+		    		//余额不足
+		    		transferOrder.setState(2);
+		    		transferOrder.setUpdatedate(new Date());
+		    		baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    		sub_map.put("state", 2);
+		    	}  
+	    	}
+	    
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    	
+	    }
+	    /**
+	     * 提现
+	     */
+	    public void   withdrawal() {
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+	    	String eth=Struts2Utils.getParameter("eth");
+	    	String price=Struts2Utils.getParameter("price");
+	    	String remark=Struts2Utils.getParameter("remark");
+	    	SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
+	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)&&StringUtils.isNotEmpty(remark)) {
+	    		WithdrawalOrder tx=new WithdrawalOrder();
+		    	// 四位随机数
+				String strRandom = TenpayUtil.buildRandom(4) + "";
+				// 10位序列号,可以自行调整。
+				String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.INTEGRAL_WITHDRAWALORDER);
+		    	tx.set_id(orderno);
+		    	tx.setCreatedate(new Date());
+		    	tx.setCustid(custid);
+		    	tx.setFromid(fromUserid);
+		    	tx.setPrice(Double.parseDouble(price));
+		    	tx.setRemark(remark);
+		    	tx.setState(0);
+		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+		    	//提现
+		    	if(wwzService.deljf(price, fromUserid, "shop_tx", custid, 0, 1, 0)) {
+		    		parameters.put("eth", eth);
+			    	parameters.put("num",price);
+			    	parameters.put("username",wwzService.getUserName(fromUserid));
+			    	parameters.put("orderid",orderno);
+			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getUserName(fromUserid)+orderno, SysConfig.getProperty("jyskey"));
+			    	parameters.put("key", sign);
+			    	HashMap<String,Object>map=new HashMap<>();
+			    	map.put("data", parameters);
+		            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
+		            JSONObject obj=JSONObject.fromObject(result);
+		            if(obj.getString("code").equals("1000")) {
+		            	//提现成功；
+		            	tx.setState(1);
+		            	tx.setUpdatedate(new Date());
+				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+				    	sub_map.put("state", 0);
+		            }else {
+		            	//提现失败开始返回
+		            	tx.setState(2);
+		            	tx.setUpdatedate(new Date());
+				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+				    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
+				    	sub_map.put("state", 3);
+		            }
+		    	}else {
+		    		//余额不足
+		    		sub_map.put("state", 2);
+		    	} 
+	    	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    }
+	    /**
+	     * 充值
+	     */
+	    public void   topup() {
+	    	
 	    }
 
 }
