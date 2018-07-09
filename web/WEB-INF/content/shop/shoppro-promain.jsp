@@ -69,7 +69,7 @@
 			}
 		</style>
 		<script type="text/javascript">
-		var loading;
+		var loadings="";
         function  loading(){
         var opts = {
 		lines: 13, // The number of lines to draw
@@ -91,7 +91,7 @@
 	   var target = document.createElement("div");
 	   document.body.appendChild(target);
 	   var spinner = new Spinner(opts).spin(target);
-	  loading=iosOverlay({
+	   loadings=iosOverlay({
 		text: "Loading", 
 		spinner: spinner
 	   });
@@ -102,26 +102,26 @@
         var type = "";
         var lx = "";
         var sel = "";
+       
         function ajaxjz() {//加载
-        	loading()
+        	if(loadings==""){
+        		loading();
+        	} 
             if (!issend) {
                 return;
-            }
-        	
+            } 
             var submitData = {
                 goodstype: '${goodstype}',
                 typeid: '${typeid}',
                 mintypeid: '${mintypeid}',
                 thirdtypeid: '${thirdtypeid}',
                 ptitle: '${ptitle}'
-            };
-            console.log(${thirdtypeid});
-            console.log(${goodstype});
+            }; 
             issend = false;
             $.post('${ctx}/shop/shoppro!prolist.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
-                    	loading.hide();
-                        var html = '';
+            	     loadings.hide();
+                        var html = $('.recomend').html();
                         if (json.state == 0) {
                             var v = json.list;
                             /* html+='<div class="mui-content" style="padding-top: 44px;padding-bottom: 50px;background: #fff;">'
@@ -139,9 +139,11 @@
                 						+'</div>'
                 						+'<div class="mui-card-footer" style="padding: 10px 5px;display: block;">'
                 						+'<span class="similar-product-text" style="height:40px;text-align: left;">' + v[i].ptitle + ' </span>'
-                						+'<div class="similar-product-info ">'	
-                						+'<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>'
-                						+'<span class="similar-product-shopCar" onclick="cart('+v[i]._id+')"></span>'			
+                						+'<div class="similar-product-info ">';
+                						if(v[i].price!=null){
+                							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';
+                						} 
+                						html+='<span class="similar-product-shopCar" onclick="cart('+v[i]._id+')"></span>'			
                 						+'</div></div></div></li>';		
             		    	              
             					
@@ -150,11 +152,11 @@
                           /*   html+='</ul></div></div>'; */
                             fypage++;
                             $('.recomend').html(html);
-                            
+                            issend = true;
                         } else {
-                        	$('.recomend').html('暂无数据');
+                        	//$('.recomend').html('暂无数据');
                         }
-                        issend = true;
+                       
                     }, "json")
               }
         function cart(pid){
@@ -193,8 +195,9 @@
 		<%@include file="/webcom/shop-foot.jsp" %>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init();
-			ajaxjz();
+			mui.init(); 
+			ajaxjz(); 
+			
 			$(window).scroll(function () {
 
 			    var offsetY = $(window).scrollTop();
