@@ -566,8 +566,14 @@ strong {
     margin-bottom: 30px;
 }
 
+
+.nav-stacked > li {
+    float: none;
+    background: #fff;
+    border-radius: 5px;
+}
 .nav-bracket > li > a {
-    color: #D1D1D1;
+    color: #D1D1D1; 
     padding: 7px 10px;
 }
 
