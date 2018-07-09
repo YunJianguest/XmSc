@@ -105,7 +105,7 @@
         if('${byprice}'<=0||totalPrice<'${byprice}'){ 
           var to=zj+kd;
           total=to;
-         document.getElementById("totalPrice").innerHTML =to.toFixed(2)+'元  <i>快递:Y'+kd.toFixed(2)+'</i>';
+         document.getElementById("totalPrice").innerHTML =to.toFixed(2)+'元  <i>快递:￥'+kd.toFixed(2)+'</i>';
          }    
         }
      function moneypay(){ 
@@ -129,7 +129,7 @@
         			spec:spec,
         			kjid:kd
         	}; 
-        	loading();
+        	//loading();
         	/* $.post('${ctx}/shop/shop!wxcarpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
         		function(json) { 
         			if (json.state == 0) {
@@ -444,13 +444,20 @@ function delcar(id){
 		<div class="mask-cont-cont">
 			<button onclick="popcode(0)" class="currency">比特币</button>
 			<button onclick="popcode(1)" class="currency">以太坊</button>
-			<button onclick="popcode(2)" class="currency">盼盼币</button>
+			<button onclick="moneypay()" class="currency">盼盼币</button>
 		</div>
 	</div>
 </div>
-<div class="modal">
+<div class="modal" id="bt">
 	<div class="modal-cont" >
 		<div id="qrcode">
+			
+		</div>
+	</div>
+</div>
+<div class="modal" id="ytf">
+	<div class="modal-cont" >
+		<div id="qrcodes">
 			
 		</div>
 	</div>
@@ -481,14 +488,27 @@ $('#ConfirmPay').click(function(){
 	})
 	//弹出支付二维码
 	function popcode(val){
-		$('.modal').css('display','block')
+	if(val == 0){
+		$('#bt').css('display','block')
+	}
+	if(val == 1){
+		$('#ytf').css('display','block')
+	}
+		
 	}
 	
 	//二维码生成
 	$('#qrcode').qrcode({ 
 	  width : w,
       height : w,
-      text	: '${ctxurl}/shop/shop!index.action?'
+      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
+    });
+	
+	//二维码生成
+	$('#qrcodes').qrcode({ 
+	  width : w,
+      height : w,
+      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
     });
 </script> 
 </html>

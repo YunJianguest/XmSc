@@ -413,9 +413,16 @@
 		</div>
 	</div>
 </div>
-<div class="modal">
+<div class="modal" id="bt">
 	<div class="modal-cont" >
 		<div id="qrcode">
+			
+		</div>
+	</div>
+</div>
+<div class="modal" id="ytf">
+	<div class="modal-cont" >
+		<div id="qrcodes">
 			
 		</div>
 	</div>
@@ -424,7 +431,12 @@
 <script>
 	//弹出支付二维码
 	function popcode(val){
-		$('.modal').css('display','block')
+		if(val == 0){
+			$('#bt').css('display','block')
+		}
+		if(val == 1){
+			$('#ytf').css('display','block')
+		}
 	}
 $(function(){ 
 	$('#ConfirmPay').click(function(){
@@ -443,7 +455,14 @@ $(function(){
 	$('#qrcode').qrcode({ 
 	  width : w,
       height : w,
-      text	: '${ctxurl}/shop/shop!index.action?'
+      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
+    });
+	
+	//二维码生成
+	$('#qrcodes').qrcode({ 
+	  width : w,
+      height : w,
+      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
     });
 	    
 	    

@@ -156,6 +156,10 @@ public class MinersAction extends GeneralAction<Miner> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("fromUserid", fromUserid);
+		DBObject dbObject =baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		Struts2Utils.getRequest().setAttribute("dbObject", dbObject);
 		return "list";
 	}
 	

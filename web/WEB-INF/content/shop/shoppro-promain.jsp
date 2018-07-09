@@ -143,7 +143,7 @@
                 						if(v[i].price!=null){
                 							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';
                 						} 
-                						html+='<span class="similar-product-shopCar" onclick="cart('+v[i]._id+')"></span>'			
+                						html+='<span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
                 						+'</div></div></div></li>';		
             		    	              
             					
@@ -159,22 +159,42 @@
                        
                     }, "json")
               }
-        function cart(pid){
-        	var submitData = {
-                   pid: pid
-                    
-            };
-        	 $.post('${ctx}/shop/shoppro!getSpec.action?agid=${agid}', submitData,
-                     function (json) {
-                         var html = '';
-                         if (json.state == 0) {
-                        	     window.location.href='${ctx}/shop/shop!orderconfirmation.action?agid=${agid}&lscode=${lscode}&pid='+pid+'&spec=${dbspec.title}&count=1';
-                             }else{
-                            	 window.location.href='${ctx}/shop/shop!orderconfirmation.action?agid=${agid}&lscode=${lscode}&pid='+pid+'&spec=默认&count=1'; 
-                             }
-                     }, "json")
-        	
-        }
+        function cart(pid,count,price){
+       	 if(count<=0){
+                alert('库存已完！');
+               return;
+          } 
+       	var submitData = {
+                  pid: pid
+                   
+           };
+       	 $.post('${ctx}/shop/shoppro!getSpec.action?agid=${agid}&lscode=${lscode}', submitData,
+                    function (json) {
+                        var html = '';
+                        if (json.state == 0) {
+                       	     gwc(pid,'${dbspec.title}',1,price);
+                            }else{
+                           	 gwc(pid,'默认',1,price);
+                            }
+                    }, "json")
+       	
+       }
+       function gwc(pid,v,count,price) {
+           var submitData = {
+               pid: pid,
+               spec:v,
+               count:1,
+               price:price
+           };
+           jQuery.post('${ctx}/shop/shop!ajaxshopcarsave.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+                   function (json) {
+                       if (json.state == 0) {
+                           alert("添加成功");
+                       } else {
+                           alert("添加失败！");
+                       }
+                   }, "json");
+       }
 		</script>
 	</head>
 

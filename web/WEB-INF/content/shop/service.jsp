@@ -7,6 +7,7 @@
     <%@include file="/webcom/meta.jsp" %>
     <%@include file="/webcom/bracket.jsp" %>
     <%@include file="/webcom/jquery.validate_js.jsp" %>
+    <script src="${contextPath}/UserInterface/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
     <script type="text/javascript" src="${contextPath}/mvccol/color/jscolor.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -67,7 +68,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/inteaccount.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/shop/service.action?comid=${comid}">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i> 退换货管理 <span>退换货列表</span></h2>
                   <!-- <div class="breadcrumb-wrapper1">
@@ -84,6 +85,41 @@
                 </div> -->
              
             </div>
+             <div class="panelss ">
+   <div class="panel-body fu10">
+        <div class="row-pad-5">
+            
+           <div class="form-group col-sm-2">
+            	<select  id="sel_type"  name="type" class="form-control "  data-placeholder="请选择售后类型">
+            	                <option value="0">请选择售后类型</option>
+                    			<option value="1">退货</option>
+                    			<option value="2">换货</option>
+                 </select>
+            </div>
+             <div class="form-group col-sm-2">
+            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择售后类型">
+            	                <option value="4">请选择售后状态</option>
+            	                <option value="0">待审核</option>
+                    			<option value="1">同意</option>
+                    			<option value="2">拒绝</option>
+                    			<option value="3">取消</option>
+                 </select>
+            </div>
+           
+            <div class="form-group col-sm-2">
+            <input type="text" name="no"  value="${no}" placeholder="订单编号"  class="form-control" />
+            </div> 
+            <div class="form-group col-sm-2">
+                 <input type="text" id="sel_insdate" name="sel_insdate" value="${sel_insdate}" placeholder="开始日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+             <div class="form-group col-sm-2">
+                 <input type="text" id="sel_enddate" name="sel_enddate" value="${sel_enddate}" placeholder="结束日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+            <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+
+        </div>
+    </div><!-- panel-body -->
+	</div><!-- panel -->
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -92,11 +128,13 @@
                                 <thead>
                                 <tr>
                                     <th class="table-action">退货人</th>
+                                    <th class="table-action">售后编号</th>
                                     <th class="table-action">订单编号</th>
                                     <th class="table-action">商品名称</th>
                                     <th class="table-action">商品数量</th>
                                     <th class="table-action">售后类型</th>
                                     <th class="table-action">售后状态</th>
+                                    <th class="table-action">售后原因</th>
                                     <th class="table-action">金额</th>
                                     <th class="table-action">添加时间</th>
                                     <th class="table-action">备注</th>
@@ -107,20 +145,27 @@
                                 <c:forEach items="${list}" var="bean">
                                     <tr>
                                         <td>${bean.nickname}</td>
+                                        <td>${bean._id}</td>
                                         <td>${bean.oid}</td>
                                         <td>${bean.product.ptitle}</td>
                                         <td>${bean.num}</td>
-                                        <td>${bean.resource}</td>
-                                        <td>${bean.price}</td>
+                                        
+                                        <td>
+                                        	<c:if test="${bean.type==1}">退货</c:if>
+                                        	<c:if test="${bean.type==2}">换货</c:if>
+                                        </td>
                                         <td><c:if test="${bean.state==0}">申请</c:if>
                                         	<c:if test="${bean.state==1}">同意</c:if>
                                         	<c:if test="${bean.state==2}">拒绝</c:if>
                                         	<c:if test="${bean.state==3}">取消</c:if>
                                         </td>
+                                        <td>${bean.resource}</td>
+                                        <td>${bean.price}</td>
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
                                         <td>${bean.remark}</td>
                                         <td class="table-action">
                                             <div class="btn-group1">
+                                            <c:if test="${bean.state==0 }">
                                                 <a data-toggle="dropdown" class="dropdown-toggle">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
@@ -133,6 +178,7 @@
                                                             class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;拒绝</a>
                                                     </li>
                                                 </ul>
+                                             </c:if>
                                             </div>
                                         </td>
                                     </tr>
@@ -146,5 +192,10 @@
         </form>
     </div>
 </section>
+<script type="text/javascript">
+	   $('#sel_state').val('${state}').trigger("change"); 
+	   $('#sel_type').val('${type}').trigger("change"); 
+
+</script>
 </body>
 </html>

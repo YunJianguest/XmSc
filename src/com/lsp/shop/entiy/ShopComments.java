@@ -32,6 +32,10 @@ public class ShopComments extends ReflectionDBObject {
 	 */
 	private Long gid; 
 	/**
+	 * 店铺id
+	 */
+	private Long comid; 
+	/**
 	 * 评论标题
 	 */
 	private String title;
@@ -67,6 +71,12 @@ public class ShopComments extends ReflectionDBObject {
 	}
 	public void setFromid(String fromid) {
 		this.fromid = fromid;
+	}
+	public Long getComid() {
+		return comid;
+	}
+	public void setComid(Long comid) {
+		this.comid = comid;
 	}
 	public Long getSid() {
 		return sid;

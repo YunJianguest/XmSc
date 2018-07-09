@@ -79,41 +79,46 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			whereMap.put("comid", Long.parseLong(comid));
 			Struts2Utils.getRequest().setAttribute("comid",  comid);
 		} 
-		String  name=Struts2Utils.getParameter("name");
-		if(StringUtils.isNotEmpty(name))
-		{
-			Pattern pattern = Pattern.compile("^.*" + name + ".*$",
-					Pattern.CASE_INSENSITIVE);
-			whereMap.put("name", pattern);
-			Struts2Utils.getRequest().setAttribute("name",  name);
-		}
 		String  no=Struts2Utils.getParameter("no");
 		if(StringUtils.isNotEmpty(no))
 		{
-			whereMap.put("_id", no);
+			Pattern pattern = Pattern.compile("^.*" + no + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("oid", pattern);
 			Struts2Utils.getRequest().setAttribute("no",  no);
 		}
-		String  tel=Struts2Utils.getParameter("tel");
-		if(StringUtils.isNotEmpty(tel))
-		{
-			whereMap.put("tel", tel);
-			Struts2Utils.getRequest().setAttribute("tel",  tel);
+		String  type=Struts2Utils.getParameter("type");
+		if(StringUtils.isNotEmpty(type)){
+			if(!type.equals("0")){
+				whereMap.put("type", Integer.parseInt(type));
+			}
+			
+			Struts2Utils.getRequest().setAttribute("type",  type);
 		}
 		String state=Struts2Utils.getParameter("state");
 		if(StringUtils.isNotEmpty(state)){
-			whereMap.put("state", Integer.parseInt(state)); 
+			if(!state.equals("4")){
+				whereMap.put("state", Integer.parseInt(state)); 
+			}
+			Struts2Utils.getRequest().setAttribute("state",  state);
+		}else{
+			Struts2Utils.getRequest().setAttribute("state",  "4");
 		}
+		
 		String  sel_insdate=Struts2Utils.getParameter("sel_insdate");
 		String  sel_enddate=Struts2Utils.getParameter("sel_enddate");
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			BasicDBObject dateCondition = new BasicDBObject();
+		BasicDBObject dateCondition = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate)) {
 			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
-			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
-			whereMap.put("insDate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
 			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-
+			whereMap.put("createdate", dateCondition);
 		}
+		if (StringUtils.isNotEmpty(sel_enddate)) {
+			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
+			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
+			whereMap.put("createdate", dateCondition);
+		}
+		
 
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
@@ -231,7 +236,6 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		// 四位随机数
 		String strRandom = TenpayUtil.buildRandom(4) + "";
 		String serviceno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.SHOP_AFTERSERVICE);
-		System.out.println("---->"+serviceno);
 		AfterService info = new AfterService();
 		info.set_id(serviceno);
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
@@ -244,6 +248,13 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
 			
 			info.setProduct(pro.getPro());
+			if(pro.getPro() != null){
+				DBObject dbObject2 =pro.getPro();
+				if(dbObject2.get("comid")!=null){
+					info.setComid(Long.parseLong(dbObject2.get("comid").toString()));
+				}
+				System.out.println("info.comid--->"+info.getComid());
+			}
 		    info.setOid(pro.getOrderid());
 			info.setCustid(custid);
 			info.setRemark(remark);
@@ -267,7 +278,6 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			}
 			info.setPrice(price);
 			baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
-			System.out.println("info--->"+info.getRemark());
 			sub_map.put("state", 0);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
@@ -300,35 +310,39 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		String id = Struts2Utils.getParameter("id");
 		String state =Struts2Utils.getParameter("state");
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_AFTERSERVICE, id);
+		OrderFormpro pro = new OrderFormpro();
 		if(dbObject !=null){
 			AfterService info = (AfterService) UniObject.DBObjectToObject(dbObject, AfterService.class);
 			DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
 			if(info.getState() == 0){
+				info.set_id(id);
 				info.setState(Integer.parseInt(state));
 				//判断是否为退货，退货则退积分
 				if(Integer.parseInt(state) == 1){//同意
 					//根据订单号查询订单
-					DBObject db = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOid());
+					DBObject db = baseDao.getMessage(PubConstants.WX_ORDERFORM, info.getOid());
 					if(db!= null){
 						OrderForm order = (OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
+						order.set_id(info.getOid());
 						DBObject dbObject2 = info.getProduct();
 						if(dbObject2!=null){
-							if(dbObject2.get("type")!=null){
-								if(dbObject2.get("type").equals("3")){//商品为大众区商品
+							if(dbObject2.get("goodstype")!=null){
+								if(dbObject2.get("goodstype").toString().equals("3")){//商品为大众区商品
 									order.setPublic_money(order.getPublic_money()-info.getPrice());
 								}
-								if(dbObject2.get("type").equals("4")){//商品为特约区商品
+								if(dbObject2.get("goodstype").toString().equals("4")){//商品为特约区商品
 									order.setContri_money(order.getContri_money()-info.getPrice());									
 								}
-								if(dbObject2.get("type").equals("5")){//商品为会员区商品
+								if(dbObject2.get("goodstype").toString().equals("5")){//商品为会员区商品
 									order.setMembers_money(order.getMembers_money()-info.getPrice());
 								}
-								baseDao.insert(PubConstants.SHOP_ODERFORMPRO, order);
+								baseDao.insert(PubConstants.WX_ORDERFORM, order);
 							}
 						}
 					 }
 					if(dbObjects != null){
-						OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+						pro = (OrderFormpro) UniObject.DBObjectToObject(dbObjects, OrderFormpro.class);
+						pro.set_id(info.getOrderproId());
 						if(info.getType() == 1){//为退货
 							pro.setState(3);//订单详情状态变成退货完成
 						}
@@ -338,12 +352,15 @@ public class ServiceAction extends GeneralAction<AfterService> {
 					}
 				}else{
 					if(dbObjects != null){
-						OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+						pro = (OrderFormpro) UniObject.DBObjectToObject(dbObjects, OrderFormpro.class);
+						pro.set_id(info.getOrderproId());
+						pro.set_id(id);
 						pro.setState(0);//将订单详情变成正常订单
 					}
 				}
-				baseDao.insert(PubConstants.SHOP_ODERFORMPRO, info);
+				baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
 				baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
+				sub_map.put("state", 0);//提交成功
 			}else{
 				sub_map.put("state", 2);//重复操作
 			}

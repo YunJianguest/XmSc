@@ -335,7 +335,6 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 			whereMap.put("gid", Long.parseLong(gid));
 		}
 		List<DBObject>list=baseDao.getList(PubConstants.SHOP_SHOPCOMMENTS, whereMap, sortMap);
-		System.out.println("list---->"+list);
 		if(list.size()>0) {
 			sub_map.put("state",0);
 			for (DBObject dbObject : list) {

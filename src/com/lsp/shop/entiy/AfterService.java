@@ -26,6 +26,10 @@ public class AfterService extends ReflectionDBObject {
 	  * 订单详情ID
 	  */
 	 private Long orderproId; 
+	 /**
+	  * 店铺ID
+	  */
+	 private Long comid; 
 	/**
 	 * 商品 
 	 */
@@ -71,6 +75,12 @@ public class AfterService extends ReflectionDBObject {
 	}
 	public void setFromUserid(String fromUserid) {
 		this.fromUserid = fromUserid;
+	}
+	public Long getComid() {
+		return comid;
+	}
+	public void setComid(Long comid) {
+		this.comid = comid;
 	}
 	public String getOid() {
 		return oid;
