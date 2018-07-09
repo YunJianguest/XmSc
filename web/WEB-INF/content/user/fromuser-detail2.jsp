@@ -48,8 +48,8 @@
         }
         .mine-headbox{
         	min-height:200px;
-        	/*background:url(${ctx}/mvccol/img/mine-headerback.jpg);
-        	background-size:100% 100%;*/
+        	background:url(${ctx}/mvccol/img/mine-headerback.jpg);
+        	background-size:100% 100%;
         }
         .line-height30 {
     		line-height: 24px !important;
@@ -68,8 +68,8 @@
 		}
 		.tab-nav li i{
 			font-size:20px;
-			margin-bottom:10px;
-			color:#fff;
+			/*margin-bottom:10px;*/
+			color: #6D6D6D;
 		}
 		.my_cate{
 			/*position: relative;*/
@@ -136,7 +136,7 @@
         	width: 100%;
         	height: 120px;
         	line-height: 20px;
-        	font-size: 16px;
+        	font-size: 12px;
         	overflow-y: auto;
         	padding: 0 10px;
         }
@@ -183,9 +183,9 @@
      
 </head>
 <body class="cmp640">
-<main style='overflow: scroll;'>
-   	<div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20" style="background: #ccc;">
-   	<div style="width: 100%;height: 45px;background: #64BB63;">
+<main style='padding-bottom: 50px;z-index: -10;'>
+   	<div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
+   	<div style="width: 100%;height: 45px;">
    		<div class="pull-left" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-left:15px;'>
    			<i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i>
    		</div>
@@ -229,8 +229,8 @@
                     </div> --%>
                 </font>
             </div>
-            <div style="text-align: right;color: #FF0000;padding-right: 15px;">
-                    	<span style="color: #000;">盼盼币:</span>00000
+            <div style="text-align: right;color: #FF0000;padding-right: 15px;font-size: 12px;">
+                <span style="color: #fff;">盼盼币:</span>00000
             </div>
         </div>
     </div>
@@ -300,8 +300,8 @@
     </c:if> 
 	<div class="" style="background: #fff;">
 		<div style="height: 34px;line-height: 34px;padding: 0 10px;width: 100%;">
-			<a href="" style="width: 100%;display: flex;justify-content: space-between;text-decoration: none;border-bottom: 1px solid #ddd;">
-				<span style="color: #6D6D6D;font-size: 14px;">全部订单</span>
+			<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}" style="width: 100%;display: flex;justify-content: space-between;text-decoration: none;border-bottom: 1px solid #ddd;">
+				<span style="color: #000;font-size: 13px;font-weight: 600;">全部订单</span>
 				<span style="color: #999;font-size: 12px;">
 					查看全部
 					<i class="fa fa-angle-right"></i>
@@ -309,30 +309,30 @@
 			</a>
 		</div>
 		<ul class='tab-nav'>
-			<li>
+			<!--<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}">
-					<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+					<div class="txt-c ${bean.color } maring-a border-radius5  img-wh30 mb-10" style='margin-bottom:10px;'>
 		            <i class="fa fa-bars  line-height30"></i>
 		            </div>全部订单
 	            </a>
-	          </li>
+	          </li>-->
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=0">	
-					<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 ">
 		              <i class="fa fa-credit-card  line-height30"></i>
 		            </div>待付款
 	              </a>     
 	        </li>
 	        <li>
 	        	<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=2">	
-			       <div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
+			       <div class="txt-c ${bean.color } maring-a border-radius5 img-wh30">
 			         <i class="fa fa-truck  line-height30"></i>
 			       </div>待发货
 		       </a> 
 	        </li>
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=3">	
-					<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30 mb-10" style='margin-bottom:10px;'>
+					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 mb-10">
 	                  <i class="fa fa-envelope  line-height30"></i>
 	                </div>待收货
 	            </a>
@@ -340,7 +340,7 @@
 			
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=4">	
-					<div class="txt-c ${bean.color } maring-a border-radius5 bg-cheng img-wh30" style='margin-bottom:10px;'>
+					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30">
 		            	<i class="fa fa-commenting-o  line-height30"></i>
 		          	</div>待评价
 	          	</a>
@@ -349,11 +349,20 @@
 	</div>
 	<c:if test="${fn:length(func.lsfunc)>0}">
       <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-    </c:if> 
-    <!--<c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
+    </c:if>
+    <div style="height: 34px;line-height: 34px;padding: 0 10px;width: 100%;background: #fff;">
+			<a href="" style="width: 100%;display: flex;justify-content: space-between;text-decoration: none;border-bottom: 1px solid #ddd;">
+				<span style="color: #000;font-size: 13px;font-weight: 600;">必备工具</span>
+				<span style="color: #999;font-size: 12px;">
+					查看更多
+					<i class="fa fa-angle-right"></i>
+				</span>
+			</a>
+	</div>
+    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
+               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
               
                    <div class="txt-c ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -366,7 +375,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
@@ -381,15 +390,13 @@
         </c:choose>
        
     </c:forEach>
-   -->
-     
-      <!--<c:if test="${fn:length(func.lsfunc)>6}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+   <c:if test="${fn:length(func.lsfunc)>6}">
+      <div class="clear hang10 bg-f5f5f9 "></div>
       </c:if> 
         <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="6" end="11">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
+               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
               
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -402,7 +409,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
@@ -416,14 +423,14 @@
           </c:otherwise> 
         </c:choose>
        
-    </c:forEach> -->
-    <!--<c:if test="${fn:length(func.lsfunc)>12}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+    </c:forEach> 
+    <c:if test="${fn:length(func.lsfunc)>12}">
+      <div class="clear hang10 bg-f5f5f9 "></div>
     </c:if>   
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="12" end="17">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
+               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
                	
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc} line-height30"></i>
@@ -436,7 +443,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc} line-height30"></i>
                    </div>
@@ -450,14 +457,14 @@
           </c:otherwise> 
         </c:choose>
        
-    </c:forEach>-->
-    <!--<c:if test="${fn:length(func.lsfunc)>18}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+    </c:forEach>
+    <c:if test="${fn:length(func.lsfunc)>18}">
+      <div class="clear hang10 bg-f5f5f9 "></div>
     </c:if>  
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="18" end="23">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
+               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
               
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -470,7 +477,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
               	
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -485,15 +492,14 @@
           </c:otherwise> 
         </c:choose>
        
-    </c:forEach>-->
-    <!--<c:if test="${fn:length(func.lsfunc)>24}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+    </c:forEach>
+    <c:if test="${fn:length(func.lsfunc)>24}">
+      <div class="clear hang10 bg-f5f5f9 "></div>
     </c:if> 
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="24" end="29">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${bean.url}'">
-               	555
+               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc} line-height30"></i>
                    </div>
@@ -505,7 +511,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
@@ -519,20 +525,12 @@
           </c:otherwise> 
         </c:choose>
        
-    </c:forEach>-->
+    </c:forEach>
     <!--<div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>-->
     <div class="clear hang10"></div> 
     <!-- 个人中心导航 -->
-    <div style="background: #fff;">
-    	<div style="height: 34px;line-height: 34px;padding: 0 10px;width: 100%;">
-			<a href="" style="width: 100%;display: flex;justify-content: space-between;text-decoration: none;border-bottom: 1px solid #ddd;">
-				<span style="color: #6D6D6D;font-size: 14px;">必备工具</span>
-				<span style="color: #999;font-size: 12px;">
-					查看更多
-					<i class="fa fa-angle-right"></i>
-				</span>
-			</a>
-		</div>
+    <!--<div style="background: #fff;">
+    	
     	<ul class="my_cate">
 	    	<c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
 		        <c:choose>
@@ -563,7 +561,7 @@
 	    		</a>
 	    	</li>
     	</ul>
-    </div>
+    </div>-->
 </main>
 <div class="modal">
 	<div class="modal-cont">

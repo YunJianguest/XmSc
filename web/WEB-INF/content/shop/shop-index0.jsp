@@ -100,13 +100,16 @@
 				width: 100%;
 				height: 30px;
 				line-height: 30px;
-				position: relative;
+				/*position: relative;*/
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
+				border:1px solid #eee;
+		        border-radius:15px;
+		        padding:0 10px; 
 			}
 			
-			.news::after {
+			/*.news::after {
 				content: '';
 				width: 100%;
 				height: 0.5px;
@@ -124,18 +127,18 @@
 				position: absolute;
 				bottom: 0;
 				left: 0;
-			}
+			}*/
 			
 			.news-cont {
 				display: flex;
 				justify-content: flex-start;
 			}
 			
-			.news-cont .mui-col-xs-9 ul li {
+			.news-cont .mui-col-xs-10 ul li {
 				float: left;
-				font-size: 12px;
+				font-size: 11px;
 			}
-			
+		
 			#newsmore {
 				position: relative;
 				text-align: center;
@@ -144,10 +147,10 @@
 			#newsmore::after {
 				content: '';
 				width: 1px;
-				height: 24px;
-				background: #757474;
+				height: 20px;
+				background: #eee;
 				position: absolute;
-				top: 3px;
+				top: 5px;
 				left: 0;
 			}
 			
@@ -440,11 +443,11 @@
 			</ul> 
 			</div>
 			<!-- 新闻 -->
-			<div class="mui-row" style="padding: 0 16px;background: #fff;">
+			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-3" style="color: #F83111;font-size: 14px;">熊猫快报</div>
-						<div class="mui-col-xs-9" style="color: #000;display: flex;overflow: hidden;" id='news'>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;">熊报</div>
+						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
 							<ul  style='line-height:30px;height:30px;'>
