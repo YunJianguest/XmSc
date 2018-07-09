@@ -69,7 +69,7 @@
 		.tab-nav li i{
 			font-size:20px;
 			/*margin-bottom:10px;*/
-			color: #6D6D6D;
+			color: #f3e392;
 		}
 		.my_cate{
 			/*position: relative;*/
@@ -231,7 +231,7 @@
                 </font>
             </div>
             <div style="text-align: right;color: #FF0000;padding-right: 15px;font-size: 12px;">
-                <span style="color: #fff;">盼盼币:</span>00000
+                <span style="color: #000;">盼盼币:</span>00000
             </div>
         </div>
     </div>
@@ -320,7 +320,7 @@
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=0">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 ">
-		              <i class="fa fa-credit-card  line-height30"></i>
+		              <i class="fa fa-credit-card  line-height30" ></i>
 		            </div>待付款
 	              </a>     
 	        </li>
@@ -334,7 +334,7 @@
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=3">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 mb-10">
-	                  <i class="fa fa-envelope  line-height30"></i>
+	                  <i class="fa fa-envelope  line-height30" ></i>
 	                </div>待收货
 	            </a>
 	        </li>
@@ -342,7 +342,7 @@
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=4">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30">
-		            	<i class="fa fa-commenting-o  line-height30"></i>
+		            	<i class="fa fa-commenting-o  line-height30" ></i>
 		          	</div>待评价
 	          	</a>
 	        </li>
