@@ -163,7 +163,8 @@
         	width: 100%;
         	height: 80px;
         	display: flex;
-        	padding: 20px 0;	
+        	padding: 20px 0;
+        	background: #fff;
         }
         .collector li{
         	flex: 1;
@@ -238,8 +239,8 @@
     
 
     <c:if test="${not empty isAgent}">
-    <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-     <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-20" onclick="window.location.href='${ctx}/shop/shop!agenttx.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
+    <div class="clear hang10 bg-f5f5f9"></div>
+     <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-10" onclick="window.location.href='${ctx}/shop/shop!agenttx.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
         <div class="hang30 width-6 maring-a">
             <div class="pull-left txt-c img-wh30 bj-cheng border-radius5 zi-bai"><i
                     class="fa fa-dollar  line-height30"></i></div>
@@ -254,7 +255,7 @@
         </div>
     </div>
      
-    <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-20" onclick="window.location.href='${ctx}/shop/shop!agentweb.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
+    <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-10" onclick="window.location.href='${ctx}/shop/shop!agentweb.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
         <div class="hang30 width-6 maring-a">
             <div class="pull-left txt-c img-wh30 bj-lan1 border-radius5 zi-bai"><i
                     class="fa fa-bar-chart  line-height30"></i></div>
@@ -296,7 +297,7 @@
   		</li>
   	</ul>
     <c:if test="${fn:length(func.lsfunc)>0}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+      <div class="clear hang10 bg-f5f5f9"></div>
     </c:if> 
 	<div class="" style="background: #fff;">
 		<div style="height: 34px;line-height: 34px;padding: 0 10px;width: 100%;">
@@ -348,7 +349,7 @@
 		</ul>
 	</div>
 	<c:if test="${fn:length(func.lsfunc)>0}">
-      <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
+      <div class="clear hang10 bg-f5f5f9"></div>
     </c:if>
     <div style="height: 34px;line-height: 34px;padding: 0 10px;width: 100%;background: #fff;">
 			<a href="" style="width: 100%;display: flex;justify-content: space-between;text-decoration: none;border-bottom: 1px solid #ddd;">
@@ -362,7 +363,7 @@
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="5">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
+               <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
               
                    <div class="txt-c ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -375,7 +376,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
@@ -396,7 +397,7 @@
         <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="6" end="11">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
+               <div class="col-3 hang100  pt-10 " onclick="window.location.href='${bean.url}'">
               
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -409,7 +410,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-3  pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
@@ -430,7 +431,7 @@
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="12" end="17">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
+               <div class="col-3 hang100  pt-10 " onclick="window.location.href='${bean.url}'">
                	
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc} line-height30"></i>
@@ -443,7 +444,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-3  pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc} line-height30"></i>
                    </div>
@@ -464,7 +465,7 @@
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="18" end="23">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
+               <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
               
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -477,7 +478,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-3  pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
               	
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
@@ -499,7 +500,7 @@
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="24" end="29">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-4 hang100  pt-20 " onclick="window.location.href='${bean.url}'">
+               <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc} line-height30"></i>
                    </div>
@@ -511,7 +512,7 @@
               </div>
           </c:when>
           <c:otherwise>
-              <div class="col-4 hang100  pt-20 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
+              <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
