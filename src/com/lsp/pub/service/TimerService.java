@@ -83,7 +83,12 @@ public class TimerService {
                 	price = BaseDecimal.division(dbObject.get("money").toString(),"365",6);
 					price = BaseDecimal.division(price,"3",6);
                 }else{
-                	price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
+                	if(dbObject.get("money")!=null&&dbObject.get("time")!=null&&Integer.parseInt(dbObject.get("time").toString())>0) { 
+                		price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
+                	}else {
+                		price = BaseDecimal.division("0","1",6);
+                	}
+                	
                 }
 				
 				
