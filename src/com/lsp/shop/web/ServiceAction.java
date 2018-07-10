@@ -129,7 +129,12 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		for(DBObject db:list){
 			if(db.get("fromUserid")!=null){
 				 DBObject  user=wwzService.getWxUser(db.get("fromUserid").toString());
-				 db.put("nickname", user.get("nickname"));
+				 if(user.get("nickname")!=null){
+					 db.put("nickname", user.get("nickname"));
+				 }else{
+					 db.put("nickname", user.get("tel"));
+				 }
+				
 				 db.put("headimgurl", user.get("headimgurl"));
 			}
 		 
@@ -242,6 +247,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
 		if(dbObject != null){
 			OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+			DBObject pros = pro.getPro();
 			pro.set_id(Long.parseLong(orderproId));
 			pro.setState(Integer.parseInt(type));//异常订单  1-退货   2-换货
 			pro.setSid(info.get_id().toString());
@@ -268,7 +274,6 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			info.setType(Integer.parseInt(type));
 			double price = 0;
 			if(Integer.parseInt(type) == 1){
-				DBObject pros = pro.getPro();
 				if(pros != null){
 					if(pros.get("price") != null){
 						price = Double.parseDouble(pros.get("price").toString())*info.getNum();
@@ -334,6 +339,9 @@ public class ServiceAction extends GeneralAction<AfterService> {
 								}
 								if(dbObject2.get("goodstype").toString().equals("5")){//商品为会员区商品
 									order.setMembers_money(order.getMembers_money()-info.getPrice());
+								}
+								if(order.getPublic_money()==0&&order.getContri_money()==0&&order.getMembers_money()==0){
+									order.setState(4);//订单完成
 								}
 								baseDao.insert(PubConstants.WX_ORDERFORM, order);
 							}
