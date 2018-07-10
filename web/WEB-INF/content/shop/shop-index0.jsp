@@ -547,12 +547,12 @@
 				</ul>
 			</div>-->
 			<!-- 店铺关注收藏 -->
-			<div class="collectbox">
+			<!--<div class="collectbox">
 				<span ><i class="mui-icon mui-icon-star "></i>关注</span>
 				<span class="on">
 					<i class="mui-icon mui-icon-star-filled "></i>收藏
 				</span>
-			</div>
+			</div>-->
 			 <%@include file="/webcom/shop-foot.jsp" %>
 		</div>
 		
