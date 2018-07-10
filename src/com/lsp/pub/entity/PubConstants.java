@@ -352,5 +352,11 @@ public class PubConstants
   public static String PARTTIME_MISSIONINFORM="parttime_missioninform";
   public static String PARTTIME_MISSIONPROMOTE="parttime_missionpromote";
   
+  public static String SHOP_PRODUCTATTENTION ="shop_productattention"; //商品关注
+  public static String SHOP_PRODUCTCOLLET ="shop_productcollect"; //商品收藏
+  public static String SHOP_SHOPATTENTION ="shop_shopattention"; //店铺关注
+  public static String SHOP_SHOPCOLLECT ="shop_shopcollect"; //店铺收藏
+  
+  
   
 }

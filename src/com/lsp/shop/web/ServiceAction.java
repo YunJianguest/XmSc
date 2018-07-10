@@ -72,6 +72,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 	public String execute() throws Exception {
 		HashMap<String, Object> sortMap =new HashMap<String, Object>();
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		sortMap.put("createdate", -1);
 		custid=SpringSecurityUtils.getCurrentUser().getId(); 
 		String  comid=Struts2Utils.getParameter("comid");
 		if(StringUtils.isNotEmpty(comid))
@@ -241,7 +242,6 @@ public class ServiceAction extends GeneralAction<AfterService> {
 		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(orderproId));
 		if(dbObject != null){
 			OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
-			System.out.println("pro---->"+dbObject);
 			pro.set_id(Long.parseLong(orderproId));
 			pro.setState(Integer.parseInt(type));//异常订单  1-退货   2-换货
 			pro.setSid(info.get_id().toString());
@@ -253,7 +253,6 @@ public class ServiceAction extends GeneralAction<AfterService> {
 				if(dbObject2.get("comid")!=null){
 					info.setComid(Long.parseLong(dbObject2.get("comid").toString()));
 				}
-				System.out.println("info.comid--->"+info.getComid());
 			}
 		    info.setOid(pro.getOrderid());
 			info.setCustid(custid);
@@ -373,7 +372,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 	/**
 	 * 取消售后申请
 	 */
-	public void cancel () throws Exception{
+	public void cancel() throws Exception{
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
@@ -389,8 +388,9 @@ public class ServiceAction extends GeneralAction<AfterService> {
 				DBObject dbObjects = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, info.getOrderproId());
 				if(dbObjects != null){
 					OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObjects, OrderFormpro.class);
+					pro.set_id(info.getOrderproId());
 					pro.setState(0);//将订单变成正常订单
-					baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
+					baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
 				}
 				baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
 				sub_map.put("state", 0);//操作成功

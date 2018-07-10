@@ -11,6 +11,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css"/>
+		<script src="${ctx }/app/js/jquery-1.8.3.js"></script>
 		<style type="text/css">
 			
 			.tip-msg{
@@ -83,17 +84,17 @@
 		<div class="mui-content">
 		    <div class="mui-row">
 		    	<div class="tip-msg">
-		    	    <c:if test="${service.type == 1||service.type == 2}">
+		    	    <c:if test="${service.state == 0}">
 		    			<p class="tip-txt">待您反馈</p>
 		    		    <p class="mui-ellipsis">服务受理中</p>
 		    		</c:if>
-		    		<c:if test="${service.type == 3||service.type == 4}">
+		    		<c:if test="${service.state == 1||service.state == 2}">
 		    			<p class="tip-txt"></p>
 		    		    <p class="mui-ellipsis">服务已受理</p>
 		    		</c:if>
-		    		<c:if test="${service.type == 5}">
+		    		<c:if test="${service.state == 3}">
 		    			<p class="tip-txt"></p>
-		    		    <p class="mui-ellipsis">已取消</p>
+		    		    <p class="mui-ellipsis">服务已取消</p>
 		    		</c:if>
 		    	</div>
 		    </div>
@@ -127,25 +128,29 @@
 		    		</div>
 		    	</div>
 		    </div>
+		    <c:if test="${service.state == 0}">
 		    <div class="mui-row">
 		    	<div style="width: 100%;height: auto;padding: 10px 0;padding-top: 30px;background: #fff;text-align: right;">
 		    		<button class="mui-btn" style="margin-right: 20px;" onclick="cancal('${service._id}')">取消申请</button>
 		    	</div>
 		    </div>
+		    </c:if>
 		</div>
 		<script type="text/javascript">
 		function cancal(id) {
-			  alert(id);
+			  
 		    var submitData = {
 		    	 id:id
 		    };
 
 		    $.post('${ctx}/shop/service!cancel.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 		    	function (json) {
-		    	
+		    	alert(json.state);
 		        	if(json.state==0){ 	
-		        	 alert("取消成功");
-		        	 window.location.reload();
+		        	    alert("取消成功");
+		        	    window.location.reload();
+		        	}else{
+		        		alert("操作失败，请重新操作");
 		        	}
 		        },"json");
 		  
