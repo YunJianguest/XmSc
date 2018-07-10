@@ -12,6 +12,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>${title}</title>
     <script src="${ctx }/app/js/jquery-1.8.3.js"></script>
+    <link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet">
     <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
@@ -365,6 +366,29 @@
         .line-height35 {
             line-height: 35px;
         }
+        
+        .collectbox{
+        position: fixed;
+        right: 5px;
+        bottom: 100px;
+        z-index: 999;
+      }
+      .collectbox span{
+        cursor: pointer;
+        display: block;
+        width: 50px;
+        height: 30px;
+        font-size: 12px;
+        margin-top: 10px;
+        /*border: 1px solid #e3e3e3;*/
+        text-align: center;
+      }
+      .collectbox span i{
+        font-size: 18px;
+      }
+      .collectbox span.on{
+        color: #E4393C;
+      }
     </style>
 </head>
 <body class="cmp640 bg-hui-98 lock">
@@ -575,6 +599,90 @@
         <div class="col-6" style="padding-left: 5px;" id="ajaxdivright">
         </div>
     </div>
+    
+    <!-- 店铺关注收藏 -->
+	<div class="collectbox">
+		<span id="attention_span"><i class="mui-icon mui-icon-star " id="attention_i"></i>关注</span>
+		<span class="on" id="collect_span">
+			<i class="mui-icon mui-icon-star-filled " id="collect_i"></i>收藏
+		</span>
+	</div>
+	<script>
+	var status;
+	var status1;
+	var submitData;
+	function collect(){
+		//查询店铺是否收藏
+		$.post('${ctx}/shop/shopcollect!ajaxbycid.action?shopId=${cid}&custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
+	            function (json) { 
+					status = json.status;
+					if(status==1){//已收藏
+						$("#collect_span").addClass("on");
+						$("#collect_i").removeClass("mui-icon-star");
+						$("#collect_i").addClass("mui-icon-star-filled");
+					}else if(status==2){//未收藏
+						$("#collect_span").removeClass("on");
+						$("#collect_i").removeClass("mui-icon-star-filled");
+						$("#collect_i").addClass("mui-icon-star");
+					}
+					
+	            }, "json");
+	}
+	
+	$("#collect_span").click(function(){
+		if(status==1){//已收藏   点击后取消收藏
+			$.post('${ctx}/shop/shopcollect!del.action?shopId=${cid},&custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
+		            function (json) { 
+						alert(json.submap);
+						collect();
+		            }, "json");
+		}else if(status==2){//未收藏   点击后收藏
+			$.post('${ctx}/shop/shopcollect!ajaxsave.action?shopId=${cid}&custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
+		            function (json) { 
+						alert(json.submap);
+						collect();
+		            }, "json");
+		}
+	});
+	
+	function attention(){
+		//查询店铺是否收藏
+		$.post('${ctx}/shop/shopattention!ajaxbycid.action?shopId=${cid}&custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
+	            function (json) {
+					status1 = json.status;
+					if(status1==1){//已收藏
+						$("#attention_span").addClass("on");
+						$("#attention_i").removeClass("mui-icon-star");
+						$("#attention_i").addClass("mui-icon-star-filled");
+					}else if(status1==2){//未收藏
+						$("#attention_span").removeClass("on");
+						$("#attention_i").removeClass("mui-icon-star-filled");
+						$("#attention_i").addClass("mui-icon-star");
+					}
+	            }, "json");
+	}
+	
+	$("#attention_span").click(function(){
+		if(status1==1){//已关注   点击后取消关注
+			$.post('${ctx}/shop/shopattention!del.action?shopId=${cid},&custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
+		            function (json) { 
+						alert(json.submap);
+						attention();
+		            }, "json");
+		}else if(status1==2){//未关注   点击后关注
+			$.post('${ctx}/shop/shopattention!ajaxsave.action?shopId=${cid}&custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
+		            function (json) { 
+						alert(json.submap);
+						attention();
+		            }, "json");
+		}
+	});
+	
+	$(function(){ 
+		collect();
+		attention();
+	});
+	</script>
     <%@include file="/webcom/foot.jsp" %>
 </main>
 <%@include file="/webcom/return-top.jsp" %>

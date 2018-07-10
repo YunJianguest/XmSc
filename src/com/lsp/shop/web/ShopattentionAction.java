@@ -110,12 +110,18 @@ public class ShopattentionAction extends GeneralAction<ShopAttention>{
 		return "attention";
 	}
 	
+	
+	public  String  save(){
+		return null;
+	}
+	
 	/**
 	 * ajax添加店铺关注
 	 */
-	public  String  save(){
+	public  void  ajaxsave(){
 		getLscode();
 		ShopAttention attention = new ShopAttention();
+		Map<String, Object>submap=new HashMap<String, Object>();
 		String shopId=Struts2Utils.getParameter("shopId");//店铺id
 		try {
 			HashMap<String, Object>whereMap=new HashMap<String, Object>();
@@ -126,6 +132,7 @@ public class ShopattentionAction extends GeneralAction<ShopAttention>{
 			List<DBObject>list=baseDao.getList(PubConstants.SHOP_SHOPATTENTION, whereMap,sortMap);
 			if(list.size()>0){
 				addActionMessage("已添加!");
+				submap.put("submap", "已添加!");
 			}else{
 				if(_id == null){
 					_id=mongoSequence.currval(PubConstants.SHOP_SHOPATTENTION);	
@@ -137,38 +144,85 @@ public class ShopattentionAction extends GeneralAction<ShopAttention>{
 				attention.setFromUserid(fromUserid);
 				baseDao.insert(PubConstants.SHOP_SHOPATTENTION, attention); 
 				addActionMessage("成功添加!");
+				submap.put("submap", "成功添加!");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			addActionMessage("抱歉,添加过程中出现异常!");
+			submap.put("submap", "抱歉,添加过程中出现异常!");
+		}
+		String json = JSONArray.fromObject(submap).toString(); 
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
+	}
+	
+	
+	public String delete() throws Exception {
+		return null;
+	}
+	
+	/**
+	 * 取消店铺关注
+	 */
+	public void del() throws Exception {
+		getLscode();
+		HashMap<String, Object>whereMap=new HashMap<String, Object>();
+		Map<String, Object>submap=new HashMap<String, Object>();
+		try {
+			String shopId=Struts2Utils.getParameter("shopId");//店铺id
+			shopId = shopId.substring(0,shopId.length()-1);
+			String[] shopIds = shopId.split(",");
+			for(int i=0;i<shopIds.length;i++){
+				whereMap.put("shopId", shopId);
+				whereMap.put("fromUserid", fromUserid);
+				baseDao.delete(PubConstants.SHOP_SHOPATTENTION, whereMap);
+			}
+			
+			addActionMessage("成功取消!");
+			submap.put("submap", "成功取消!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			addActionMessage("抱歉,取消过程中出现异常!");
+			submap.put("submap", "抱歉,取消过程中出现异常!");
+		}
+		String json = JSONArray.fromObject(submap).toString(); 
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
+	}
+	 
+	
+	/**
+	 * 根据店铺id  查询是否关注
+	 */
+	
+	public  void  ajaxbycid(){
+		getLscode();
+		Map<String, Object>submap=new HashMap<String, Object>();
+		String shopId=Struts2Utils.getParameter("shopId");//店铺id
+		try {
+			
+			
+			HashMap<String, Object>whereMap=new HashMap<String, Object>();
+			HashMap<String, Object>sortMap=new HashMap<String, Object>();
+			whereMap.put("fromUserid", fromUserid);
+			whereMap.put("shopId", shopId);
+			sortMap.put("createdate",-1);
+			List<DBObject>list=baseDao.getList(PubConstants.SHOP_SHOPATTENTION, whereMap,sortMap);
+			if(list.size()>0){
+				addActionMessage("已添加!");
+				submap.put("status", 1);
+			}else{
+				addActionMessage("未添加!");
+				submap.put("status", 2);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			addActionMessage("抱歉,添加过程中出现异常!");
 		}
-		return RELOAD;
+		String json = JSONArray.fromObject(submap).toString(); 
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
-	
-	
-	/**
-	 * 取消店铺关注
-	 */
-	public String delete() throws Exception {
-		getLscode();
-		HashMap<String, Object>whereMap=new HashMap<String, Object>();
-		
-		try {
-			String shopId=Struts2Utils.getParameter("shopId");//店铺id
-			whereMap.put("shopId", shopId);
-			whereMap.put("fromUserid", fromUserid);
-			baseDao.delete(PubConstants.SHOP_SHOPATTENTION, whereMap);
-			
-			addActionMessage("成功取消!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			addActionMessage("抱歉,取消过程中出现异常!");
-		}
-		
-		return RELOAD;
-	}
-	
-	 
 }
