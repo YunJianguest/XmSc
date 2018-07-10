@@ -223,7 +223,7 @@ public class WwzService {
 		}
 		Object ob = Struts2Utils.getSession().getAttribute("fromUserDb");
 		if (ob == null) {
-			DBObject user = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUser);
+			DBObject user = baseDao.getMessage(PubConstants.USER_INFO, fromUser);
 			Struts2Utils.getSession().setAttribute("fromUserDb", user);
 			return user;
 		} else {
@@ -506,7 +506,7 @@ public class WwzService {
 	public boolean checkName(String name) {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("loginname", name);
-		Long count = baseDao.getCount(PubConstants.DATA_WXUSER, whereMap);
+		Long count = baseDao.getCount(PubConstants.USER_INFO, whereMap);
 		if (count == 0L) {
 			return true;
 		}
@@ -523,7 +523,7 @@ public class WwzService {
 	public boolean isAdmin(String fromUser, String wid) {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		boolean re = false;
-		DBObject user = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUser);
+		DBObject user = baseDao.getMessage(PubConstants.USER_INFO, fromUser);
 		BasicDBList dbList = new BasicDBList(); // 翻译数组对象
 		if (user == null || user.get("comUser") == null) {
 
@@ -557,7 +557,7 @@ public class WwzService {
 		}
 		whereMap.put("comUser", fromUser);
 		whereMap.put("toUser", toUser);
-		if (baseDao.getCount(PubConstants.DATA_WXUSER, whereMap) > 0) {
+		if (baseDao.getCount(PubConstants.USER_INFO, whereMap) > 0) {
 			return false;
 		}
 		Comunit wxtoUser = GetAllFunc.wxTouser.get(toUser);
@@ -665,7 +665,8 @@ public class WwzService {
 			whereMap.put("custid", pattern);
 		}
 		sortMap.put("sort", -1);
-		DBObject db = getWxUser(whereMap);
+		
+		DBObject db = getWxUser(whereMap); 
 		if (db.get("fromUser").equals("notlogin") && StringUtils.isNotEmpty(fromUser)
 				&& StringUtils.isNotEmpty(custid)) {
 			// 注册新用户
@@ -897,14 +898,14 @@ public class WwzService {
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
 				user.setNo(getVipNo());
-				baseDao.insert(PubConstants.DATA_WXUSER, user);
+				baseDao.insert(PubConstants.USER_INFO, user); 
 				updateUser(token, baseDao.getMessage(PubConstants.USER_INFO, id));
 
 				return id;
 			} else {
 				/**
 				 * 返回查到的用户
-				 */
+				 */ 
 				UserInfo user = (UserInfo) UniObject.DBObjectToObject(list.get(0), UserInfo.class);
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
@@ -927,7 +928,7 @@ public class WwzService {
 		if (StringUtils.isNotEmpty(fromUser)) {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("fromUser", fromUser);
-			List<DBObject> list = baseDao.getList(PubConstants.DATA_WXUSER, whereMap, null);
+			List<DBObject> list = baseDao.getList(PubConstants.USER_INFO, whereMap, null);
 			if (list.size() == 0) {
 				UserInfo user = new UserInfo();
 				String id = UUID.randomUUID().toString();
@@ -1043,7 +1044,7 @@ public class WwzService {
 			addjf(task.get("jfreward").toString(), fromUserid, type, custid, wxuser);
 
 		}
-		baseDao.insert(PubConstants.DATA_WXUSER, wxuser);
+		baseDao.insert(PubConstants.USER_INFO, wxuser);
 
 		return false;
 
@@ -1999,7 +2000,7 @@ public class WwzService {
 		if (db != null) {
 			WxUser wxuser = (WxUser) UniObject.DBObjectToObject(db, WxUser.class);
 			wxuser.setNo(getVipNo());
-			baseDao.insert(PubConstants.DATA_WXUSER, wxuser);
+			baseDao.insert(PubConstants.USER_INFO, wxuser);
 			return true;
 		}
 		return false;
@@ -2014,7 +2015,7 @@ public class WwzService {
 	public String getfromUseridVipNo(String VipNo) {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("no", VipNo);
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 		if (db != null) {
 			return db.get("_id").toString();
 		}
@@ -2034,7 +2035,7 @@ public class WwzService {
 		}
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("no", VipNo);
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 		if (db != null) {
 			return db;
 		}
@@ -2051,7 +2052,7 @@ public class WwzService {
 	public String getVipNo(String fromUserid) {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("_id", fromUserid);
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 		if (db != null && db.get("no") != null) {
 			return db.get("no").toString();
 		}
@@ -2163,7 +2164,7 @@ public class WwzService {
 
 	public String fromUserbyid(String custid, String fromUserid) {
 		if (StringUtils.isNotEmpty(fromUserid)) {
-			DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUserid);
+			DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
 			WxToken token = GetAllFunc.wxtoken.get(custid);
 			if (token.getSqlx() > 0) {
 				token = GetAllFunc.wxtoken.get(getparentcustid(custid));
@@ -2449,7 +2450,7 @@ public class WwzService {
 			user.setHeadimgurl(headimgurl);
 			user.setNo(getVipNo());
 			user.setCreatedate(new Date());
-			baseDao.insert(PubConstants.DATA_WXUSER, user);
+			baseDao.insert(PubConstants.USER_INFO, user);
 			return user;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -2700,7 +2701,7 @@ public class WwzService {
 		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
-			System.out.println(db);
+			 
 			String now="0";
 			String nows="0";
 			if(StringUtils.isNotEmpty(inteSetting.getNownum())) {
