@@ -15,6 +15,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lsp.integral.entity.InteProstore;
+import com.lsp.integral.entity.InteSetting;
 import com.lsp.integral.entity.Miner;
 import com.lsp.integral.entity.TransferOrder;
 import com.lsp.integral.entity.WithdrawalOrder;
@@ -36,6 +37,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxUser;
 import com.mongodb.DBObject;
@@ -582,7 +584,47 @@ public class MinersAction extends GeneralAction<Miner> {
 	     * 兑换招商部
 	     */
 	    public void  dhZsb() {
-	    	
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+	    	String address=Struts2Utils.getParameter("address");
+	    	HashMap<String, Object> whereMap = new HashMap<>();
+	    	whereMap.put("custid",SysConfig.getProperty("custid"));
+			DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+			if(StringUtils.isEmpty(address)) {
+				//未选择所属县域
+				sub_map.put("state",4);
+				String json = JSONArray.fromObject(sub_map).toString();
+		  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
+		  		return;
+			}
+			if(db!=null) { 
+				//获取部门价格
+				InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
+				double bl=sett.getReturnDept()/3;
+				if(wwzService.deljf(bl+"", fromUserid,"jfdh", custid, 0, 1, 0)) {
+					//购买成功
+					DBObject dbuser=wwzService.getWxUser(fromUserid);
+					UserInfo user=(UserInfo) UniObject.DBObjectToObject(dbuser, UserInfo.class);
+					user.set_id(fromUserid);
+					user.setAgentLevel(4);
+					user.setAgentedate(new Date());
+					user.setAgentcounty(address);
+					baseDao.insert(PubConstants.USER_INFO, user);
+					//购买成功
+					sub_map.put("state",0);
+				}else {
+					//余额不足
+					sub_map.put("state",3);
+				}
+				
+			}else {
+				//服务器未开通该功能
+				sub_map.put("state",2);
+			}
+			
+			String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
 	    }
 	    
 }

@@ -65,6 +65,18 @@ public class UserInfo extends ReflectionDBObject {
 	 */
 	private String county;
 	/**
+	 * 代理的县
+	 */
+	private String agentcounty;
+	/**
+	 * 代理的市
+	 */
+	private String agentcity;
+	/**
+	 * 代理的省
+	 */
+	private String agentprovince;
+	/**
 	 * 代理商   类型
 	 * 1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
 	 * 2018/6/20
@@ -183,9 +195,43 @@ public class UserInfo extends ReflectionDBObject {
 	/**
 	 * 推荐类型（0默认1推荐id为管理员id）
 	 */
-	private int    tjlx; 
-	
-	
+	private int    tjlx;  
+	/**
+	 * 代理时间
+	 */
+	private Date   agentedate; 
+	public Date getAgentedate() {
+		return agentedate;
+	}
+
+	public void setAgentedate(Date agentedate) {
+		this.agentedate = agentedate;
+	}
+
+	public String getAgentcounty() {
+		return agentcounty;
+	}
+
+	public void setAgentcounty(String agentcounty) {
+		this.agentcounty = agentcounty;
+	}
+
+	public String getAgentcity() {
+		return agentcity;
+	}
+
+	public void setAgentcity(String agentcity) {
+		this.agentcity = agentcity;
+	}
+
+	public String getAgentprovince() {
+		return agentprovince;
+	}
+
+	public void setAgentprovince(String agentprovince) {
+		this.agentprovince = agentprovince;
+	}
+
 	public boolean isIsadmin() {
 		return isadmin;
 	}
