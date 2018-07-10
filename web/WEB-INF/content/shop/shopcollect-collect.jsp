@@ -264,7 +264,7 @@
 	       	});
 	        
 	        var submitData;
-	        $.post("${ctx}/shop/shopcollect!delete.action?shopId="+shopId, submitData,
+	        $.post("${ctx}/shop/shopcollect!del.action?shopId="+shopId, submitData,
             	function (json) {
                 	console.log(json); 	       
                 }, "json")
