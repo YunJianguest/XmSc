@@ -248,7 +248,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			  whereMap.clear();
 			  whereMap.put("fromUserid",fromUserid);
 			  Long tackcount=basedao.getCount(PubConstants.SUC_TASK);
-			  wxUser.put("bbscount",bbscount); 
+			  //wxUser.put("bbscount",bbscount); 
 			  wxUser.put("tackcount",tackcount); 
 			  if(wxUser.get("getExperience")!=null&&wxUser.get("needExperience")!=null) {
 				  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
