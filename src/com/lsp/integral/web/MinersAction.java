@@ -578,5 +578,11 @@ public class MinersAction extends GeneralAction<Miner> {
 	    		
 	    	}
 	    }
+	    /**
+	     * 兑换招商部
+	     */
+	    public void  dhZsb() {
+	    	
+	    }
 	    
 }
