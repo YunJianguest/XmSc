@@ -75,6 +75,9 @@
 				top: 0;
 				left: 0px;
 			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell{
+				padding-left: 5px;
+			}
 		</style>
 		<script type="text/javascript">
 		var loadings="";
