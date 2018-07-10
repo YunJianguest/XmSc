@@ -203,7 +203,7 @@
           </c:if>
            
         </div>
-        <div class="width-10" style='position:absolute;bottom:25px;'>
+        <div class="width-10" style='position:absolute;bottom:15px;'>
             <div class=" hang70">
                 <font size="2">
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
@@ -230,8 +230,9 @@
                     </div> --%>
                 </font>
             </div>
-            <div style="text-align: right;color: #FF0000;padding-right: 15px;font-size: 12px;">
-                <span style="color: #000;">盼盼币:</span>00000
+            <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
+            	<span style="color: #FF0000;float:left">乐乐币:<i style="color: #000;">666666.000068</i></span>
+                <span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">800000.000089</i></span>
             </div>
         </div>
     </div>
@@ -272,26 +273,26 @@
     </c:if>
   	<ul class="collector">
   		<li>
-  			<a href="${ctx}/shop/productcollect!productcollectList.action?custid=${custid}&lscode=${lscode}">
-  				<div>${productcollectCount }</div>
+  			<a href="">
+  				<div>9</div>
   				商品收藏
   			</a>
   		</li>
   		<li>
-  			<a href="${ctx}/shop/shopcollect!ajaxkj.action?custid=${custid}&lscode=${lscode}">
-  				<div>${shopcollectCount }</div>
+  			<a href="">
+  				<div>9</div>
   				店铺收藏
   			</a>
   		</li>
   		<li>
-  			<a href="${ctx}/shop/productattention!productattentionList.action?custid=${custid}&lscode=${lscode}">
-  				<div>${productattentionCount }</div>
+  			<a href="">
+  				<div>9</div>
   				商品关注
   			</a>
   		</li>
   		<li>
-  			<a href="${ctx}/shop/shopattention!ajaxkj.action?custid=${custid}&lscode=${lscode}">
-  				<div>${shopattentionCount }</div>
+  			<a href="">
+  				<div>9</div>
   				店铺关注
   			</a>
   		</li>
