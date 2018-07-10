@@ -121,6 +121,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return SUCCESS;
 	}
@@ -166,6 +167,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		whereMap.put("state", 0);// 收益
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "profit";
 	}
@@ -215,6 +217,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		whereMap.put("state", 1);// 支出
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "pay";
 	}
@@ -248,6 +251,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		whereMap.put("type", "jfcz");// 充值记录
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "recharge";
 	}
@@ -281,6 +285,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		whereMap.put("type", "jf_withdraw");// 提现记录
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "withdraw";
 	}
@@ -324,6 +329,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		whereMap.put("$or", dblist);
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		Struts2Utils.getRequest().setAttribute("toUser", toUser);
 		return "day";
