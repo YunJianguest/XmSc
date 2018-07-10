@@ -72,6 +72,8 @@
 				line-height: 34px;
 				color: rgb(34,46,110);
 				text-align: center;
+				font-size: 12px;
+				font-weight: 600;
 			}
 		</style>
 	</head>

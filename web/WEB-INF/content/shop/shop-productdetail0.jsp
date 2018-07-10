@@ -313,6 +313,19 @@
 //              }, "json");
        		}
        	}
+       	
+       	// 渲染页面判断是否已收藏
+       	function applycollect(){
+        	$.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+		        function (json) {
+		            if(json.state =="0"){
+		            	
+		            }else{
+		            	
+		        }
+		    }
+       	}
+       	applycollect()
       </script>
        <style>
          .img-100 img{
@@ -517,9 +530,9 @@
                       <div id="">
                       	${entity.ptitle} 
                       </div>          
-                      <div class="">
+                      <div class="attentbox">
                       	<span class="Collect" onclick="productCollect(${entity._id});">收藏</span> <span class="Attent" onclick="productAttent(${entity._id})">关注</span>  
-                      <span onclick="productCollectDel(${entity._id});">取消收藏</span> <span onclick="productAttentDel(${entity._id})">取消关注</span>
+                      	<span onclick="productCollectDel(${entity._id});">取消收藏</span> <span onclick="productAttentDel(${entity._id})">取消关注</span>
                       </div>   
                     </div>
                 </font>
