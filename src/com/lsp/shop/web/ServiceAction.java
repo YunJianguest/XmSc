@@ -341,7 +341,7 @@ public class ServiceAction extends GeneralAction<AfterService> {
 									order.setMembers_money(order.getMembers_money()-info.getPrice());
 								}
 								if(order.getPublic_money()==0&&order.getContri_money()==0&&order.getMembers_money()==0){
-									order.setState(4);//订单完成
+									order.setState(5);//退货完成
 								}
 								baseDao.insert(PubConstants.WX_ORDERFORM, order);
 							}

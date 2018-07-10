@@ -238,6 +238,7 @@ function page_submit(num){
                         	<c:if test="${bean.state=='2'}">已购买</c:if>
 							<c:if test="${bean.state=='3'}"><span style="color:#F00">已发货</span></c:if>
 							<c:if test="${bean.state=='4'}"><span style="color:#F00">订单已完成</span></c:if>
+							<c:if test="${bean.state=='5'}"><span style="color:#F00">退货已完成</span></c:if>
 							<%-- <c:if test="${bean.state=='5'}"><span style="color:#F00">已退货</span></c:if> --%></td>
 							 
 						

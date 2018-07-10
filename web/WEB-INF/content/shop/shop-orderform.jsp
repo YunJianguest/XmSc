@@ -166,7 +166,7 @@
 		    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">待发货</div>'
 		    		              +'<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 		    		         }else if(v[i].state==3){
-		    		          xszf+='<div class="col-3 txt-r zi-bbbbbb">确认收货</div>'
+		    		          xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+')">确认收货</div>'
 		    		              +'<div class="col-3 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 		    		         }else if(v[i].state==4){
 		    		        	  if(list[j].states==0){
@@ -231,6 +231,23 @@ function del(id) {
 } 
   function  getkd(id){
    window.location.href='http://m.kuaidi100.cn/result.html#com=auto&no='+id;
+  }
+  function resure(oid){
+	  alert(oid);
+	  var submitData = {
+			  oid:oid
+		    };
+
+		    $.post('${ctx}/shop/shop!delivery.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+		    	function (json) {
+		    	
+		        	if(json.state==0){ 	
+		        	 alert("收货成功！");
+		        	 window.location.reload();
+		        	}else{
+		        		alert('操作失败');
+		        	}
+		        },"json");
   }
 </script>
 </head>

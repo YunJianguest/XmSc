@@ -3256,10 +3256,14 @@ public class ShopAction extends GeneralAction {
 	@SuppressWarnings("null")
 	public void delivery() throws Exception {
 		getLscode();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		sub_map.put("state", 1);
 		String oid = Struts2Utils.getParameter("oid");
 		DBObject dbObject = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
-		if (dbObject != null && dbObject.get("fromid") != null
-				&& dbObject.get("fromid").toString().equals(fromUserid)) {
+		System.out.println(dbObject);
+		System.err.println(fromUserid);
+		if (dbObject != null && dbObject.get("fromUserid") != null
+				&& dbObject.get("fromUserid").toString().equals(fromUserid)) {
 			OrderForm order = (OrderForm) UniObject.DBObjectToObject(dbObject, OrderForm.class);
 			order.setState(4);// 确认收货
 			order.setDeliveryDate(new Date());
@@ -3305,7 +3309,9 @@ public class ShopAction extends GeneralAction {
 					}
 
 					// 获取间接推荐人员
-					tjuser = wwzService.getWXuserVipNo(tjuser.get("reno").toString());
+					if(tjuser!=null&&tjuser.get("reno")!=null){
+						tjuser = wwzService.getWXuserVipNo(tjuser.get("reno").toString());
+					} 
 					if (tjuser != null) {
 						// 记录提成
 						wwzService.addjf(BaseDecimal
@@ -3349,7 +3355,9 @@ public class ShopAction extends GeneralAction {
 					// 获取县级
 
 					whereMap.clear();
-					whereMap.put("_id", user.get("parentId").toString());
+					if(user.get("parentId") != null){
+						whereMap.put("_id", user.get("parentId").toString());
+					}
 					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
@@ -3360,7 +3368,9 @@ public class ShopAction extends GeneralAction {
 						// 县级存在，获取市级
 
 						whereMap.clear();
-						whereMap.put("_id", user.get("parentId").toString());
+						if(user.get("parentId") != null){
+							whereMap.put("_id", user.get("parentId").toString());
+						}
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
@@ -3370,7 +3380,9 @@ public class ShopAction extends GeneralAction {
 
 							// 县级存在，市级存在，获取省级
 							whereMap.clear();
-							whereMap.put("_id", user.get("parentId").toString());
+							if(user.get("parentId") != null){
+								whereMap.put("_id", user.get("parentId").toString());
+							}
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
@@ -3384,7 +3396,9 @@ public class ShopAction extends GeneralAction {
 
 							whereMap.clear();
 							whereMap.put("agentLevel", 1);
-							whereMap.put("province", user.get("province").toString());
+							if(user.get("province") != null){
+								whereMap.put("province", user.get("province").toString());
+							}
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
@@ -3401,7 +3415,9 @@ public class ShopAction extends GeneralAction {
 
 						whereMap.clear();
 						whereMap.put("agentLevel", 2);
-						whereMap.put("county", user.get("county").toString());
+						if(user.get("county")!=null){
+							whereMap.put("county", user.get("county").toString());
+						}
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
@@ -3411,7 +3427,9 @@ public class ShopAction extends GeneralAction {
 
 							// 县级不存在， 市级存在，获取省级
 							whereMap.clear();
-							whereMap.put("_id", user.get("parentId").toString());
+							if(user.get("parentId") != null){
+								whereMap.put("_id", user.get("parentId").toString());
+							}
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
@@ -3424,7 +3442,9 @@ public class ShopAction extends GeneralAction {
 
 							whereMap.clear();
 							whereMap.put("agentLevel", 1);
-							whereMap.put("province", user.get("province").toString());
+							if(user.get("province") != null){
+								whereMap.put("province", user.get("province").toString());
+							}
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
@@ -3441,7 +3461,9 @@ public class ShopAction extends GeneralAction {
 
 				// 获取异地县域
 				whereMap.clear();
-				whereMap.put("county", user.get("county").toString());
+				if(user != null &&user.get("county")!=null){
+					whereMap.put("county", user.get("county").toString());
+				}
 				user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 				if (user != null) {
 
@@ -3453,7 +3475,9 @@ public class ShopAction extends GeneralAction {
 					// 县级存在，获取市级
 
 					whereMap.clear();
-					whereMap.put("_id", user.get("parentId").toString());
+					if(user.get("parentId") != null){
+						whereMap.put("_id", user.get("parentId").toString());
+					}
 					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
@@ -3463,7 +3487,9 @@ public class ShopAction extends GeneralAction {
 
 						// 县级存在，市级存在，获取省级
 						whereMap.clear();
-						whereMap.put("_id", user.get("parentId").toString());
+						if(user.get("parentId") != null){
+							whereMap.put("_id", user.get("parentId").toString());
+						}
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
@@ -3478,7 +3504,9 @@ public class ShopAction extends GeneralAction {
 
 						whereMap.clear();
 						whereMap.put("agentLevel", 1);
-						whereMap.put("province", user.get("province").toString());
+						if(user.get("province")!=null){
+							whereMap.put("province", user.get("province").toString());
+						}
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
@@ -3495,7 +3523,9 @@ public class ShopAction extends GeneralAction {
 					// 县域不存在获取市级
 					whereMap.clear();
 					whereMap.put("agentLevel", 2);
-					whereMap.put("county", user.get("county").toString());
+					if(user.get("county")!=null){
+						whereMap.put("county", user.get("county").toString());
+					}
 					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
@@ -3505,7 +3535,10 @@ public class ShopAction extends GeneralAction {
 
 						// 县级不存在， 市级存在，获取省级
 						whereMap.clear();
-						whereMap.put("_id", user.get("parentId").toString());
+						if(user.get("parentId") != null){
+							whereMap.put("_id", user.get("parentId").toString());
+						}
+						
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
@@ -3519,7 +3552,9 @@ public class ShopAction extends GeneralAction {
 
 						whereMap.clear();
 						whereMap.put("agentLevel", 1);
-						whereMap.put("province", user.get("province").toString());
+						if(user.get("province") != null){
+							whereMap.put("province", user.get("province").toString());
+						}
 						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 						if (user != null) {
 							// 记录提成
@@ -3535,8 +3570,10 @@ public class ShopAction extends GeneralAction {
 				}
 
 			}
-
+			sub_map.put("state", 0);//操作成功
 		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
 	/**
