@@ -2908,7 +2908,10 @@ public class WwzService {
 			if (db != null) {
 				InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 				// 获取当前赠送数量
-				double now = Double.parseDouble(inteSetting.getNownums());
+				double now =0;
+				if(inteSetting.getNownums()!=null){
+					now= Double.parseDouble(inteSetting.getNownums());
+				} 
 				if (now > 0 && now < 50000000) {
 					// 1倍
 					return BaseDecimal.multiplication(price + "", "1");
@@ -2925,7 +2928,7 @@ public class WwzService {
 
 			}
 		}
-		return null;
+		return "0";
 	}
 	
 	/**
