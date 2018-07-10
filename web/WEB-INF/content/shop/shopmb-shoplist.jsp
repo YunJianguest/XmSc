@@ -129,7 +129,6 @@
                     function (json) {
             	     loadings.hide();
                         var html = $('.recomend').html();
-                        alert(json.state);
                         if (json.state == 0) {
                             var v = json.list;
                             for (var i = 0; i < v.length; i++) {

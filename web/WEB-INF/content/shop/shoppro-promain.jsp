@@ -156,7 +156,7 @@
                 						+'</a>'	
                 						+'</div>'
                 						+'<div class="mui-card-footer" style="padding: 10px 5px;display: block;">'
-                						+'<span class="similar-product-text" style="height:40px;text-align: left;"><span class="shopping-name">熊猫商城</span>' + v[i].ptitle + ' </span>'
+                						+'<span class="similar-product-text" style="height:40px;text-align: left;"><span class="shopping-name">'+v[i].comname+'</span>' + v[i].ptitle + ' </span>'
                 						+'<div class="similar-product-info ">';
                 						if(v[i].price!=null){
                 							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';

@@ -412,6 +412,19 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);  
+		for (DBObject dbObject : list) {
+				if(dbObject.get("comid") != null){
+					DBObject db = baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(dbObject.get("comid").toString()));
+					if(db!=null){
+						if(db.get("name")!=null){
+							dbObject.put("comname", db.get("name"));
+						}else{
+							dbObject.put("comname", "默认小店");
+						}
+					}
+				}
+		}
+		
 		if(list.size()>0){
 			sub_map.put("state", 0);
 			sub_map.put("list", list);
