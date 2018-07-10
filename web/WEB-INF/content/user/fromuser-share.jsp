@@ -26,6 +26,7 @@
 			.share{
 				width: 100%;
 				padding: 80px 38px 35px 38px;
+				position: relative;
 			}
 			.share-canvas{
 				width: 100%;
@@ -45,7 +46,7 @@
 				width: 150px;
 				height: 64px;
 				margin: 0 auto;
-				border: 3px solid #00d6ff;
+				border: 2px solid #00d6ff;
 				text-align: center;
 			}
 			.share-logo-box img{
@@ -65,6 +66,10 @@
 				color: #fff;
 				font-size: 18px;
 				margin-top: 10px;
+				position: absolute;
+			    bottom: -100px;
+			    left: 50%;
+			    margin-left: -120px;
 			}
 			.share-txt{
 				width: 100%;
@@ -74,6 +79,41 @@
 				text-align: center;
 				font-size: 12px;
 				font-weight: 600;
+				position: absolute;
+			    bottom: -150px;
+			    left: 0;
+			}
+			@media screen and (min-width:375px){
+				.share-tit{
+					bottom: 0;
+				}
+				.share-txt{
+					bottom: -30px;
+				}
+			}
+			@media screen and(min-width:414px){
+				.share-tit{
+					bottom: -40px;
+				}
+				.share-txt{
+					bottom: -80px;
+				}
+			}
+			@media screen and(min-width:768px){
+				.share-tit{
+					bottom: -50px;
+				}
+				.share-txt{
+					bottom: -90px;
+				}
+			}
+			@media screen and(min-width:1024px){
+				.share-tit{
+					bottom: -130px;
+				}
+				.share-txt{
+					bottom: -170px;
+				}
 			}
 		</style>
 	</head>
