@@ -74,7 +74,24 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		String  comid=Struts2Utils.getParameter("comid");
-		whereMap.put("comid", Long.parseLong(comid));
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("comid", Long.parseLong(comid));
+		}
+		String  typeid=Struts2Utils.getParameter("typeid");
+		if(StringUtils.isNotEmpty(typeid)){
+			whereMap.put("typeid", Long.parseLong(typeid));
+		}
+		Struts2Utils.getRequest().setAttribute("typeid",  typeid);
+		String  mintypeid=Struts2Utils.getParameter("mintypeid");
+		if(StringUtils.isNotEmpty(mintypeid)){
+			whereMap.put("mintypeid", Long.parseLong(mintypeid));
+		}
+		Struts2Utils.getRequest().setAttribute("mintypeid",  mintypeid);
+		String  thirdtypeid=Struts2Utils.getParameter("thirdtypeid");
+		if(StringUtils.isNotEmpty(thirdtypeid)){
+			whereMap.put("thirdtypeid", Long.parseLong(thirdtypeid));
+		}
+		Struts2Utils.getRequest().setAttribute("thirdtypeid",  thirdtypeid);
 		fycount=baseDao.getCount(PubConstants.DATA_PRODUCT, whereMap);
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
 		backMap.put("context", 0);
@@ -86,6 +103,12 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		Struts2Utils.getRequest().setAttribute("custid",SpringSecurityUtils.getCurrentUser().getId());
 		
 		Struts2Utils.getRequest().setAttribute("ProductInfoList", list);
+		whereMap.clear();
+		sortMap.clear();
+		sortMap.put("sort", -1);
+		whereMap.put("parentid", 0L);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("protype", baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap));
 		
 		return SUCCESS;
 	}
@@ -448,6 +471,90 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);		
+	}
+	
+	public String list() throws Exception {
+		HashMap<String, Object> sortMap =new HashMap<String, Object>();
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		 
+		 	
+		String  title=Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title))
+		{
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("ptitle", pattern);
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
+		sortMap.put("sort", -1);
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		String  comid=Struts2Utils.getParameter("comid");
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("comid", Long.parseLong(comid));
+		}
+		String  typeid=Struts2Utils.getParameter("typeid");
+		if(StringUtils.isNotEmpty(typeid)){
+			whereMap.put("typeid", Long.parseLong(typeid));
+		}
+		Struts2Utils.getRequest().setAttribute("typeid",  typeid);
+		String  mintypeid=Struts2Utils.getParameter("mintypeid");
+		if(StringUtils.isNotEmpty(mintypeid)){
+			whereMap.put("mintypeid", Long.parseLong(mintypeid));
+		}
+		Struts2Utils.getRequest().setAttribute("mintypeid",  mintypeid);
+		String  thirdtypeid=Struts2Utils.getParameter("thirdtypeid");
+		if(StringUtils.isNotEmpty(thirdtypeid)){
+			whereMap.put("thirdtypeid", Long.parseLong(thirdtypeid));
+		}
+		Struts2Utils.getRequest().setAttribute("thirdtypeid",  thirdtypeid);
+		fycount=baseDao.getCount(PubConstants.DATA_PRODUCT, whereMap);
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
+		backMap.put("context", 0);
+		List<DBObject> list=baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap,backMap);
+		 for (DBObject dbObject : list) {
+				dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
+			}
+		System.out.println(list);
+		Struts2Utils.getRequest().setAttribute("custid",SpringSecurityUtils.getCurrentUser().getId());
+		
+		Struts2Utils.getRequest().setAttribute("ProductInfoList", list);
+		whereMap.clear();
+		sortMap.clear();
+		sortMap.put("sort", -1);
+		whereMap.put("parentid", 0L);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("protype", baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap));
+		
+		return "list";
+	}
+	
+	public String read() throws Exception {	
+		HashMap<String, Object>whereMap=new HashMap<String, Object>();
+		HashMap<String, Object>sortMap=new HashMap<String, Object>();
+		String comid = Struts2Utils.getParameter("comid");
+		Struts2Utils.getRequest().setAttribute("comid", comid);
+		whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("comid"))); 
+		sortMap.put("sort", -1);
+		//获取店铺分类 
+		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
+		System.out.println(typelist);
+		Struts2Utils.getRequest().setAttribute("typelist",typelist);
+		DBObject pro=baseDao.getMessage(PubConstants.DATA_PRODUCT, _id); 
+		Struts2Utils.getRequest().setAttribute("entity",pro);
+		if(pro!=null){
+			Struts2Utils.getRequest().setAttribute("bq",pro.get("bq"));
+		} 
+		DBObject  db=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(Struts2Utils.getParameter("comid")));
+		if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){
+			Struts2Utils.getRequest().setAttribute("isjf",1);
+		} 
+		whereMap.clear();
+		whereMap.put("parentid", 0L);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("protype", baseDao.getList(PubConstants.SHOP_PROTYPE, whereMap, sortMap));
+		return "read";
 	}
 	
 }

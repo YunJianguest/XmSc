@@ -171,7 +171,7 @@
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
         <form id="custinfoForm" name="custinfoForm" method="post"
-              action="${contextPath}/shop/shoppro.action?comid=${comid}">
+              action="${contextPath}/shop/shoppro!list.action?comid=${comid}">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i> 微网站<span>产品管理</span></h2>
                 
@@ -200,12 +200,7 @@
 		                 </select>
 		            </div>
                         <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
-                         <div class="form-group col-sm-1d pull-right"> 
-                         <button type="button" onclick="window.location.href='${ctx }/shop/shoppro!input.action?comid=${comid}&fypage=${fypage}'" class="btn btn-primary dropdown-toggle form-group pull-right" data-toggle="dropdown">
-                                                                                 添加商品&nbsp; <i  class="fa fa-plus"></i>
-                         </button>
-                          
-                      </div>
+
                     </div>
                 </div>
             </div>
@@ -260,24 +255,11 @@
                                                 <ul role="menu" class="dropdown-menu pull-right">
 
                                                     <li>
-                                                        <a href="${contextPath}/shop/shoppro!update.action?_id=${bean._id}&comid=${comid}&fypage=${fypage}">
-                                                            <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;修改</a>
+                                                        <a href="${contextPath}/shop/shoppro!read.action?_id=${bean._id}&comid=${comid}&fypage=${fypage}">
+                                                            <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;查看</a>
                                                     </li>
-
-                                                    <li><a href="javascript:del(${bean._id});"><i
-                                                            class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
-                                                    </li>
-                                                    <li><a href="${ctx}/shop/specification.action?parentid=${bean._id}"><i
-                                                            class="fa fa-cog "></i>&nbsp;&nbsp;&nbsp;&nbsp;规格管理</a>
-                                                    </li>
-                                                    <li><a href="${ctx}/suc/slide.action?type=shoppro-${bean._id}"><i
-                                                            class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;幻灯片</a></li>
                                                      <li>
-                                                     <c:if test="${bean.bq==8}">
-                                                     <li><a href="${ctx}/shop/shoppro!barlist.action?id=${bean._id}"><i
-                                                            class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;砍价管理</a></li>
-                                                     <li>
-                                                     </c:if>
+                                                    
                                                         <a href="javascript:qrcode('${ctxurl}/shop/shop!shopproduct.action?pid=${bean._id}')"><i
                                                                 class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;&nbsp;页面预览</a>
                                                     </li>
@@ -295,44 +277,6 @@
         </form>
     </div>
 </section>
-<div id="inszc" class="modal fade bs-example-modal-static"
-     tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close"
-                        type="button">&times;</button>
-                <h4 class="modal-title">
-                    <i class="fa fa-automobile"></i>设置推广
-                </h4>
-            </div>
-            <div class="modal-body">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">类型: <span
-                                    class="asterisk">*</span>
-                            </label>
-                            <div class="col-sm-2">
-                                <s:select cssClass="form-control mb15" class="select2" id="lx"
-                                          name="mb" list="#{'1':'左图','2':'右上','3':'右下'}" listKey="key"
-                                          listValue="value"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-sm-12 ">
-                                <button class="btn btn-primary btn-block" data-dismiss="modal" onclick="sztg()">提&nbsp;&nbsp;交</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <%@ include file="/webcom/preview.jsp"%>
 <script type="text/javascript">
 $('#typeid').change(function(){ 
