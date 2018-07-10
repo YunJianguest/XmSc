@@ -116,7 +116,11 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		for(DBObject db:list){
 			if(db.get("fromUserid")!=null){
 				 DBObject  user=wwzService.getWxUser(db.get("fromUserid").toString());
-				 db.put("nickname", user.get("nickname"));
+				 if(user.get("nickname") != null){
+					 db.put("nickname", user.get("nickname"));
+				 }else{
+					 db.put("nickname", user.get("tel")); 
+				 }
 				 db.put("headimgurl", user.get("headimgurl"));
 			}
 		 
@@ -367,8 +371,17 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> sortsMap = new HashMap<String, Object>();
 		String orderId = Struts2Utils.getParameter("orderId");
-		whereMap.put("orderid", orderId);
-		
+		if(StringUtils.isNotEmpty(orderId)){
+			whereMap.put("orderid", orderId);
+			Struts2Utils.getRequest().setAttribute("orderId", orderId);
+		}
+		String title = Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title)){
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("pro.ptitle", pattern);
+			Struts2Utils.getRequest().setAttribute("title", title);
+		}
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}

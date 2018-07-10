@@ -178,7 +178,7 @@ function page_submit(num){
             	 				<option value="1">订单</option>
                     			<option value="2">已购买</option>
                     			<option value="3">已发货</option>
-                    			<option value="4">已收货</option>
+                    			<option value="4">订单已完成</option>
                     			<option value="5">退货</option>
                     			
                  </select>
@@ -205,7 +205,7 @@ function page_submit(num){
                        	<th class="th5">昵称</th>
                         <th class="th5">编号</th>
 						<th class="th8">快递号</th> 
-				     	<th class="th2">金额</th>
+				     	<th class="th2">大众区/特约区/会员区金额</th>
 				     	 
 				     	<th class="th2">数量</th>
 				        <th class="th8">姓名</th>
@@ -224,7 +224,9 @@ function page_submit(num){
                        <td>${bean.nickname}</td>
                       	<td>${bean._id}</td>
 						<td>${bean.kdno}</td> 
-						<td><c:if test="${bean.zfmoney>0.0}"><fmt:formatNumber value='${bean.zfmoney }' pattern="0.0#"/></c:if></td>
+						<td><%-- <c:if test="${bean.zfmoney>0.0}"> --%><fmt:formatNumber value='${bean.public_money }' pattern="0.0#"/>/
+						<fmt:formatNumber value='${bean.contri_money}' pattern="0.0#"/>/
+						<fmt:formatNumber value='${bean.members_money}' pattern="0.0#"/><%-- </c:if> --%></td>
 						 
 						<td><a href="javascript:orderinfo('${bean._id}')" >${bean.count}</a></td>
 						<td>${bean.name}</td>
@@ -235,7 +237,7 @@ function page_submit(num){
                         <td><c:if test="${bean.state=='1'}">下单</c:if>
                         	<c:if test="${bean.state=='2'}">已购买</c:if>
 							<c:if test="${bean.state=='3'}"><span style="color:#F00">已发货</span></c:if>
-							<c:if test="${bean.state=='4'}"><span style="color:#F00">已收货</span></c:if>
+							<c:if test="${bean.state=='4'}"><span style="color:#F00">订单已完成</span></c:if>
 							<%-- <c:if test="${bean.state=='5'}"><span style="color:#F00">已退货</span></c:if> --%></td>
 							 
 						
@@ -247,9 +249,10 @@ function page_submit(num){
                                       <i class="fa fa-cog"></i>
                                   </a>
                                   <ul role="menu" class="dropdown-menu pull-right">
-                                   
+                                      <c:if test="${bean.state<3}">
                                       <li><a href="javascript:fh('${bean._id}');">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;发货</a></li>
+                                     </c:if>
                                       <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId=${bean._id}">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;订单详情</a></li>
                                   </ul>

@@ -34,7 +34,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/intecurrency.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/shop/orderform!orderDetailsById.action?orderId=${orderId}">
               <div class="pageheader">
                 <h2><i class="fa"></i>订单详情<span>商品列表</span></h2>
                 <div class="breadcrumb-wrapper1">
@@ -65,6 +65,7 @@
                                     <th class="table-action">单价</th>
                                     <th class="table-action">数量</th>
                                     <th class="table-action">规格</th>
+                                    <th class="table-action">是否异常</th>
                                     <th class="table-action">操作</th>
                                 </tr>
                                 </thead>
@@ -75,12 +76,19 @@
                                         <td>${bean.pro.price}</td>
                                         <td>${bean.count}</td>
                                         <td>${bean.spec}</td>
+                                        <td>
+                                        <c:if test="${bean.state==0}">否</c:if>
+                                        <c:if test="${bean.state!=0}"><span style="color:#F00">是</span></c:if>
+                                        </td>
                                         <td class="table-action">
                                             <div class="btn-group1">
+                                            <c:if test="${bean.state==0}">
                                                 <a data-toggle="dropdown" class="dropdown-toggle">
                                                     <i class="fa fa-cog"></i>
                                                 </a>
-                                                <ul role="menu" class="dropdown-menu pull-right"> 
+                                                
+                                                <ul role="menu" class="dropdown-menu pull-right">
+                                                   
                                                     <li><a href="${ctx}/shop/orderform!ordercom.action?gid=${bean.pro._id}">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;评论列表</a>
                                                     </li>  
@@ -88,6 +96,7 @@
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;回复</a>
                                                     </li> 
                                                 </ul>
+                                                </c:if> 
                                             </div>
                                         </td>
                                     </tr>
