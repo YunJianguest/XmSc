@@ -44,7 +44,7 @@
 				word-break: break-word;
 				color: #232326;
 				margin-top: 5px;
-				line-height: 17px;
+				line-height: 20px;
 				margin-bottom: 3px;
 				padding: 0 4px;
 			}
@@ -53,19 +53,27 @@
 				display: block;
 				position: relative;
 				overflow: hidden;
-				display: flex;
-				justify-content: space-between;
+				height: 20px;
 			}
-			
+			.similar-product-info span.similar-product-shopCar,.similar-product-info .similar-product-price{
+				display: block;
+				overflow: hidden;
+			}
 			.similar-product-shopCar {
 				width: 18px;
 				height: 18px;
 				display: block;
 				background: url(${ctx}/xmMobile/img/icon/icon-shopCar.png) no-repeat;
-				background-size: 100% auto
+				background-size: 100% auto;
+				position: absolute;
+				right: 5px;
+				top: 0;
 			}
 			.similar-product-price{
 				color: #fd0707;
+				position: absolute;
+				top: 0;
+				left: 0px;
 			}
 		</style>
 		<script type="text/javascript">

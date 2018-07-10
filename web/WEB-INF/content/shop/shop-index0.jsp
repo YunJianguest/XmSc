@@ -82,8 +82,7 @@
 			
 			.mui-grid-view.mui-grid-9 .mui-table-view-cell {
 				border: none;
-				padding-top: 0;
-				padding-bottom: 0;
+				padding: 0 5px;
 			}
 			
 			.mui-grid-view.mui-grid-9 .mui-table-view-cell a:not(.mui-btn) {
