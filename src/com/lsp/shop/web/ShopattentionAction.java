@@ -84,9 +84,9 @@ public class ShopattentionAction extends GeneralAction<ShopAttention>{
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		List<DBObject>attention_list=baseDao.getList(PubConstants.SHOP_SHOPATTENTION, whereMap,fypage,10,sortMap);
+		List<Object> list = new ArrayList<Object>();
 		if(attention_list.size()>0){
 			Map<String, Object> sub_map1;
-			List<Object> list = new ArrayList<Object>();
 			for(int i=0;i<attention_list.size();i++){
 				String shopid = (String)attention_list.get(i).get("shopId");
 				whereMap=new HashMap<String, Object>();
@@ -100,9 +100,9 @@ public class ShopattentionAction extends GeneralAction<ShopAttention>{
 				list.add(sub_map1);
 			}
 			
-			sub_map.put("list",list);
-			sub_map.put("state", attention_list.size());
 		}
+		sub_map.put("list",list);
+		sub_map.put("state", attention_list.size());
 		//String json = JSONArray.fromObject(sub_map).toString();
 		//Struts2Utils.renderJson(json.substring(1, json.length()-1), new String[0]);	
 		

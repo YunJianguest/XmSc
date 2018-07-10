@@ -83,10 +83,10 @@ public class ShopcollectAction extends GeneralAction<ShopCollect>{
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
+		List<Object> list = new ArrayList<Object>();
 		List<DBObject>collect_list=baseDao.getList(PubConstants.SHOP_SHOPCOLLECT, whereMap,fypage,10,sortMap);
 		if(collect_list.size()>0){
 			Map<String, Object> sub_map1;
-			List<Object> list = new ArrayList<Object>();
 			for(int i=0;i<collect_list.size();i++){
 				whereMap=new HashMap<String, Object>();
 				String shopid = (String)collect_list.get(i).get("shopId");
@@ -99,9 +99,9 @@ public class ShopcollectAction extends GeneralAction<ShopCollect>{
 				
 				list.add(sub_map1);
 			}
-			sub_map.put("list",list);
-			sub_map.put("state", collect_list.size());
 		}
+		sub_map.put("list",list);
+		sub_map.put("state", collect_list.size());
 		//String json = JSONArray.fromObject(sub_map).toString();
 		
 		//Struts2Utils.renderJson(json.substring(1, json.length()-1), new String[0]);

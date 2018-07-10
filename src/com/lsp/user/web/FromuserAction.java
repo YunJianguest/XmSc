@@ -295,6 +295,20 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		  if(wwzservice.checkAgent(custid,fromUserid)){
 			 Struts2Utils.getRequest().setAttribute("isAgent","ok");
 		  }
+		  
+		  /**获取商品关注、收藏， 店铺关注、收藏数量***/
+		  HashMap<String, Object> whereMap=new HashMap<String, Object>();
+		 whereMap.put("fromUserid", fromUserid);
+		 Long productattentionCount=basedao.getCount(PubConstants.SHOP_PRODUCTATTENTION, whereMap);
+		 Long productcollectCount=basedao.getCount(PubConstants.SHOP_PRODUCTCOLLET, whereMap);
+		 //店铺关注 收藏
+		 Long shopattentionCount=basedao.getCount(PubConstants.SHOP_SHOPATTENTION, whereMap);
+		 Long shopcollectCount=basedao.getCount(PubConstants.SHOP_SHOPCOLLECT, whereMap);
+		 Struts2Utils.getRequest().setAttribute("productattentionCount",productattentionCount);
+		 Struts2Utils.getRequest().setAttribute("productcollectCount",productcollectCount);
+		 
+		 Struts2Utils.getRequest().setAttribute("shopattentionCount",shopattentionCount);
+		 Struts2Utils.getRequest().setAttribute("shopcollectCount",shopcollectCount);
 		  if(mb!=null&&mb.get("mb")!=null){
 			  return "detail"+mb.get("mb");  
 		  }
