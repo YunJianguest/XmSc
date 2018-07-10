@@ -206,7 +206,7 @@
                             <div class=" div-group-10 pb-25 bg-bai border-radius5 overflow-hidden">
                                 <div class="clear col-2 pl-10 overflow-hidden">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        商品logo<i class="size12 zi-hui">（仅需一张）</i></div>
+                                        商品logo<i class="size12 zi-hui">（仅需一张）（推荐上传图片大小：400px X 400px）</i></div>
                                     <div class="line-bottom line-right line-left1 div-group-5 pt-10 pb-10 overflow-hidden">
                                         <div class="col-6">
                                             <c:if test="${empty entity.logo}">
@@ -305,7 +305,11 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-2 pl-10">
+                              
+
+
+                            <div class="pt-25 clear">
+                              <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         序号
                                     </div>
@@ -316,9 +320,6 @@
                                                placeholder="请输入序号">
                                     </div>
                                 </div>
-
-
-                            <div class="pt-25 clear">
                                <div class="col-2 pl-10">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
                                         分享说明
@@ -420,6 +421,7 @@
 
                     <!--下部编辑器-->
                     <div class="pt-10 clear">
+                    推荐：图片宽为640px,大小不能超过1M
                         <div class="div-group-10 border-radius5 bg-bai">
                             <textarea  name="context" id="context" class="ckeditor" rows="10" cols="38">${context}</textarea>
                             <script id="editor" type="text/plain" style="width:100%;height:300px;">${context}</script>

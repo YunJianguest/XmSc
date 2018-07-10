@@ -41,6 +41,7 @@ import com.lsp.pub.util.XMLUtil;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.suc.entity.IntegralLlInfo;
 import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.Tourism;
 import com.lsp.suc.entity.Comunit;
@@ -61,7 +62,7 @@ import com.mongodb.DBObject;
  */
 @Namespace("/suc")
 @Results({ @Result(name = "reload", location = "integralll.action", type = "redirect") })
-public class IntegralllAction extends GeneralAction<IntegralInfo> {
+public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 
 	private static final long serialVersionUID = -6784469775589971579L;
 	@Autowired
@@ -78,7 +79,7 @@ public class IntegralllAction extends GeneralAction<IntegralInfo> {
 	@Autowired
 	private WebsiteService webService;
 
-	private IntegralInfo entity = new IntegralInfo();
+	private IntegralLlInfo entity = new IntegralLlInfo();
 	private Long _id;
 
 	@Override
@@ -325,7 +326,7 @@ public class IntegralllAction extends GeneralAction<IntegralInfo> {
 	}
 
 	@Override
-	public IntegralInfo getModel() {
+	public IntegralLlInfo getModel() {
 		// TODO Auto-generated method stub
 		return entity;
 	}
@@ -389,9 +390,9 @@ public class IntegralllAction extends GeneralAction<IntegralInfo> {
 		try {
 			if (_id != null) {
 				DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INFO, _id);
-				entity = (IntegralInfo) UniObject.DBObjectToObject(db, IntegralInfo.class);
+				entity = (IntegralLlInfo) UniObject.DBObjectToObject(db, IntegralLlInfo.class);
 			} else {
-				entity = new IntegralInfo();
+				entity = new IntegralLlInfo();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

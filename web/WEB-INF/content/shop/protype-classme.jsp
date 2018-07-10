@@ -69,9 +69,8 @@
 					            		     var obj=list[j].list;
 					            		     if(obj!=null){
 					            		    	 for(var i=0;i<obj.length;i++){
-										    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&thirdtypeid='+obj[i]._id+'"><img src="${filehttp}/'+obj[i].picurl+'"/><span>'+obj[i].name+'</span></a></li>';	
-										    		  } 
-										    		
+										    			html+='<li><a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&thirdtypeid='+obj[i]._id+'&goodstype=${goodstype}"><img src="${filehttp}/'+obj[i].picurl+'"/><span>'+obj[i].name+'</span></a></li>';	
+										    		  } 	
 					            		     }
 					            		     html+='</ul>'; 
 			            		 }  

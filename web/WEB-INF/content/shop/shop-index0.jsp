@@ -492,7 +492,7 @@
 			<div class="mui-row ">
 				<ul class="mui-table-view mui-grid-view public" style="padding-left: 10px;">
 					<li class="mui-table-view-cell mui-media mui-col-xs-12">
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3" style="padding: 0;">
+						<a href="${ctx}/shop/protype!classme.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3" style="padding: 0;">
 							<!--<div class="mui-media-body" style="line-height: 30px;font-weight: 600;height: 30px;font-size: 16px;">-->
 								<!-- 标题 -->
 								<div class="title-txt">
@@ -507,7 +507,7 @@
 					</li>
 					
 					<li class="mui-table-view-cell mui-media mui-col-xs-12" >
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5"style="padding: 0;">
+						<a href="${ctx}/shop/shopmb!shoplist.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=5"style="padding: 0;">
 							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height:30px;">会员区</div>-->
 							<div class="title-txt">
 								<span class="title-layout"> 
@@ -518,7 +518,7 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-12">
-						<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
+						<a href="${ctx}/shop/protype!classme.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
 							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>-->
 							<div class="title-txt">
 								<span class="title-layout"> 

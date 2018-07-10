@@ -173,8 +173,44 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-    	
-    	
-    	
     }
+    public String shoplist() throws Exception{
+    	getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String goodstype = Struts2Utils.getParameter("goodstype");
+		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
+    	return "shoplist";
+    }
+    
+    /**
+     * 店铺列表
+     */
+    public void shopmblist() throws Exception{
+    	getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+    	Map<String, Object> sub_map = new HashMap<String, Object>(); 
+    	HashMap<String, Object>whereMap = new HashMap<>();
+    	HashMap<String, Object>sortMap = new HashMap<>();
+    	sortMap.put("createdate", 1);
+    	String type = Struts2Utils.getParameter("type");
+    	if(StringUtils.isNotEmpty(type)){
+    		whereMap.put("type", Integer.parseInt(type));
+    	}
+    	if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt( Struts2Utils.getParameter("fypage"));
+		}
+    	List<DBObject>list = baseDao.getList(PubConstants.SHOP_SHOPMB, whereMap,fypage,10,sortMap);
+    	if(list.size()>0){
+    		 sub_map.put("list", list);
+    		 sub_map.put("state", 0);
+    	}
+    	String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+    }
+    
+    /**
+     * 
+     */
 }

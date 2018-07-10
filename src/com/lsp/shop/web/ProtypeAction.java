@@ -180,6 +180,9 @@ public class ProtypeAction extends GeneralAction<ProType> {
 	public String classme()throws Exception{
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		String goodstype =Struts2Utils.getParameter("goodstype");
+		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
 		return "classme";
 	}
 	
