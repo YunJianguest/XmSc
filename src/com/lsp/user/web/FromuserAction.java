@@ -254,8 +254,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
 				  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100)); 
 			  } 
-			  //积分
-			  wxUser.put("jf",wwzservice.getJf(custid, fromUserid));
+			  //积分 
+			  Struts2Utils.getRequest().setAttribute("jf", wwzservice.getJf(custid, fromUserid));
 			  Struts2Utils.getRequest().setAttribute("entity", wxUser);
 		  }else{
 			 

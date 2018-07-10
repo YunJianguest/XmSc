@@ -71,9 +71,9 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-5">
                                             <input type="submit" class="btn btn-primary dropdown-toggle"
-                                                   value="提&nbsp;&nbsp;交"/> <input type="reset" class="btn btn-primary dropdown-toggle"
+                                                   value="提&nbsp;&nbsp;交"/> <!-- <input type="reset" class="btn btn-primary dropdown-toggle"
                                                                                    value="重&nbsp;&nbsp;置"
-                                                                                   onClick="document.form.reset();"/>
+                                                                                   onClick="document.form.reset();"/> -->
                                             <input
                                                     type="reset" class="btn btn-primary dropdown-toggle" value="返&nbsp;&nbsp;回"
                                                     onClick="history.back();"/>

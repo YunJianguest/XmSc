@@ -15,110 +15,89 @@
 				background: #fff;
 				height: 100%;
 			}
+			
 			.mui-content{
-				padding-left: 26px;
-				padding-right: 26px;
+				width: 100%;
 				height: 100%;
-				background: #fff;
+				overflow: scroll;
+				background: url('${ctx}/xmMobile/img/beijing.jpg') no-repeat;
+				background-size:100% 100%;
 			}
 			.share{
 				width: 100%;
-				padding: 58px 38px 35px 38px;
-				background: #a5e8e7;
-				border-radius: 5px;
-				display: flex;
-				flex-wrap: wrap;
+				padding: 80px 38px 35px 38px;
 			}
 			.share-canvas{
 				width: 100%;
 				text-align: center;
+				padding: 10px;
+				border-radius:10px;
+			}
+			canvas{
+				padding: 10px;
+				border-radius: 10px;
+				background: #fff;
+			}
+			.share-logo{
+				margin-bottom: 14px;
+			}
+			.share-logo-box{
+				width: 150px;
+				height: 64px;
+				margin: 0 auto;
+				border: 3px solid #00d6ff;
+				text-align: center;
+			}
+			.share-logo-box img{
+				width: 100px;
+				height: 64px;
+				margin: 0 auto;
+				vertical-align: middle;
+				text-align: center;
 			}
 			.share-tit{
+				width: 240px;
+				height: 40px;
+				line-height: 40px;
+				border: 2px solid rgba(255,255,255,.5);
+				margin: 0 auto;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+				margin-top: 10px;
+			}
+			.share-txt{
 				width: 100%;
-				margin-top: 40px;
-				line-height: 46px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				
-			}
-			.share-tit img{
-				width: 70px;
-				height: 44px;
-			}
-			.share-tit p{
-				font-size:17px;
-				color: #FFFEFE;
-				margin-left: -10px;
-				font-weight: 600;
-			}
-			.share-area{
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-top: 50px;
-			}
-			.share-area span{
-				width: 150px;
-				height: 50px;
-				line-height: 50px;
-				border-radius: 13px;
-				border: 1px solid #000;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-size: 14px;
-				color: #000;
-			}
-			.friends{
-				background: url('${ctx}/xmMobile/images/CircleFriends.png') no-repeat;
-				display: inline-block;
-				width: 31px;
-				height: 31px;
-				background-size: 100% auto;
-				margin-right: 10px;
-			}
-			.wx{
-				background: url('${ctx}/xmMobile/images/weixin.png') no-repeat;
-				display: inline-block;
-				width: 31px;
-				height: 31px;
-				background-size: 100% auto;
-				margin-right: 10px;
+				height: 34px;
+				line-height: 34px;
+				color: rgb(34,46,110);
+				text-align: center;
 			}
 		</style>
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav" style="background: #fff;box-shadow: none;">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
-		    <h1 class="mui-title">分享</h1>-->
-		    <!--<span class="mui-pull-right">保存到手机</span>-->
-		<!--</header>-->
+		
 		<div class="mui-content" style="padding-top: 10px;">
+			
 		    <div class="mui-row">
+		    	
 		    	<div class="share">
-		    		<div class="share-canvas" id="qrcode">
-		    			
+		    		<div class="share-logo">
+		    			<div class="share-logo-box">
+		    				<img src="${ctx}/xmMobile/img/icon/sharelogo.png"/>
+		    			</div>
 		    		</div>
+		    		<div class="share-canvas" id="qrcode"></div>
 		    		<div class="share-tit">
-		    			<img src="${ctx}/xmMobile/img/icon/icon-logo-2.png"/>
-		    			<p>熊猫商城APP</p>
+		    			扫描进入熊猫商城
+		    		</div>
+		    		<div class="share-txt">
+		    			全球首家数字货币购物商城
 		    		</div>
 		    	</div>
 		    </div>
-		    <div class="mui-row">
-		    	<div class="share-area">
-		    		<span>
-		    			<i class="mui-icon friends"></i>
-		    			朋友圈
-		    		</span>
-		    		<span>
-		    			<i class="mui-icon wx"></i>
-		    			微信
-		    		</span>
-		    	</div>
-		    </div>
+		    
 		</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="${ctx}/app/js/jquery.qrcode.js"></script>
@@ -159,7 +138,7 @@
 				wx.onMenuShareWeibo(share);
 			});
 
-			var w= ($(window).width()-38*2)/2;
+			var w= ($(window).width()-38*2)/2+50;
 			$(function(){
 				$('#qrcode').qrcode({ 
 					  width : w,

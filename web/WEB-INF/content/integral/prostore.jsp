@@ -144,9 +144,9 @@
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                                 <ul role="menu" class="dropdown-menu pull-right">
-                                                    <li><a href="javascript:resure('${bean._id}');">
+                                                   <%--  <li><a href="javascript:resure('${bean._id}');">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;确定回本</a>
-                                                    </li> 
+                                                    </li> --%> 
                                                     <li><a href="${ctx}/integral/miners!pcdetail.action?id=${bean._id}">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;矿机详情</a>
                                                     </li> 

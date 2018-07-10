@@ -185,6 +185,279 @@ public class UserInfo extends ReflectionDBObject {
 	 */
 	private int    tjlx; 
 	
+	
+	public boolean isIsadmin() {
+		return isadmin;
+	}
+
+	public void setIsadmin(boolean isadmin) {
+		this.isadmin = isadmin;
+	}
+
+	public String getSno() {
+		return sno;
+	}
+
+	public void setSno(String sno) {
+		this.sno = sno;
+	}
+
+	public String getWxid() {
+		return wxid;
+	}
+
+	public void setWxid(String wxid) {
+		this.wxid = wxid;
+	}
+
+	public String getComname() {
+		return comname;
+	}
+
+	public void setComname(String comname) {
+		this.comname = comname;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getUserimg() {
+		return userimg;
+	}
+
+	public void setUserimg(String userimg) {
+		this.userimg = userimg;
+	}
+
+	public String getSfz() {
+		return sfz;
+	}
+
+	public void setSfz(String sfz) {
+		this.sfz = sfz;
+	}
+
+	public String getSfzpic() {
+		return sfzpic;
+	}
+
+	public void setSfzpic(String sfzpic) {
+		this.sfzpic = sfzpic;
+	}
+
+	public List<Double> getLoc() {
+		return loc;
+	}
+
+	public void setLoc(List<Double> loc) {
+		this.loc = loc;
+	}
+
+	public int getLx() {
+		return lx;
+	}
+
+	public void setLx(int lx) {
+		this.lx = lx;
+	}
+
+	public Long getWid() {
+		return wid;
+	}
+
+	public void setWid(Long wid) {
+		this.wid = wid;
+	}
+
+	public String getComUser() {
+		return comUser;
+	}
+
+	public void setComUser(String comUser) {
+		this.comUser = comUser;
+	}
+
+	public int getLy() {
+		return ly;
+	}
+
+	public void setLy(int ly) {
+		this.ly = ly;
+	}
+
+	public String getQtUser() {
+		return qtUser;
+	}
+
+	public void setQtUser(String qtUser) {
+		this.qtUser = qtUser;
+	}
+
+	public int getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(int groupid) {
+		this.groupid = groupid;
+	}
+
+	public int getXh() {
+		return xh;
+	}
+
+	public void setXh(int xh) {
+		this.xh = xh;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public Long getBbscount() {
+		return bbscount;
+	}
+
+	public void setBbscount(Long bbscount) {
+		this.bbscount = bbscount;
+	}
+
+	public String getLevelimgurl() {
+		return levelimgurl;
+	}
+
+	public void setLevelimgurl(String levelimgurl) {
+		this.levelimgurl = levelimgurl;
+	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public int getNeedExperience() {
+		return needExperience;
+	}
+
+	public void setNeedExperience(int needExperience) {
+		this.needExperience = needExperience;
+	}
+
+	public int getGetExperience() {
+		return getExperience;
+	}
+
+	public void setGetExperience(int getExperience) {
+		this.getExperience = getExperience;
+	}
+
+	public String getHumor() {
+		return humor;
+	}
+
+	public void setHumor(String humor) {
+		this.humor = humor;
+	}
+
+	public boolean isIsqqvip() {
+		return isqqvip;
+	}
+
+	public void setIsqqvip(boolean isqqvip) {
+		this.isqqvip = isqqvip;
+	}
+
+	public boolean isIsqqhz() {
+		return isqqhz;
+	}
+
+	public void setIsqqhz(boolean isqqhz) {
+		this.isqqhz = isqqhz;
+	}
+
+	public int getQqHzdj() {
+		return qqHzdj;
+	}
+
+	public void setQqHzdj(int qqHzdj) {
+		this.qqHzdj = qqHzdj;
+	}
+
+	public String getLoginname() {
+		return loginname;
+	}
+
+	public void setLoginname(String loginname) {
+		this.loginname = loginname;
+	}
+
+	public String getLoginpasswd() {
+		return loginpasswd;
+	}
+
+	public void setLoginpasswd(String loginpasswd) {
+		this.loginpasswd = loginpasswd;
+	}
+
+	public String getExpbl() {
+		return expbl;
+	}
+
+	public void setExpbl(String expbl) {
+		this.expbl = expbl;
+	}
+
+	public Long getTackcount() {
+		return tackcount;
+	}
+
+	public void setTackcount(Long tackcount) {
+		this.tackcount = tackcount;
+	}
+
+	public int getAndroidAdmin() {
+		return androidAdmin;
+	}
+
+	public void setAndroidAdmin(int androidAdmin) {
+		this.androidAdmin = androidAdmin;
+	}
+
+	public int getOnline() {
+		return online;
+	}
+
+	public void setOnline(int online) {
+		this.online = online;
+	}
+
+	public int getTjlx() {
+		return tjlx;
+	}
+
+	public void setTjlx(int tjlx) {
+		this.tjlx = tjlx;
+	}
+
 	public String getReno() {
 		return reno;
 	}
