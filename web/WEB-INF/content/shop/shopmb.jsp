@@ -120,7 +120,7 @@
                             <li> <a href="javascript:add();">
                                  <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp; 添加店铺</a>
                             </li>
-                            <li><a href="javascript:qrcode('${ctxurl}/shop/shop!storepayweb.action?custid=${custid}')"><i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;&nbsp;支付预览</a></li>
+                            <%-- <li><a href="javascript:qrcode('${ctxurl}/shop/shop!storepayweb.action?custid=${custid}')"><i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;&nbsp;支付预览</a></li> --%>
                              
                         </ul>
                     </div>
@@ -251,11 +251,11 @@
                                 <select id="mb" name="mb" class="select2 hang40"
                                         data-placeholder="请选择">
                                     <option value="0">图标两行</option>
-                                    <option value="1">图标一行</option>
+                                   <!--  <option value="1">图标一行</option>
                                     <option value="2">图片两行</option>
                                     <option value="3">瀑布模板</option>
                                     <option value="4">图片一行</option>
-                                    <option value="5">分销模板</option>
+                                    <option value="5">分销模板</option> -->
                                 </select>
                                 <label class="error" for="color"></label>
                             </div>
