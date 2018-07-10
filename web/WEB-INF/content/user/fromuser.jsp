@@ -221,9 +221,9 @@
                                                 <a data-toggle="dropdown" class="dropdown-toggle"> <i
                                                         class="fa fa-cog"></i> </a>
                                                 <ul role="menu" class="dropdown-menu pull-right">
-                                                <li><a href="javascript:updjf('${bean._id}');">
+                                                <%-- <li><a href="javascript:updjf('${bean._id}');">
                                                             <i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;&nbsp;更新积分</a>
-                                                </li>
+                                                </li> --%>
                                                 <li><a href="javascript:upd('${bean._id}');">
                                                             <i class="fa fa-refresh"></i>&nbsp;&nbsp;&nbsp;&nbsp;修改密码</a>
                                                 </li>
