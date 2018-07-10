@@ -12,8 +12,7 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			classpath*:/applicationContext.xml 
-		    classpath*:/applicationContext-mq.xml
+			classpath*:/applicationContext.xml  
 			classpath*:/applicationContext-security.xml 
 			classpath*:/applicationContext-quartz.xml 
 		</param-value>
@@ -161,51 +160,6 @@
   
     </listener>  
 	
-	   <servlet>  
-<servlet-name>dwr-invoker</servlet-name>  
-<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>  
-<init-param>  
-    <param-name>debug</param-name>  
-    <param-value>true</param-value>  
-</init-param> 
-
- <init-param>  
+ 
   
-  <param-name>pollAndCometEnabled</param-name>  
-  
-            <param-value>true</param-value>  
-  
- </init-param>
-  <init-param>  
-          <param-name >org.directwebremoting.extend.ScriptSessionManager </param-name>  
-          <param-value >com.lsp.dwr.service.DWRScriptSessionManager </param-value>  
-  </init-param>  
- </servlet>  
-  
- <servlet-mapping>  
-<servlet-name>dwr-invoker</servlet-name>  
-<url-pattern>/dwr/*</url-pattern>  
-</servlet-mapping> 
-
-<servlet>
-        <servlet-name>login</servlet-name>
-        <servlet-class>com.qq.connect.IndexServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>login</servlet-name>
-        <!-- 业界标准 用.do后缀来表示 controler -->
-        <url-pattern>/login.do</url-pattern>
-    </servlet-mapping> 
-<servlet>
-        <servlet-name>afterlogin</servlet-name>
-        <servlet-class>com.qq.connect.AfterLoginRedirectServlet</servlet-class>
-</servlet>
-
-      <servlet-mapping>
-        <servlet-name>afterlogin</servlet-name>
-        <!-- 业界标准 用.do后缀来表示 controler -->
-        <url-pattern>/afterlogin.do</url-pattern>
-      </servlet-mapping>
-
 </web-app>

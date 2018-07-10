@@ -68,6 +68,7 @@ import com.lsp.suc.entity.Taskresults;
 import com.lsp.suc.entity.Comunit;
 import com.lsp.user.entity.Authcode;
 import com.lsp.user.entity.FriendsInfo;
+import com.lsp.user.entity.UserInfo;
 import com.lsp.user.entity.UserLoginDetail;
 import com.lsp.website.entity.WwzFlowInfo;
 import com.lsp.weixin.entity.Experience;
@@ -360,7 +361,7 @@ public class WwzService {
 	 * @param type
 	 */
 	public String getUserName(String fromUser) {
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUser);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUser);
 		String name = "游客";
 		if (db != null && db.get("nickname") != null) {
 			name = db.get("nickname").toString();
@@ -375,9 +376,9 @@ public class WwzService {
 	 * @param type
 	 */
 	public DBObject getWxUser(String fromUserid) {
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUserid);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
 		if (db == null) {
-			db = new WxUser();
+			db = new UserInfo();
 			db.put("nickname", "游客");
 			db.put("no", "未注册");
 			db.put("humor", "暂无心情");
@@ -399,7 +400,7 @@ public class WwzService {
 		}
 		HashMap<String, Object> backMap = new HashMap<>();
 		backMap.put(type, 1);
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUserid, backMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid, backMap);
 		if (db != null && db.get(type) != null) {
 			return db.get(type).toString();
 
@@ -420,7 +421,7 @@ public class WwzService {
 		HashMap<String, Object> whereMap = new HashMap<>();
 		whereMap.put("fromUser", fromUser);
 		whereMap.put("custid", custid);
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 		if (db != null) {
 			return db;
 		}
@@ -432,7 +433,7 @@ public class WwzService {
 	 */
 	public String getVipNo() {
 		String vipno = null;
-		Long count = baseDao.getCount(PubConstants.DATA_WXUSER);
+		Long count = baseDao.getCount(PubConstants.USER_INFO);
 		while (true) {
 			if (count.toString().length() >= 5 && Double
 					.parseDouble(count.toString()) >= Math.pow(10, Double.parseDouble(count.toString()) + 1) - 10000) {
@@ -445,7 +446,7 @@ public class WwzService {
 				// 检查是否唯一
 				HashMap<String, Object> whereMap = new HashMap<String, Object>();
 				whereMap.put("no", vipno);
-				Long num = baseDao.getCount(PubConstants.DATA_WXUSER, whereMap);
+				Long num = baseDao.getCount(PubConstants.USER_INFO, whereMap);
 				if (num == 0) {
 					break;
 				}
@@ -464,9 +465,9 @@ public class WwzService {
 	 * @param type
 	 */
 	public DBObject getWxUser(HashMap<String, Object> whereMap) {
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 		if (db == null) {
-			db = new WxUser();
+			db = new UserInfo();
 			db.put("nickname", "游客");
 			db.put("no", "未注册");
 			db.put("humor", "暂无心情");
@@ -486,9 +487,9 @@ public class WwzService {
 	public DBObject getWxUsers(String fromUser) {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("fromUser", fromUser);
-		DBObject db = baseDao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 		if (db == null) {
-			db = new WxUser();
+			db = new UserInfo();
 			db.put("nickname", "游客");
 			db.put("no", "未注册");
 			db.put("humor", "暂无心情");
@@ -734,7 +735,7 @@ public class WwzService {
 
 				return false;
 			}
-			WxUser user = (WxUser) UniObject.DBObjectToObject(db, WxUser.class);
+			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
 			if (StringUtils.isEmpty(user.getProvince())) {
 				user.setCity(map.getString("city"));
 				user.setCountry(map.getString("country"));
@@ -785,7 +786,7 @@ public class WwzService {
 			user.setLanguage(map.getString("language"));
 			user.setCreatedate(new Date());
 			user.setNickname(map.getString("nickname"));
-			baseDao.insert(PubConstants.DATA_WXUSER, user);
+			baseDao.insert(PubConstants.USER_INFO, user);
 			return true;
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -813,7 +814,7 @@ public class WwzService {
 				return false;
 			}
 
-			WxUser user = (WxUser) UniObject.DBObjectToObject(db, WxUser.class);
+			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
 			if (StringUtils.isEmpty(user.getProvince())) {
 				user.setCity(map.getString("city"));
 				user.setCountry(map.getString("country"));
@@ -864,7 +865,7 @@ public class WwzService {
 			user.setLanguage(map.getString("language"));
 			user.setCreatedate(new Date());
 			user.setNickname(map.getString("nickname"));
-			baseDao.insert(PubConstants.DATA_WXUSER, user);
+			baseDao.insert(PubConstants.USER_INFO, user);
 			return true;
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -888,26 +889,26 @@ public class WwzService {
 		if (StringUtils.isNotEmpty(fromUser)) {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("fromUser", fromUser);
-			List<DBObject> list = baseDao.getList(PubConstants.DATA_WXUSER, whereMap, null);
+			List<DBObject> list = baseDao.getList(PubConstants.USER_INFO, whereMap, null);
 			if (list.size() == 0) {
-				WxUser user = new WxUser();
+				UserInfo user = new UserInfo();
 				String id = UUID.randomUUID().toString();
 				user.set_id(id);
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
 				user.setNo(getVipNo());
 				baseDao.insert(PubConstants.DATA_WXUSER, user);
-				updateUser(token, baseDao.getMessage(PubConstants.DATA_WXUSER, id));
+				updateUser(token, baseDao.getMessage(PubConstants.USER_INFO, id));
 
 				return id;
 			} else {
 				/**
 				 * 返回查到的用户
 				 */
-				WxUser user = (WxUser) UniObject.DBObjectToObject(list.get(0), WxUser.class);
+				UserInfo user = (UserInfo) UniObject.DBObjectToObject(list.get(0), UserInfo.class);
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
-				baseDao.insert(PubConstants.DATA_WXUSER, user);
+				baseDao.insert(PubConstants.USER_INFO, user);
 				if (list.get(0).get("headimgurl") == null || list.get(0).get("nickname") == null
 						|| list.get(0).get("nickname").equals("游客")) {
 
@@ -928,26 +929,26 @@ public class WwzService {
 			whereMap.put("fromUser", fromUser);
 			List<DBObject> list = baseDao.getList(PubConstants.DATA_WXUSER, whereMap, null);
 			if (list.size() == 0) {
-				WxUser user = new WxUser();
+				UserInfo user = new UserInfo();
 				String id = UUID.randomUUID().toString();
 				user.set_id(id);
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
 				user.setNo(getVipNo());
 				// 推荐人推荐号码保存
-				user.setReno(Integer.parseInt(number));
-				baseDao.insert(PubConstants.DATA_WXUSER, user);
-				updateUser(token, baseDao.getMessage(PubConstants.DATA_WXUSER, id));
+				user.setReno(number);
+				baseDao.insert(PubConstants.USER_INFO, user);
+				updateUser(token, baseDao.getMessage(PubConstants.USER_INFO, id));
 
 				return id;
 			} else {
 				/**
 				 * 返回查到的用户
 				 */
-				WxUser user = (WxUser) UniObject.DBObjectToObject(list.get(0), WxUser.class);
+				UserInfo user = (UserInfo) UniObject.DBObjectToObject(list.get(0), UserInfo.class);
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
-				baseDao.insert(PubConstants.DATA_WXUSER, user);
+				baseDao.insert(PubConstants.USER_INFO, user);
 				if (list.get(0).get("headimgurl") == null || list.get(0).get("nickname") == null
 						|| list.get(0).get("nickname").equals("游客")) {
 
@@ -2908,10 +2909,7 @@ public class WwzService {
 			if (db != null) {
 				InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 				// 获取当前赠送数量
-				double now =0;
-				if(inteSetting.getNownums()!=null){
-					now= Double.parseDouble(inteSetting.getNownums());
-				} 
+				double now = Double.parseDouble(inteSetting.getNownums());
 				if (now > 0 && now < 50000000) {
 					// 1倍
 					return BaseDecimal.multiplication(price + "", "1");
@@ -2928,7 +2926,7 @@ public class WwzService {
 
 			}
 		}
-		return "0";
+		return null;
 	}
 	
 	/**

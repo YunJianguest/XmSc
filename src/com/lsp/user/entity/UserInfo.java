@@ -77,6 +77,162 @@ public class UserInfo extends ReflectionDBObject {
 	//推荐部门编号
 	private Long deptnumber;
 	private String rolename; 
+	private String country;
+	private String sex;
+	private String headimgurl;
+	private String language; 
+	private String no; 
+	private String reno;
+	
+	/**
+	 * 是否为管理员
+	 * 
+	 */
+	private boolean  isadmin; 
+	/**
+	 * 绑定号
+	 */
+	private String sno; 
+	/**
+	 * 微信id
+	 */
+	private String wxid; 
+	
+	private String comname;
+	private String name;
+	private String qq; 
+	/**
+	 * 用户照片
+	 */
+	private String userimg;
+	private String sfz; 
+	private String sfzpic; 
+	/**
+	 * 经纬度，经度在前，纬度在后
+	 */
+	private List<Double> loc; 
+	
+	/**
+	 * 0 默认 
+	 */
+	private int lx;
+	
+	private Long wid;
+	
+	private String comUser;
+	/**
+	 * 来源
+	 */
+	private int ly;
+	/**
+	 * 其他来源同步用户
+	 */
+	private String qtUser;
+	private int groupid;
+	 
+	/**
+	 * 序号
+	 */
+	private int xh; 
+	/**
+	 * 等级
+	 * @return
+	 */
+	private int   level;
+	/**
+	 * 论坛帖子
+	 */
+	private Long   bbscount;
+	/**
+	 * 徽章
+	 */
+	private String levelimgurl;
+	/**
+	 * 累计总经验
+	 * @return
+	 */
+	private int  experience;
+	/**
+	 * 升级需要经验
+	 */
+	private int  needExperience;
+	/**
+	 * 当前获得经验
+	 */
+	private int  getExperience;
+	/**
+	 * 心情
+	 * @return
+	 */
+	private String humor;
+	private boolean isqqvip;
+	private boolean isqqhz;
+	private int     qqHzdj;
+	private String loginname;
+	private String loginpasswd;
+	private String    expbl; 
+	private Long    tackcount;
+	/**
+	 * 是否是安卓管理员
+	 */
+	private int     androidAdmin; 
+	/**
+	 * 是否在线0不在线1在线
+	 */
+	private int     online; 
+	/**
+	 * 推荐类型（0默认1推荐id为管理员id）
+	 */
+	private int    tjlx; 
+	
+	public String getReno() {
+		return reno;
+	}
+
+	public void setReno(String reno) {
+		this.reno = reno;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getHeadimgurl() {
+		return headimgurl;
+	}
+
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	public String getRolename() {
 		return rolename;
 	}

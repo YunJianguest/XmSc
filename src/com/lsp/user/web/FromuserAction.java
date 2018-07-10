@@ -250,8 +250,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			  Long tackcount=basedao.getCount(PubConstants.SUC_TASK);
 			  wxUser.put("bbscount",bbscount); 
 			  wxUser.put("tackcount",tackcount); 
-			  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
-			  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100));
+			  if(wxUser.get("getExperience")!=null&&wxUser.get("needExperience")!=null) {
+				  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
+				  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100)); 
+			  } 
 			  //积分
 			  wxUser.put("jf",wwzservice.getJf(custid, fromUserid));
 			  Struts2Utils.getRequest().setAttribute("entity", wxUser);
