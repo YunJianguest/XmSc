@@ -99,9 +99,9 @@
 				width: 100%;
 				height: 40px;
 				position: relative;
-				display: flex;
+				/*display: flex;
 				justify-content: space-between;
-				align-items: center;
+				align-items: center;*/
 				border:1px solid #eee;
 		        border-radius:10px;
 		        padding:0 10px; 
@@ -468,8 +468,8 @@
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 30px;height:30px;padding: 5px;"/></div>
-						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;padding-top: 5px;" id='news'>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 30px;height:30px;margin-top: 5px;"/></div>
+						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
 							<ul>
