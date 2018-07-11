@@ -324,6 +324,7 @@
 			z-index: 20;
 			/*position: fixed;*/
 			max-width: 640px;
+			text-align: center;
 		}
 		.search-box-urlBack {
 			position: absolute;
