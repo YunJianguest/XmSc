@@ -443,6 +443,7 @@
 			 <div class="search search-h">
 
 				<div class="search-box">
+					<div class="search-back on-blur"></div>
 					<div class="search-box-tb ">
 						<div class="search-box-urlBack" onclick="javascript:window.history.back(-1)">
 							<span class="search-box-urlBack-back iconLeft">返回</span>
