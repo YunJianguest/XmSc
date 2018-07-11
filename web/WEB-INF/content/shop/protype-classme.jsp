@@ -25,7 +25,7 @@
 		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
 		<link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/swiper.css" />
-		<<!--link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/xmMobilePro.css" /-->>
+		<!--link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/xmMobilePro.css" /-->
 		<!--<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mediaJfyPro.css" />-->
 		<style type="text/css">
 			.category {
