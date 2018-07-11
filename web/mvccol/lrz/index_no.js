@@ -1,4 +1,4 @@
-var fileInput=function(v,l) {
+var fileInput=function(v,l,p) {
 
 	var input =document.querySelector('.'+v);
 	var types = [".jpg",".jpeg",".gif",".png",".JPG",".JPEG",".PNG",".RAW"];
@@ -27,14 +27,18 @@ var fileInput=function(v,l) {
 	  
 	        setTimeout(function () { 
 	            $.post( 
-	            	"http://www.pskjyf.com/suc/lrzimg!imginput.action",
+	            	"http://localhost:8080/XmSc/suc/lrzimg!imginput.action",
 	            	{
 	                    imgBase64:base64,
 	                    imgSize: base64.length, // 校验用，防止未完整接收
 	                    imgName: fileName, 
 	                },
 	                function (data) {
+	                	console.log(fileName);
+	                	console.log(data);
 	                	   $("#"+l).val(data.path);
+	                	   console.log("http://localhost:8080/uploads/"+data.path);
+	                	   $("#"+p).attr("src","http://localhost:8080/uploads/"+data.path);
 	                    }
 	            );
 	        },"json", 1000);

@@ -613,6 +613,16 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String tel=Struts2Utils.getParameter("tel");
 		String yzcode=Struts2Utils.getParameter("yzcode"); 
 		String password=Struts2Utils.getParameter("password"); 
+		
+		String userName = Struts2Utils.getParameter("username");//真实姓名
+		String id_card = Struts2Utils.getParameter("id_card");//身份证号码
+		String id_card_front = Struts2Utils.getParameter("id_card_front");//身份证正面照
+		String id_card_reverse = Struts2Utils.getParameter("id_card_recverse");//身份证反面照
+		String company_name = Struts2Utils.getParameter("company_name"); //公司名称
+		String lisense_number= Struts2Utils.getParameter("lisense_number"); //营业证号码
+		String lisense_photo = Struts2Utils.getParameter("lisense_photo"); //营业证照片
+		String status = Struts2Utils.getParameter("status"); //状态
+		
 		whereMap.put("tel", tel);
 		Long count =basedao.getCount(PubConstants.DATA_WXUSER, whereMap);
 		
@@ -621,14 +631,40 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			if (code!=null&&code.getCode().equals(yzcode)) {
 				//验证时间
 				if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
-					WxUser user = new WxUser();
-					user.set_id(UUID.randomUUID().toString());
-					user.setTel(tel);
-					user.setPassword(password);
-					basedao.insert(PubConstants.DATA_WXUSER, user);
-					String lscode=wwzservice.createcode(user.get_id().toString());
-					sub_map.put("lscode", lscode);//注册成功
-					sub_map.put("state", 0);//注册成功
+					if(status.equals("1")) {//个人注册
+						UserInfo user = new UserInfo();
+						user.set_id(UUID.randomUUID().toString());
+						user.setAccount(tel);
+						user.setTel(tel);
+						user.setPassword(password);
+						user.setCustid(SysConfig.getProperty("custid"));
+						user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
+						
+						basedao.insert(PubConstants.USER_INFO, user);
+						String lscode=wwzservice.createcode(user.get_id().toString());
+						sub_map.put("lscode", lscode);//注册成功
+						sub_map.put("state", 0);//注册成功
+					}else if(status.equals("2")) {//商家注册
+						UserInfo user = new UserInfo();
+						user.set_id(UUID.randomUUID().toString());
+						user.setAccount(tel);
+						user.setTel(tel);
+						user.setPassword(password);
+						user.setCustid(SysConfig.getProperty("custid"));
+						user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
+						user.setUserName(userName);
+						user.setId_card(id_card);
+						user.setId_card_front(id_card_front);
+						user.setId_card_reverse(id_card_reverse);
+						user.setCompany_name(company_name);
+						user.setLisense_number(lisense_number);
+						user.setLisense_photo(lisense_photo);
+						basedao.insert(PubConstants.USER_INFO, user);
+						String lscode=wwzservice.createcode(user.get_id().toString());
+						sub_map.put("lscode", lscode);//注册成功
+						sub_map.put("state", 0);//注册成功
+					}
+					
 				}else{
 					sub_map.put("state", 4);//验证码超时
 				}

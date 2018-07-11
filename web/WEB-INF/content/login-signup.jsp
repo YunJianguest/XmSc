@@ -167,8 +167,22 @@
 				</div>
 				<div class="mui-input-row afterhide" style="height:auto;overflow: hidden;">
 					<label style="width: 100%;">上传身份证照片</label>
-					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative"><input style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;"  type="file" onclick="pz('logo','200','200',false,this)"><span class="Idimg" >身份证正面</span></p>
-					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative"><input style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;"  type="file"><span class="Idimg">身份证反面</span></p>
+					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
+						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
+	        			<label for="upload">
+	        				<span class="Idimg">身份证正面</span>
+	        				<img width="100" height="100" src="" alt="" id="imgss_front" />
+	        			</label>
+	        			<input type="hidden" id="up_picture_front"/>
+					</p>
+					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
+						<input type="file" class="picture1" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload1" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse()"/>
+	        			<label for="upload">
+	        				<span class="Idimg">身份证反面</span>
+	        				<img width="100" height="100" src="" alt="" id="imgss_reverse" />
+	        			</label>
+	        			<input type="hidden" id="up_picture_reverse"/>
+					</p>
 				</div>
                 <div class="mui-input-row">
 					<label>公司名称</label>
@@ -179,8 +193,15 @@
 					<input id='yingyeId' type="text" class=" mui-input " placeholder="请填写准确的营业证号码">
 				</div>
 				<div class="mui-input-row afterhide" style="height:auto;overflow: hidden;">
-					<label style="width: 100%;">上传身份证照片</label>
-					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative"><input style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;"  type="file"><span class="Idimg">营业执照照片</span></p>
+					<label style="width: 100%;">上传营业证照片</label>
+					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
+						<input type="file" class="picture2" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload2" value="" placeholder="" style="display: none;" onclick="upload_business()"/>
+	        			<label for="upload">
+	        				<span class="Idimg">营业执照照片</span>
+	        				<img width="100" height="100" src="" alt="" id="imgss" />
+	        			</label>
+	        			<input type="hidden" id="up_picture"/>
+					</p>
 				</div>
 			</form>
 			</div>
@@ -244,7 +265,7 @@
 						var timer = setInterval(countDown, 1000);
 						$.ajax({
 							type:"post",
-							url:"",
+							url:"${ctx}/user/fromuser!createTelCode.action",
 							async:true,
 							data:{
 								phone:$('#phone').val()
@@ -369,7 +390,7 @@
 							type:"post",
 							url:"${ctx}/user/fromuser!signup.action",
 							async:true,
-							data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val(),name_confirm:$('#name_confirm').val(),nameId:$('nameId').val(),yingyename:$('#yingyename').val(),yingyeId:$('#yingyeId').val(),status:2},
+							data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val(),username:$('#name_confirm').val(),id_card:$('nameId').val(),id_card_front:$('up_picture_front').val(),id_card_reverse:$('up_picture_reverse').val(),company_name:$('#yingyename').val(),lisense_number:$('#yingyeId').val(),lisense_photo:$('up_picture').val(),status:2},
 							success:function(json){
 								if(json){
 									if(json.state == 0){
@@ -383,7 +404,25 @@
 					}
 				})
 			})
+			
+			
 		</script>
-		<%@include file="/webcom/cut-img1.jsp" %>
+		
  	</body>
+ 	<script src="${ctx}/mvccol/lrz/index_no.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		
+		function upload_id_card_front(){
+			//picture代表input<file类型>的class的值，up_picture代表隐藏（hidden）的input的id值，imgss代表<img>标签的id值
+			fileInput("picture","up_picture_front","imgss_front");
+		}
+		
+		function upload_id_card_reverse(){
+			fileInput("picture1","up_picture_reverse","imgss_reverse");
+		}
+		
+		function upload_business(){
+			fileInput("picture2","up_picture","imgss");
+		}
+		</script>
 </html>
