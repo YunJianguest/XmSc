@@ -468,7 +468,7 @@
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.png" style="width: 100%;height: 100%;"/></div>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 100%;height: 100%;"/></div>
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
