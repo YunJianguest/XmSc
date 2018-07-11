@@ -135,7 +135,7 @@
 			.news-cont .mui-col-xs-10 ul li {
 				float: left;
 				font-size: 12px;
-				line-height: 25px;
+				line-height: 20px;
 			}
 		
 			#newsmore {
