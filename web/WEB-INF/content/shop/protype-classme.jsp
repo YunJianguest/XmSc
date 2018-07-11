@@ -299,6 +299,7 @@
 			position: relative;
 			height: 40px;
 			/*top: -4px;*/
+			background: #fff;
 		}
 		
 		.search-h {
@@ -306,7 +307,6 @@
 		}
 		
 		.search-back {
-			background: #e4393c;
 			opacity: 0;
 			height: 40px;
 			width: 100%;
@@ -322,7 +322,6 @@
 			z-index: 20;
 			/*position: fixed;*/
 			max-width: 640px;
-			background: #f86262;
 		}
 		.search-box-urlBack {
 			position: absolute;
