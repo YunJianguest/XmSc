@@ -611,9 +611,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sub_map.put("state", 1);
 		String tel=Struts2Utils.getParameter("tel");
-		String yzcode=Struts2Utils.getParameter("yzcode"); 
+		String yzcode=Struts2Utils.getParameter("verCode"); 
 		String password=Struts2Utils.getParameter("password"); 
-		
+		System.out.println("手机验证码-verCode--》"+yzcode);
 		String userName = Struts2Utils.getParameter("username");//真实姓名
 		String id_card = Struts2Utils.getParameter("id_card");//身份证号码
 		String id_card_front = Struts2Utils.getParameter("id_card_front");//身份证正面照
@@ -624,9 +624,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String status = Struts2Utils.getParameter("status"); //状态
 		
 		whereMap.put("tel", tel);
-		Long count =basedao.getCount(PubConstants.DATA_WXUSER, whereMap);
+		Long count =basedao.getCount(PubConstants.USER_INFO, whereMap);
 		
 		Code code=GetAllFunc.telcode.get(tel); 
+		System.out.println("手机验证码---》"+code.getCode());
 		if(count == 0){
 			if (code!=null&&code.getCode().equals(yzcode)) {
 				//验证时间
