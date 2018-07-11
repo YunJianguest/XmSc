@@ -27,7 +27,7 @@ var fileInput=function(v,l,p) {
 	  
 	        setTimeout(function () { 
 	            $.post( 
-	            	"http://localhost:8080/XmSc/suc/lrzimg!imginput.action",
+	            	"http://xmshop365.com/suc/lrzimg!imginput.action",
 	            	{
 	                    imgBase64:base64,
 	                    imgSize: base64.length, // 校验用，防止未完整接收
@@ -37,8 +37,8 @@ var fileInput=function(v,l,p) {
 	                	console.log(fileName);
 	                	console.log(data);
 	                	   $("#"+l).val(data.path);
-	                	   console.log("http://localhost:8080/uploads/"+data.path);
-	                	   $("#"+p).attr("src","http://localhost:8080/uploads/"+data.path);
+	                	   console.log("http://xmshop365.com/uploads/"+data.path);
+	                	   $("#"+p).attr("src","http://xmshop365.com/uploads/"+data.path);
 	                    }
 	            );
 	        },"json", 1000);
