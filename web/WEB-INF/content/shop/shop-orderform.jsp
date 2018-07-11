@@ -125,8 +125,22 @@
 		    		  xszf+='<div class="pl-10 pr-10 pt-10 overflow-hidden">'
 		    		      +'<div class="bg-bai border-radius5">'
 		    		      +'<div class="hang30 line-bottom-98 zi-hui-tq weight500 overflow-hidden line-height30 pl-5 pr-5 zi-353535">'
-		    		      +'<font size="1"><div class="col-9 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>'
-		    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    		      +'<font size="1"><div class="col-9 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>';
+//		    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+							if(v[i].state==1){
+		    		          	  xszf+='<div class="col-2 txt-r zi-bbbbbb">已下单</div>'
+		    		        }else if(v[i].state==2){
+		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">待发货</div>'
+		    		        }else if(v[i].state==3){
+		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+')">确认收货</div>';
+		    		        }else if(v[i].state==4){
+		    		        	xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
+		    		        } 
+		    		        	/*   xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
+		    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
+		    		         }else if(v[i].state==5){
+		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">已退款</div>';
+		    		         } 
 		    		      +'</font></div>';
 		    		      if(v[i].list!=null){
 		    		       var list=v[i].list; 
@@ -153,7 +167,6 @@
 		    		         xszf+='<div class=" hang30 width-10 line-height30 zi-6">'  
 		    		         +'<div class="col-8">共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></div>';
 		    		         if(v[i].state==1){
-		    		          	  xszf+='<div class="col-2 txt-r zi-bbbbbb">已下单</div>'
 			    		          if(list[j].state==1 || list[j].state==3){
 			    		        	  xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')">退货查看</div>';
 			    		          }else if(list[j].state==2 || list[j].state==4){
@@ -163,24 +176,18 @@
 			    		          }
 		    		          
 		    		         }else if(v[i].state==2){
-		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">待发货</div>'
-		    		              +'<div class="col-2 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
+		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 		    		         }else if(v[i].state==3){
-		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+')">确认收货</div>'
-		    		              +'<div class="col-2 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
+		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 		    		         }else if(v[i].state==4){
 		    		        	  if(list[j].states==0){
-		    		        		 xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
-			    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
+		    		        		 xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
 		    		        	 }else if(list[j].states==1){
-		    		        		 xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
-			    		          		 +'<div class="col-2 txt-r zi-bbbbbb" >已评价</div>'; 
+		    		        		 xszf+='<div class="col-2 txt-r zi-bbbbbb" >已评价</div>'; 
 		    		        	 } 
 		    		        	/*   xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
 		    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
-		    		         }else if(v[i].state==5){
-		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">已退款</div>';
-		    		         } 
+		    		         }
 		    		         xszf+=''
 		    		             +'</div></font></div></div></div>';
 		    		       }
