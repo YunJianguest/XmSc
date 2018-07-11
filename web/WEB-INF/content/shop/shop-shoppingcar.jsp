@@ -370,79 +370,127 @@ function delcar(id){
             height: 2px;
             background-image: url(${ctx}/img/scdz-xz.png);
         }
-         .mask,.modal{
-        	width: 100%;
-        	height: 100%;
-        	background: rgba(0,0,0,.1);
-        	position: fixed;
-        	top: 0;
-        	left: 0;
-        	right: 0;
-        	bottom: 0;
-        	z-index: 100;
-        	display: none;
-        }
-        .mask-cont{
-        	width: 100%;
-        	height: auto;
-        	background: #fff;
-        	position: absolute;
-        	bottom: 50px;
-        	left: 0;
-        	padding: 0 10px;
-        	z-index: 101;
-        }
-        .mask-cont-tit{
-        	width: 100%;
-        	height: 30px;
-        	line-height: 30px;
-        	text-align: center;
-        	position: relative;
-        }
-        .mask-cont-tit::after{
-        	content: '';
-        	width: 100%;
-        	height: 0.5px;
-        	position: absolute;
-			bottom: 0;
-			left: 0;
-			background: #ddd;
-        }
-        .mask-cont-cont{
-        	width: 100%;
-        	height: auto;
-        	padding-bottom: 10px;
-        }
-        .mask-cont-cont button{
-        	width: 100%;
-        	height: 34px;
-        	line-height: 34px;
-        	background: none;
-        	border: 1px solid #000;
-        	border-radius: 5px;
-        	display: block;
-        	margin-top: 10px;
-        }
-        .modal{
-        	z-index: 1001;
-        	background: rgba(0,0,0,.3);
-        	
-        }
-        .modal-cont{
-        	width: 100%;
-        	height: 100%;
-        	display: flex;
-        	justify-content: center;
-        	align-items: center;
-        	z-index: 1002;
-        }
-        #qrcode{
-        	width: auto;
-        	height: auto;
-        	border-radius: 5px;
-        	background: #fff;
-        	padding: 10px;
-        }
+         .mask,
+			.modal {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .1);
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 100;
+				/*display: none;*/
+			}
+			
+			.mask-cont {
+				width: 100%;
+				height: auto;
+				background: #fff;
+				position: absolute;
+				bottom: 50px;
+				left: 0;
+				padding: 0 10px;
+				z-index: 101;
+			}
+			
+			.mask-cont-tit {
+				width: 100%;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				position: relative;
+			}
+			
+			.mask-cont-tit::after {
+				content: '';
+				width: 100%;
+				height: 0.5px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				background: #ddd;
+			}
+			
+			.mask-cont-cont {
+				width: 100%;
+				height: auto;
+				padding-bottom: 10px;
+			}
+			
+			.mask-cont-cont button {
+				width: 100%;
+				height: 34px;
+				line-height: 34px;
+				background: none;
+				border: 1px solid #000;
+				border-radius: 5px;
+				display: block;
+				margin-top: 10px;
+			}
+			
+			.modal {
+				z-index: 1001;
+				background: rgb(127, 127, 127);
+			}
+			
+			.modal-cont {
+				width: 80%;
+				height: auto;
+				z-index: 1002;
+				margin: 0 auto;
+				margin-top: 80px;
+				text-align: center;
+				background: #fefefe;
+				border-radius: 5px;
+				padding: 10px;
+			}
+			.modal-tit{
+				line-height: 16px;
+				position: relative;
+				font-size: 12px;
+				margin-top: 10px;
+			}
+			.modal-cont-tit{
+				line-height: 16px;
+				font-size: 11px;
+				padding: 5px 10px;
+				text-align: left;
+				
+			}
+			.modal-cont-tit p{
+				margin: 0;
+			}
+			canvas{
+				background: #fefefe;
+				border-radius: 10px;
+				padding: 10px;
+			}
+			.gopayBtn{
+				width: 100px;
+				height: 34px;
+				line-height: 34px;
+				color: #fff;
+				background: #E4393C;
+				display: inline-block;
+				border-radius: 5px;
+				margin-top: 15px;
+				text-decoration: none;
+			}
+			.bturlBox{
+				width: 100%;
+				height: 24px;
+			}
+			input:focus{
+				outline: none;
+			}
+			#bturl{
+				width: 80%;
+				margin: 0 auto;
+				border: none;
+				border-bottom: 1px solid #e3e3e3;
+			}
     </style>
 </head>
 <body>
@@ -527,13 +575,23 @@ function delcar(id){
 	</div>
 </div>
 <div class="modal" id="bt">
-	<div class="modal-cont" >
-		<div id="qrcode">	
+	<div class="modal-cont">
+		<div id="qrcode"></div>
+		<div class="bturlBox">
+			<input type="text" id="bturl" />
 		</div>
-		 <div >普通URL</div>
-            <div class="pt-15">
-                <input type="text"id="bturl"/>
-            </div>
+		<div class="modal-tit">
+			提示
+		</div>
+		<div class="modal-cont-tit">
+			<p>1.请备注你的手机号码;</p>
+			<p>2.请备注你的会员号码;</p>
+			<p>3.请备注你的币数量;</p>
+			<p>4.请交易手续费最大化;</p>
+			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
+			<p>6.请复制上方的付款码</p>
+		</div>
+		<a href="" class="gopayBtn">去付款</a>
 	</div>
 </div>
 <div class="modal" id="ytf">
