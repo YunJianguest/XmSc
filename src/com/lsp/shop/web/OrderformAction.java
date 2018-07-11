@@ -284,7 +284,6 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			whereMap.put("state", Integer.parseInt(sel_state));
 		}
 		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-		System.out.println("sel_insdate---->"+sel_insdate);
 		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
 		BasicDBObject dateCondition = new BasicDBObject();
 		if (StringUtils.isNotEmpty(sel_insdate)) {			
@@ -298,6 +297,7 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		sortMap.put("insDate", -1);
 		List<DBObject> list = baseDao.getList(PubConstants.WX_ORDERFORM,
 				whereMap, 0, 3000, sortMap);
+		System.out.println("---list--->"+list);
 		for (DBObject dbObject : list) {
 			if (dbObject.get("fromUserid") != null) {			 
 			 DBObject  user=wwzService.getWxUser(dbObject.get("fromUserid").toString());
@@ -322,17 +322,20 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			Double members_money = 0.0;
 			Double other_money = 0.0;
 			
-			//whereMap.put("orderid", dbObject.get("_id").toString());
+			whereMap.clear();
+			
+			whereMap.put("orderid", dbObject.get("_id").toString());
 			System.out.println("----orderid--->"+dbObject.get("_id").toString());
 			/*if(StringUtils.isNotEmpty(comid)){
 				whereMap.put("pro.comid", comid);
 			}*/
 			System.out.println("----comid--->"+comid);
-			List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,sortMap);
-			System.out.println("lists.size-->"+lists);
-			for (DBObject dbObject2 : lists) {
+			//List<DBObject> detaillists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,sortMap);
+			List<DBObject>lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, sortMap);
+			System.out.println("lists.size-1->"+lists);
+			for (DBObject dbs : lists) {
 				
-				OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
+				OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbs, OrderFormpro.class);
 				System.out.println("---->"+pro);
 				DBObject dbObject3 = pro.getPro();
 				if(dbObject3!=null){
