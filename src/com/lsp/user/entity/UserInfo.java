@@ -68,6 +68,8 @@ public class UserInfo extends ReflectionDBObject {
 	private String company_name;//公司名称
 	private String lisense_number;//营业证号码
 	private String lisense_photo;//营业证照片
+	private int audit_status;//审核状态
+	
 	
 	/**
 	 * 用户所在县
@@ -1063,6 +1065,14 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setLisense_photo(String lisense_photo) {
 		this.lisense_photo = lisense_photo;
+	}
+
+	public int getAudit_status() {
+		return audit_status;
+	}
+
+	public void setAudit_status(int audit_status) {
+		this.audit_status = audit_status;
 	}
 	
 	

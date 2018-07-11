@@ -177,153 +177,100 @@
         
         
       //取消商品关注
-    	function productAttentDel(productId)
-    	{
-    		console.log(productId)
-    		var submitData = {
-                    "productId": productId,
-                    "_id": productId,
-            };
-    		
-    		 $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
-                     function (json) {
-    			 		console.log(json);
-                      if(json.state =="1"){
-                    	  $.post('${ctx}/shop/productattention!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
-                                  function (json1) {
-                    		 	 	alert("取消关注成功!");
-                              }, "json");
-                      }else{
-                   	   alert("该商品还未关注!");
-                      }
-                   }, "json");
-    	}
-    
-    	//商品关注
-    	function productAttent(productId)
-    	{
-    		console.log(productId)
-    		var submitData = {
-                    "productId": productId
-                };
-    		
-    		 $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
-              function (json) {
-                 if(json.state =="0"){
-              	   //alert("关注成功");
-                	 $.post('${ctx}/shop/productattention!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
-                             function (json) {
-                            if(json.state =="1"){
-                         	   alert("关注成功");
-                            }else{
-                         	   alert("抱歉,添加过程中出现异常!");
-                            }
-                         }, "json");
-              	   
-                 }else{
-              	   alert("该商品已关注!");
-                 }
-              }, "json");
-    	}
-    	
-    	//商品收藏
-//  	function productCollect(productId)
-//  	{
-//  		var submitData = {
-//                  "productId": productId
-//              };
-//  		
-//  		 $.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
-//            function (json) {
-//               if(json.state =="0"){
-//            	   //alert("关注成功");
-//              	 $.post('${ctx}/shop/productcollect!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
-//                           function (json) {
-//                          if(json.state =="1"){
-//                       	   alert("收藏成功");
-//                          }else{
-//                       	   alert("抱歉,添加过程中出现异常!");
-//                          }
-//                       }, "json");
-//            	   
-//               }else{
-//            	   alert("该商品已收藏!");
-//               }
-//            }, "json");
-//  	}
-//  	
-    	//取消商品收藏
-//  	function productCollectDel(productId)
+//  	function productAttentDel(productId)
 //  	{
 //  		var submitData = {
 //                  "productId": productId,
 //                  "_id": productId,
 //          };
 //  		
-//  		 $.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+//  		 $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
 //                   function (json) {
 //  			 		console.log(json);
 //                    if(json.state =="1"){
-//                  	  $.post('${ctx}/shop/productcollect!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
+//                  	  $.post('${ctx}/shop/productattention!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
 //                                function (json1) {
-//                  		 	 	alert("取消收藏成功!");
+//                  		 	 	alert("取消关注成功!");
 //                            }, "json");
 //                    }else{
-//                 	   alert("该商品还未收藏!");
+//                 	   alert("该商品还未关注!");
 //                    }
 //                 }, "json");
 //  	}
+    
+    	//商品关注
+    	function productAttent(productId){
+    		var submitData = {
+                    "productId": productId
+           };
+        	if ($('.Attent').html()=='关注') {
+        		$.post('${ctx}/shop/productattention!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
+	                function (json) {
+	                    if(json.state =="1"){
+	                 	   confirm("关注成功");
+	                 	   $('.Attent').html('取消关注')
+	                    }else{
+	                 	   confirm("抱歉,添加过程中出现异常!");
+	                    }
+	            }, "json");
+        	} else{
+        		$.post('${ctx}/shop/productattention!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
+                  	function (json1) {
+    		 	 	confirm("取消关注成功!");
+    		 	 	$('.Attent').html('关注')
+              	}, "json");
+        	}
+    	}
+    	
+    	//商品收藏
+
        	function productCollect(productId){
        		var submitData = {
                 "productId": productId,
                 "_id": productId,
-            };
-            
-       		if ($('.Collect').html() == '收藏') {
-//       		$.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
-//		            function (json) {
-//		                if(json.state =="0"){
-//		              	   //alert("关注成功");
-		                	$.post('${ctx}/shop/productcollect!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
-		                        function (json) {
-		                            if(json.state =="1"){
-		                         	   alert("收藏成功");
-		                         	   $('.Collect').html('取消收藏')
-		                            }else{
-		                         	   alert("抱歉,添加过程中出现异常!");
-		                            }
-		                    	}, "json");
-//		                 }else{
-//		              	   alert("该商品已收藏!");
-//		                 }
-//		              }, "json");
-       		} else{
-//     			$.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
-//                  function (json) {
-//  			 		console.log(json);
-//                  if(json.state =="1"){
-                    	  $.post('${ctx}/shop/productcollect!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
-                                  function (json1) {
-                    		 	 	alert("取消收藏成功!");
-                    		 	 	$('.Collect').html('收藏')
-                              }, "json");
-//                  }else{
-//                 	   alert("该商品还未收藏!");
-//                  }
-//              }, "json");
-       		}
+           };
+	       	if ($('.Collect').html() == '收藏') {
+            	$.post('${ctx}/shop/productcollect!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
+                    function (json) {
+                        if(json.state =="1"){
+                     	   confirm("收藏成功");
+                     	   $('.Collect').html('取消收藏')
+                        }else{
+                     	   confirm("抱歉,添加过程中出现异常!");
+                        }
+                }, "json");
+	       	} else{
+	        	$.post('${ctx}/shop/productcollect!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
+	                function (json1) {
+	        		 	confirm("取消收藏成功!");
+	        		 	$('.Collect').html('收藏')
+	            }, "json");
+	       	}
        	}
        	
        	// 渲染页面判断是否已收藏
        	function applycollect(){
+       		var submitData = {
+                "productId": ${entity._id},
+                "_id": ${entity._id},
+            };
         	$.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
 		        function (json) {
 		            if(json.state =="0"){
-		            	
+		            	$('.Collect').html('收藏')
 		            }else{
-		            	
+		            	$('.Collect').html('取消收藏')
+		        	}
+		    	}, "json");
+		    $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
+              function (json) {
+              	console.log(json.state)
+              	if(json.state =="0"){
+		            $('.Attent').html('关注')
+		        }else{
+		            $('.Attent').html('取消关注')
 		        }
-		    }
+              }, "json");
        	}
        	applycollect()
       </script>
@@ -488,6 +435,22 @@
 			margin-top: 7px;
 			text-align: center;
 		}
+		.attentbox{
+			width: 100%;
+			height: auto;
+			overflow: hidden;
+			text-align: center;
+		}
+		.attentbox div{
+			float: left;
+			width: 50%;
+			overflow: hidden;
+			font-size: 12px;
+			font-weight: 0;
+		}
+		.attentbox div span{
+			display: block;
+		}
     </style>
 </head>
 <body class="cmp640">
@@ -526,13 +489,21 @@
         <div class="col-12 clear div-group-5 pt-10 bg-huang zi-6 weight500">
             <font size="1">
                 <font size="3">
-                    <div class="clear zi-6 weight500 line-height25" style="color:#333333;">
-                      <div id="">
+                    <div class="clear zi-6 weight500 line-height25" style="color:#333333;overflow: hidden;">
+                      <div id="" style="width: 70%;float: left;">
                       	${entity.ptitle} 
                       </div>          
-                      <div class="attentbox">
-                      	<span class="Collect" onclick="productCollect(${entity._id});">收藏</span> <span class="Attent" onclick="productAttent(${entity._id})">关注</span>  
-                      	<span onclick="productCollectDel(${entity._id});">取消收藏</span> <span onclick="productAttentDel(${entity._id})">取消关注</span>
+                      <div class="attentbox" style="width: 30%;float: right;">
+                      	
+                      	<div class=""  onclick="productCollect(${entity._id});">
+                      		<i class="fa fa-heart-o"></i>
+                      		<span class="Collect"></span>
+                      	</div>
+                      	<div class="" onclick="productAttent(${entity._id})">
+                      		<i class="fa fa-heart-o"></i>
+                      		<span class="Attent" ></span>  
+                      	</div>
+                      	<!--<span onclick="productCollectDel(${entity._id});">取消收藏</span> <span onclick="productAttentDel(${entity._id})">取消关注</span>-->
                       </div>   
                     </div>
                 </font>

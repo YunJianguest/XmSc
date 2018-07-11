@@ -9,6 +9,10 @@
     <script src="${contextPath}/UserInterface/My97DatePicker/WdatePicker.js"
             type="text/javascript"></script>
     <script type="text/javascript">
+    	function audit(id){
+    		
+    	}
+    	
         function del(id) {
             if (confirm('确实要删除吗?')) {
                 location.href = "${contextPath}/user/user!delete.action?_id=" + id;
@@ -268,6 +272,9 @@
                                                         </li>
                                                         <li><a href="javascript:del('${bean._id}');"><i
                                                                 class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
+                                                        </li>
+                                                        <li><a href="javascript:audit('${bean._id}');"><i
+                                                                class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;审核</a>
                                                         </li>
                                                     </ul>
                                                 </c:if>
