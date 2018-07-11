@@ -427,6 +427,7 @@
 							data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val(),username:$('#name_confirm').val(),id_card:$('nameId').val(),id_card_front:$('up_picture_front').val(),id_card_reverse:$('up_picture_reverse').val(),company_name:$('#yingyename').val(),lisense_number:$('#yingyeId').val(),lisense_photo:$('up_picture').val(),status:2},
 							success:function(json){
 								if(json){
+									console.log("++++++++++++++++"+json.status);
 									if(json.state == 0){
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 									}
