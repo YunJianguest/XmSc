@@ -103,7 +103,7 @@
 				justify-content: space-between;
 				align-items: center;
 				border:1px solid #eee;
-		        border-radius:5px;
+		        border-radius:10px;
 		        padding:0 10px; 
 			}
 			
@@ -134,18 +134,20 @@
 			
 			.news-cont .mui-col-xs-10 ul li {
 				float: left;
-				font-size: 11px;
+				font-size: 12px;
+				line-height: 25px;
 			}
 		
 			#newsmore {
 				position: relative;
 				text-align: center;
+				line-height: 50px;
 			}
 			
 			#newsmore::after {
 				content: '';
 				width: 1px;
-				height: 20px;
+				height: 40px;
 				background: #eee;
 				position: absolute;
 				top: 5px;
@@ -466,7 +468,7 @@
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;">熊猫<br />快报</div>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.png" style="width: 100%;height: 100%;"/></div>
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
