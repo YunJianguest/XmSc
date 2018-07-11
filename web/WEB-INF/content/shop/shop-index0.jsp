@@ -34,7 +34,7 @@
 			.mui-bar.mui-bar-nav.mui-bar-transparent.mui-active {
 				background-color: rgba(255,255,255,0.6) !important;
 			}
-			.mui-bar.mui-bar-nav.mui-bar-transparent.mui-active .search{
+			.mui-bar.mui-bar-nav.mui-bar-transparent.mui-active .mui-search{
 				background: #e2e2e2;
 			}
 			.mui-pull-left span {
