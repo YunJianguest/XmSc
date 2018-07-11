@@ -97,14 +97,13 @@
 			
 			.news {
 				width: 100%;
-				height: 30px;
-				line-height: 30px;
-				/*position: relative;*/
-				display: flex;
+				height: 40px;
+				position: relative;
+				/*display: flex;
 				justify-content: space-between;
-				align-items: center;
+				align-items: center;*/
 				border:1px solid #eee;
-		        border-radius:15px;
+		        border-radius:10px;
 		        padding:0 10px; 
 			}
 			
@@ -135,18 +134,20 @@
 			
 			.news-cont .mui-col-xs-10 ul li {
 				float: left;
-				font-size: 11px;
+				font-size: 12px;
+				line-height: 18px;
 			}
 		
 			#newsmore {
 				position: relative;
 				text-align: center;
+				line-height: 40px;
 			}
 			
 			#newsmore::after {
 				content: '';
 				width: 1px;
-				height: 20px;
+				height: 30px;
 				background: #eee;
 				position: absolute;
 				top: 5px;
@@ -154,11 +155,11 @@
 			}
 			
 			.icon-logo {
-				width: 24px;
-				height: 24px;
+				width: 36px;
+				height: 36px;
 				background: url(${ctx}/xmMobile/img/icon/icon-logo.png) no-repeat;
 				background-size: 100% auto;
-				margin-top: 3px;
+				/*margin-top: 10px;*/
 				margin-right: 3px;
 			}
 			
@@ -465,19 +466,25 @@
 			</div>
 			<!-- 新闻 -->
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
-				<div class="news">
+				<div class="news mui-col-xs-12 mui-row">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;">熊报</div>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 30px;height:30px;margin-top: 5px;"/></div>
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul  style='line-height:30px;height:30px;'>
+							<ul>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
-								   <li><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></li>
+								   <li style="height: 50px;">
+								   		<p><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></p>
+								   		<p><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></p>
+								   </li>
 								   </c:if>
 								   <c:if test="${empty bean.url}">
-								   <li><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></li>
+								   		<li style="height: 50px;">
+								   			<p><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></p>
+								   			<p><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></p>								   			
+								   		</li>
 								   </c:if> 
 								 </c:forEach>  
 							</ul>
@@ -573,9 +580,8 @@
 				setInterval('autoScroll("#news")', 2000)
 		}); 
 		function autoScroll(obj) {
-			var lineh = $(obj).find('li:first').height();
 			$(obj).find('ul:first').animate({
-				marginTop: -lineh
+				marginTop: -50+'px'
 			}, 500, function() {
 				$(this).css({
 					marginTop: 0

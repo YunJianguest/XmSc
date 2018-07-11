@@ -160,7 +160,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <select id="sqlx" name="sqlx" class="hang30 width-10" data-placeholder="请选择" onchange="changesq()">
                                     <option value="0">本公众号授权</option>
-                                    <option value="1">父类授权</option>
+                                    <!-- <option value="1">父类授权</option> -->
                                 </select>
                             </div>
                         </div>
