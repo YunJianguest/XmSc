@@ -319,7 +319,7 @@
 	            </a>
 	          </li>-->
 			<li>
-				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=0">	
+				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=1">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 ">
 		              <i class="fa fa-credit-card  line-height30" ></i>
 		            </div>待付款
