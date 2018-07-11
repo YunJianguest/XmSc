@@ -472,7 +472,7 @@
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;padding-top: 5px;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul  style='height:30px;'>
+							<ul  style='height:50px;'>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
 								   <li>
