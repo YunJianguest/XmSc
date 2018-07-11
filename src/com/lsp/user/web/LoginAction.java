@@ -133,6 +133,13 @@ public class LoginAction extends ActionSupport
   }
   
   /***
+   * 移动端商家注册页面
+   * @return
+   */
+  public String signup1(){
+	  return "signup1";
+  }
+  /***
    * 移动端忘记密码
    * @return
    */
@@ -236,4 +243,64 @@ public class LoginAction extends ActionSupport
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
   }
+  
+  
+  /**
+   * 商家注册
+   * @throws Exception
+   */
+  public void ajaxsave1() throws Exception{
+	    Map<String,Object>sub_map = new HashMap<>();
+	    sub_map.put("state", 1);
+	    HashMap<String,Object>whereMap = new HashMap<>();
+		String tel=Struts2Utils.getParameter("tel");
+		String yzcode=Struts2Utils.getParameter("yzcode"); 
+		String password=Struts2Utils.getParameter("password"); 
+		String nickname=Struts2Utils.getParameter("nickname");
+		String userName = Struts2Utils.getParameter("username");//真实姓名
+		String id_card = Struts2Utils.getParameter("id_card");//身份证号码
+		String id_card_front = Struts2Utils.getParameter("id_card_front");//身份证正面照
+		String id_card_reverse = Struts2Utils.getParameter("id_card_recverse");//身份证反面照
+		String company_name = Struts2Utils.getParameter("company_name"); //公司名称
+		String lisense_number= Struts2Utils.getParameter("lisense_number"); //营业证号码
+		String lisense_photo = Struts2Utils.getParameter("lisense_photo"); //营业证照片
+		whereMap.put("account", tel);
+		long count = basedao.getCount(PubConstants.USER_INFO, whereMap);
+		
+		if(count == 0){
+			Code code=GetAllFunc.telcode.get(tel); 
+			if (code!=null&&code.getCode().equals(yzcode)) { 
+				 //验证时间
+				if(DateUtil.checkbig(DateUtil.addMinute(code.getCreatedate(),10))) {
+					UserInfo user = new UserInfo();
+					user.set_id(UUID.randomUUID().toString());
+					user.setAccount(tel);
+					user.setTel(tel);
+					user.setPassword(password);
+					user.setNickname(nickname);
+					user.setCustid(SysConfig.getProperty("custid"));
+					user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
+					user.setUserName(userName);
+					user.setId_card(id_card);
+					user.setId_card_front(id_card_front);
+					user.setId_card_reverse(id_card_reverse);
+					user.setCompany_name(company_name);
+					user.setLisense_number(lisense_number);
+					user.setLisense_photo(lisense_photo);
+					basedao.insert(PubConstants.USER_INFO, user);
+					sub_map.put("state", 0);//注册成功
+				}else{
+					sub_map.put("state", 4);//验证码过期
+				}
+			}else{
+				sub_map.put("state", 3);//验证码输入错误
+			}
+		}else{
+			sub_map.put("state", 2);//用户名存在
+		}
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+  }
+  
 }
