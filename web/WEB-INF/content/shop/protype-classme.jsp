@@ -44,6 +44,7 @@
 			overflow-y: scroll;
 			height: 100%;
 			position: fixed;
+			padding-top: 40px;
 		}
 		
 		.category-tab-box {
@@ -296,7 +297,7 @@
 			padding-right: 0;
 			max-width: 640px;
 			z-index: 999;
-			position: relative;
+			position: fixed;
 			height: 40px;
 			/*top: -4px;*/
 			background: #fff;
@@ -442,15 +443,12 @@
 			 <div class="search search-h">
 
 				<div class="search-box">
-					<div class="search-back on-blur"></div>
 					<div class="search-box-tb ">
-						<div class="search-box-icon" style="display: none;">
-
-						</div>
 						<div class="search-box-urlBack" onclick="javascript:window.history.back(-1)">
 							<span class="search-box-urlBack-back iconLeft">返回</span>
 						</div>
 					</div>
+					分类
 				</div>
 			</div> 
 			<div class="category">
