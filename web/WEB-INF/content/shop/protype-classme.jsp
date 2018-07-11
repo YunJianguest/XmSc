@@ -136,6 +136,7 @@
 		
 		.category-tab-list li.opt a {
 			color: #f23030;
+			border: 1px solid #F23030;
 		}
 		
 		
@@ -285,7 +286,89 @@
 			z-index: 2;
 			position: relative;
 		}
-
+		
+		.search {
+			/*position: fixed;
+			left: 0;
+			top: 0;*/
+			width: 100%;
+			padding-left: 0;
+			padding-right: 0;
+			max-width: 640px;
+			z-index: 999;
+			position: relative;
+			height: 40px;
+			/*top: -4px;*/
+		}
+		
+		.search-h {
+			height: 40px;
+		}
+		
+		.search-back {
+			background: #e4393c;
+			opacity: 0;
+			height: 40px;
+			width: 100%;
+			position: absolute;
+			/*z-index: 10;*/
+		}
+		
+		.search-box {
+			height: 40px;
+			position: relative;
+			width: 100%;
+			line-height: 40px;
+			z-index: 20;
+			/*position: fixed;*/
+			max-width: 640px;
+			background: #f86262;
+		}
+		.search-box-urlBack {
+			position: absolute;
+			width: 37px;
+			height: 44px;
+		}
+		
+		.search-box-urlBack-back {
+			text-indent: -100px;
+			overflow: hidden;
+			left: 10px;
+			top: 13px;
+			display: block;
+		}
+		
+		.search-form-seek {
+			display: block;
+			padding: 0;
+			margin-left: 30px;
+			height: 44px;
+			overflow: hidden;
+		}
+		.iconLeft {
+			/*content: " ";*/
+			display: inline-block;
+			-webkit-transform: rotate(225deg);
+			-ms-transform: rotate(225deg);
+			    transform: rotate(225deg);
+			border-width: 1px 1px 0 0;
+			border-color: #666666;
+			border-style: solid;
+			/*position: relative;*/
+			/*top: -2px;*/
+			/*position: absolute;*/
+			/*top: 50%;*/
+			/*right: 18px;*/
+			/*margin-top: -3px;*/
+			/*top: 43%;*/
+			font-size: 16px;
+			position: relative;
+			left: 17px;
+			top: 15px;
+			height: 14px;
+			width: 14px;
+			float: left;
+		}
 		</style>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -356,7 +439,7 @@
 
 	<body>
 		<div class="page">
-			<!-- <div class="search search-h">
+			 <div class="search search-h">
 
 				<div class="search-box">
 					<div class="search-back on-blur"></div>
@@ -369,7 +452,7 @@
 						</div>
 					</div>
 				</div>
-			</div> -->
+			</div> 
 			<div class="category">
 							<!-- 左侧总分类 -->
 			    <div class="category-tab">
