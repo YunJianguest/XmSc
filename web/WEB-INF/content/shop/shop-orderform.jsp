@@ -139,7 +139,8 @@
 		    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
 		    		         }else if(v[i].state==5){
 		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">已退款</div>';
-		    		         } 
+		    		         }
+		    		      xszf+=''
 		    		      +'</font></div>';
 		    		      if(v[i].list!=null){
 		    		       var list=v[i].list; 
