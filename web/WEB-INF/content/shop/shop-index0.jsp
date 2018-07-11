@@ -97,14 +97,13 @@
 			
 			.news {
 				width: 100%;
-				height: 30px;
-				line-height: 30px;
+				height: 50px;
 				/*position: relative;*/
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 				border:1px solid #eee;
-		        border-radius:15px;
+		        border-radius:5px;
 		        padding:0 10px; 
 			}
 			
@@ -158,7 +157,7 @@
 				height: 24px;
 				background: url(${ctx}/xmMobile/img/icon/icon-logo.png) no-repeat;
 				background-size: 100% auto;
-				margin-top: 3px;
+				margin-top: 10px;
 				margin-right: 3px;
 			}
 			
@@ -467,17 +466,23 @@
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;">熊报</div>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;">熊猫<br />快报</div>
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul  style='line-height:30px;height:30px;'>
+							<ul  style='height:30px;'>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
-								   <li><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></li>
+								   <li>
+								   		<a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a>
+								   		<a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a>
+								   </li>
 								   </c:if>
 								   <c:if test="${empty bean.url}">
-								   <li><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></li>
+								   		<li>
+								   			<a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a>
+								   			<a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a>
+								   		</li>
 								   </c:if> 
 								 </c:forEach>  
 							</ul>
