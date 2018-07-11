@@ -47,42 +47,42 @@
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一命名:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.name}" name="name" id="name" placeholder="情输入">
+                                       value="${entity.name}" name="name" id="name" placeholder="请输入">
                             </div>
                         </div>
                          <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一发行量:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.num}" name="num" id="num" placeholder="情输入">
+                                       value="${entity.num}" name="num" id="num" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种一备注:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.remark}"  name="remark" id="remark" placeholder="情输入">
+                                       value="${entity.remark}"  name="remark" id="remark" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种二:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.names}" name="names" id="names" placeholder="情输入">
+                                       value="${entity.names}" name="names" id="names" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种二发行量:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.nums}" name="nums" id="nums" placeholder="情输入">
+                                       value="${entity.nums}" name="nums" id="nums" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
                             <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">币种二备注:</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
-                                       value="${entity.remarks}" name="remarks" id="remarks" placeholder="情输入">
+                                       value="${entity.remarks}" name="remarks" id="remarks" placeholder="请输入">
                             </div>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.any}"
-                                       name="any" id="any" placeholder="情输入">
+                                       name="any" id="any" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
@@ -108,7 +108,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.direct}"
-                                       name="direct" id="direct" placeholder="情输入">
+                                       name="direct" id="direct" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
@@ -116,7 +116,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.between}"
-                                       name="between" id="between" placeholder="情输入">
+                                       name="between" id="between" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -125,7 +125,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.sameDepartment}"
-                                       name="sameDepartment" id="sameDepartment" placeholder="情输入">
+                                       name="sameDepartment" id="sameDepartment" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -135,7 +135,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.sameProvince}"
-                                       name="sameProvince" id="sameProvince" placeholder="情输入">
+                                       name="sameProvince" id="sameProvince" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -144,7 +144,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.sameCity}"
-                                       name="sameCity" id="sameCity" placeholder="情输入">
+                                       name="sameCity" id="sameCity" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -153,7 +153,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.sameCounty}"
-                                       name="sameCounty" id="sameCounty" placeholder="情输入">
+                                       name="sameCounty" id="sameCounty" placeholder="请输入">
                             </div>
                         </div>
                        
@@ -162,7 +162,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.diffProvince}"
-                                       name="diffProvince" id="diffProvince" placeholder="情输入">
+                                       name="diffProvince" id="diffProvince" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -171,7 +171,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.diffCity}"
-                                       name="diffCity" id="diffCity" placeholder="情输入">
+                                       name="diffCity" id="diffCity" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -180,7 +180,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.diffCounty}"
-                                       name="diffCounty" id="diffCounty" placeholder="情输入">
+                                       name="diffCounty" id="diffCounty" placeholder="请输入">
                             </div>
                         </div>
                         </div>
@@ -199,7 +199,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.returnProvince}"
-                                       name="returnProvince" id="returnProvince" placeholder="情输入">
+                                       name="returnProvince" id="returnProvince" placeholder="请输入">
                             </div>
                         </div>
                          <div class="col-2 pl-10">
@@ -207,7 +207,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.provinceTime}"
-                                       name="provinceTime" id="provinceTime" placeholder="情输入">
+                                       name="provinceTime" id="provinceTime" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -216,7 +216,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.returnCity}"
-                                       name="returnCity" id="returnCity" placeholder="情输入">
+                                       name="returnCity" id="returnCity" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
@@ -224,7 +224,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.cityTime}"
-                                       name="cityTime" id="cityTime" placeholder="情输入">
+                                       name="cityTime" id="cityTime" placeholder="请输入">
                             </div>
                         </div>
                          <div class="pt-25 clear">
@@ -233,7 +233,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.returnCounty}"
-                                       name="returnCounty" id="returnCounty" placeholder="情输入">
+                                       name="returnCounty" id="returnCounty" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10">
@@ -241,7 +241,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.countyTime}"
-                                       name="countyTime" id="countyTime" placeholder="情输入">
+                                       name="countyTime" id="countyTime" placeholder="请输入">
                             </div>
                         </div>
                         
@@ -250,7 +250,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.returnDept}"
-                                       name="returnDept" id="returnDept" placeholder="情输入">
+                                       name="returnDept" id="returnDept" placeholder="请输入">
                             </div>
                         </div>
                         <div class="col-2 pl-10" id="app_secret">
@@ -258,7 +258,7 @@
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.deptTime}"
-                                       name="deptTime" id="deptTime" placeholder="情输入">
+                                       name="deptTime" id="deptTime" placeholder="请输入">
                             </div>
                         </div>
                         </div>
