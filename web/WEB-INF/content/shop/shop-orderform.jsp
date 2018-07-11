@@ -151,7 +151,7 @@
 		    		               +'</div>';
 		    		         }
 		    		         xszf+='<div class=" hang30 width-10 line-height30 zi-6">'  
-		    		         +'<div class="col-9">共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></div>';
+		    		         +'<div class="col-5">共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></div>';
 		    		         if(v[i].state==1){
 		    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
 			    		          if(list[j].state==1 || list[j].state==3){
