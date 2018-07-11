@@ -466,7 +466,7 @@
 			</div>
 			<!-- 新闻 -->
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
-				<div class="news mui-col-xs-12">
+				<div class="news mui-col-xs-12 mui-row">
 					<div class="news-cont mui-col-xs-10">
 						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 30px;height:30px;margin-top: 5px;"/></div>
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
