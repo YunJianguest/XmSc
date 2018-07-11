@@ -94,7 +94,7 @@
         			jfdh:jfdh,
         			
         	}; 
-        	loading();
+        	//loading();
         	/* $.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
         		function(json) { 
         		     loading.hide();
@@ -130,8 +130,7 @@
         		"json") */
         		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}&isgwc=1', submitData,
                 		function(json) { 
-                		     loading.hide();
-                		     alert(json.state);
+                		     //loading.hide();
                 		 	if (json.state == 0) {
                 				alert("购买成功！");
                 				window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
@@ -146,6 +145,99 @@
                 		"json")
         	 
         } 
+         
+         function popcode(val){
+             if('${address.tel}'==""){
+                alert("请先设置收货地址");
+                return ;
+               }
+               if('${entity.jfdh}'>0&&'${entity.kdprice}'==0){
+                 jfpay();
+                 return;
+               }
+               if('${count}'==0){
+                alert("数量不能为空请重新选择购买");
+                return ;
+               }
+                var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
+            	var submitData = { 
+            			lx:0,
+            			no:'0',
+            			name:'${address.name}',
+            			tel:'${address.tel}',
+            			address:address, 
+            			total:total, 
+                    	remoney:'${entity.price}',
+                    	recordid:'${entity._id}', 
+            			price:total,
+            			remark:'${entity.ptitle}',
+            			comid:'${entity.comid}',
+            			kjid:$("#kdpric").val(),
+            			num:'${count}',
+            			logo:'${entity.logo}',
+            			title:'${entity.title}',
+            			spec:'${spec}',
+            			jffh:'${entity.jffh}',
+            			jfdh:jfdh,
+            			
+            	}; 
+            	//loading();
+            	/* $.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+            		function(json) { 
+            		     loading.hide();
+            		 	if (json.state == 0) { 
+            				WeixinJSBridge.invoke('getBrandWCPayRequest',{
+            			  		 "appId" : json.appId,"timeStamp" : json.timeStamp, "nonceStr" : json.nonceStr, "package" : json.packageValue,"signType" : json.signType, "paySign" : json.paySign 
+            			   			},function(res){  
+            			   				if(res.err_msg == "get_brand_wcpay_request:ok"){  
+            			   					 var text='购买成功！';
+            			   					 if(!jQuery.isEmptyObject(json.jffh)){
+            			   					   text="购买成功！获得平台币"+json.jffh
+            			   					 }
+            			   					 noty({text: text,type:'alert', layout: "top", timeout: 1000,callback: { // 回调函数
+                                                  afterClose: function() {
+                                            window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+                                                  } // 关闭之后
+                                                },});
+            			   				}else{
+            			   				
+            			   					//alert(res.err_code+res.err_desc+res.err_msg);
+            			   					 
+            			   				}
+            						}); 
+            				return;
+            			}else if(json.state == 1) {
+            				alert("该账号没有开通支付"); 
+            			}else if(json.state == 3){
+            			  alert("没有登录");
+            			}else if(json.state==10){
+            			  alert("购买次数已完");
+            			}
+            		},
+            		"json") */
+            		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}&isgwc=1', submitData,
+                    		function(json) { 
+                    		     //loading.hide();
+                    		 	if (json.state == 0) {
+                    				alert("下单成功，请支付");
+                    				if(val == 0){
+                    					$('#bt').css('display','block')
+                    				}
+                    				if(val == 1){
+                    					$('#ytf').css('display','block')
+                    				}
+                    			}else if(json.state == 1) {
+                    				alert("该账号没有开通支付"); 
+                    			}else if(json.state == 3){
+                    			  alert("没有登录");
+                    			}else if(json.state==10){
+                    			  alert("购买次数已完");
+                    			}
+                    		},
+                    		"json")
+            	 
+            } 
+         
         function  jfpay(){
          var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
         	var submitData = { 
@@ -415,9 +507,12 @@
 </div>
 <div class="modal" id="bt">
 	<div class="modal-cont" >
-		<div id="qrcode">
-			
+		<div id="qrcode">	
 		</div>
+		 <div >普通URL</div>
+            <div class="pt-15">
+                <input type="text"id="bturl"/>
+            </div>
 	</div>
 </div>
 <div class="modal" id="ytf">
@@ -425,19 +520,16 @@
 		<div id="qrcodes">
 			
 		</div>
+		 <div >普通URL</div>
+            <div >
+                <input  type="text"id="ytfurl"/>
+            </div>
+	</div>
 	</div>
 </div>
 </body>
 <script>
-	//弹出支付二维码
-	function popcode(val){
-		if(val == 0){
-			$('#bt').css('display','block')
-		}
-		if(val == 1){
-			$('#ytf').css('display','block')
-		}
-	}
+	
 $(function(){ 
 	$('#ConfirmPay').click(function(){
 		$('.mask').css('display','block')
@@ -451,12 +543,14 @@ $(function(){
 	
 	//获取屏幕宽度
 	var w= $(window).width()/2; 
+	
 	//二维码生成
 	$('#qrcode').qrcode({ 
 	  width : w,
       height : w,
       text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
     });
+	$("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
 	
 	//二维码生成
 	$('#qrcodes').qrcode({ 
@@ -464,6 +558,7 @@ $(function(){
       height : w,
       text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
     });
+	$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
 	    
 	    
 if('${entity.jfdh}'==''||'${entity.jfdh}'==0){ 

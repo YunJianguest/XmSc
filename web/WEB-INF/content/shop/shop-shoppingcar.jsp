@@ -181,6 +181,84 @@
             		"json")
     	 
            } 
+     function popcode(val){ 
+         if('${address.tel}'==""){
+             alert("请先设置收货地址");
+              return ;
+             } 
+                var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
+            	var submitData = { 
+            			lx:0,
+            			no:'0',
+            			name:'${address.name}',
+            			tel:'${address.tel}',
+            			address:address,  
+                    	remoney:prices,
+                    	recordid:ids, 
+            			price:total, 
+            			comid:'${entity._id}',
+            			num:counts,
+            			remark:remarks.split(",")[0],
+            			spec:spec,
+            			kjid:kd
+            	}; 
+            	//loading();
+            	/* $.post('${ctx}/shop/shop!wxcarpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+            		function(json) { 
+            			if (json.state == 0) {
+            				WeixinJSBridge.invoke('getBrandWCPayRequest',{
+            			  		 "appId" : json.appId,"timeStamp" : json.timeStamp, "nonceStr" : json.nonceStr, "package" : json.packageValue,"signType" : json.signType, "paySign" : json.paySign 
+            			   			},function(res){ 
+            			   			  loading.hide(); 
+            			   				if(res.err_msg == "get_brand_wcpay_request:ok"){ 
+            			   					 var text='购买成功！';
+            			   					 if(!jQuery.isEmptyObject(json.jffh)){
+            			   					   text="购买成功！获得平台币"+json.jffh
+            			   					 }
+            			   					 noty({text: text,type:'alert', layout: "top", timeout: 1000,callback: { // 回调函数
+                                                  afterClose: function() {
+                                            window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+                                                  } // 关闭之后
+                                                },});
+            			   				}else{
+            			   				
+            			   					alert(res.err_code+res.err_desc+res.err_msg);
+            			   					 
+            			   				}
+            						}); 
+            				return;
+            			}else if(json.state == 1) {
+            				alert("该账号没有开通支付"); 
+            			}else if(json.state == 3){
+            			  alert("没有登录");
+            			}else if(json.state==10){
+            			  alert("购买次数已完");
+            			}
+            		},
+            		"json") */
+            	$.post('${ctx}/shop/shop!COrderFromCar.action?agid=${agid}&lscode=${lscode}&isgwc=0', submitData,
+                		function(json) { 
+                		     loading.hide();
+                		     alert(json.state);
+                		 	if (json.state == 0) {
+                		 		alert("下单成功，请支付");
+                				if(val == 0){
+                					$('#bt').css('display','block')
+                				}
+                				if(val == 1){
+                					$('#ytf').css('display','block')
+                				}
+                			}else if(json.state == 1) {
+                				alert("该账号没有开通支付"); 
+                			}else if(json.state == 3){
+                			  alert("没有登录");
+                			}else if(json.state==10){
+                			  alert("购买次数已完");
+                			}
+                		},
+                		"json")
+        	 
+               } 
  
     </script>
        <script>
@@ -450,9 +528,12 @@ function delcar(id){
 </div>
 <div class="modal" id="bt">
 	<div class="modal-cont" >
-		<div id="qrcode">
-			
+		<div id="qrcode">	
 		</div>
+		 <div >普通URL</div>
+            <div class="pt-15">
+                <input type="text"id="bturl"/>
+            </div>
 	</div>
 </div>
 <div class="modal" id="ytf">
@@ -460,6 +541,10 @@ function delcar(id){
 		<div id="qrcodes">
 			
 		</div>
+		 <div >普通URL</div>
+            <div >
+                <input  type="text"id="ytfurl"/>
+            </div>
 	</div>
 </div>
 </body>
@@ -486,16 +571,7 @@ $('#ConfirmPay').click(function(){
 	$('.modal').click(function(){
 		$('.modal').css('display','none')
 	})
-	//弹出支付二维码
-	function popcode(val){
-	if(val == 0){
-		$('#bt').css('display','block')
-	}
-	if(val == 1){
-		$('#ytf').css('display','block')
-	}
-		
-	}
+	
 	
 	//二维码生成
 	$('#qrcode').qrcode({ 
@@ -503,12 +579,13 @@ $('#ConfirmPay').click(function(){
       height : w,
       text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
     });
-	
+    $("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
 	//二维码生成
 	$('#qrcodes').qrcode({ 
 	  width : w,
       height : w,
       text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
     });
+	$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
 </script> 
 </html>
