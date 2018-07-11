@@ -4,6 +4,7 @@ package com.lsp.user.web;
 import com.lsp.email.entity.Email; 
 import com.lsp.email.util.EmailUtils;
 import com.lsp.integral.entity.InteProstore;
+import com.lsp.integral.entity.InteSetting;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Fromusermb;
@@ -660,23 +661,16 @@ public class UserAction extends GeneralAction<UserInfo>
 		System.out.println("user---->"+user.get("_id").toString());
 		
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
-
+		InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 		if(db!=null){
 			//预付
 			InteProstore info = new InteProstore();
 			
 			info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
-			info.setType("ps_account");//开通账户
-			Calendar calendar = Calendar.getInstance();
-	        Date date = new Date(System.currentTimeMillis());
-	        calendar.setTime(date);
-	        calendar.add(Calendar.YEAR, +3);
-	        date = calendar.getTime();
-	        info.setCreatedate(new Date());
-	        info.setEnddate(date);
+			info.setType("ps_account");//开通账户 
+	        info.setCreatedate(new Date()); 
 			info.setFromUserid(custid);
-			info.setState(0);
-			info.setTime(1095);
+			info.setState(0); 
 			//1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
 			String any = "";
 			if(db.get("any")!=null){
@@ -686,6 +680,8 @@ public class UserAction extends GeneralAction<UserInfo>
 				if(db.get("returnProvince")!=null){
 					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnProvince").toString(), "3")));
 					System.out.println("钱数----》"+info.getMoney());
+					info.setTime(Integer.parseInt(sett.getProvinceTime()+""));
+					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getProvinceTime()+"")));
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
@@ -695,6 +691,8 @@ public class UserAction extends GeneralAction<UserInfo>
 			}else if(type == 2){
 				if(db.get("returnCity")!=null){
 					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCity").toString(), "3")));
+					info.setTime(Integer.parseInt(sett.getCityTime()+""));
+					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getCityTime()+"")));
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCity").toString(), any);
@@ -704,6 +702,8 @@ public class UserAction extends GeneralAction<UserInfo>
 			}else if(type == 3){
 				if(db.get("returnCounty")!=null){
 					info.setMoney(Float.valueOf(Long.parseLong(db.get("returnCounty").toString())*3));
+					info.setTime(Integer.parseInt(sett.getCountyTime()+""));
+					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getCountyTime()+"")));
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCounty").toString(), any);
@@ -714,6 +714,8 @@ public class UserAction extends GeneralAction<UserInfo>
 			}else if(type == 4){
 				if(db.get("returnDept")!=null){
 					info.setMoney(Float.valueOf(Long.parseLong(db.get("returnDept").toString())*3));
+					info.setTime(Integer.parseInt(sett.getDeptTime()+""));
+					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getDeptTime()+"")));
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);

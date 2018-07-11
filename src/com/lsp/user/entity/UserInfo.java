@@ -60,6 +60,17 @@ public class UserInfo extends ReflectionDBObject {
 	private String area;
 	private String province;
 	private String city;
+	
+	private String userName;//真实姓名
+	private String id_card;//身份证号码
+	private String id_card_front;//身份证正面照
+	private String id_card_reverse;//身份证反面照
+	private String company_name;//公司名称
+	private String lisense_number;//营业证号码
+	private String lisense_photo;//营业证照片
+	private int audit_status;//审核状态
+	
+	
 	/**
 	 * 用户所在县
 	 */
@@ -999,6 +1010,70 @@ public class UserInfo extends ReflectionDBObject {
 	public void setCounty(String county) {
 		this.county = county;
 	}
-	
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getId_card() {
+		return id_card;
+	}
+
+	public void setId_card(String id_card) {
+		this.id_card = id_card;
+	}
+
+	public String getId_card_front() {
+		return id_card_front;
+	}
+
+	public void setId_card_front(String id_card_front) {
+		this.id_card_front = id_card_front;
+	}
+
+	public String getId_card_reverse() {
+		return id_card_reverse;
+	}
+
+	public void setId_card_reverse(String id_card_reverse) {
+		this.id_card_reverse = id_card_reverse;
+	}
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
+
+	public String getLisense_number() {
+		return lisense_number;
+	}
+
+	public void setLisense_number(String lisense_number) {
+		this.lisense_number = lisense_number;
+	}
+
+	public String getLisense_photo() {
+		return lisense_photo;
+	}
+
+	public void setLisense_photo(String lisense_photo) {
+		this.lisense_photo = lisense_photo;
+	}
+
+	public int getAudit_status() {
+		return audit_status;
+	}
+
+	public void setAudit_status(int audit_status) {
+		this.audit_status = audit_status;
+	}
+	
+	
 }

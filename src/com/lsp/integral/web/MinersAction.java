@@ -626,5 +626,35 @@ public class MinersAction extends GeneralAction<Miner> {
 			String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
 	    }
+	    /**
+	     * 获取比特币实时价格
+	     */
+	    public void  getBTCSrice() {
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+		  	double  dou=wwzService.getBTCSprice();
+		  	if(dou>0) {
+		  		sub_map.put("state", 0);
+		  		sub_map.put("data", dou);
+		  	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
+	    };
+	    /**
+	     * 获取以太坊实时价格
+	     */
+        public void  getETHSrice() {
+        	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+		  	double  dou=wwzService.getBTCSprice();
+		  	if(dou>0) {
+		  		sub_map.put("state", 0);
+		  		sub_map.put("data", dou);
+		  	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
+	    };
 	    
 }

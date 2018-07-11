@@ -2953,5 +2953,29 @@ public class WwzService {
     public double getSprice() { 
 		return 0; 
     }
+    /**
+     * 获取比特币实时价格(USD美元CNY人民币)
+     * @return
+     */
+    public double getBTCSprice() { 
+    	String str=HttpClient.sendGet("https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=CNY");
+    	JSONObject json=JSONObject.parseObject(str);
+    	if(json.get("CNY")!=null) {
+    		return Double.parseDouble(json.get("CNY").toString());
+    	};
+		return 0; 
+    }
+    /**
+     * 获取以太坊实时价格
+     * @return
+     */
+    public double getETHSprice() { 
+    	String str=HttpClient.sendGet("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=CNY");
+    	JSONObject json=JSONObject.parseObject(str);
+    	if(json.get("CNY")!=null) {
+    		return Double.parseDouble(json.get("CNY").toString());
+    	};
+		return 0; 
+    }
 
 }

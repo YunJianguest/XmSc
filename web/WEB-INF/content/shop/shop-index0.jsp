@@ -413,55 +413,55 @@
 			</c:if>
 			<!-- 分类 -->
 			<div class="hero-gallery js-flickity pb-5" data-js-module="hero-gallery">
-			<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
-			<div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
-			 <c:if test="${not empty typelist}">
-			 <c:forEach items="${typelist}" var="bean"  begin="0" end="9">
-                 <c:if test="${not empty bean.url}">
-				<li class="mui-table-view-cell mui-media" style="width: 20%">
-					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
-						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-						<div class="mui-media-body">${bean.name}</div>
-					</a>
-				</li>
-		   </c:if>
-            <c:if test="${empty bean.url}"> 
-				<li class="mui-table-view-cell mui-media" style="width: 20%">
-					<a href="javascript:fxsel('${bean.type}')">
-						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-						<div class="mui-media-body">${bean.name}</div>
-					</a>
-				</li>
-			  </c:if>
-             </c:forEach>
-             
-             </c:if> 
-             </div>
-             
-             <div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
-			 <c:if test="${not empty typelist}">
-			 <c:forEach items="${typelist}" var="bean"  begin="10" end="19">
-                 <c:if test="${not empty bean.url}">
-				<li class="mui-table-view-cell mui-media" style="width: 20%">
-					<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
-						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-						<div class="mui-media-body">${bean.name}</div>
-					</a>
-				</li>
-		   </c:if>
-            <c:if test="${empty bean.url}"> 
-				<li class="mui-table-view-cell mui-media" style="width: 20%">
-					<a href="javascript:fxsel('${bean.type}')">
-						<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-						<div class="mui-media-body">${bean.name}</div>
-					</a>
-				</li>
-			  </c:if>
-             </c:forEach>
-             
-             </c:if> 
-             </div>
-			</ul> 
+				<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+					<div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
+						<c:if test="${not empty typelist}">
+							<c:forEach items="${typelist}" var="bean"  begin="0" end="9">
+				                <c:if test="${not empty bean.url}">
+									<li class="mui-table-view-cell mui-media" style="width: 20%">
+										<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
+											<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+											<div class="mui-media-body">${bean.name}</div>
+										</a>
+									</li>
+						   		</c:if>
+				            	<c:if test="${empty bean.url}"> 
+									<li class="mui-table-view-cell mui-media" style="width: 20%">
+										<a href="javascript:fxsel('${bean.type}')">
+											<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+											<div class="mui-media-body">${bean.name}</div>
+										</a>
+									</li>
+							  	</c:if>
+				            </c:forEach>
+			             
+			            </c:if> 
+		            </div>
+	            </ul>
+	            <ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+		            <div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
+						<c:if test="${not empty typelist}">
+							<c:forEach items="${typelist}" var="bean"  begin="10" end="19">
+				                <c:if test="${not empty bean.url}">
+									<li class="mui-table-view-cell mui-media" style="width: 20%">
+										<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
+											<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+											<div class="mui-media-body">${bean.name}</div>
+										</a>
+									</li>
+						   		</c:if>
+				            	<c:if test="${empty bean.url}"> 
+									<li class="mui-table-view-cell mui-media" style="width: 20%">
+										<a href="javascript:fxsel('${bean.type}')">
+											<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+											<div class="mui-media-body">${bean.name}</div>
+										</a>
+									</li>
+							  	</c:if>
+				           </c:forEach>
+			            </c:if> 
+		            </div>
+				</ul> 
 			</div>
 			<!-- 新闻 -->
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
@@ -547,12 +547,12 @@
 				</ul>
 			</div>-->
 			<!-- 店铺关注收藏 -->
-			<div class="collectbox">
+			<!--<div class="collectbox">
 				<span ><i class="mui-icon mui-icon-star "></i>关注</span>
 				<span class="on">
 					<i class="mui-icon mui-icon-star-filled "></i>收藏
 				</span>
-			</div>
+			</div>-->
 			 <%@include file="/webcom/shop-foot.jsp" %>
 		</div>
 		

@@ -191,6 +191,7 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
     	Map<String, Object> sub_map = new HashMap<String, Object>(); 
+    	sub_map.put("state", 1);
     	HashMap<String, Object>whereMap = new HashMap<>();
     	HashMap<String, Object>sortMap = new HashMap<>();
     	sortMap.put("createdate", 1);
