@@ -105,12 +105,12 @@
     <body style="background: #fff;">
     	<div class="mui-content" style="background: #fff;padding: 0 20px;">
 			<div class="mui-row">
-				<p class="mui-popup-title">注册</p>
-				<!-- <p class="mui-popup-title zhuce-fenlei">
-					<span style="float: left;" class="personal">个人注册</span>
-					<span style="float: right;" class="personal">商家注册</span>
-					<input type="hidden" id="mui_title" value="1"/>
-				</p>-->
+				<p class="mui-popup-title">商家入驻</p>
+				 <p class="mui-popup-title zhuce-fenlei">
+					<span style="float: left;" class="personal"></span>
+					<span style="float: right;" class="personal"></span>
+					<input type="hidden" id="mui_title" value="2"/>
+				</p>
 			</div>
 			<!--商家注册-->
 			<div class="box">
@@ -145,16 +145,16 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
 	        			<label for="upload">
+	        				<img  class="Idimg" alt="" id="imgss_front" />
 	        				<span class="Idimg" id="Idimg1">身份证正面</span>
-	        				<img width="100" height="100" src="" alt="" id="imgss_front" />
 	        			</label>
 	        			<input type="hidden" id="up_picture_front"/>
 					</p>
 					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture1" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload1" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse()"/>
 	        			<label for="upload">
+	        				<img class="Idimg" alt="" id="imgss_reverse" />
 	        				<span class="Idimg" id="Idimg2">身份证反面</span>
-	        				<img width="100" height="100" src="" alt="" id="imgss_reverse" />
 	        			</label>
 	        			<input type="hidden" id="up_picture_reverse"/>
 					</p>
@@ -172,8 +172,9 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture2" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload2" value="" placeholder="" style="display: none;" onclick="upload_business()"/>
 	        			<label for="upload">
+	        				
+	        				<img class="Idimg"  alt="" id="imgss" />
 	        				<span class="Idimg" id="Idimg3">营业执照照片</span>
-	        				<img width="100" height="100" src="" alt="" id="imgss" />
 	        			</label>
 	        			<input type="hidden" id="up_picture"/>
 					</p>
@@ -464,6 +465,7 @@
 			//picture代表input<file类型>的class的值，up_picture代表隐藏（hidden）的input的id值，imgss代表<img>标签的id值
 			fileInput("picture","up_picture_front","imgss_front");
 			$("#Idimg1").attr("style","display:none");
+			
 		}
 		
 		function upload_id_card_reverse(){
