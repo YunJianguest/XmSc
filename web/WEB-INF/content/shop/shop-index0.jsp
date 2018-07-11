@@ -155,11 +155,11 @@
 			}
 			
 			.icon-logo {
-				width: 24px;
-				height: 24px;
+				width: 36px;
+				height: 36px;
 				background: url(${ctx}/xmMobile/img/icon/icon-logo.png) no-repeat;
 				background-size: 100% auto;
-				margin-top: 10px;
+				/*margin-top: 10px;*/
 				margin-right: 3px;
 			}
 			
@@ -469,7 +469,7 @@
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
 						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 100%;height: 100%;padding: 5px;"/></div>
-						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
+						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;padding-top: 5px;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
 							<ul  style='height:30px;'>
