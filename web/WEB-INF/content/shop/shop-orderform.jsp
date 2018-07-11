@@ -135,7 +135,6 @@
 		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+')">确认收货</div>';
 		    		        }else if(v[i].state==4){
 		    		        	xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
-		    		        } 
 		    		        	/*   xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
 		    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
 		    		         }else if(v[i].state==5){
