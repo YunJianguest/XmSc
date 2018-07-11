@@ -474,14 +474,14 @@
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
 								   <li>
-								   		<a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a>
-								   		<a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a>
+								   		<p><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></p>
+								   		<p><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></p>
 								   </li>
 								   </c:if>
 								   <c:if test="${empty bean.url}">
 								   		<li>
-								   			<a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a>
-								   			<a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a>
+								   			<p><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></p>
+								   			<p><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></p>								   			
 								   		</li>
 								   </c:if> 
 								 </c:forEach>  
