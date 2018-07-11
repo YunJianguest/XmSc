@@ -300,6 +300,7 @@
 			height: 40px;
 			/*top: -4px;*/
 			background: #fff;
+			border: none;
 		}
 		
 		.search-h {
