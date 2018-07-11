@@ -424,10 +424,22 @@
 							type:"post",
 							url:"${ctx}/user/fromuser!signup.action",
 							async:true,
-							data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val(),username:$('#name_confirm').val(),id_card:$('nameId').val(),id_card_front:$('up_picture_front').val(),id_card_reverse:$('up_picture_reverse').val(),company_name:$('#yingyename').val(),lisense_number:$('#yingyeId').val(),lisense_photo:$('up_picture').val(),status:2},
+							data:{
+								tel:$('#phone1').val(),
+								password:$('#password1').val(),
+								verCode:$('#verCode1').val(),
+								username:$('#name_confirm').val(),
+								id_card:$('nameId').val(),
+								id_card_front:$('#up_picture_front').val(),
+								id_card_reverse:$('#up_picture_reverse').val(),
+								company_name:$('#yingyename').val(),
+								lisense_number:$('#yingyeId').val(),
+								lisense_photo:$('#up_picture').val(),
+								status:2
+							},
 							success:function(json){
 								if(json){
-									console.log("++++++++++++++++"+json.status);
+									console.log("++++++++++++++++"+json.state);
 									if(json.state == 0){
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 									}
