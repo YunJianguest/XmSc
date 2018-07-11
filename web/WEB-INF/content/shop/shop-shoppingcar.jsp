@@ -568,10 +568,10 @@ $('#ConfirmPay').click(function(){
 	$('#close').click(function(){
 		$('.mask').css('display','none')
 	})
-	$('.modal').click(function(){
-		$('.modal').css('display','none')
-	})
-	
+//	$('.modal').click(function(){
+//		$('.modal').css('display','none')
+//	})
+//	
 	
 	//二维码生成
 	$('#qrcode').qrcode({ 
