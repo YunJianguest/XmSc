@@ -26,6 +26,7 @@
 		<link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/swiper.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/xmMobilePro.css" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mediaJfyPro.css" />
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		   
