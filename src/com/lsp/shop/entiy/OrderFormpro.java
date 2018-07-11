@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.struts2.components.DoubleListUIBean;
+
 import com.mongodb.DBObject;
 import com.mongodb.ReflectionDBObject;
 /**
@@ -26,6 +28,7 @@ public class OrderFormpro extends ReflectionDBObject{
 	  * 售后申请id
 	  */
 	 private String sid;
+	 private Double other_money;
 	public String getOrderid() {
 		return orderid;
 	}
@@ -73,6 +76,12 @@ public class OrderFormpro extends ReflectionDBObject{
 	}
 	public void setState(int state) {
 		this.state = state;
+	}
+	public Double getOther_money() {
+		return other_money;
+	}
+	public void setOther_money(Double other_money) {
+		this.other_money = other_money;
 	}
 	 
 	

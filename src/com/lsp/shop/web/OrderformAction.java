@@ -32,6 +32,7 @@ import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
+import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -272,37 +273,33 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
-		String sel_state = Struts2Utils.getParameter("sel_state");
-		custid=SpringSecurityUtils.getCurrentUser().getId(); 
 		String  comid=Struts2Utils.getParameter("comid");
 		if(StringUtils.isNotEmpty(comid)){
-			whereMap.put("comid", Long.parseLong(comid));	
+			BasicDBList dbList = new BasicDBList();
+			dbList.add(Long.parseLong(comid));
+			whereMap.put("comids",Long.parseLong(comid));
 		} 
+		String sel_state = Struts2Utils.getParameter("sel_state");
 		if (StringUtils.isNotEmpty(sel_state)) {
 			whereMap.put("state", Integer.parseInt(sel_state));
 		}
 		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-  
+		System.out.println("sel_insdate---->"+sel_insdate);
 		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
-
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			BasicDBObject dateCondition = new BasicDBObject();
+		BasicDBObject dateCondition = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate)) {			
 			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
+			whereMap.put("insDate", dateCondition);
+		}
+		if (StringUtils.isNotEmpty(sel_enddate)) {
 			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
 			whereMap.put("insDate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
-
 		}
-	 
 		sortMap.put("insDate", -1);
-
 		List<DBObject> list = baseDao.getList(PubConstants.WX_ORDERFORM,
 				whereMap, 0, 3000, sortMap);
 		for (DBObject dbObject : list) {
-
-			if (dbObject.get("fromUserid") != null) {
-			 
+			if (dbObject.get("fromUserid") != null) {			 
 			 DBObject  user=wwzService.getWxUser(dbObject.get("fromUserid").toString());
 			 dbObject.put("nickname", user.get("nickname"));
 			 dbObject.put("headimgurl", user.get("headimgurl"));
@@ -310,8 +307,7 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			 dbObject.put("insDate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("insDate").toString())));
 			 if(dbObject.get("fhdate")!=null){
 				 dbObject.put("fhdate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("fhdate").toString())));
-			 }
-			 
+			 }			 
 			} 
 			dbObject.put("total",
 					BaseDecimal.round(dbObject.get("total").toString(), 2));
@@ -321,6 +317,48 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 				dbObject.put("zfmoney", BaseDecimal.round(
 						dbObject.get("zfmoney").toString(), 2));
 			} 
+			Double public_money = 0.0;
+			Double contri_money = 0.0;
+			Double members_money = 0.0;
+			Double other_money = 0.0;
+			
+			//whereMap.put("orderid", dbObject.get("_id").toString());
+			System.out.println("----orderid--->"+dbObject.get("_id").toString());
+			/*if(StringUtils.isNotEmpty(comid)){
+				whereMap.put("pro.comid", comid);
+			}*/
+			System.out.println("----comid--->"+comid);
+			List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,sortMap);
+			System.out.println("lists.size-->"+lists);
+			for (DBObject dbObject2 : lists) {
+				
+				OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
+				System.out.println("---->"+pro);
+				DBObject dbObject3 = pro.getPro();
+				if(dbObject3!=null){
+					System.out.println("---->"+dbObject3.get("goodstype"));
+					if(dbObject3.get("goodstype")!=null){
+						if(dbObject3.get("goodstype").toString().equals("3")){//商品为大众区商品
+							public_money +=Double.parseDouble(dbObject3.get("price").toString());
+						}
+						if(dbObject3.get("goodstype").toString().equals("4")){//商品为特约区商品
+							contri_money +=Double.parseDouble(dbObject3.get("price").toString());		
+						}
+						if(dbObject3.get("goodstype").toString().equals("5")){//商品为会员区商品
+							members_money +=Double.parseDouble(dbObject3.get("price").toString());
+						}
+					}
+				}
+				if(pro.getOther_money()!=null){
+					other_money+=pro.getOther_money();
+				}
+				
+			}
+			dbObject.put("public_money", BaseDecimal.round(public_money+"", 2));
+			dbObject.put("contri_money", BaseDecimal.round(contri_money+"", 2));
+			dbObject.put("members_money", BaseDecimal.round(members_money+"", 2));
+			dbObject.put("other_money", BaseDecimal.round(other_money+"", 2));
+
 			if(dbObject.get("kdcom")!=null){
 				dbObject.put("kdcom",wwzService.getKdName(dbObject.get("kdcom").toString()));
 			} 
@@ -342,10 +380,10 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 				break;
 			}
 		}
-		String[] header = { "微信名", "订单号", "快递单位", "快递号", "合计", "现金",
-				"积分", "备注", "数量", "姓名", "电话", "地址", "订货日期", "发货日期", "状态" };
-		String[] body = { "nickname", "_id", "kdcom", "kdno", "total",
-				"zfmoney", "jfdk", "remark", "count", "name", "tel",
+		String[] header = { "微信名", "订单号", "快递单位", "快递号", "大众区金额", "特约区金额","会员区金额","其他费用（如存在退款，为退款手续费）","实付款",
+				 "备注", "姓名", "电话", "地址", "订货日期", "发货日期", "状态" };
+		String[] body = { "nickname", "_id", "kdcom", "kdno", "public_money","contri_money","members_money","other_money","zfmoney",
+				"remark", "count", "name", "tel",
 				"address", "insDate", "fhdate", "state" };
 		String newtime = "orderfrom" + ".xls";
 

@@ -535,7 +535,13 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		String comid = Struts2Utils.getParameter("comid");
 		Struts2Utils.getRequest().setAttribute("comid", comid);
-		whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("comid"))); 
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("parentid", Long.parseLong(Struts2Utils.getParameter("comid")));
+			DBObject  db=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(Struts2Utils.getParameter("comid")));
+			if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){
+				Struts2Utils.getRequest().setAttribute("isjf",1);
+			} 
+		}
 		sortMap.put("sort", -1);
 		//获取店铺分类 
 		List<DBObject> typelist=baseDao.getList(PubConstants.SHOP_SHOPTYPE, whereMap, sortMap);
@@ -545,10 +551,6 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		Struts2Utils.getRequest().setAttribute("entity",pro);
 		if(pro!=null){
 			Struts2Utils.getRequest().setAttribute("bq",pro.get("bq"));
-		} 
-		DBObject  db=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(Struts2Utils.getParameter("comid")));
-		if(db.get("type")!=null&&Integer.parseInt(db.get("type").toString())==1){
-			Struts2Utils.getRequest().setAttribute("isjf",1);
 		} 
 		whereMap.clear();
 		whereMap.put("parentid", 0L);

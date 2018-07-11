@@ -131,6 +131,8 @@ public class OrderForm extends ReflectionDBObject{
 	 * 会员区支付金额
 	 */
 	private Double members_money;
+	
+	private Double other_money;//退款手续费
 	/**
 	 * 所有的店铺ID
 	 */
@@ -425,6 +427,12 @@ public class OrderForm extends ReflectionDBObject{
 	}
 	public void setComids(List<Long> comids) {
 		this.comids = comids;
+	}
+	public Double getOther_money() {
+		return other_money;
+	}
+	public void setOther_money(Double other_money) {
+		this.other_money = other_money;
 	}
 	 
 	 

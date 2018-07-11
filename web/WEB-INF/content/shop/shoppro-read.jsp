@@ -202,34 +202,17 @@
                         <!--左边项目-->
                         <div class="overflow-hidden">
                             <div class=" div-group-10 pb-25 bg-bai border-radius5 overflow-hidden">
-                                <div class="clear col-2 pl-10 overflow-hidden">
+                                <div class="clear col-1 pl-10 overflow-hidden">
                                     <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
-                                        商品logo<i class="size12 zi-hui">（仅需一张）（推荐上传图片大小：400px X 400px）</i></div>
+                                        商品logo<i class="size12 zi-hui"></i></div>
                                     <div class="line-bottom line-right line-left1 div-group-5 pt-10 pb-10 overflow-hidden">
-                                        <div class="col-6">
-                                            <c:if test="${empty entity.logo}">
-                                                <div class="img-wh60 maring-a border-radius3 line-lu logos">
-
-                                                </div>
-                                        </div>
-                                        </c:if>
+                                 
                                         <c:if test="${not empty entity.logo}">
                                             <div class="img-wh60 maring-a border-radius3 line-lu logos">
                                                 <img src="${filehttp}/${entity.logo}" class="img-60">
                                             </div>
                                     </div>
-                                    </c:if>
-                                    <div class="col-6">
-                                        <a href="javascript:pz('logo','200','200',false,this)">
-                                            <div class="img-wh60 maring-a border-radius3 line-lu">
-                                                <div class="div-group-15">
-                                                    <img src="${contextPath}/mvccol/img/addimg.png" class="width-10">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                </div>
+                                    </c:if> 
                             </div>
 
                             <div class="clear pt-25">
@@ -243,7 +226,7 @@
                                                id="ptitle"
                                                value="${entity.ptitle}"
                                                name="ptitle"
-                                               placeholder="商品名称">
+                                               placeholder="商品名称" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -251,7 +234,7 @@
                                         店铺分类
                                     </div>
                                     <div class="overflow-hidden">
-                                        <select id="hylx" name="hylx" class="select2" data-placeholder="请选择">
+                                        <select id="hylx" name="hylx" class="select2" data-placeholder="请选择" readonly="readonly">
                                             <c:forEach items="${typelist}" var="bean" varStatus="status">
                                                 <option value="${bean.type}">${bean.name}</option>
                                             </c:forEach>
@@ -278,7 +261,7 @@
                                         商品二级分类
                                     </div>
                                     <div class="overflow-hidden">
-                                         <select id="mintypeid" name="mintypeid" class="select2" data-placeholder="请选择" >
+                                         <select id="mintypeid" name="mintypeid" class="select2" data-placeholder="请选择" readonly="readonly">
                                         
                                         </select>
                                     </div>
@@ -288,7 +271,7 @@
                                         商品三级分类
                                     </div>
                                     <div class="overflow-hidden">
-                                         <select id="thirdtypeid" name="thirdtypeid" class="select2" data-placeholder="请选择" >
+                                         <select id="thirdtypeid" name="thirdtypeid" class="select2" data-placeholder="请选择" readonly="readonly">
                                         
                                         </select>
                                     </div>
@@ -298,7 +281,7 @@
                                         模板
                                     </div>
                                     <div class="overflow-hidden">
-                                        <select id="mb" name="mb" class="select2" data-placeholder="请选择">
+                                        <select id="mb" name="mb" class="select2" data-placeholder="请选择" readonly="readonly">
                                             <option value="0">默认模板</option>
                                         </select>
                                     </div>
@@ -315,7 +298,7 @@
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
                                                id="sort" value="${entity.sort}" name="sort"
-                                               placeholder="请输入序号">
+                                               placeholder="请输入序号" readonly="readonly">
                                     </div>
                                 </div>
                                <div class="col-2 pl-10">
@@ -326,7 +309,7 @@
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
                                                id="summary" value="${entity.summary}" name="summary"
-                                               placeholder="请输入分享说明">
+                                               placeholder="请输入分享说明" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -336,7 +319,7 @@
                                     <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
-                                               id="url" value="${entity.url}" name="url" placeholder="外部链接">
+                                               id="url" value="${entity.url}" name="url" placeholder="外部链接" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -350,7 +333,7 @@
                                                id="cost"
                                                value="${entity.cost}"
                                                name="cost"
-                                               placeholder="成本价格 ">
+                                               placeholder="成本价格 " readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -361,7 +344,7 @@
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
                                                id="price" value="${entity.price}" name="price"
-                                               placeholder="请输入价格">
+                                               placeholder="请输入价格" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -372,7 +355,7 @@
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
                                                id="oldprice" value="${entity.oldprice}" name="oldprice"
-                                               placeholder="请输入市场价格">
+                                               placeholder="请输入市场价格" readonly="readonly">
                                     </div>
                                 </div>
     
@@ -384,7 +367,7 @@
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
                                                id="num" value="${entity.num}" name="num"
-                                               placeholder="请输入库存数量">
+                                               placeholder="请输入库存数量" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -395,7 +378,7 @@
                                         <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
                                                type="text"
                                                id="gmnum" value="${entity.gmnum}" name="gmnum"
-                                               placeholder="请输入已售数量">
+                                               placeholder="请输入已售数量" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="col-2 pl-10">
@@ -405,7 +388,7 @@
                                     </div>
                                     <div class="overflow-hidden">
                                         <select id="isxs" name="isxs" class="select2"
-                                                data-placeholder="请选择">
+                                                data-placeholder="请选择" readonly="readonly">
                                             <option value="0">显示</option>
                                             <option value="1">隐藏</option>
                                             
@@ -471,7 +454,12 @@
     width: '100%'
    });
    var editor=CKEDITOR.replace('context');
-
+   $("#typeid").prop("disabled", true);
+   $("#mintypeid").prop("disabled", true);
+   $("#thirdtypeid").prop("disabled", true);
+   $("#isxs").prop("disabled", true);
+   $("#mb").prop("disabled", true);
+   $("#hylx").prop("disabled", true);
    
 </script>
 
