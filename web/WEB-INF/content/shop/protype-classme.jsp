@@ -306,6 +306,7 @@
 		
 		.search-h {
 			height: 40px;
+			text-align: center;
 		}
 		
 		.search-back {
