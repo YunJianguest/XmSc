@@ -170,7 +170,7 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
 	        			<label for="upload">
-	        				<span class="Idimg">身份证正面</span>
+	        				<span class="Idimg" id="Idimg1">身份证正面</span>
 	        				<img width="100" height="100" src="" alt="" id="imgss_front" />
 	        			</label>
 	        			<input type="hidden" id="up_picture_front"/>
@@ -178,7 +178,7 @@
 					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture1" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload1" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse()"/>
 	        			<label for="upload">
-	        				<span class="Idimg">身份证反面</span>
+	        				<span class="Idimg" id="Idimg2">身份证反面</span>
 	        				<img width="100" height="100" src="" alt="" id="imgss_reverse" />
 	        			</label>
 	        			<input type="hidden" id="up_picture_reverse"/>
@@ -197,7 +197,7 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture2" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload2" value="" placeholder="" style="display: none;" onclick="upload_business()"/>
 	        			<label for="upload">
-	        				<span class="Idimg">营业执照照片</span>
+	        				<span class="Idimg" id="Idimg3">营业执照照片</span>
 	        				<img width="100" height="100" src="" alt="" id="imgss" />
 	        			</label>
 	        			<input type="hidden" id="up_picture"/>
@@ -245,35 +245,69 @@
 				$('.verBtn').click(function() {
 					var count = 60;
 					var timer;
-					if($('#phone').val() == '') {
-						mui.alert('请输入手机号')
-					} else if(!reg.test($('#phone').val())) {
-						mui.alert('手机号码不正确')
-					} else {
-						function countDown() {
-							if(count == 0) {
-								clearInterval(timer);
-								$('.verBtn').removeAttr('disabled', true);
-								$('.verBtn').html('重新发送');
-							} else {
-								
-								$('.verBtn').removeAttr('disabled', false);
-								$('.verBtn').html(count + 's');
-								count--;
+					var status = $("#mui_title").val();
+					if(status=='1'){//个人注册
+						if($('#phone').val() == '') {
+							mui.alert('请输入手机号')
+						} else if(!reg.test($('#phone').val())) {
+							mui.alert('手机号码不正确')
+						} else {
+							function countDown() {
+								if(count == 0) {
+									clearInterval(timer);
+									$('.verBtn').removeAttr('disabled', true);
+									$('.verBtn').html('重新发送');
+								} else {
+									
+									$('.verBtn').removeAttr('disabled', false);
+									$('.verBtn').html(count + 's');
+									count--;
+								}
 							}
+							var timer = setInterval(countDown, 1000);
+							$.ajax({
+								type:"post",
+								url:"${ctx}/user/fromuser!createTelCode.action",
+								async:true,
+								data:{
+									tel:$('#phone').val()
+								},
+								success:function(json){
+									
+								}
+							});
 						}
-						var timer = setInterval(countDown, 1000);
-						$.ajax({
-							type:"post",
-							url:"${ctx}/user/fromuser!createTelCode.action",
-							async:true,
-							data:{
-								phone:$('#phone').val()
-							},
-							success:function(json){
-								
+					}else if(status=='2'){//商家注册
+						if($('#phone1').val() == '') {
+							mui.alert('请输入手机号')
+						} else if(!reg.test($('#phone1').val())) {
+							mui.alert('手机号码不正确')
+						} else {
+							function countDown() {
+								if(count == 0) {
+									clearInterval(timer);
+									$('.verBtn').removeAttr('disabled', true);
+									$('.verBtn').html('重新发送');
+								} else {
+									
+									$('.verBtn').removeAttr('disabled', false);
+									$('.verBtn').html(count + 's');
+									count--;
+								}
 							}
-						});
+							var timer = setInterval(countDown, 1000);
+							$.ajax({
+								type:"post",
+								url:"${ctx}/user/fromuser!createTelCode.action",
+								async:true,
+								data:{
+									tel:$('#phone1').val()
+								},
+								success:function(json){
+									
+								}
+							});
+						}
 					}
 				});
 				$('#password').blur(function(){
@@ -415,14 +449,17 @@
 		function upload_id_card_front(){
 			//picture代表input<file类型>的class的值，up_picture代表隐藏（hidden）的input的id值，imgss代表<img>标签的id值
 			fileInput("picture","up_picture_front","imgss_front");
+			$("#Idimg1").attr("style","display:none");
 		}
 		
 		function upload_id_card_reverse(){
 			fileInput("picture1","up_picture_reverse","imgss_reverse");
+			$("#Idimg2").attr("style","display:none");
 		}
 		
 		function upload_business(){
 			fileInput("picture2","up_picture","imgss");
+			$("#Idimg3").attr("style","display:none");
 		}
 		</script>
 </html>
