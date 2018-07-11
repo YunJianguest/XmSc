@@ -97,11 +97,11 @@
 			
 			.news {
 				width: 100%;
-				height: 50px;
-				/*position: relative;*/
-				display: flex;
+				height: 40px;
+				position: relative;
+				/*display: flex;
 				justify-content: space-between;
-				align-items: center;
+				align-items: center;*/
 				border:1px solid #eee;
 		        border-radius:10px;
 		        padding:0 10px; 
@@ -141,13 +141,13 @@
 			#newsmore {
 				position: relative;
 				text-align: center;
-				line-height: 50px;
+				line-height: 40px;
 			}
 			
 			#newsmore::after {
 				content: '';
 				width: 1px;
-				height: 40px;
+				height: 30px;
 				background: #eee;
 				position: absolute;
 				top: 5px;
@@ -468,20 +468,20 @@
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 100%;height: 100%;padding: 5px;"/></div>
-						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;padding-top: 5px;" id='news'>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 30px;height:30px;margin-top: 5px;"/></div>
+						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
-							<ul  style='height:50px;'>
+							<ul>
 								<c:forEach items="${roll}" var="bean">
 								   <c:if test="${not empty bean.url}">
-								   <li>
+								   <li style="height: 50px;">
 								   		<p><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></p>
 								   		<p><a href="${bean.url}" style="text-decoration: underline;">${bean.title}</a></p>
 								   </li>
 								   </c:if>
 								   <c:if test="${empty bean.url}">
-								   		<li>
+								   		<li style="height: 50px;">
 								   			<p><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></p>
 								   			<p><a href="javascript:void(0);" style="text-decoration: underline;">${bean.title}</a></p>								   			
 								   		</li>
@@ -580,9 +580,8 @@
 				setInterval('autoScroll("#news")', 2000)
 		}); 
 		function autoScroll(obj) {
-			var lineh = $(obj).find('li:first').height();
 			$(obj).find('ul:first').animate({
-				marginTop: -lineh
+				marginTop: -50+'px'
 			}, 500, function() {
 				$(this).css({
 					marginTop: 0
