@@ -106,37 +106,12 @@
     	<div class="mui-content" style="background: #fff;padding: 0 20px;">
 			<div class="mui-row">
 				<p class="mui-popup-title">注册</p>
-				<p class="mui-popup-title zhuce-fenlei">
+				<!-- <p class="mui-popup-title zhuce-fenlei">
 					<span style="float: left;" class="personal">个人注册</span>
 					<span style="float: right;" class="personal">商家注册</span>
 					<input type="hidden" id="mui_title" value="1"/>
-				</p>
+				</p>-->
 			</div>
-			<!--个人注册-->
-			<div class="box">
-				<form class="mui-input-group">
-				<div class="mui-input-row">
-					<label>手机号</label>
-					<input id="phone" type="text" class="mui-input-clear mui-input" minlength='11' maxlength="11" placeholder="请输入手机号码" />
-				</div>
-				<div class="mui-input-row" style="position: relative;">
-					<label>验证码</label>
-					<input id="verCode" type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" />
-					<span class="mui-btn mui-btn-grey verBtn">获取验证码</span>
-				</div>
-				<div class="mui-input-row">
-					<label>密码</label>
-					<input id='password' type="password" class="mui-input mui-input-password" placeholder="请输入密码">
-				</div>
-				<div class="mui-input-row">
-					<label>确认</label>
-					<input id='password_confirm' type="password" class=" mui-input mui-input-password" placeholder="请确认密码">
-				</div>
-				
-
-			</form>
-			</div>
-			
 			<!--商家注册-->
 			<div class="box">
 				<form class="mui-input-group">
@@ -204,7 +179,33 @@
 					</p>
 				</div>
 			</form>
+			</div>	
+			<!--个人注册-->
+			<div class="box">
+				<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>手机号</label>
+					<input id="phone" type="text" class="mui-input-clear mui-input" minlength='11' maxlength="11" placeholder="请输入手机号码" />
+				</div>
+				<div class="mui-input-row" style="position: relative;">
+					<label>验证码</label>
+					<input id="verCode" type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" />
+					<span class="mui-btn mui-btn-grey verBtn">获取验证码</span>
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input mui-input-password" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
+					<label>确认</label>
+					<input id='password_confirm' type="password" class=" mui-input mui-input-password" placeholder="请确认密码">
+				</div>
+				
+
+			</form>
 			</div>
+			
+			
 			
 			<div class="mui-content-padded" style="margin-right: 0;">
 				<button id='reg' class="mui-btn mui-btn-block " data-loading-icon= "mui-spinner mui-spinner-custom">注册</button>

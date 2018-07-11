@@ -132,12 +132,13 @@ public class LoginAction extends ActionSupport
 	  return "signup";
   }
   
+  
   /***
    * 移动端商家注册页面
    * @return
    */
-  public String signup1(){
-	  return "signup1";
+  public String sjsignup(){
+	  return "sjsignup";
   }
   /***
    * 移动端忘记密码
