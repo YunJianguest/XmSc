@@ -32,9 +32,11 @@
 			}
 			
 			.mui-bar.mui-bar-nav.mui-bar-transparent.mui-active {
-				background-color: #c4c3c2 !important;
+				background-color: rgba(255,255,255,0.6) !important;
 			}
-			
+			.mui-bar.mui-bar-nav.mui-bar-transparent.mui-active .search{
+				background: #e2e2e2;
+			}
 			.mui-pull-left span {
 				width: 22px;
 				height: 22px;
