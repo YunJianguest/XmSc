@@ -271,28 +271,28 @@
         </div>
     </div>
     </c:if>
-  	<ul class="collector">
+  		<ul class="collector">
   		<li>
-  			<a href="">
-  				<div>9</div>
+  			<a href="${ctx}/shop/productcollect!productcollectList.action?custid=${custid}&lscode=${lscode}">
+  				<div>${productcollectCount }</div>
   				商品收藏
   			</a>
   		</li>
   		<li>
-  			<a href="">
-  				<div>9</div>
+  			<a href="${ctx}/shop/shopcollect!ajaxkj.action?custid=${custid}&lscode=${lscode}">
+  				<div>${shopcollectCount }</div>
   				店铺收藏
   			</a>
   		</li>
   		<li>
-  			<a href="">
-  				<div>9</div>
+  			<a href="${ctx}/shop/productattention!productattentionList.action?custid=${custid}&lscode=${lscode}">
+  				<div>${productattentionCount }</div>
   				商品关注
   			</a>
   		</li>
   		<li>
-  			<a href="">
-  				<div>9</div>
+  			<a href="${ctx}/shop/shopattention!ajaxkj.action?custid=${custid}&lscode=${lscode}">
+  				<div>${shopattentionCount }</div>
   				店铺关注
   			</a>
   		</li>
