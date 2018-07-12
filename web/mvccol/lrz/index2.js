@@ -1,6 +1,6 @@
-(function() {
+var fileInput=function(v,l,p){
 
-	var input = document.querySelector('.cameraInput');
+	var input = document.querySelector('.'+v);
 	var types = [".jpg",".jpeg",".gif",".png",".JPG",".JPEG",".PNG",".RAW"];
 	var mpiArr = []; 
 	var index = 0; 
@@ -19,8 +19,8 @@
 	    	alert("请上传小于10M的文件");
 	    return;
 	    }
-	  document.querySelector('.pic-list').appendChild(span);  
-  	 $('#jdt').show();
+	 // document.querySelector('.pic-list').appendChild(span);  
+  	 
 	    lrz(file, {
 	        before: function() {
 	        	
@@ -36,66 +36,16 @@
 	        function (results) {
 	        setTimeout(function () {
 	            $.post(
-	            	"lrzimg!imginput.action",
+	            	"suc/lrzimg!imginput.action",
 	            	{
 	                    imgBase64:results.base64,
 	                    imgSize: results.base64.length, // 校验用，防止未完整接收
 	                    imgName: fileName, 
 	                },
 	                function (data) {
-	                	 
-	                		$('#jdt').hide(); 
-	                        var rData =data;                        
-	                        
-	                        var img = document.createElement('img');
-	                        
-	                        var timestamp=new Date().getTime();
-	                    	var idx = "img" + fileName.substring(0, fileName.indexOf(".")) + timestamp;
-	                    	$(span).attr("class" ,"col-3 pt-10");
-	                    	$(span).attr("id" ,idx);
-	                    	$(span).attr("name" ,rData.path);
-	                    	var div1 = document.createElement('div');
-	                    	$(div1).attr("class","img-wh70 position-r border-radius5 line-lu");
-	                    	 
-	                    	var divdel=document.createElement('div');
-	                    	$(divdel).attr("class","position-a");
-	                    	$(divdel).css("top","-7px");
-	                    	$(divdel).css("right","-7px");
-	                    	$(divdel).click(function(){
-	                    		removeimg(divdel);
-	                    	});
-	                    	var adel=document.createElement('div');
-	                    	$(adel).attr("href","#");
-	                    	var imgdel=document.createElement('div');
-	                    	$(imgdel).attr("class","img-wh20 txt-c zi-bai border-radius50 bg-cheng");
-	                    	var fontdel=document.createElement('font');
-	                    	$(fontdel).attr("size","2");
-	                    	var idel=document.createElement('i');
-	                    	$(idel).attr("class","fa fa-remove");
-	                    	$(idel).css("line-height","22px");
-	                    	fontdel.appendChild(idel);
-	                    	imgdel.appendChild(fontdel);
-	                    	adel.appendChild(imgdel);
-	                    	divdel.appendChild(adel);
-	                    	
-	                    	 
-	                    	
-	                    	
-	                        if(!rData.ret || rData.state != "0") {
-	                        	     
-	                        } else {
-	                        	           
-	              //用于上传完成后直接展示图片
-	                        	var mpImg = new MegaPixImage(file);                        	
-	                        	mpImg.render(img, {width: 50, height: 50,quality: 0.5 }); 
-	                            mpiArr.push({"id":idx,"mpi":mpImg});
-	                        	span.innerHTML = ""; 
-	                        	$(img).attr("class","img-wh70 img-bj  maring-a border-radius5"); 
-	                        	div1.appendChild(img);
-	                        	div1.appendChild(divdel);
-
-		                    	span.appendChild(div1); 
-	                        }
+	                	$("#"+l).val(data.path);
+	                	$("#"+p).attr("src","http://xmshop365.com/uploads/"+data.path);
+	                	                        
 	                    }
 	            );
 	        },"json", 1000);
@@ -127,4 +77,4 @@
 	function  removeimg(v){ 
 		$(v).parent().parent().remove();
 	}
-})();
+};
