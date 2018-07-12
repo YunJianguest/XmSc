@@ -430,8 +430,8 @@
 							city:$('#city').val(),
 							county:$('#county').val(),
 							username:$('#username').val(),
-							id_card_front:$('#up_picture_front11').val(),
-							id_card_reverse:$('#up_picture_reverse11').val(),
+							id_card_front:$('#up_picture_front').val(),
+							id_card_reverse:$('#up_picture_reverse').val(),
 							status:1
 						},
 						success:function(json){

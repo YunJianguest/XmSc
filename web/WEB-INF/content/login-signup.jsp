@@ -267,7 +267,7 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture11" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload11" value="" placeholder="" style="display: none;" onclick="upload_id_card_front11()"/>
 	        			<label for="upload11">
-	        				<img width="100" height="100" src="" alt="" id="imgss_front11" />
+	        				<img  class="Idimg" src="" alt="" id="imgss_front11" />
 	        				<span class="Idimg" id="Idimg11">身份证正面</span>
 	        			</label>
 	        			<input type="hidden" id="up_picture_front11"/>
