@@ -24,8 +24,12 @@
     </style>
 </head>
 <body class="bg-bai">
-<main class="cmp640 img-100">
-    ${entity.content}
-</main>
+	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;"><</a>
+			关于我们
+	</header>
+	<main class="cmp640 img-100" style='padding-top: 40px;'>
+	    ${entity.content}
+	</main>
 </body>
 </html>

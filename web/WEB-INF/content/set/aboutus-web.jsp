@@ -24,8 +24,9 @@
     </style>
 </head>
 <body class="bg-bai">
-<main class="cmp640 img-100">
-    ${entity.content}
-</main>
+	
+	<main class="cmp640 img-100">
+	    ${entity.content}
+	</main>
 </body>
 </html>

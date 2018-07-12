@@ -458,7 +458,12 @@
 		</script>
 		
  	</body>
- 	<script src="${ctx}/mvccol/lrz/index_no.js" type="text/javascript" charset="utf-8"></script>
+ 	
+ 	<script src="${ctx}/mvccol/lrz/exif.js" type="text/javascript" charset="utf-8"></script>
+ 	
+ 	<script src="${ctx}/mvccol/lrz/lrz.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="${ctx}/mvccol/lrz/mobileFix.mini.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="${ctx}/mvccol/lrz/index2.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		
 		function upload_id_card_front(){

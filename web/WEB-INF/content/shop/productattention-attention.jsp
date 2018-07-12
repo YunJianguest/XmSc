@@ -313,6 +313,11 @@
      </script>
 </head>
 <body>
+	<header class="mui-bar mui-bar-nav" style="background: #fff;box-shadow: none;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+		    <h1 class="mui-title">我的关注</h1>
+		    <!--<span class="mui-pull-right">保存到手机</span>-->
+		</header>
 	<div class="mui-content">
 			<p class="fav_count">
 				<span class="dianpushoucang">您关注了</span><em id="shoplist_count">${fycount }</em>个商品

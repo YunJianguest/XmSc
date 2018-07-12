@@ -184,14 +184,18 @@
      
 </head>
 <body class="cmp640">
+	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			个人中心
+	</header>
 <main style='padding-bottom: 50px;z-index: -10;'>
    	<div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
    	<div style="width: 100%;height: 45px;">
    		<div class="pull-left" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-left:15px;'>
-   			<i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i>
+   			<i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#000;'></i>
    		</div>
    		<div class="pull-right" style="margin-top: 15px;margin-right: 15px;">
-   			<i class="zi-lan-tq fa fa-commenting-o" style='font-size:16px;color:#fff;'></i>
+   			<i class="zi-lan-tq fa fa-commenting-o" style='font-size:16px;color:#000;'></i>
    		</div>
    	</div>
         <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 0;margin-left:20px;margin-top:-35px;">

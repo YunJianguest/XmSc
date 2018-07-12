@@ -217,10 +217,10 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav">
+		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
 		    <h1 class="mui-title">商品列表</h1>
-		</header>-->
+		</header>
 		<!-- <div id="showall"></div> -->
 		<div class='mui-content' style="height: 100%;background-color: #fff;">
 			<div class='mui-row'>
