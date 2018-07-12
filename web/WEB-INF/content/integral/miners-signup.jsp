@@ -15,6 +15,7 @@
 	    <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
 		 <!--标准mui.css-->
     	<link rel="stylesheet" href="${ctx}/mvccol/mui-css/mui.min.css">
+    	<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<style>
 						.area {
 				margin: 20px auto 0px auto;
@@ -304,7 +305,7 @@
 					</div>
 				</div>
 			</div>
-		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
 		<script src="${ctx}/mvccol/mui-js/mui.picker.js"></script>
 <script src="${ctx}/mvccol/mui-js/mui.poppicker.js"></script>
