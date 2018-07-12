@@ -61,7 +61,7 @@
 		}
 		
 		.category-tab-list li:last-child {
-			margin-bottom: 40px;
+			margin-bottom: 53px;
 		}
 		
 		.category-tab-list li::before {
@@ -368,6 +368,9 @@
 			height: 14px;
 			width: 14px;
 			float: left;
+		}
+		.bottom-bai font .fa{
+			display: ;
 		}
 		</style>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
