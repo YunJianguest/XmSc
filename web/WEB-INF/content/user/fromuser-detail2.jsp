@@ -185,10 +185,10 @@
 </head>
 <body class="cmp640">
 	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;" class="fa fa-angle-left"><</a>
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
 			关于我们
 	</header>
-<main style='padding-bottom: 50px;z-index: -10;padding-top: 40px;'>
+<main style='padding-bottom: 50px;z-index: -10;'>
    	<div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
    	<div style="width: 100%;height: 45px;">
    		<div class="pull-left" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-left:15px;'>
