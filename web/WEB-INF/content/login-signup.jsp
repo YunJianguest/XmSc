@@ -243,8 +243,7 @@
 				})
 				
 				$('.verBtn').click(function() {
-					var count = 60;
-					var timer;
+					
 					var status = $("#mui_title").val();
 					if(status=='1'){//个人注册
 						if($('#phone').val() == '') {
@@ -262,14 +261,18 @@
 								},
 								success:function(json){
 									if(json.state == 0){
+										var count = 60;
+										var timer;
 										function countDown() {
 											if(count == 0) {
 												clearInterval(timer);
-												$('.verBtn').removeAttr('disabled', true);
+												//$('.verBtn').removeAttr('disabled', true);
+												$('.verBtn').attr("disabled",false); 
 												$('.verBtn').html('重新发送');
 											} else {
 												
-												$('.verBtn').removeAttr('disabled', false);
+												//$('.verBtn').removeAttr('disabled', false);
+												$('.verBtn').attr("disabled",true); 
 												$('.verBtn').html(count + 's');
 												count--;
 											}
@@ -299,14 +302,19 @@
 								},
 								success:function(json){
 									if(json.state == 0){
+										 console.log('获取验证码被点击了...');
+										var count = 60;
+										var timer;
 										function countDown() {
 											if(count == 0) {
 												clearInterval(timer);
-												$('.verBtn').removeAttr('disabled', true);
+												//$('.verBtn').removeAttr('disabled', true);
+												$('.verBtn').attr("disabled",false); 
 												$('.verBtn').html('重新发送');
 											} else {
 												
-												$('.verBtn').removeAttr('disabled', false);
+												//$('.verBtn').removeAttr('disabled', false);
+												$('.verBtn').attr("disabled",true); 
 												$('.verBtn').html(count + 's');
 												count--;
 											}
