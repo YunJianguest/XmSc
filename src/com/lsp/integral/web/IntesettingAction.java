@@ -21,6 +21,7 @@ import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.Useraddress;
 import com.mongodb.DBObject;
@@ -51,7 +52,8 @@ public class IntesettingAction extends GeneralAction<InteSetting> {
 
 	@Override
 	public String execute() throws Exception {
-		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SpringSecurityUtils.getCurrentUser().getId());
+		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		System.out.println("db--->"+db);
 		Struts2Utils.getRequest().setAttribute("entity", db);
 		return SUCCESS;
 	}
@@ -61,7 +63,7 @@ public class IntesettingAction extends GeneralAction<InteSetting> {
 		
 		try {
 			if (_id == null || _id.equals("")) {
-				_id = SpringSecurityUtils.getCurrentUser().getId();
+				_id = SysConfig.getProperty("custid");
 			}
 			entity.set_id(_id); 
 			entity.setCreatedate(new Date());

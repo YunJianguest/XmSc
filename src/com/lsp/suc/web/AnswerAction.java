@@ -37,6 +37,7 @@ import com.lsp.suc.entity.AnswerRecord;
 import com.lsp.suc.entity.AnswerRecordDetail;
 import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.suc.entity.Integrallm;
+import com.lsp.website.service.WwzService;
 import com.lsp.suc.entity.Comunit; 
 import com.mongodb.DBObject;
  
@@ -387,6 +388,19 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		System.err.println(l);
 		System.err.println(l/60000);
 	    }
+	public void  cz() {
+		HashMap<String, Object>sub_map=new HashMap<>();
+		sub_map.put("state",1);
+		String id=Struts2Utils.getParameter("id");
+		String value =Struts2Utils.getParameter("value");
+		WwzService wwzService =new WwzService();
+		if(wwzService.addjf(value, id, "xtcz", null, 1, 1, 0)) {
+			sub_map.put("state",0);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
+	}
 	
 }
 

@@ -2726,7 +2726,9 @@ public class WwzService {
 	public boolean checkTotalIntegral(int type, String value) {
 		HashMap<String, Object> whereMap = new HashMap<>();
 		whereMap.put("_id",SysConfig.getProperty("custid"));
-		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+		System.out.println("chongzi0--->"+SysConfig.getProperty("custid"));
+		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING,SysConfig.getProperty("custid"));
+		System.out.println("=====>>>"+db);
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 			 
