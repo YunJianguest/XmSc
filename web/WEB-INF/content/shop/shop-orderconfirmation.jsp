@@ -376,6 +376,30 @@
         	background: #fff;
         	padding: 10px;
         }
+       /*  .gopayBtn{
+				width: 100px;
+				height: 34px;
+				line-height: 34px;
+				color: #fff;
+				background: #E4393C;
+				display: inline-block;
+				border-radius: 5px;
+				margin-top: 15px;
+				text-decoration: none;
+			}
+			.bturlBox{
+				width: 100%;
+				height: 24px;
+			}
+			input:focus{
+				outline: none;
+			}
+			#bturl{
+				width: 80%;
+				margin: 0 auto;
+				border: none;
+				border-bottom: 1px solid #e3e3e3;
+			} */
     </style>
 </head>
 <body>
@@ -509,10 +533,21 @@
 	<div class="modal-cont" >
 		<div id="qrcode">	
 		</div>
-		 <div >普通URL</div>
-            <div class="pt-15">
-                <input type="text"id="bturl"/>
-            </div>
+		<div class="bturlBox">
+			<input type="text" id="bturl" />
+		</div>
+		<div class="modal-tit">
+			提示
+		</div>
+		<div class="modal-cont-tit">
+			<p>1.请备注你的手机号码;</p>
+			<p>2.请备注你的会员号码;</p>
+			<p>3.请备注你的币数量;</p>
+			<p>4.请交易手续费最大化;</p>
+			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
+			<p>6.请复制上方的付款码</p>
+		</div>
+		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
 <div class="modal" id="ytf">
@@ -520,11 +555,21 @@
 		<div id="qrcodes">
 			
 		</div>
-		 <div >普通URL</div>
-            <div >
-                <input  type="text"id="ytfurl"/>
-            </div>
-	</div>
+		<div class="bturlBox">
+			<input type="text" id="ytfurl" />
+		</div>
+		<div class="modal-tit">
+			提示
+		</div>
+		<div class="modal-cont-tit">
+			<p>1.请备注你的手机号码;</p>
+			<p>2.请备注你的会员号码;</p>
+			<p>3.请备注你的币数量;</p>
+			<p>4.请交易手续费最大化;</p>
+			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
+			<p>6.请复制上方的付款码</p>
+		</div>
+		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
 </body>

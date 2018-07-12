@@ -381,7 +381,7 @@ function delcar(id){
 				right: 0;
 				bottom: 0;
 				z-index: 100;
-				/*display: none;*/
+				display: none;
 			}
 			
 			.mask-cont {
@@ -591,18 +591,27 @@ function delcar(id){
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
 		</div>
-		<a href="" class="gopayBtn">去付款</a>
+		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
 <div class="modal" id="ytf">
 	<div class="modal-cont" >
-		<div id="qrcodes">
-			
+		<div id="qrcodes"></div>
+		<div class="bturlBox">
+			<input type="text" id="ytfurl" />
 		</div>
-		 <div >普通URL</div>
-            <div >
-                <input  type="text"id="ytfurl"/>
-            </div>
+		<div class="modal-tit">
+			提示
+		</div>
+		<div class="modal-cont-tit">
+			<p>1.请备注你的手机号码;</p>
+			<p>2.请备注你的会员号码;</p>
+			<p>3.请备注你的币数量;</p>
+			<p>4.请交易手续费最大化;</p>
+			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
+			<p>6.请复制上方的付款码</p>
+		</div>
+		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
 </body>

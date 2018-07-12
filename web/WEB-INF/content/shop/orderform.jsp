@@ -254,7 +254,7 @@ function page_submit(num){
                                       <li><a href="javascript:fh('${bean._id}');">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;发货</a></li>
                                      </c:if>
-                                      <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId=${bean._id}">
+                                      <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId=${bean._id}&comid=${comid}">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;订单详情</a></li>
                                   </ul>
                               </div>

@@ -323,20 +323,18 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			Double other_money = 0.0;
 			
 			whereMap.clear();
+			sortMap.clear();
 			
 			whereMap.put("orderid", dbObject.get("_id").toString());
-			System.out.println("----orderid--->"+dbObject.get("_id").toString());
-			/*if(StringUtils.isNotEmpty(comid)){
-				whereMap.put("pro.comid", comid);
-			}*/
-			System.out.println("----comid--->"+comid);
-			//List<DBObject> detaillists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,sortMap);
-			List<DBObject>lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, sortMap);
-			System.out.println("lists.size-1->"+lists);
-			for (DBObject dbs : lists) {
-				
+			if(StringUtils.isNotEmpty(comid)){
+				whereMap.put("pro.comid", Long.parseLong(comid));
+			}
+			
+			List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO,whereMap,sortMap);
+			System.out.println("lists.size-s1->"+lists);
+			
+			for (DBObject dbs : lists) {				
 				OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbs, OrderFormpro.class);
-				System.out.println("---->"+pro);
 				DBObject dbObject3 = pro.getPro();
 				if(dbObject3!=null){
 					System.out.println("---->"+dbObject3.get("goodstype"));
@@ -412,9 +410,14 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> sortsMap = new HashMap<String, Object>();
 		String orderId = Struts2Utils.getParameter("orderId");
+		String comid = Struts2Utils.getParameter("comid");
 		if(StringUtils.isNotEmpty(orderId)){
 			whereMap.put("orderid", orderId);
 			Struts2Utils.getRequest().setAttribute("orderId", orderId);
+		}
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("pro.comid", Long.parseLong(comid));
+			Struts2Utils.getRequest().setAttribute("comid", comid);
 		}
 		String title = Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title)){
