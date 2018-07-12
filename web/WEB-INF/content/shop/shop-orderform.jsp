@@ -259,8 +259,11 @@ function del(id) {
 </script>
 </head>
 <body>
- 
-<main class="clear cmp640 lock bg-hui-92">
+ <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			订单列表
+	</header>
+<main class="clear cmp640 lock bg-hui-92" style='padding-top: 40px;'>
 
     <div id="ajaxdiv"></div>
     <c:if test="${ordercount==0}">
@@ -285,5 +288,6 @@ $(window).scroll(function () {
 	}
    
 });
+
 </script>
 </html>
