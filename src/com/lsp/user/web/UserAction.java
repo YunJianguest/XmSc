@@ -773,4 +773,28 @@ public class UserAction extends GeneralAction<UserInfo>
 		
 	}
 	
+	
+	/**
+	 * ajax商家入驻审核
+	 */
+	public void  ajaxauditsave(){
+		
+		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		try {
+			String id=Struts2Utils.getParameter("id");
+			String audit_status =  Struts2Utils.getParameter("audit_status");//审核状态
+			DBObject db = basedao.getMessage(PubConstants.USER_INFO, id);
+			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+			user.setAudit_status(Integer.parseInt(audit_status));
+			basedao.insert(PubConstants.USER_INFO, user);
+			sub_Map.put("state", 0);//修改成功
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			sub_Map.put("state", 1);
+			e.printStackTrace();
+		}
+	  	String json = JSONArray.fromObject(sub_Map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
 }

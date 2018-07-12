@@ -68,7 +68,7 @@ public class UserInfo extends ReflectionDBObject {
 	private String company_name;//公司名称
 	private String lisense_number;//营业证号码
 	private String lisense_photo;//营业证照片
-	private int audit_status;//审核状态
+	private int audit_status;//审核状态  1为通过  2为不通过
 	
 	
 	/**

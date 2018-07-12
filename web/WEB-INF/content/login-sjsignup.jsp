@@ -518,6 +518,7 @@
 								if(json){
 									console.log("++++++++++++++++"+json.state);
 									if(json.state == 0){
+										mui.alert('注册成功，请等待审核！')
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 									}
 								}else{
