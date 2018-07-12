@@ -68,7 +68,7 @@ function CheckMail(mail) {
 		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
 			个人中心
 	</header>
-<main id="section1" class="cmp640">   
+<main id="section1" class="cmp640" style='padding-top: 40px;'>   
 	<input name="headimgurl" id="headimgurl" value="${user.headimgurl}" type="hidden"/>
 
     <div class="line-bottom overflow-hidden pl-15 pr-15">
