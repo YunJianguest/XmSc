@@ -55,6 +55,8 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 	private BaseDao baseDao;
 	private MongoSequence mongoSequence;	
 	@Autowired
+	private WwzService wwzService;
+	@Autowired
 	public void setMongoSequence(MongoSequence mongoSequence) {
 		this.mongoSequence = mongoSequence;
 	} 
@@ -393,7 +395,6 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		sub_map.put("state",1);
 		String id=Struts2Utils.getParameter("id");
 		String value =Struts2Utils.getParameter("value");
-		WwzService wwzService =new WwzService();
 		if(wwzService.addjf(value, id, "xtcz", null, 1, 1, 0)) {
 			sub_map.put("state",0);
 		}
