@@ -169,6 +169,7 @@
 											</tr>
 										</c:forEach>
 								</table>
+								<%@include file="/webcom/bracket-page.jsp" %>
 							</div>
 						</div>
 					</div>
