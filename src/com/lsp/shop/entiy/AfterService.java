@@ -63,6 +63,14 @@ public class AfterService extends ReflectionDBObject {
 	  * 退款金额
 	  */
 	 private double price;
+	 /**
+	  * 手续费金额
+	  */
+	 private double charge;
+	 /**
+	  * 最终退款金额
+	  */
+	 private double total;
 	 
 	public String getCustid() {
 		return custid;
@@ -141,6 +149,18 @@ public class AfterService extends ReflectionDBObject {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public double getCharge() {
+		return charge;
+	}
+	public void setCharge(double charge) {
+		this.charge = charge;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
 	}
 	
 	 

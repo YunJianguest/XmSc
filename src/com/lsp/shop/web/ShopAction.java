@@ -1697,6 +1697,95 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
+	
+	/**
+	 * ajax获取订单列表
+	 */
+	public void ajaxorders1() {
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		try {
+			getLscode();
+			Struts2Utils.getRequest().setAttribute("custid", Struts2Utils.getParameter("custid"));
+			if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
+				fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
+			}
+			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			HashMap<String, Object> sortMap = new HashMap<String, Object>();
+			String state=Struts2Utils.getParameter("state").toString();
+			if(state!=null&&state!="") {
+				whereMap.put("state", Integer.parseInt(state));
+			}
+			sortMap.put("insDate", -1);
+			//whereMap.put("custid", custid);
+			whereMap.put("isxs", new BasicDBObject("$ne", 1));
+			whereMap.put("fromUserid", fromUserid);
+			
+			List<DBObject> list = baseDao.getList(PubConstants.WX_ORDERFORM, whereMap, fypage, 10, sortMap);
+			List<DBObject> lsodb = new ArrayList<DBObject>();
+			
+			if (list.size() > 0) {
+				for (DBObject dbObject : list) {
+					List<DBObject>lscomord=new ArrayList<DBObject>();
+					if (dbObject.get("kdcom") != null) {
+						dbObject.put("kdcom", wwzService.getKdName(dbObject.get("kdcom").toString()));
+					}
+					OrderForm orderForm=(OrderForm) UniObject.DBObjectToObject(dbObject, OrderForm.class);
+					List<Long> lscomis=orderForm.getComids(); 
+					for (int i = 0; i < lscomis.size(); i++) { 
+						HashMap<String, Object> wheresMap = new HashMap<String, Object>();
+						HashMap<String, Object> sortsMap = new HashMap<String, Object>();
+						DBObject  shopcom=baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(lscomis.get(i)+""));
+						DBObject  shopdata=new BasicDBObject();
+						//wheresMap.put("orderid",long1);
+						wheresMap.put("orderid", dbObject.get("_id").toString());
+						wheresMap.put("pro.comid",Long.parseLong(lscomis.get(i)+""));
+						List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, wheresMap, sortsMap);
+						System.out.println(shopcom);
+						System.out.println(lists.size());
+
+						if (lists.size() > 0) {
+							for (DBObject obj : lists) { 
+								whereMap.clear();
+								whereMap.put("oid", obj.get("_id").toString());
+								DBObject com = baseDao.getMessage(PubConstants.SHOP_SHOPCOMMENTS, whereMap);
+								//System.out.println(com);
+								if (com != null) {
+									obj.put("states", 1);// 代表已评价
+								} else {
+									obj.put("states", 0);// 代表未评价
+								}
+							} 
+							shopdata.put("list",lists);
+							shopdata.put("shop",shopcom);
+							//shopcom.put("list", list);
+							
+						} else {
+							// 清空
+							//baseDao.delete(PubConstants.WX_ORDERFORM, dbObject.get("_id").toString());
+						} 
+						System.out.println(lscomis.get(i));
+						lscomord.add(shopdata);	 
+					}
+					
+					dbObject.put("comlist", lscomord);
+					lsodb.add(dbObject);
+
+				}
+				sub_map.put("state", 0);
+				sub_map.put("list", lsodb);
+			} else {
+				sub_map.put("state", 1);
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			sub_map.put("state", 1);
+			e.printStackTrace();
+		}
+		String json = JSONArray.fromObject(sub_map).toString(); 
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
+	}
+	
 
 	/**
 	 * 用户地址管理

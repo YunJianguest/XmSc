@@ -113,7 +113,7 @@
 	    }; 
 	   
 	    issend=false; 
-	    $.post('${ctx}/shop/shop!ajaxorders.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
+	    $.post('${ctx}/shop/shop!ajaxorders1.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
 	       	function(json) { 
 	       		loading.hide()
 	    		var xszf=$('#ajaxdiv').html();  
