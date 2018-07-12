@@ -165,7 +165,7 @@
                              var html;
                              for(var i=0;i<list.length;i++){
                             	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
-                            	 +'<div class="cmt_cnt">'+list[i].content+'</div><div></div></li>';
+                            	 +'<div class="cmt_cnt">'+list[i].content+'</div><div>'+list[i].sjreply+'</div></li>';
                             	  
                              }
                              $('#cmt_list').html(html);

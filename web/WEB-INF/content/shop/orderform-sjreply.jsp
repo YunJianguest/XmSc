@@ -92,9 +92,9 @@
                                                     <li><a href="${ctx}/shop/orderform!ordercom.action?gid=${bean.pro._id}">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;评论列表</a>
                                                     </li>  
-                                                    <li><a href="javascript:huifu('${bean._id}',2);">
+                                                    <%-- <li><a href="javascript:huifu('${bean._id}',2);">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;回复</a>
-                                                    </li> 
+                                                    </li>  --%>
                                                 </ul>
                                                 </c:if> 
                                             </div>
