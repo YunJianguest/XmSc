@@ -57,8 +57,17 @@ function CheckMail(mail) {
             },"json")
         }
 </script>
+<style type="text/css">
+	body{
+		background: #fff;
+	}
+</style>
 </head>
-<body>  
+<body>
+	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			个人中心
+	</header>
 <main id="section1" class="cmp640">   
 	<input name="headimgurl" id="headimgurl" value="${user.headimgurl}" type="hidden"/>
 
