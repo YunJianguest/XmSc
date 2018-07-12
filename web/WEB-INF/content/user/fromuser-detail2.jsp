@@ -116,6 +116,7 @@
         	display: flex;
         	justify-content: center;
         	align-items: center;
+        	display: none;
        }
         .modal-cont{
         	width: 80%;
