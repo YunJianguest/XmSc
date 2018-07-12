@@ -24,10 +24,7 @@
     </style>
 </head>
 <body class="bg-bai">
-	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;"><</a>
-			关于我们
-	</header>
+	
 	<main class="cmp640 img-100">
 	    ${entity.content}
 	</main>
