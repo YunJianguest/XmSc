@@ -24,7 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.chuanglan.sms.request.SmsSendRequest;
+import com.chuanglan.sms.response.SmsSendResponse;
+import com.chuanglan.sms.util.ChuangLanSmsUtil;
 import com.lsp.integral.entity.InteProstore;
 import com.lsp.integral.entity.InteSetting;
 import com.lsp.parttime.entity.Assets;
@@ -377,6 +381,30 @@ public class WwzService {
 	 */
 	public DBObject getWxUser(String fromUserid) {
 		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if (db == null) {
+			db = new UserInfo();
+			db.put("nickname", "游客");
+			db.put("no", "未注册");
+			db.put("humor", "暂无心情");
+			db.put("_id", "notlogin");
+		}
+
+		return db;
+	}
+	/**
+	 * 获取用户
+	 * 
+	 * @param toUser
+	 * @param type
+	 */
+	public DBObject getWxUserSession(String fromUserid) {
+		HashMap<String, Object>whereMap=new HashMap<>();
+		whereMap.put("_id", fromUserid);
+		HashMap<String, Object>backMap=new HashMap<>();
+		backMap.put("no", 1);
+		backMap.put("nickname", 1);
+		backMap.put("headimgurl", 1); 
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap,backMap);
 		if (db == null) {
 			db = new UserInfo();
 			db.put("nickname", "游客");
@@ -2938,6 +2966,30 @@ public class WwzService {
      */
 
     public boolean sendSMS(String tel,String content) {
+    	String account ="N4103166";
+    	// 用户平台API密码(非登录密码)
+    	String pswd ="eDqwluLbWSe971";
+    	String smsSingleRequestServerUrl = "http://smssh1.253.com/msg/send/json";
+    	//状态报告
+    	String report= "true"; 
+		SmsSendRequest smsSingleRequest = new SmsSendRequest(account, pswd, content, tel,report);
+		
+		String requestJson = JSON.toJSONString(smsSingleRequest);
+		String response = ChuangLanSmsUtil.sendSmsByPost(smsSingleRequestServerUrl, requestJson);
+		SmsSendResponse smsSingleResponse = JSON.parseObject(response, SmsSendResponse.class);
+		if(Integer.parseInt(smsSingleResponse.getCode().trim())==0) {
+			return true;
+		} 
+		return false; 
+    }
+    /**
+     * 发送短信验证码
+     * @param tel
+     * @param content
+     * @return https://IP+Port/ws/BatchSend2.aspx?CorpID=*&Pwd=*&Mobile=*&Content=*&SendTime=* 
+     */
+
+    public boolean sendSMS_Js(String tel,String content) {
     	//https://sdk2.028lk.com/sdk2/ 
     	String url="https://sdk2.028lk.com/sdk2/BatchSend2.aspx?CorpID="+SysConfig.getProperty("lk_sms_id")+"&Pwd="+SysConfig.getProperty("lk_sms_pwd")+"&Mobile="+tel+"&Content="+content;  
     	String str=HttpClient.http(url, null); 

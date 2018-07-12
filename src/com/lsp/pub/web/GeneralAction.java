@@ -384,7 +384,7 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 			Comunit  com=GetAllFunc.wxTouser.get(custid);
 			Struts2Utils.getRequest().setAttribute("com",com); 
 			//加载用户
-			Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUser(fromUserid));
+			Struts2Utils.getRequest().setAttribute("user",wwzService.getWxUserSession(fromUserid));
 			//邮件提醒验证
 			Long  emailcount=wwzService.chekEmail(fromUserid, custid); 
 			if(emailcount!=null&&emailcount>0){
