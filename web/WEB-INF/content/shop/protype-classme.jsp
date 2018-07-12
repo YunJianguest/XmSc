@@ -372,7 +372,7 @@
 		.bottom-bai font .fa{
 			display: block;
 		}
-		.bottom-bai font div{
+		.bottom-bai div{
 			padding: 0;
 		}
 		</style>
