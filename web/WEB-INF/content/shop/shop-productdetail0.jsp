@@ -454,6 +454,10 @@
     </style>
 </head>
 <body class="cmp640">
+	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			商品详情
+	</header>
 <main style="position: relative">
     <c:if test="${not empty slide}">
         <div id="banner_box" class="box_swipe overflow-hidden position-r" style="width:100%">
