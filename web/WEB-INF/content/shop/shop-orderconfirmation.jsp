@@ -32,6 +32,7 @@
          var remoney=0;
          var jfdh=0;
          var loading;
+         var w= $(window).width()/2; 
           function  loading(){
         var opts = {
 		lines: 13, // The number of lines to draw
@@ -58,6 +59,44 @@
 		spinner: spinner
 	   });
      }
+          
+          $(function(){ 
+        		$('#ConfirmPay').click(function(){
+        			$('.mask').css('display','block')
+        		})
+        		$('#close').click(function(){
+        			$('.mask').css('display','none')
+        		})
+        		$('.modal').click(function(){
+        			$('.modal').css('display','none')
+        		})
+        		 
+        	if('${entity.jfdh}'==''||'${entity.jfdh}'==0){ 
+        	   var totalPrice='${entity.price}'*'${count}'; 
+        	    if('${price}'>0){
+        	     totalPrice=parseFloat('${price}')*'${count}';
+        	    }
+        	   remoney=totalPrice.toFixed(2); 
+        	    if('${byprice}'==''||'${byprice}'<=0||totalPrice<'${byprice}'){ 
+        	     var kd='${entity.kdprice}'; 
+        	      if(kd!=''&&kd>0){ 
+        	       totalPrice=parseFloat(totalPrice)+parseFloat(kd);  
+        	       $("#totalPrice").html(totalPrice.toFixed(2)+'元  <i>快递:￥'+parseFloat(kd).toFixed(2)+'</i>');
+        	      }else{
+        	      $("#totalPrice").html(totalPrice.toFixed(2));
+        	     } 
+        	    }else{ 
+        	   $("#totalPrice").html(totalPrice.toFixed(2));
+        	  }
+        	   total=totalPrice.toFixed(2);
+        	  }else{
+        	   var totalPrice='${entity.jfdh}'*'${count}';
+        	   jfdh=totalPrice.toFixed(2);
+        	   total='${entity.kdprice}'; 
+        	 $("#totalPrice").parent().html('<i id="totalPrice" class="fa fa-cny pl-5 weight500">'+totalPrice.toFixed(2)+'</i>平台币 快递'+parseFloat('${entity.kdprice}').toFixed(2)+'元');
+        	}
+
+        	});
   
          function moneypay(){
          if('${address.tel}'==""){
@@ -221,10 +260,26 @@
                     		 	if (json.state == 0) {
                     				alert("下单成功，请支付");
                     				if(val == 0){
-                    					$('#bt').css('display','block')
+                    					$('#bt').css('display','block');
+                    					pay_bt();
+                    					//二维码生成
+                    					$('#qrcode').qrcode({ 
+                    					  width : w,
+                    				      height : w,
+                    				      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
+                    				    });
+                    					$("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
                     				}
                     				if(val == 1){
-                    					$('#ytf').css('display','block')
+                    					$('#ytf').css('display','block');
+                    					pay_ytf();
+                    					//二维码生成
+                    					$('#qrcodes').qrcode({ 
+                    					  width : w,
+                    				      height : w,
+                    				      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
+                    				    });
+                    					$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
                     				}
                     			}else if(json.state == 1) {
                     				alert("该账号没有开通支付"); 
@@ -566,7 +621,7 @@
 		<div class="modal-cont-tit">
 			<p>1.请备注你的手机号码;</p>
 			<p>2.请备注你的会员号码;</p>
-			<p>3.请备注你的币数量;</p>
+			<p>3.您需要支付的比特币:<span id="btnum"></span></p>
 			<p>4.请交易手续费最大化;</p>
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
@@ -588,7 +643,7 @@
 		<div class="modal-cont-tit">
 			<p>1.请备注你的手机号码;</p>
 			<p>2.请备注你的会员号码;</p>
-			<p>3.请备注你的币数量;</p>
+			<p>3.您需要支付的以太坊币:<span id="ytfnum"></span></p>
 			<p>4.请交易手续费最大化;</p>
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
@@ -599,62 +654,39 @@
 </body>
 <script>
 	
-$(function(){ 
-	$('#ConfirmPay').click(function(){
-		$('.mask').css('display','block')
-	})
-	$('#close').click(function(){
-		$('.mask').css('display','none')
-	})
-	$('.modal').click(function(){
-		$('.modal').css('display','none')
-	})
-	
-	//获取屏幕宽度
-	var w= $(window).width()/2; 
-	
-	//二维码生成
-	$('#qrcode').qrcode({ 
-	  width : w,
-      height : w,
-      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
-    });
-	$("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
-	
-	//二维码生成
-	$('#qrcodes').qrcode({ 
-	  width : w,
-      height : w,
-      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
-    });
-	$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
-	    
-	    
-if('${entity.jfdh}'==''||'${entity.jfdh}'==0){ 
-   var totalPrice='${entity.price}'*'${count}'; 
-    if('${price}'>0){
-     totalPrice=parseFloat('${price}')*'${count}';
-    }
-   remoney=totalPrice.toFixed(2); 
-    if('${byprice}'==''||'${byprice}'<=0||totalPrice<'${byprice}'){ 
-     var kd='${entity.kdprice}'; 
-      if(kd!=''&&kd>0){ 
-       totalPrice=parseFloat(totalPrice)+parseFloat(kd);  
-       $("#totalPrice").html(totalPrice.toFixed(2)+'元  <i>快递:￥'+parseFloat(kd).toFixed(2)+'</i>');
-      }else{
-      $("#totalPrice").html(totalPrice.toFixed(2));
-     } 
-    }else{ 
-   $("#totalPrice").html(totalPrice.toFixed(2));
-  }
-   total=totalPrice.toFixed(2);
-  }else{
-   var totalPrice='${entity.jfdh}'*'${count}';
-   jfdh=totalPrice.toFixed(2);
-   total='${entity.kdprice}'; 
- $("#totalPrice").parent().html('<i id="totalPrice" class="fa fa-cny pl-5 weight500">'+totalPrice.toFixed(2)+'</i>平台币 快递'+parseFloat('${entity.kdprice}').toFixed(2)+'元');
-}
 
-});
+
+function pay_bt(){
+	var totalPrice = $('#totalPrice').html();
+	var submitData = {
+	};
+	$.post('${ctx}/integral/miners!getBTCSrice.action?lscode=${lscode}', submitData,
+		function(json) {
+	    if(json.state==0){
+	       if(totalPrice != '0.00'){
+	    	   $('#btnum').html(parseFloat(totalPrice)/json.data); 
+	       }else{
+	    	   $('#btnum').html(0.00);
+	       }
+	    	
+	   }
+				
+	},"json")
+}
+function pay_ytf(){
+	var totalPrice = $('#totalPrice').html();
+	var submitData = {
+	};
+	$.post('${ctx}/integral/miners!getETHSrice.action?lscode=${lscode}', submitData,
+		function(json) {
+	    if(json.state==0){
+	       if(totalPrice != '0.00'){
+	    	   $('#ytfnum').html(parseFloat(totalPrice)/json.data); 
+	       }else{
+	    	   $('#ytfnum').html(0.00);
+	       }
+	   }			
+	},"json")
+}
 </script>
 </html>

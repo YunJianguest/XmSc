@@ -166,7 +166,6 @@
         	$.post('${ctx}/shop/shop!COrderFromCar.action?agid=${agid}&lscode=${lscode}&isgwc=0', submitData,
             		function(json) { 
             		     loading.hide();
-            		     alert(json.state);
             		 	if (json.state == 0) {
             				alert("购买成功！");
             				window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
@@ -243,10 +242,26 @@
                 		 	if (json.state == 0) {
                 		 		alert("下单成功，请支付");
                 				if(val == 0){
-                					$('#bt').css('display','block')
+                					$('#bt').css('display','block');
+                					pay_bt();
+                					//二维码生成
+                					$('#qrcode').qrcode({ 
+                					  width : w,
+                				      height : w,
+                				      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
+                				    });
+                				    $("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
                 				}
                 				if(val == 1){
-                					$('#ytf').css('display','block')
+                					$('#ytf').css('display','block');
+                					pay_ytf();
+                					//二维码生成
+                					$('#qrcodes').qrcode({ 
+                					  width : w,
+                				      height : w,
+                				      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
+                				    });
+                					$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
                 				}
                 			}else if(json.state == 1) {
                 				alert("该账号没有开通支付"); 
@@ -586,7 +601,7 @@ function delcar(id){
 		<div class="modal-cont-tit">
 			<p>1.请备注你的手机号码;</p>
 			<p>2.请备注你的会员号码;</p>
-			<p>3.请备注你的币数量;</p>
+			<p>3.您需要支付的比特币:<span id="btnum"></span></p>
 			<p>4.请交易手续费最大化;</p>
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
@@ -606,7 +621,7 @@ function delcar(id){
 		<div class="modal-cont-tit">
 			<p>1.请备注你的手机号码;</p>
 			<p>2.请备注你的会员号码;</p>
-			<p>3.请备注你的币数量;</p>
+			<p>3.您需要支付的以太坊币:<span id="ytfnum"></span></p>
 			<p>4.请交易手续费最大化;</p>
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
@@ -640,19 +655,42 @@ $('#ConfirmPay').click(function(){
 //	})
 //	
 	
-	//二维码生成
-	$('#qrcode').qrcode({ 
-	  width : w,
-      height : w,
-      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
-    });
-    $("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
-	//二维码生成
-	$('#qrcodes').qrcode({ 
-	  width : w,
-      height : w,
-      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
-    });
-	$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
+	
+    
+    function pay_bt(){
+    	var totalPrice = $('#totalPrice').html();
+    	var submitData = {
+    	};
+    	$.post('${ctx}/integral/miners!getBTCSrice.action?lscode=${lscode}', submitData,
+    		function(json) {
+    	    if(json.state==0){
+    	       if(totalPrice != '0.00'){
+    	    	   $('#btnum').html(parseFloat(totalPrice)/json.data); 
+    	       }else{
+    	    	   $('#btnum').html(0.00);
+    	       }
+    	    	
+    	   }
+    				
+    	},"json")
+    }
+    
+	
+	
+	 function pay_ytf(){
+	    	var totalPrice = $('#totalPrice').html();
+	    	var submitData = {
+	    	};
+	    	$.post('${ctx}/integral/miners!getETHSrice.action?lscode=${lscode}', submitData,
+	    		function(json) {
+	    	    if(json.state==0){
+	    	       if(totalPrice != '0.00'){
+	    	    	   $('#ytfnum').html(parseFloat(totalPrice)/json.data); 
+	    	       }else{
+	    	    	   $('#ytfnum').html(0.00);
+	    	       }
+	    	   }			
+	    	},"json")
+	    }
 </script> 
 </html>
