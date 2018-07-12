@@ -252,19 +252,7 @@
 						} else if(!reg.test($('#phone').val())) {
 							mui.alert('手机号码不正确')
 						} else {
-							function countDown() {
-								if(count == 0) {
-									clearInterval(timer);
-									$('.verBtn').removeAttr('disabled', true);
-									$('.verBtn').html('重新发送');
-								} else {
-									
-									$('.verBtn').removeAttr('disabled', false);
-									$('.verBtn').html(count + 's');
-									count--;
-								}
-							}
-							var timer = setInterval(countDown, 1000);
+							
 							$.ajax({
 								type:"post",
 								url:"${ctx}/user/fromuser!createTelCode.action",
@@ -273,7 +261,25 @@
 									tel:$('#phone').val()
 								},
 								success:function(json){
-									
+									if(json.state == 0){
+										function countDown() {
+											if(count == 0) {
+												clearInterval(timer);
+												$('.verBtn').removeAttr('disabled', true);
+												$('.verBtn').html('重新发送');
+											} else {
+												
+												$('.verBtn').removeAttr('disabled', false);
+												$('.verBtn').html(count + 's');
+												count--;
+											}
+										}
+										var timer = setInterval(countDown, 1000);
+									}else{
+										clearInterval(timer);
+										$('.verBtn').removeAttr('disabled', true);
+										$('.verBtn').html('重新发送');
+									}
 								}
 							});
 						}
@@ -283,19 +289,7 @@
 						} else if(!reg.test($('#phone1').val())) {
 							mui.alert('手机号码不正确')
 						} else {
-							function countDown() {
-								if(count == 0) {
-									clearInterval(timer);
-									$('.verBtn').removeAttr('disabled', true);
-									$('.verBtn').html('重新发送');
-								} else {
-									
-									$('.verBtn').removeAttr('disabled', false);
-									$('.verBtn').html(count + 's');
-									count--;
-								}
-							}
-							var timer = setInterval(countDown, 1000);
+							
 							$.ajax({
 								type:"post",
 								url:"${ctx}/user/fromuser!createTelCode.action",
@@ -304,6 +298,25 @@
 									tel:$('#phone1').val()
 								},
 								success:function(json){
+									if(json.state == 0){
+										function countDown() {
+											if(count == 0) {
+												clearInterval(timer);
+												$('.verBtn').removeAttr('disabled', true);
+												$('.verBtn').html('重新发送');
+											} else {
+												
+												$('.verBtn').removeAttr('disabled', false);
+												$('.verBtn').html(count + 's');
+												count--;
+											}
+										}
+										var timer = setInterval(countDown, 1000);
+									}else{
+										clearInterval(timer);
+										$('.verBtn').removeAttr('disabled', true);
+										$('.verBtn').html('重新发送');
+									}
 									
 								}
 							});
