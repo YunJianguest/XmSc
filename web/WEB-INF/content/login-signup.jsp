@@ -101,6 +101,93 @@
 				display: none;
 			}
 		</style>
+		<script type="text/javascript">
+		var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+		function sendsms(){
+			if($('#phone').val() == '') {
+				mui.alert('请输入手机号')
+				return ;
+			} else if(!reg.test($('#phone').val())) {
+				mui.alert('手机号码不正确')
+				return ;
+			} 
+			if($('.verBtn').html()=='重新发送'||$('.verBtn').html()=='获取验证码'){
+				sendsms1();
+			}
+		}
+		
+		function sendsms1(){
+			var status = $("#mui_title").val();
+			if(status=='1'){//个人注册
+					$.ajax({
+						type:"post",
+						url:"${ctx}/user/fromuser!createTelCode.action",
+						async:true,
+						data:{
+							tel:$('#phone').val()
+						},
+						success:function(json){
+							if(json.state == 0){
+								var count = 60;
+								var timer;
+								function countDown() {
+									if(count == 0) {
+										clearInterval(timer);
+										$('.verBtn').prop("disabled",false);
+										$('.verBtn').html('重新发送');
+										$('.verBtn').attr('onclick','sendsms1()');
+									} else {
+										$('.verBtn').removeAttr('onclick'); 									
+										$('.verBtn').html(count + 's');
+										count--;
+									}
+								}
+								var timer = setInterval(countDown, 1000);
+							}else{
+								clearInterval(timer);
+								$('.verBtn').removeAttr('disabled', true);
+								$('.verBtn').html('重新发送');
+							}
+						}
+					});
+			}else if(status=='2'){//商家注册
+					$.ajax({
+						type:"post",
+						url:"${ctx}/user/fromuser!createTelCode.action",
+						async:true,
+						data:{
+							tel:$('#phone1').val()
+						},
+						success:function(json){
+							if(json.state == 0){
+								 console.log('获取验证码被点击了...');
+								var count = 60;
+								var timer;
+								function countDown() {
+									if(count == 0) {
+										clearInterval(timer);
+										$('.verBtn').attr("disabled",false);
+										$('.verBtn').attr('onclick','sendsms1()');
+										$('.verBtn').html('重新发送');
+									} else {
+										$('.verBtn').removeAttr('onclick');
+										$('.verBtn').html(count + 's');
+										count--;
+									}
+								}
+								var timer = setInterval(countDown, 1000);
+							}else{
+								clearInterval(timer);
+								$('.verBtn').removeAttr('disabled', true);
+								$('.verBtn').html('重新发送');
+							}
+							
+						}
+					});
+				}
+
+			} 
+		</script>
     </head>
     <body style="background: #fff;">
     	<div class="mui-content" style="background: #fff;padding: 0 20px;">
@@ -122,7 +209,7 @@
 				<div class="mui-input-row" style="position: relative;">
 					<label>验证码</label>
 					<input id="verCode" type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" />
-					<span class="mui-btn mui-btn-grey verBtn">获取验证码</span>
+					<div class="mui-btn mui-btn-grey verBtn" onclick="sendsms()">获取验证码</div>
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -147,7 +234,7 @@
 				<div class="mui-input-row" style="position: relative;">
 					<label>验证码</label>
 					<input id="verCode1" type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" />
-					<span class="mui-btn mui-btn-grey verBtn">获取验证码</span>
+					<span class="mui-btn mui-btn-grey verBtn" id="verBtn" onclick="sendsms()">获取验证码</span>
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -233,7 +320,7 @@
 					})
 				})
 
-				var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+				
 				$('#phone').blur(function() {
 					if($(this).val() == '') {
 						mui.alert('请输入手机号')
@@ -241,95 +328,9 @@
 						mui.alert('手机号码不正确')
 					}
 				})
-				
+			 
 				$('.verBtn').click(function() {
 					
-					var status = $("#mui_title").val();
-					if(status=='1'){//个人注册
-						if($('#phone').val() == '') {
-							mui.alert('请输入手机号')
-						} else if(!reg.test($('#phone').val())) {
-							mui.alert('手机号码不正确')
-						} else {
-							
-							$.ajax({
-								type:"post",
-								url:"${ctx}/user/fromuser!createTelCode.action",
-								async:true,
-								data:{
-									tel:$('#phone').val()
-								},
-								success:function(json){
-									if(json.state == 0){
-										var count = 60;
-										var timer;
-										function countDown() {
-											if(count == 0) {
-												clearInterval(timer);
-												//$('.verBtn').removeAttr('disabled', true);
-												$('.verBtn').attr("disabled",false); 
-												$('.verBtn').html('重新发送');
-											} else {
-												
-												//$('.verBtn').removeAttr('disabled', false);
-												$('.verBtn').attr("disabled",true); 
-												$('.verBtn').html(count + 's');
-												count--;
-											}
-										}
-										var timer = setInterval(countDown, 1000);
-									}else{
-										clearInterval(timer);
-										$('.verBtn').removeAttr('disabled', true);
-										$('.verBtn').html('重新发送');
-									}
-								}
-							});
-						}
-					}else if(status=='2'){//商家注册
-						if($('#phone1').val() == '') {
-							mui.alert('请输入手机号')
-						} else if(!reg.test($('#phone1').val())) {
-							mui.alert('手机号码不正确')
-						} else {
-							
-							$.ajax({
-								type:"post",
-								url:"${ctx}/user/fromuser!createTelCode.action",
-								async:true,
-								data:{
-									tel:$('#phone1').val()
-								},
-								success:function(json){
-									if(json.state == 0){
-										 console.log('获取验证码被点击了...');
-										var count = 60;
-										var timer;
-										function countDown() {
-											if(count == 0) {
-												clearInterval(timer);
-												//$('.verBtn').removeAttr('disabled', true);
-												$('.verBtn').attr("disabled",false); 
-												$('.verBtn').html('重新发送');
-											} else {
-												
-												//$('.verBtn').removeAttr('disabled', false);
-												$('.verBtn').attr("disabled",true); 
-												$('.verBtn').html(count + 's');
-												count--;
-											}
-										}
-										var timer = setInterval(countDown, 1000);
-									}else{
-										clearInterval(timer);
-										$('.verBtn').removeAttr('disabled', true);
-										$('.verBtn').html('重新发送');
-									}
-									
-								}
-							});
-						}
-					}
 				});
 				$('#password').blur(function(){
 					pwd($(this).val())
