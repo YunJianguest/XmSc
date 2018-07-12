@@ -19,7 +19,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
- 
+import com.baidu.ueditor.define.State;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.BaseDecimal;
@@ -124,7 +124,46 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 				 }
 				 db.put("headimgurl", user.get("headimgurl"));
 			}
-		 
+			whereMap.clear();
+			whereMap.put("orderid", db.get("_id").toString());
+			if(StringUtils.isNotEmpty(comid)){
+				whereMap.put("pro.comid", Long.parseLong(comid));
+			}
+			List<DBObject> orderList = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
+		    System.out.println("");
+			if(orderList.size()>0){
+		    	DBObject dbss = orderList.get(0);
+		    	if(dbss.get("goodstate") != null){
+		    		db.put("goodstate", dbss.get("goodstate").toString());
+		    	}else{
+		    		db.put("goodstate", "1");
+		    	}
+		    	Double public_money = 0.0;
+				Double contri_money = 0.0;
+				Double members_money = 0.0;
+				Double other_money = 0.0;
+		    	for (DBObject dbs : orderList) {
+		    		OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbs, OrderFormpro.class);
+					DBObject dbObject3 = pro.getPro();
+					if(dbObject3!=null){
+						if(dbObject3.get("goodstype")!=null){
+							if(dbObject3.get("goodstype").toString().equals("3")){//商品为大众区商品
+								public_money +=Double.parseDouble(dbObject3.get("price").toString());
+							}
+							if(dbObject3.get("goodstype").toString().equals("4")){//商品为特约区商品
+								contri_money +=Double.parseDouble(dbObject3.get("price").toString());		
+							}
+							if(dbObject3.get("goodstype").toString().equals("5")){//商品为会员区商品
+								members_money +=Double.parseDouble(dbObject3.get("price").toString());
+							}
+						}
+					}
+				}
+		    	db.put("public_money", public_money);
+		    	db.put("contri_money", contri_money);
+		    	db.put("members_money", members_money);
+		    	//db.put("goodstate", dbss.get("goodstate").toString());
+		    }
 		} 
 		Struts2Utils.getRequest().setAttribute("OrderFormList", list);
 		whereMap.clear();
@@ -135,11 +174,6 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		Struts2Utils.getRequest().setAttribute("lskd", lskd);
  
 		return SUCCESS;
-	}
-	
-	public void delall(){
-		baseDao.delete(PubConstants.WX_ORDERFORM);
-		baseDao.delete(PubConstants.SHOP_ODERFORMPRO);
 	}
 	
 	
@@ -215,6 +249,41 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		
 		return RELOAD;
 	}
+	
+	public  void  changestate() throws Exception{
+		String  orderid=Struts2Utils.getParameter("orderid");
+		String  comid=Struts2Utils.getParameter("comid");
+		String  goodstate=Struts2Utils.getParameter("goodstate");
+		String  kdno=Struts2Utils.getParameter("kdno");
+		String  kdcom=Struts2Utils.getParameter("kdcom");
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		sub_map.put("state", 1);
+		HashMap<String, Object> whereMap =new HashMap<String, Object>();
+		if(StringUtils.isNotEmpty(orderid)){
+			whereMap.put("orderid", orderid);
+		}
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("pro.comid", Long.parseLong(comid));
+		}
+		List<DBObject> orderList = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
+
+		for (DBObject dbObject : orderList) {
+			OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+			pro.set_id(Long.parseLong(dbObject.get("_id").toString()));
+			if(StringUtils.isNotEmpty(goodstate)){
+				if(goodstate.equals("3")){
+					pro.setKdno(kdno);
+					pro.setKdcom(kdcom);
+				}
+				pro.setGoodstate(Integer.parseInt(goodstate));
+				baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
+			}
+			sub_map.put("state", 0);
+		}
+        String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
 	public String fahuo() throws Exception {
 		//注册业务逻辑
 		try {
@@ -247,21 +316,19 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
 	}
-	/*public void orderinfo() throws Exception {
-		Long orderid=Long.parseLong(Struts2Utils.getParameter("orderid"));
-		HashMap<String, Object> whereMap =new HashMap<String, Object>();
-		whereMap.put("orderid", orderid);
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		List<DBObject> orderList = baseDao.getList(PubConstants.WX_ORDERBUY, whereMap,null);
-		sub_map.put("list", orderList);
-		String json = JSONArray.fromObject(sub_map).toString();
-		
-		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-	}*/
+	
 	public void orderinfo() throws Exception {
 		String  orderid=Struts2Utils.getParameter("orderid");
+		String  comid=Struts2Utils.getParameter("comid");
+		
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
-		whereMap.put("orderid", orderid);
+		if(StringUtils.isNotEmpty(orderid)){
+			whereMap.put("orderid", orderid);
+		}
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("pro.comid", Long.parseLong(comid));
+		}
+		
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		List<DBObject> orderList = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
 		sub_map.put("list", orderList);
@@ -269,6 +336,15 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
+	public void delall1() {
+		baseDao.delete(PubConstants.WX_ORDERFORM);
+		baseDao.delete(PubConstants.SHOP_ODERFORMPRO);
+		baseDao.delete(PubConstants.SHOP_AFTERSERVICE);
+		baseDao.delete(PubConstants.SHOP_SHOPCOMMENTS);
+		baseDao.delete(PubConstants.SHOP_SHOPCOMREPLY);
+	}
+	
 	public void orderfromexp() throws Exception {
 
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
@@ -332,29 +408,36 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			
 			List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO,whereMap,sortMap);
 			System.out.println("lists.size-s1->"+lists);
-			
-			for (DBObject dbs : lists) {				
-				OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbs, OrderFormpro.class);
-				DBObject dbObject3 = pro.getPro();
-				if(dbObject3!=null){
-					System.out.println("---->"+dbObject3.get("goodstype"));
-					if(dbObject3.get("goodstype")!=null){
-						if(dbObject3.get("goodstype").toString().equals("3")){//商品为大众区商品
-							public_money +=Double.parseDouble(dbObject3.get("price").toString());
-						}
-						if(dbObject3.get("goodstype").toString().equals("4")){//商品为特约区商品
-							contri_money +=Double.parseDouble(dbObject3.get("price").toString());		
-						}
-						if(dbObject3.get("goodstype").toString().equals("5")){//商品为会员区商品
-							members_money +=Double.parseDouble(dbObject3.get("price").toString());
+			String state = "1";
+			if(lists.size() >0){
+				
+				for (DBObject dbs : lists) {				
+					OrderFormpro pro = (OrderFormpro) UniObject.DBObjectToObject(dbs, OrderFormpro.class);
+					DBObject dbObject3 = pro.getPro();
+					if(dbObject3!=null){
+						if(dbObject3.get("goodstype")!=null){
+							if(dbObject3.get("goodstype").toString().equals("3")){//商品为大众区商品
+								public_money +=Double.parseDouble(dbObject3.get("price").toString());
+							}
+							if(dbObject3.get("goodstype").toString().equals("4")){//商品为特约区商品
+								contri_money +=Double.parseDouble(dbObject3.get("price").toString());		
+							}
+							if(dbObject3.get("goodstype").toString().equals("5")){//商品为会员区商品
+								members_money +=Double.parseDouble(dbObject3.get("price").toString());
+							}
 						}
 					}
+					if(pro.getOther_money()!=null){
+						other_money+=pro.getOther_money();
+					}					
 				}
-				if(pro.getOther_money()!=null){
-					other_money+=pro.getOther_money();
-				}
-				
+				if(lists.get(0).get("goodstate") != null){
+		    		state = lists.get(0).get("goodstate").toString();
+		    	}else{
+		    		state = "1";
+		    	}
 			}
+			
 			dbObject.put("public_money", BaseDecimal.round(public_money+"", 2));
 			dbObject.put("contri_money", BaseDecimal.round(contri_money+"", 2));
 			dbObject.put("members_money", BaseDecimal.round(members_money+"", 2));
@@ -362,8 +445,9 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 
 			if(dbObject.get("kdcom")!=null){
 				dbObject.put("kdcom",wwzService.getKdName(dbObject.get("kdcom").toString()));
-			} 
-			switch (Integer.parseInt(dbObject.get("state").toString())) {
+			}
+			//System.out.println("--->"+state);
+			switch (Integer.parseInt(state)) {
 			case 1:
 				dbObject.put("state", "下单");
 				break;
@@ -397,6 +481,12 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		ouputStream.flush();
 		ouputStream.close();
 	}
+	
+	
+	public void  sss() throws Exception{
+		System.out.println("--->"+baseDao.getList(PubConstants.INTEGRAL_INTESETTING, null, null));
+	}
+	
 	/***
 	 * 订单详情
 	 * @return

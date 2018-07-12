@@ -90,7 +90,8 @@ function wxpay(id){
 
 function orderinfo(id){
 	var submitData = {
-			orderid:id
+			orderid:id,
+			comid:'${comid}'
 	};
 	$.post('${ctx}/shop/orderform!orderinfo.action', submitData,
 		function(json) {
@@ -124,6 +125,26 @@ function page_submit(num){
 	$("#custinfoForm").submit();
 }
  
+  function change(){
+	  alert($('#_id').val());
+	  alert($('#scomid').val());
+	  var submitData = {
+				orderid:$('#_id').val(),
+				comid:$('#scomid').val(),
+				goodstate:$('#state').val(),
+				kdno:$('#kdno').val(),
+				kdcom:$('#kdcom').val()
+		};
+		$.post('${ctx}/shop/orderform!changestate.action', submitData,
+			function(json) {	
+				if(json.state == 0){
+					alert('操作成功');
+				}else{
+					alert('操作失败');
+				}	
+				window.location.reload();
+		},"json")
+  }
 
  </script>
 
@@ -207,14 +228,15 @@ function page_submit(num){
 						<th class="th8">快递号</th> 
 				     	<th class="th2">大众区/特约区/会员区金额</th>
 				     	 
-				     	<th class="th2">数量</th>
+				     	
 				        <th class="th8">姓名</th>
 						<th class="th4">电话</th>
 						<th class="th6">地址</th>
                         <th class="th6">日期</th>
                         <th class="th6">备注</th>
+                       
                         <th class="th6">状态</th>
-						
+						<th class="th2">详情</th>
 						<th class="th5">操作</th>
                       </tr>
                     </thead>
@@ -228,21 +250,21 @@ function page_submit(num){
 						<fmt:formatNumber value='${bean.contri_money}' pattern="0.0#"/>/
 						<fmt:formatNumber value='${bean.members_money}' pattern="0.0#"/><%-- </c:if> --%></td>
 						 
-						<td><a href="javascript:orderinfo('${bean._id}')" >${bean.count}</a></td>
+						
 						<td>${bean.name}</td>
 						<td>${bean.tel}</td>	
 						<td title="${bean.address}"><div class="th6 sl">${bean.address}</div></td>
                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bean.insDate}" /></td>
                         <td>${bean.remark}</td>
-                        <td><c:if test="${bean.state=='1'}">下单</c:if>
-                        	<c:if test="${bean.state=='2'}">已购买</c:if>
-							<c:if test="${bean.state=='3'}"><span style="color:#F00">已发货</span></c:if>
-							<c:if test="${bean.state=='4'}"><span style="color:#F00">订单已完成</span></c:if>
-							<c:if test="${bean.state=='5'}"><span style="color:#F00">退货已完成</span></c:if>
+                        <td><c:if test="${bean.goodstate=='1'}">下单</c:if>
+                        	<c:if test="${bean.goodstate=='2'}">已购买</c:if>
+							<c:if test="${bean.goodstate=='3'}"><span style="color:#F00">已发货</span></c:if>
+							<c:if test="${bean.goodstate=='4'}"><span style="color:#F00">订单已完成</span></c:if>
+							<c:if test="${bean.goodstate=='5'}"><span style="color:#F00">退货已完成</span></c:if>
 							<%-- <c:if test="${bean.state=='5'}"><span style="color:#F00">已退货</span></c:if> --%></td>
 							 
 						
-					
+					<td><a href="javascript:orderinfo('${bean._id}')" >查看</a></td>
                         <td class="table-action">
                               
                               <div class="btn-group1">
@@ -368,9 +390,8 @@ function page_submit(num){
                 <h4 class="modal-title">维护订单</h4>
             </div>
             <div class="modal-body">
-                <form id="inscxForm" action="${contextPath}/shop/orderform!save.action?fypage=${fypage}&comid=${comid}" class="form-horizontal"  method="post" >
                 	<input type="hidden" id="_id" name="_id" />
-                	
+                	<input type="hidden" id="scomid" name="scomid" value="${comid}" />
 
                    
                 	<div class="form-group">
@@ -396,12 +417,11 @@ function page_submit(num){
                          <label class="col-sm-2 control-label">状态 <span class="asterisk">*</span></label>
                         <div class="col-sm-3">
                         	<select  id="state"  name="state" class="form-control "  data-placeholder="请选择">
-            	 				<option value="1">订单</option>
-                    			<option value="2">已购买</option>
+            	 				<!-- <option value="1">订单</option> -->
+                    			<!-- <option value="2">已购买</option> -->
                     			<option value="3">已发货</option>
-                    			<option value="4">已收货</option>
-                    			<option value="5">退货</option>
-                    			
+                    			<!-- <option value="4">已收货</option> -->
+                    			<!-- <option value="5">退货</option> -->
                  			</select>
                         	
                         </div>
@@ -412,14 +432,13 @@ function page_submit(num){
             	 <div class="panel-footer">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <button class="btn btn-primary btn-block">提&nbsp;&nbsp;交</button>
+                                    <button class="btn btn-primary btn-block" onclick="change()">提&nbsp;&nbsp;交</button>
                                 </div>
                             </div>
                   </div>
                </div>
                        
                     <!-- panel -->
-                </form>
 
 
             </div>

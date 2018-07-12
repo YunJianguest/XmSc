@@ -273,14 +273,20 @@ public class ServiceAction extends GeneralAction<AfterService> {
 			info.setCreatedate(new Date());
 			info.setType(Integer.parseInt(type));
 			double price = 0;
+			double charge = 0;
+			double total = 0;
 			if(Integer.parseInt(type) == 1){
 				if(pros != null){
 					if(pros.get("price") != null){
 						price = Double.parseDouble(pros.get("price").toString())*info.getNum();
+						charge = price * 0.002;
+						total = price - charge;
 					}
 				}
 			}
 			info.setPrice(price);
+			info.setCharge(charge);
+			info.setTotal(total);
 			baseDao.insert(PubConstants.SHOP_AFTERSERVICE, info);
 			sub_map.put("state", 0);
 		}
@@ -340,6 +346,9 @@ public class ServiceAction extends GeneralAction<AfterService> {
 								if(dbObject2.get("goodstype").toString().equals("5")){//商品为会员区商品
 									order.setMembers_money(order.getMembers_money()-info.getPrice());
 								}
+								//订单退货手续费
+								order.setOther_money(order.getOther_money()+info.getCharge());
+								System.out.println("订单--退货手续费-->"+order.getOther_money());
 								if(order.getPublic_money()==0&&order.getContri_money()==0&&order.getMembers_money()==0){
 									order.setState(5);//退货完成
 								}
@@ -356,6 +365,8 @@ public class ServiceAction extends GeneralAction<AfterService> {
                         if(info.getType() == 2){//为换货
                         	pro.setState(4);//订单详情状态变成换货完成
 						}
+                        pro.setOther_money(info.getCharge());
+                        System.out.println("订单详情手续费---》"+pro.getOther_money());
 					}
 				}else{
 					if(dbObjects != null){

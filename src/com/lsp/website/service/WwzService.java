@@ -2727,6 +2727,7 @@ public class WwzService {
 		HashMap<String, Object> whereMap = new HashMap<>();
 		whereMap.put("_id",SysConfig.getProperty("custid"));
 		System.out.println("chongzi0--->"+SysConfig.getProperty("custid"));
+		System.out.println("--->"+baseDao.getList(PubConstants.INTEGRAL_INTESETTING, null, null));
 		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING,SysConfig.getProperty("custid"));
 		System.out.println("=====>>>"+db);
 		if (db != null) {

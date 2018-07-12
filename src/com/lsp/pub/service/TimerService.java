@@ -74,9 +74,7 @@ public class TimerService {
 		whereMap.put("enddate", dateCondition);
 		//whereMap.put("state", 0);
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
-		System.out.println("list---->"+list);
 		for (DBObject dbObject : list) {
-			System.out.println("money---->"+dbObject.get("money"));
 			if(dbObject.get("money")!=null){
 				String price = "0";
                 if(dbObject.get("money").toString().equals("4500000.0")||dbObject.get("money").toString().equals("1500000.0")||dbObject.get("money").toString().equals("450000.0")||dbObject.get("money").toString().equals("90000.0")||dbObject.get("money").toString().equals("0.0")){
