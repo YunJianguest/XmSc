@@ -104,13 +104,39 @@
 		<script type="text/javascript">
 		var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
 		function sendsms(){
-			if($('#phone').val() == '') {
-				mui.alert('请输入手机号')
-				return ;
-			} else if(!reg.test($('#phone').val())) {
-				mui.alert('手机号码不正确')
-				return ;
-			} 
+			var status = $("#mui_title").val();
+			if(status=='1'){//个人
+				if($('#phone').val() == '') {
+					mui.alert('请输入手机号')
+					return ;
+				} else if(!reg.test($('#phone').val())) {
+					mui.alert('手机号码不正确')
+					return ;
+				} 
+			}else if(status=='1'){//商家
+				if($('#phone1').val() == '') {
+					mui.alert('请输入手机号')
+					return ;
+				} else if(!reg.test($('#phone1').val())) {
+					mui.alert('手机号码不正确')
+					return ;
+				} 
+			}
+			var count = 60;
+			var timer;
+			function countDown() {
+				if(count == 0) {
+					clearInterval(timer);
+					$('.verBtn').prop("disabled",false);
+					$('.verBtn').html('重新发送');
+					$('.verBtn').attr('onclick','sendsms1()');
+				} else {
+					$('.verBtn').removeAttr('onclick'); 									
+					$('.verBtn').html(count + 's');
+					count--;
+				}
+			}
+			var timer = setInterval(countDown, 1000);
 			if($('.verBtn').html()=='重新发送'||$('.verBtn').html()=='获取验证码'){
 				sendsms1();
 			}
@@ -118,6 +144,8 @@
 		
 		function sendsms1(){
 			var status = $("#mui_title").val();
+			
+			console.log('获取验证码被点击了...');
 			if(status=='1'){//个人注册
 					$.ajax({
 						type:"post",
@@ -128,21 +156,7 @@
 						},
 						success:function(json){
 							if(json.state == 0){
-								var count = 60;
-								var timer;
-								function countDown() {
-									if(count == 0) {
-										clearInterval(timer);
-										$('.verBtn').prop("disabled",false);
-										$('.verBtn').html('重新发送');
-										$('.verBtn').attr('onclick','sendsms1()');
-									} else {
-										$('.verBtn').removeAttr('onclick'); 									
-										$('.verBtn').html(count + 's');
-										count--;
-									}
-								}
-								var timer = setInterval(countDown, 1000);
+								
 							}else{
 								clearInterval(timer);
 								$('.verBtn').removeAttr('disabled', true);
@@ -160,22 +174,7 @@
 						},
 						success:function(json){
 							if(json.state == 0){
-								 console.log('获取验证码被点击了...');
-								var count = 60;
-								var timer;
-								function countDown() {
-									if(count == 0) {
-										clearInterval(timer);
-										$('.verBtn').attr("disabled",false);
-										$('.verBtn').attr('onclick','sendsms1()');
-										$('.verBtn').html('重新发送');
-									} else {
-										$('.verBtn').removeAttr('onclick');
-										$('.verBtn').html(count + 's');
-										count--;
-									}
-								}
-								var timer = setInterval(countDown, 1000);
+								
 							}else{
 								clearInterval(timer);
 								$('.verBtn').removeAttr('disabled', true);
@@ -478,7 +477,11 @@
 		</script>
 		
  	</body>
- 	<script src="${ctx}/mvccol/lrz/index_no.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="${ctx}/mvccol/lrz/exif.js" type="text/javascript" charset="utf-8"></script>
+ 	
+ 	<script src="${ctx}/mvccol/lrz/lrz.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="${ctx}/mvccol/lrz/mobileFix.mini.js" type="text/javascript" charset="utf-8"></script>
+ 	<script src="${ctx}/mvccol/lrz/index2.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		
 		function upload_id_card_front(){
