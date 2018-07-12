@@ -350,7 +350,7 @@
                                                         <li><a href="javascript:del('${bean._id}');"><i
                                                                 class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
                                                         </li>
-                                                         <c:if test="${bean.agentLevel==1}">
+                                                         <c:if test="${bean.agentLevel==6}">
                                                         <li><a href="javascript:audit('${bean._id}');"><i
                                                                 class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;审核</a>
                                                         </li>
