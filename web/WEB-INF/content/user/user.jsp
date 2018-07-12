@@ -11,6 +11,9 @@
     <script type="text/javascript">
     	function audit(id){
     		
+    		$('#inszc1').modal({
+                show: true
+            });
     	}
     	
         function del(id) {
@@ -273,9 +276,11 @@
                                                         <li><a href="javascript:del('${bean._id}');"><i
                                                                 class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
                                                         </li>
+                                                         <c:if test="${bean.agentLevel==1}">
                                                         <li><a href="javascript:audit('${bean._id}');"><i
                                                                 class="fa fa-trash-o "></i>&nbsp;&nbsp;&nbsp;&nbsp;审核</a>
                                                         </li>
+                                                        </c:if>
                                                     </ul>
                                                 </c:if>
                                             </div>
@@ -432,6 +437,206 @@
                 </form>
                 <div class="panel-footer">
                     <button class="btn btn-primary col-sm-2" onclick="submint()" style="padding: 9px 15px;">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 审核 -->
+<div id="inszc1" class="modal fade bs-example-modal-static"
+     tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close"
+                        type="button">&times;</button>
+                <h4 class="modal-title">
+                    <i class="fa fa-leaf pr-10"></i>帐号管理
+                </h4>
+            </div>
+            <div class="modal-body">
+                <form id="inscxForm" action="${ctx}/user/user!save.action" class="form-horizontal" method="post">
+                    <input type="hidden" id="_id" name="_id"/>
+                    <input type="hidden" id="funcs" name="funcs"/>
+                    <input type="hidden" id="number" name="number"/>
+                    
+                    <input type="hidden" id="upIds" name="upIds"/>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">登录帐号</label>
+                                <input type="text" id="account" name="account"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">登录密码</label>
+                                <input type="text" id="password" name="password"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">单位名称:</label>
+                                <input type="text" id="nickname" name="nickname"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">ToUser:</label>
+                                <input type="text" id="toUser" name="toUser"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">角色:</label>
+                                <select id="roleid" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="县域管理员" >
+                                    <option value="">请选择</option> 
+                                    <c:forEach items="${rolelist}" var="bean">
+                                        <option value="${bean._id }">${bean.rolename }</option>
+                                    </c:forEach>
+                                </select>
+                                <label class="error" for="roleid"></label>
+                            </div>
+                           
+                        </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">类型:</label>
+                                <select id="type" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="管理员" onchange="selrole()">
+                                    <option value="">请选择</option>
+                                    <option value="1">普通用户</option>
+                                    <option value="2">管理员</option>
+                                </select>
+                                <label class="error" for="type"></label>
+                            </div>
+                        </div>
+                         <div class="col-sm-2" id="agentLevel_show">
+                            <div class="form-group-20">
+                                <label class="control-label">代理类型:</label>
+                                <select id="agentLevel" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="代理类型">
+                                    <option value="">请选择</option>
+                                    <option value="1">省</option>
+                                    <option value="2">市</option>
+                                    <option value="3">县</option>
+                                    <option value="4">部门</option>
+                                </select>
+                                <label class="error" for="agentLevel"></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">省份:</label>
+                                <input type="text" id="province" name="province"
+                                       class="form-control" placeholder="请输入"/>
+                       </div>
+                        </div> 
+                         <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">区县:</label>
+                                <input type="text" id="city" name="city"
+                                       class="form-control" placeholder="请输入"/>
+                       </div>
+                      </div>   
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            <label class="control-label pr-10" style="padding-bottom:10px;!important;">个人中心菜单配置:</label>
+                            <div>
+                                <c:forEach items="${fromfunc}" var="bean" varStatus="status">
+                                    <div class="pull-left pr-10 form-group-20">
+                                        <div id="func-${bean._id}" class="pull-left gx-xz ch_type" onclick="cke(this)">
+                                            <input type="hidden" value="${bean._id}"/>
+                                            <i class="fa fa-check"></i>
+                                        </div>
+                                        <div class="pull-left pl-10">${bean.title}</div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <div class="col-md-2"> 
+                             <div class="form-group-20">
+                                <label class="control-label">个人中心模板:</label>
+                                <select id="mb" name="mb" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="管理员">
+                                    <option value="1">普通模板</option>
+                                    <option value="2">分销模板</option>
+                                </select>
+                                <label class="error" for="type"></label>
+                            </div>
+                        </div>
+                           <div class="col-md-2"> 
+                             <div class="form-group-20">
+                                <label class="control-label">推荐码:</label>
+                                <input type="text" id="renumber" name="renumber"
+                                       class="form-control" placeholder="请输入"/>
+                                <label class="error" for="renumber"></label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">真实姓名</label>
+                                <input type="text" id="account" name="account"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">身份证号码</label>
+                                <input type="text" id="password" name="password"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">营业证号码:</label>
+                                <input type="text" id="nickname" name="nickname"
+                                       class="form-control" placeholder="请输入"/>
+                            </div>
+                        </div>
+                     </div>
+                     
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">身份证正面照</label>
+                                <img src=""/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">身份证反面照</label>
+                                <img src=""/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">营业证照片:</label>
+                                <img src=""/>
+                            </div>
+                        </div>
+                     </div> 
+                </form>
+                <div class="panel-footer">
+                
+                <button class="btn btn-primary col-sm-2" onclick="submint()" style="padding: 9px 15px;">通过</button>
+                
+                
+                <button class="btn btn-primary col-sm-2" onclick="submint()" style="padding: 9px 15px;">不通过</button>
+                
+                    
+                    
                 </div>
             </div>
         </div>
