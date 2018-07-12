@@ -222,28 +222,48 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	 * ajax回复评论(商家)
 	 */
 	public void ajaxReplayAdm() {
+		getLscode(); 
+		Map<String,Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
 		//评论id
 		String comid=Struts2Utils.getParameter("comid");
-		//父ID
-		String parentid=Struts2Utils.getParameter("parentid");
+		
+		//String parentid=Struts2Utils.getParameter("parentid");
 		String content=Struts2Utils.getParameter("content"); 
 		String picurl=Struts2Utils.getParameter("picurl");
 		String title=Struts2Utils.getParameter("title");
+		//父ID
+		String parentid="";
+		if(StringUtils.isNotEmpty(comid)) {
+			DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,Long.parseLong(comid));
+			if(dbObject!=null) {
+				if(dbObject.get("_id") !=null) {
+					parentid=dbObject.get("_id").toString();
+				}
+			}
+		}
 		if(StringUtils.isNotEmpty(comid)) {
 			ShopComReply reply=new ShopComReply();
 			reply.set_id(mongoSequence.currval(PubConstants.SHOP_SHOPCOMREPLY));
 			reply.setComid(Long.parseLong(comid));
 			reply.setContent(content);
 			reply.setCreatedate(new Date());
-			reply.setCustid(SpringSecurityUtils.getCurrentUser().getId());
-			reply.setFromid(SpringSecurityUtils.getCurrentUser().getId());
+			reply.setCustid(custid);
+			reply.setFromid(fromUserid);
 			reply.setHflx(1);
 			if (StringUtils.isNotEmpty(parentid)) {
 				reply.setParentid(Long.parseLong(parentid));
 			} 
 			reply.setPicurl(picurl);
 			reply.setTitle(title);
-			baseDao.insert(PubConstants.SHOP_SHOPCOMREPLY, reply);
+			int i=baseDao.insert(PubConstants.SHOP_SHOPCOMREPLY, reply);
+			if (i>0) {
+				
+				sub_map.put("state", 0);
+			}
+			String json = JSONArray.fromObject(sub_map).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			System.out.println(json);
 		}
 	}
 	
@@ -340,6 +360,12 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 			for (DBObject dbObject : list) {
 				if(dbObject.get("fromid")!=null) {
 					dbObject.put("nickname",wwzService.getWxUser(dbObject.get("fromid").toString()).get("nickname"));
+				}
+				if(dbObject.get("_id")!=null) {
+					DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,Long.parseLong(dbObject.get("_id").toString()));
+					if(obj!=null) {
+						dbObject.put("sjreply",obj.get("content"));
+					}				
 				}
 			}
 			sub_map.put("list",list);

@@ -22,10 +22,23 @@
         }
        
        function huifu(oid){
+    	   $("#comid").val(oid);
     	   ps_show('inszc');
        }
        
-       
+       function sjreply(){
+    	  var submitData = {
+    			   comid:$("#comid").val(),
+    			   content:$("#sj_huifu").val()
+          }; 
+    	  $.post('${ctx}/shop/shopcom!ajaxReplayAdm.action', submitData,
+                  function (json) {
+                      if (json.state == 0) {
+                         
+                          window.location.href =javascript:history.go(-1);
+                      }
+                  }, "json")
+       }
     
     </script>
 </head>
@@ -85,9 +98,9 @@
                                                     <i class="fa fa-cog"></i>
                                                 </a>
                                                 <ul role="menu" class="dropdown-menu pull-right"> 
-                                                    <li><a href="javascript:void();">
+                                                    <!-- <li><a href="javascript:void();">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;评论列表</a>
-                                                    </li>  
+                                                    </li>  --> 
                                                     <li><a href="javascript:huifu('${bean._id}',2);">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;回复</a>
                                                     </li> 
@@ -121,9 +134,9 @@
                         </div>
                     </a>
                 </div>
-                <form id="inscxForm" action="${ctx }/integral/intecurrency!save.action?fypage=${fypage}"
-                      class="form-horizontal" method="post">
-                    <input type="hidden" id="_id" name="_id"/>
+                <%-- <form id="inscxForm" action="${ctx }/shop/shopcom!ajaxReplayAdm.action?fypage=${fypage}"
+                      class="form-horizontal" method="post"> --%>
+                    <input type="hidden" id="comid" />
                     <%--row--%>
 
                     <div class="pt-15 pl-15 pr-15 overflow-auto" style="height:490px;">
@@ -138,10 +151,10 @@
                         
                     </div>
                     <div class="div-group-10 line-top" style="padding-left: 40px; padding-right: 40px;">
-                        <button class="btn btn-primary width-10 maring-a clear weight500 hang40">提 交
+                        <button class="btn btn-primary width-10 maring-a clear weight500 hang40" onclick="sjreply()">提 交
                         </button>
                     </div>
-                </form>
+                <!-- </form> -->
             </div>
         </div>
     </div>
