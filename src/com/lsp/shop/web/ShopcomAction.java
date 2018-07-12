@@ -362,7 +362,9 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 					dbObject.put("nickname",wwzService.getWxUser(dbObject.get("fromid").toString()).get("nickname"));
 				}
 				if(dbObject.get("_id")!=null) {
-					DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,Long.parseLong(dbObject.get("_id").toString()));
+					whereMap.clear();
+					whereMap.put("comid", Long.parseLong(dbObject.get("_id").toString()));
+					DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,whereMap);
 					if(obj!=null) {
 						dbObject.put("sjreply",obj.get("content"));
 					}				
@@ -371,6 +373,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 			sub_map.put("list",list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
+		System.out.println(json);
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	

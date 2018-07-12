@@ -153,20 +153,23 @@
         })
         
          function getcom() {
-			loading()
+			loading();
             var submitData = {
                 gid: '${entity._id}', 
             };
             jQuery.post('${ctx}/shop/shopcom!getCom.action?lscode=${lscode}', submitData,
                     function (json) {
-                    	loading.hide()
+                    	loading.hide();
                         if (json.state == 0) {
                              var list=json.list;
-                             var html;
+                             var html='';
                              for(var i=0;i<list.length;i++){
                             	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
-                            	 +'<div class="cmt_cnt">'+list[i].content+'</div><div>'+list[i].sjreply+'</div></li>';
-                            	  
+                            	 +'<div class="cmt_cnt">'+list[i].content+'</div>';
+                            	 if(list[i].sjreply!=null && list[i].sjreply!=""){
+                            		 html+='<div>'+list[i].sjreply+'</div>';
+                            	 } 
+                            	 html+='</li>';
                              }
                              $('#cmt_list').html(html);
                         }  
@@ -562,7 +565,7 @@
     <div class="width-10 clear pt-5 goodsdetails" id="assess">
     	<div class="detail_row detail_cmt">
     		<div class="cmt_list_wrap">
-    			<ul class="cmt_list">
+    			<ul id="cmt_list">
     				
     			</ul>
     		</div>

@@ -22,20 +22,23 @@
         }
        
        function huifu(oid){
-    	   $("#comid").val(oid);
+    	  /*  alert(1);*/
+    	   $("#comid").val(oid); 
     	   ps_show('inszc');
        }
        
        function sjreply(){
+    	   alert($("#comid").val());
     	  var submitData = {
     			   comid:$("#comid").val(),
     			   content:$("#sj_huifu").val()
           }; 
     	  $.post('${ctx}/shop/shopcom!ajaxReplayAdm.action', submitData,
-                  function (json) {
+                  function (json ) {
+    		  			alert(json.state);
                       if (json.state == 0) {
-                         
-                          window.location.href =javascript:history.go(-1);
+                         window.location.reload();
+                       
                       }
                   }, "json")
        }
@@ -101,9 +104,10 @@
                                                     <!-- <li><a href="javascript:void();">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;评论列表</a>
                                                     </li>  --> 
-                                                    <li><a href="javascript:huifu('${bean._id}',2);">
+                                                    <li><a href="javascript:huifu('${bean._id}');">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;回复</a>
                                                     </li> 
+                                                   
                                                 </ul>
                                             </div>
                                         </td>
