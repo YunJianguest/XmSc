@@ -28,7 +28,7 @@
 		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;"><</a>
 			关于我们
 	</header>
-	<main class="cmp640 img-100">
+	<main class="cmp640 img-100" style='padding-top: 40px;'>
 	    ${entity.content}
 	</main>
 </body>
