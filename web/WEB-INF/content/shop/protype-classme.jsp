@@ -370,7 +370,10 @@
 			float: left;
 		}
 		.bottom-bai font .fa{
-			display: ;
+			display: block;
+		}
+		.bottom-bai font div{
+			padding: 0;
 		}
 		</style>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
