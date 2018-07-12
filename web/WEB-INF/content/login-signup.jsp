@@ -8,6 +8,13 @@
 		<title>注册</title>
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/style.css" rel="stylesheet" />
+		<link href="${ctx}/mvccol/mui-css/mui.picker.css" rel="stylesheet"/>
+	    <link href="${ctx}/mvccol/mui-css/mui.poppicker.css" rel="stylesheet"/>
+	    <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet">
+	    <link href="${ctx}/app/css/font-awesome-ie7.min.css" rel="stylesheet">	
+	    <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		 <!--标准mui.css-->
+    	<link rel="stylesheet" href="${ctx}/mvccol/mui-css/mui.min.css">
 		<style>
 			
 			.area {
@@ -228,6 +235,53 @@
 					<input id='password_confirm' type="password" class=" mui-input mui-input-password" placeholder="请确认密码">
 				</div>
 				
+				<div class="line-bottom overflow-hidden">
+                <div class="col-3 hang50 line-height50 weight500 zi-6 txt-c">地区信息</div>
+                <div class="col-7" id='showCityPicker3'>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="province" value="省份" onfocus="if(value=='省份'){value=''}"
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="city" value="城市" onfocus="if(value=='城市'){value=''}"
+                               onblur="if (value ==''){value='城市'}" readonly="readonly"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="col-2 hang50 line-height50 txt-c"><i
+                        class="fa fa-1dx fa-map-marker zi-green line-height50"></i></div>
+            	</div>
+				
+				<div class="mui-input-row">
+					<label>真实姓名</label>
+					<input id='name_confirm1' type="text" class=" mui-input " placeholder="请填写真实姓名">
+				</div>
+				<div class="mui-input-row afterhide" style="height:auto;overflow: hidden;">
+					<label style="width: 100%;">上传身份证照片</label>
+					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
+						<input type="file" class="picture11" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload11" value="" placeholder="" style="display: none;" onclick="upload_id_card_front11()"/>
+	        			<label for="upload11">
+	        				<img width="100" height="100" src="" alt="" id="imgss_front11" />
+	        				<span class="Idimg" id="Idimg11">身份证正面</span>
+	        			</label>
+	        			<input type="hidden" id="up_picture_front11"/>
+					</p>
+					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
+						<input type="file" class="picture12" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload12" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse11()"/>
+	        			<label for="upload12">
+	        				<img  class="Idimg" src="" alt="" id="imgss_reverse11" />
+	        				<span class="Idimg" id="Idimg12">身份证反面</span>
+	        			</label>
+	        			<input type="hidden" id="up_picture_reverse11"/>
+					</p>
+				</div>
+				
 				<div style="width: 100%;height: 20px;font-size: 12px;text-align: right;margin-top: 10px;cursor: pointer;" >
 						<input type="checkbox" name="Agreement1" id="Agreement1" value="" /><span id="Agreement1">用户协议</span>
 				</div>
@@ -254,6 +308,30 @@
 					<label>确认</label>
 					<input id='password_confirm1' type="password" class=" mui-input mui-input-password" placeholder="请确认密码">
 				</div>
+				
+				<div class="line-bottom overflow-hidden">
+                <div class="col-3 hang50 line-height50 weight500 zi-6 txt-c">地区信息</div>
+                <div class="col-7" id='showCityPicker4'>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="province1" value="省份" onfocus="if(value=='省份'){value=''}"
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="city1" value="城市" onfocus="if(value=='城市'){value=''}"
+                               onblur="if (value ==''){value='城市'}" readonly="readonly"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="county1" value="区/县" onfocus="if(value=='区/县'){value=''}"
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="col-2 hang50 line-height50 txt-c"><i
+                        class="fa fa-1dx fa-map-marker zi-green line-height50"></i></div>
+            	</div>
+				
 				<div class="mui-input-row">
 					<label>真实姓名</label>
 					<input id='name_confirm' type="text" class=" mui-input " placeholder="请填写真实姓名">
@@ -267,16 +345,18 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
 	        			<label for="upload">
+	        				
+	        				<img class="Idimg" src="" alt="" id="imgss_front" />
 	        				<span class="Idimg" id="Idimg1">身份证正面</span>
-	        				<img width="100" height="100" src="" alt="" id="imgss_front" />
 	        			</label>
 	        			<input type="hidden" id="up_picture_front"/>
 					</p>
 					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture1" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload1" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse()"/>
 	        			<label for="upload">
+	        				
+	        				<img class="Idimg" src="" alt="" id="imgss_reverse" />
 	        				<span class="Idimg" id="Idimg2">身份证反面</span>
-	        				<img width="100" height="100" src="" alt="" id="imgss_reverse" />
 	        			</label>
 	        			<input type="hidden" id="up_picture_reverse"/>
 					</p>
@@ -294,8 +374,8 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture2" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload2" value="" placeholder="" style="display: none;" onclick="upload_business()"/>
 	        			<label for="upload">
+	        				<img class="Idimg" src="" alt="" id="imgss" />
 	        				<span class="Idimg" id="Idimg3">营业执照照片</span>
-	        				<img width="100" height="100" src="" alt="" id="imgss" />
 	        			</label>
 	        			<input type="hidden" id="up_picture"/>
 					</p>
@@ -380,6 +460,73 @@
 			</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+<!--<script src="../js/mui.picker.min.js"></script>-->
+<script src="${ctx}/mvccol/mui-js/mui.picker.js"></script>
+<script src="${ctx}/mvccol/mui-js/mui.poppicker.js"></script>
+
+<script src="${ctx}/mvccol/mui-js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    (function ($, doc) {
+        $.init();
+        $.ready(function () {
+
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker3');
+            var province = doc.getElementById('province');
+            var city = doc.getElementById('city');
+            var county = doc.getElementById('county');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker3.show(function (items) {
+                    province.value =(items[0] || {}).text;
+                    city.value=(items[1] || {}).text;
+                    if (typeof((items[2] || {}).text) == "undefined") { 
+                     county.value='';
+                     }else{
+                     county.value=(items[2] || {}).text;
+                     }  
+                    
+                    //返回 false 可以阻止选择框的关闭
+                    
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+    
+    
+    (function ($, doc) {
+        $.init();
+        $.ready(function () {
+
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker4');
+            var province = doc.getElementById('province1');
+            var city = doc.getElementById('city1');
+            var county = doc.getElementById('county1');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker3.show(function (items) {
+                    province.value =(items[0] || {}).text;
+                    city.value=(items[1] || {}).text;
+                    if (typeof((items[2] || {}).text) == "undefined") { 
+                     county.value='';
+                     }else{
+                     county.value=(items[2] || {}).text;
+                     }  
+                    
+                    //返回 false 可以阻止选择框的关闭
+                    
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+</script> 
 		<script>
 			$(function() {
 				$('#hideBtn').click(function(){
@@ -462,6 +609,30 @@
 							return;
 						}
 						
+						var province = $("#province").val();
+						if(province==""){
+							mui.alert('地区不能为空')
+							return;
+						}
+						
+						var username = $("#name_confirm1").val();
+						if(username==""){
+							mui.alert('真实姓名不能为空')
+							return;
+						}
+						
+						var up_picture_front11 = $("#up_picture_front11").val();
+						if(up_picture_front11==""){
+							mui.alert('身份证正面照不能为空')
+							return;
+						}
+						
+						var up_picture_reverse11 = $("#up_picture_reverse11").val();
+						if(up_picture_reverse11==""){
+							mui.alert('身份证反面照不能为空')
+							return;
+						}
+						
 						var flag = $("#Agreement1").is(":checked");
 						if(!flag){
 							mui.alert('请先选择协议！')
@@ -516,6 +687,24 @@
 							return;
 						}
 						
+						var up_picture_front = $("#up_picture_front").val();
+						if(up_picture_front==""){
+							mui.alert('身份证正面照不能为空')
+							return;
+						}
+						
+						var up_picture_reverse = $("#up_picture_reverse").val();
+						if(up_picture_reverse==""){
+							mui.alert('身份证反面照不能为空')
+							return;
+						}
+						
+						var up_picture = $("#up_picture").val();
+						if(up_picture==""){
+							mui.alert('营业证照片不能为空')
+							return;
+						}
+						
 						var flag = $("#Agreement").is(":checked");
 						if(!flag){
 							mui.alert('请先选择协议！')
@@ -528,10 +717,22 @@
 							type:"post",
 							url:"${ctx}/user/fromuser!signup.action",
 							async:true,
-							data:{tel:$('#phone').val(),password:$('#password').val(),yzcode:$('#verCode').val(),status:1},
+							data:{
+								tel:$('#phone').val(),
+								password:$('#password').val(),
+								yzcode:$('#verCode').val(),
+								status:1,
+								province:$('#province').val(),
+								city:$('#city').val(),
+								county:$('#county').val(),
+								username:$('#username').val(),
+								id_card_front:$('#up_picture_front11').val(),
+								id_card_reverse:$('#up_picture_reverse11').val()
+							},
 							success:function(json){
 								if(json){
 									if(json.state == 0){
+										mui.alert('注册成功！')
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 									}
 								}else{
@@ -555,12 +756,16 @@
 								company_name:$('#yingyename').val(),
 								lisense_number:$('#yingyeId').val(),
 								lisense_photo:$('#up_picture').val(),
-								status:2
+								status:2,
+								province:$('#province1').val(),
+								city:$('#city1').val(),
+								county:$('#county1').val()
 							},
 							success:function(json){
 								if(json){
 									console.log("++++++++++++++++"+json.state);
 									if(json.state == 0){
+										mui.alert('注册成功，请等待审核！')
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 									}
 								}else{
@@ -598,5 +803,17 @@
 			fileInput("picture2","up_picture","imgss");
 			$("#Idimg3").attr("style","display:none");
 		}
+		
+		function upload_id_card_front11(){
+			//picture代表input<file类型>的class的值，up_picture代表隐藏（hidden）的input的id值，imgss代表<img>标签的id值
+			fileInput("picture11","up_picture_front11","imgss_front11");
+			$("#Idimg11").attr("style","display:none");
+		}
+		
+		function upload_id_card_reverse11(){
+			fileInput("picture12","up_picture_reverse11","imgss_reverse11");
+			$("#Idimg12").attr("style","display:none");
+		}
 		</script>
+		
 </html>

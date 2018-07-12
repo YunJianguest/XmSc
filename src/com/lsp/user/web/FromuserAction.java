@@ -623,6 +623,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String lisense_photo = Struts2Utils.getParameter("lisense_photo"); //营业证照片
 		String status = Struts2Utils.getParameter("status"); //状态
 		
+		String province = Struts2Utils.getParameter("province");//省
+		String city = Struts2Utils.getParameter("city");//市
+		String county = Struts2Utils.getParameter("county");//区
+		
 		whereMap.put("tel", tel);
 		Long count =basedao.getCount(PubConstants.USER_INFO, whereMap);
 		
@@ -640,7 +644,12 @@ public class FromuserAction extends GeneralAction<WxUser>{
 						user.setPassword(password);
 						user.setCustid(SysConfig.getProperty("custid"));
 						user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
-						
+						user.setProvince(province);
+						user.setCity(city);
+						user.setCounty(county);
+						user.setUserName(userName);
+						user.setId_card_front(id_card_front);
+						user.setId_card_reverse(id_card_reverse);
 						basedao.insert(PubConstants.USER_INFO, user);
 						String lscode=wwzservice.createcode(user.get_id().toString());
 						sub_map.put("lscode", lscode);//注册成功
@@ -660,6 +669,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 						user.setCompany_name(company_name);
 						user.setLisense_number(lisense_number);
 						user.setLisense_photo(lisense_photo);
+						user.setProvince(province);
+						user.setCity(city);
+						user.setCounty(county);
 						basedao.insert(PubConstants.USER_INFO, user);
 						String lscode=wwzservice.createcode(user.get_id().toString());
 						sub_map.put("lscode", lscode);//注册成功

@@ -8,6 +8,13 @@
 		<title>注册</title>
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/style.css" rel="stylesheet" />
+		<link href="${ctx}/mvccol/mui-css/mui.picker.css" rel="stylesheet"/>
+	    <link href="${ctx}/mvccol/mui-css/mui.poppicker.css" rel="stylesheet"/>
+	    <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet">
+	    <link href="${ctx}/app/css/font-awesome-ie7.min.css" rel="stylesheet">	
+	    <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		 <!--标准mui.css-->
+    	<link rel="stylesheet" href="${ctx}/mvccol/mui-css/mui.min.css">
 		<style>
 			
 			.area {
@@ -216,6 +223,30 @@
 					<label>确认</label>
 					<input id='password_confirm1' type="password" class=" mui-input mui-input-password" placeholder="请确认密码">
 				</div>
+				
+				<div class="line-bottom overflow-hidden">
+                <div class="col-3 hang50 line-height50 weight500 zi-6 txt-c">地区信息</div>
+                <div class="col-7" id='showCityPicker4'>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="province1" value="省份" onfocus="if(value=='省份'){value=''}"
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="city1" value="城市" onfocus="if(value=='城市'){value=''}"
+                               onblur="if (value ==''){value='城市'}" readonly="readonly"/>
+                    </div>
+                    <div class="col-4">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="county1" value="区/县" onfocus="if(value=='区/县'){value=''}"
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly"/>
+                    </div>
+                </div>
+                <div class="col-2 hang50 line-height50 txt-c"><i
+                        class="fa fa-1dx fa-map-marker zi-green line-height50"></i></div>
+            	</div>
+				
 				<div class="mui-input-row">
 					<label>真实姓名</label>
 					<input id='name_confirm' type="text" class=" mui-input " placeholder="请填写真实姓名">
@@ -369,6 +400,41 @@
 			</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+		<script src="${ctx}/mvccol/mui-js/mui.picker.js"></script>
+<script src="${ctx}/mvccol/mui-js/mui.poppicker.js"></script>
+
+<script src="${ctx}/mvccol/mui-js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    (function ($, doc) {
+        $.init();
+        $.ready(function () {
+
+            var cityPicker3 = new $.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            var showCityPickerButton = doc.getElementById('showCityPicker4');
+            var province = doc.getElementById('province1');
+            var city = doc.getElementById('city1');
+            var county = doc.getElementById('county1');
+            showCityPickerButton.addEventListener('tap', function (event) {
+                cityPicker3.show(function (items) {
+                    province.value =(items[0] || {}).text;
+                    city.value=(items[1] || {}).text;
+                    if (typeof((items[2] || {}).text) == "undefined") { 
+                     county.value='';
+                     }else{
+                     county.value=(items[2] || {}).text;
+                     }  
+                    
+                    //返回 false 可以阻止选择框的关闭
+                    
+                    //return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+</script> 
 		<script>
 			$(function() {
 				$('#hideBtn').click(function(){
@@ -562,6 +628,24 @@
 							return;
 						}
 						
+						var up_picture_front = $("#up_picture_front").val();
+						if(up_picture_front==""){
+							mui.alert('身份证正面照不能为空')
+							return;
+						}
+						
+						var up_picture_reverse = $("#up_picture_reverse").val();
+						if(up_picture_reverse==""){
+							mui.alert('身份证反面照不能为空')
+							return;
+						}
+						
+						var up_picture = $("#up_picture").val();
+						if(up_picture==""){
+							mui.alert('营业证照片不能为空')
+							return;
+						}
+						
 						var flag = $("#Agreement").is(":checked");
 						if(!flag){
 							mui.alert('请先选择协议！')
@@ -601,7 +685,10 @@
 								company_name:$('#yingyename').val(),
 								lisense_number:$('#yingyeId').val(),
 								lisense_photo:$('#up_picture').val(),
-								status:2
+								status:2,
+								province:$('#province1').val(),
+								city:$('#city1').val(),
+								county:$('#county1').val()
 							},
 							success:function(json){
 								if(json){
