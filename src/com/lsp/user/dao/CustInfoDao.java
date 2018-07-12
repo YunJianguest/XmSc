@@ -66,7 +66,8 @@ public class CustInfoDao
         if ((cust.getStartdate().getTime() > now) || (cust.getEnddate().getTime() < now)) {
           return null;
         }
-      }else if(cust.getAudit_status()!=1&&cust.getRole()==Long.parseLong(SysConfig.getProperty("sjroleid").toString())){
+      } 
+      if(cust.getAudit_status()!=1&&cust.getRoleid()==Long.parseLong(SysConfig.getProperty("sjroleid").toString())){
     	  //验证商户
     	  return null;
       }
