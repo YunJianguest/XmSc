@@ -142,9 +142,12 @@
 </head>
 
 <body>
- 
+ <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			地址管理
+	</header>
 
-<main class="clear cmp640 lock">
+<main class="clear cmp640 lock" style='padding-top: 40px;'>
 
     <c:if test="${not empty address}"> 
         <font size="2">
