@@ -167,7 +167,7 @@
                             	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
                             	 +'<div class="cmt_cnt">'+list[i].content+'</div>';
                             	 if(list[i].sjreply!=null && list[i].sjreply!=""){
-                            		 html+='<div>'+list[i].sjreply+'</div>';
+                            		 html+='<div class="reply">'+list[i].sjreply+'<span class="replybtn fa fa-commenting-o" onclick="replyBtn()"></span></div>';
                             	 } 
                             	 html+='</li>';
                              }
@@ -454,6 +454,96 @@
 		.attentbox div span{
 			display: block;
 		}
+		.reply{
+			width: 100%;
+			height: auto;
+			line-height: 16px;
+			padding: 0 30px 0 10px;
+			overflow: hidden;
+		}
+		.reply span.replybtn{
+			font-size: 18px;
+			float: right;
+			margin-right: 5px;
+		}
+		.replyModal {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 1000;
+				background: rgba(0, 0, 0, .1);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.replyModal-content {
+				width: 80%;
+				height: 200px;
+				background: #fff;
+				border-radius: 10px;
+				box-sizing: border-box;
+				margin-top: -200px;
+			}
+			
+			.replyModal-content-tit {
+				height: 34px;
+				line-height: 34px;
+				width: 100%;
+				text-align: center;
+				font-size: 18px;
+				position: relative;
+			}
+			.replyModal-content-tit::after{
+				content: '';
+				width: 100%;
+				height: 1px;
+				background: #ececec;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+			.replyModal-content-cont {
+				height: 126px;
+				width: 100%;
+				/*text-align: center;*/
+				padding: 10px;
+				box-sizing: border-box;
+			}
+			
+			.replyModal-content-cont textarea {
+				width: 100%;
+				height: 106px;
+				padding: 5px;
+				box-sizing: border-box;
+				resize: none;
+				border-radius: 5px;
+			}
+			
+			.replyModal-content-foot {
+				width: 100%;
+				display: flex;
+				height: 40px;
+			}
+			
+			.replyModal-content-foot button {
+				flex: 1;
+				width: 1%;
+				text-align: center;
+				border: none;
+				color: #fff;
+			}
+			.replycancel{
+				background: #E4393C;
+				border-bottom-left-radius: 5px;
+			}
+			.replyOk{
+				background: #007AFF;
+				border-bottom-right-radius: 5px;
+			}
     </style>
 </head>
 <body class="cmp640">
@@ -623,7 +713,21 @@
         </div>
     </div>
 </div>
- 
+		<!-- 评论回复弹出框 -->
+		 <div class="replyModal">
+			<div class="replyModal-content">
+				<div class="replyModal-content-tit">
+					回复
+				</div>
+				<div class="replyModal-content-cont">
+					<textarea name="" rows="" cols=""></textarea>
+				</div>
+				<div class="replyModal-content-foot">
+					<button class="replycancel">取消</button>
+					<button class="replyOk">提交</button>
+				</div>
+			</div>
+		</div>
 <script>
 	$('.tab-switch li a').click(function(){
 		$(this).parent().addClass('on').siblings('.on').removeClass('on');
@@ -666,6 +770,14 @@
 </script> 
 <%@ include file="/webcom/shop-spec.jsp" %>  
 <script>
+	function replyBtn(){
+		$(this).click(function(){
+			$('.replyModal').show()
+		})
+	}
+	$('.replycancel').click(function() {
+		$('.replyModal').hide()
+	})
 getcom();
   wx.config({
     debug: false,
