@@ -91,13 +91,18 @@
 </head>
 <body>
  
-
+<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			商品详情
+	</header>
 <main class="lock cmp640" id="section1"> 
-    <div class="top_foot bg-hui-92 zi-bai hang40 line-height40 cmp640 line-bottom">
+    <div class="top_foot bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
         <a href="#">
-            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font>
-            <font size="2">可用${setting.name}：<i class="zi-cheng">${jf.prostore}</i></font>
-            <font size="2">冻结${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font>
+            <div class="zi-hei weight500 pl-15">
+            	<div><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font></div>
+            	<div><font size="2">可用${setting.name}：<i class="zi-cheng">${jf.prostore}</i></font></div>
+            	<div><font size="2">冻结${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
+            	<div><font size="2">我的${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
@@ -105,7 +110,7 @@
         </a> --%>
     </div>
 
-    <div class="txt-c zi-cheng  div-group-5 pt-50">
+    <div class="txt-c zi-cheng  div-group-5">
 
         <div class="line-left1 line-top line-bottom line-right border-radius5">
             <!--<a href="#">-->
