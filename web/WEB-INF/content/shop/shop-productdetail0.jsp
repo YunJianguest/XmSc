@@ -323,6 +323,16 @@
 		    position: relative;
 		    padding: 10px 0;
 		}
+		
+		.detail_cmt .cmt_list li::after{
+			content: '';
+			width: 100%;
+			height: 1px;
+			background: #ccc;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
 		.detail_cmt .cmt_cnt {
 		    position: relative;
 		    line-height: 1.3;
@@ -537,6 +547,7 @@
 				text-align: center;
 				border: none;
 				color: #fff;
+				line-height: 40px;
 			}
 			.replycancel{
 				background: #E4393C;
@@ -657,7 +668,7 @@
     <div class="width-10 clear pt-5 goodsdetails" id="assess">
     	<div class="detail_row detail_cmt">
     		<div class="cmt_list_wrap">
-    			<ul id="cmt_list">
+    			<ul class="cmt_list">
     				<li>
 	    				<div class="cmt_user">
 		    				<span class="user">1111'</span>
