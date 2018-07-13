@@ -118,8 +118,8 @@
                     <div class="nomargin"><i class="logos"></i>熊猫后台登陆系统</div>
                    
                 
-                    <input type="text" maxlength="11" id="j_username" onblur="checkName(this.value)" name="j_username" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" class="form-control uname" placeholder="账号" style="margin-top: 30px;"/>
-                    <input type="password" id="j_password" name="j_password" class="form-control pword" placeholder="密码" />
+                    <input type="text" maxlength="11" id="j_username" onblur="checkName(this.value)" name="j_username" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" class="form-control uname" placeholder="账号" style="margin-top: 30px;" autocomplete="off"/>
+                    <input type="password" id="j_password" name="j_password" class="form-control pword" placeholder="密码" autocomplete="off"/>
                    
                     <button class="btn btn-block" style="background: #fff !important;margin-bottom: 30px;">登陆</button>
                     <a href="${ctx}/login!pcforgetpw.action">忘记密码</a><span style="float: right;margin: 0 10px;">|</span><a href="${ctx}/register.action">注册</a>
