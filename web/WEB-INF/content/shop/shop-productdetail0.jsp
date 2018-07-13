@@ -371,8 +371,18 @@
         	line-height: 30px;
         	display: flex;
         	padding: 0 10px;
+        	position: relative;
         }
-        
+        .tab-switch::after{
+        	position: absolute;
+        	bottom: 0;
+        	left: 0;
+        	right: 0;
+        	border-bottom: 1px solid #ddd;
+        	content: '';
+        	width: 100%;
+        	height: 1px;
+        }
         .tab-switch li{
         	flex: 1;
         	width: 1%;
