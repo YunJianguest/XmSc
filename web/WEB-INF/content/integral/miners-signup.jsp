@@ -160,8 +160,11 @@
 	</head>
 
 	<body>
-
-		<div class="mui-content" style="background: #fff;padding: 0 16px;">
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content" style="background: #fff;padding: 0 16px; padding-top: 44px;">
 			<div class="mui-row">
 				<p class="mui-popup-title">注册</p>
 			</div>

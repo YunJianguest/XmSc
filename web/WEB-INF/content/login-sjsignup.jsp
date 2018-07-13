@@ -194,6 +194,10 @@
 		</script>
     </head>
     <body style="background: #fff;">
+    	<header class="mui-bar mui-bar-nav">
+    	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    	    <h1 class="mui-title">注册</h1>
+    	</header>
     	<div class="mui-content" style="background: #fff;padding: 0 20px;">
 			<div class="mui-row">
 				<p class="mui-popup-title">商家入驻</p>
@@ -230,17 +234,17 @@
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="province1" value="省份" onfocus="if(value=='省份'){value=''}"
-                               onblur="if (value ==''){value='省份'}" readonly="readonly"/>
+                               onblur="if (value ==''){value='省份'}" readonly="readonly" style="padding: 10px 5px;"/>
                     </div>
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="city1" value="城市" onfocus="if(value=='城市'){value=''}"
-                               onblur="if (value ==''){value='城市'}" readonly="readonly"/>
+                               onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;"/>
                     </div>
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="county1" value="区/县" onfocus="if(value=='区/县'){value=''}"
-                               onblur="if (value ==''){value='区/县'}" readonly="readonly"/>
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;"/>
                     </div>
                 </div>
                 <div class="col-2 hang50 line-height50 txt-c"><i
