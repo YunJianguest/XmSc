@@ -324,17 +324,10 @@
 		    padding: 10px 5px;
 		    margin-bottom: 10px;
 		    background: #efefef;
+		    border-radius: 5px;
 		}
 		
-		.detail_cmt .cmt_list li::after{
-			content: '';
-			width: 100%;
-			height: 1px;
-			border-bottom: 1px solid #ddd;
-			position: absolute;
-			bottom: 0;
-			left: 0;
-		}
+		
 		.detail_cmt .cmt_cnt {
 		    position: relative;
 		    line-height: 1.3;
