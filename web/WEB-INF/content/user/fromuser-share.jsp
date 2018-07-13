@@ -25,8 +25,7 @@
 			}
 			.share{
 				width: 100%;
-				padding: 80px 38px 35px 38px;
-				position: relative;
+				margin-top: 90px;
 			}
 			.share-canvas{
 				width: 100%;
@@ -66,10 +65,10 @@
 				color: #fff;
 				font-size: 18px;
 				margin-top: 10px;
-				position: absolute;
+				/*position: absolute;
 			    bottom: -100px;
 			    left: 50%;
-			    margin-left: -120px;
+			    margin-left: -120px;*/
 			}
 			.share-txt{
 				width: 100%;
@@ -79,11 +78,11 @@
 				text-align: center;
 				font-size: 12px;
 				font-weight: 600;
-				position: absolute;
+				/*position: absolute;
 			    bottom: -150px;
-			    left: 0;
+			    left: 0;*/
 			}
-			@media screen and (min-width:375px){
+			/*@media screen and (min-width:375px){
 				.share-tit{
 					bottom: 0;
 				}
@@ -114,7 +113,7 @@
 				.share-txt{
 					bottom: -170px;
 				}
-			}
+			}*/
 		</style>
 	</head>
 
