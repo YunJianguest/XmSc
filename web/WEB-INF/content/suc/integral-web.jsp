@@ -93,7 +93,7 @@
  
 <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
 		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
-			商品详情
+			数字资产
 	</header>
 <main class="lock cmp640" id="section1"> 
     <div class="top_foot bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
