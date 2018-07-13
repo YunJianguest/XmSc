@@ -96,7 +96,7 @@
 			数字资产
 	</header>
 <main class="lock cmp640" id="section1"> 
-    <div class="top_foot bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
+    <div class=" bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
         <a href="#">
             <div class="zi-hei weight500 pl-15">
             	<div style="margin: 5px 0;"><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font></div>
