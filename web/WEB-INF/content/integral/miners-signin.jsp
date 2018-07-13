@@ -183,7 +183,7 @@
 					</span>
 				</div>
 			</div>
-			<div class="mui-content-padded oauth-area">
+			<div class="mui-content-padded oauth-area" style="margin-top: 50px;">
 				<button class="oauth-btn wx-icon"></button>
 				
 			</div>
