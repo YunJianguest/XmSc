@@ -165,9 +165,9 @@
 		    <h1 class="mui-title">注册</h1>
 		</header>
 		<div class="mui-content" style="background: #fff;padding: 0 16px; padding-top: 44px;">
-			<div class="mui-row">
+			<!--<div class="mui-row">
 				<p class="mui-popup-title">注册</p>
-			</div>
+			</div>-->
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手机号</label>

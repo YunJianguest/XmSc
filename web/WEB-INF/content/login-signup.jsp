@@ -211,7 +211,7 @@
     	</header>
     	<div class="mui-content" style="background: #fff;padding: 0 20px;padding-top: 44px;">
 			<div class="mui-row">
-				<p class="mui-popup-title">注册</p>
+				<!--<p class="mui-popup-title">注册</p>-->
 				<p class="mui-popup-title zhuce-fenlei">
 					<span style="float: left;" class="personal">个人注册</span>
 					<span style="float: right;" class="personal">商家注册</span>
