@@ -125,8 +125,8 @@
 		    		  xszf+='<div class="pl-10 pr-10 pt-10 overflow-hidden">'
 		    		      +'<div class="bg-bai border-radius5">'
 		    		      +'<div class="hang30 line-bottom-98 zi-hui-tq weight500 overflow-hidden line-height30 pl-5 pr-5 zi-353535">'
-		    		      +'<font size="1"><div class="col-8 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>';
-//		    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    		      +'<font size="1"><div class="col-9 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>'
+		    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
 							/* if(v[i].state==1){
 		    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
 		    		        }else if(v[i].state==2){
@@ -150,22 +150,19 @@
 		    			    		       var list=comlist[k].list;
 		    			    		       
 		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
-		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >已下单</div>'
-		    			    		    		   +'<div class="col-2 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >已下单</div>'
+		    			    		    		   
 		    			    		       }
 		    			    		       
 		    			    		       if(list[0].goodstate == 2){
-		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >待发货</div>'
-		    			    		    		   +'<div class="col-2 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >待发货</div>'
 		    			    		       }
 		    			    		       if(list[0].goodstate == 3){
-		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')">确认收货</div>'
-		    			    		    	   +'<div class="col-2 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')">确认收货</div>'
 		    			    		       }
 		    			    		       
 		    			    		       if(list[0].goodstate == 4){
-		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;">订单完成</div>'
-		    			    		    		   +'<div class="col-2 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;">订单完成</div>'
 		    			    		       }
 		    			    		       
 		    			    		       for(var j=0;j<list.length;j++){
