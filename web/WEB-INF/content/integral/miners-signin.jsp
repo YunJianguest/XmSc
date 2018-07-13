@@ -72,15 +72,15 @@
 			}
 			
 			.oauth-area {
-				position: absolute;
+				/*position: absolute;
 				bottom: 20px;
-				left: 0px;
+				left: 0px;*/
 				text-align: center;
 				width: 100%;
 				padding: 0px;
 				margin: 0px;
-				/*display: flex;
-				justify-content: center;*/
+				display: flex;
+				justify-content: center;
 			}
 			
 			.oauth-area .oauth-btn {
