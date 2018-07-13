@@ -331,8 +331,9 @@
 	          </li>-->
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=1">	
-					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 ">
+					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 		              <i class="fa fa-credit-card  line-height30" ></i>
+		              <span style="padding: 2px 5px;position: absolute;top: 0;right: 0;">1</span>
 		            </div>待付款
 	              </a>     
 	        </li>
