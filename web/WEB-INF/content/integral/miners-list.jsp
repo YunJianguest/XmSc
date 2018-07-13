@@ -167,10 +167,10 @@
 	</head>
 
 	<body>
-		<!-- <header class="mui-bar mui-bar-nav">
+		 <header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">矿机购买</h1>
-		</header> -->
+			<h1 class="mui-title">矿机列表</h1>
+		</header> 
 		<div class="mui-content" style="overflow: scroll;height: 100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
 			<div class="mui-row">
 				<div class="coin">

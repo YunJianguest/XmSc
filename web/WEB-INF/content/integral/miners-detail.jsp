@@ -108,10 +108,10 @@
 	</head>
 
 	<body>
-		<!-- <header class="mui-bar mui-bar-nav" style="background: #fff;">
+		 <header class="mui-bar mui-bar-nav" style="background: #fff;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">标题</h1>
-		</header> -->
+		</header> 
 		
 		<div class="mui-content">
 			<canvas id="matrix" width="" height=""></canvas>

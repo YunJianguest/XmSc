@@ -151,9 +151,9 @@
 	</head>
 
 	<body>
-		<!-- <header class="mui-bar mui-bar-nav">
+		 <header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
-		</header> -->
+		</header> 
 		<div class="mui-content">
 			<div class="login-logo">
 				<img src="${ctx}/xmMobile/img/icon/icon-login-logo.png"/>
