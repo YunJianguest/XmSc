@@ -687,7 +687,7 @@
     <div class="width-10 clear pt-5 goodsdetails" id="assess">
     	<div class="detail_row detail_cmt">
     		<div class="cmt_list_wrap">
-    			<ul class="cmt_list">
+    			<ul id="cmt_list">
     				
     			</ul>
     		</div>
@@ -863,9 +863,9 @@ wx.ready(function(){
   </c:if> 
 </c:if> 
 <!--客服-->
-    <div class="position-f img-wh35 txt-c bj-lan1 zi-bai border-radius50"style="bottom:60px; right: 3px;" onclick="window.location.href='${ctx}/android/reply!index.action?custid=${custid}&lscode=${lscode}&id=${entity.comid}&pid=${entity._id}'">
+   <%--  <div class="position-f img-wh35 txt-c bj-lan1 zi-bai border-radius50"style="bottom:60px; right: 3px;" onclick="window.location.href='${ctx}/android/reply!index.action?custid=${custid}&lscode=${lscode}&id=${entity.comid}&pid=${entity._id}'">
         <i class="fa fa-commenting"style="line-height: 35px;"></i>
-    </div>
+    </div> --%>
 <!--客服结束--> 
 </body>
 </html>
