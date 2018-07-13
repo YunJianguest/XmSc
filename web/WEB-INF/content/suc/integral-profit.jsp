@@ -109,6 +109,14 @@ function page_submit(num){
 function share(url) {
 	window.open("${contextPath}/weixin/share.action?method="+ encodeURIComponent(url));
 }
+
+function exp() {
+	var sel_state=0;//0为收入
+	var sel_type=$("#sel_type").val();
+	var sel_insdate=$("#sel_insdate").val();
+	var sel_enddate=$("#sel_enddate").val(); 
+	location.href = "${ctx }/suc/integral!integeralfromexp.action?comid=${comid}&sel_state="+sel_state+"&sel_insdate="+sel_insdate+"&sel_enddate="+sel_enddate+"&sel_type="+sel_type;
+}
 </script>
 </head>
 
@@ -125,6 +133,15 @@ function share(url) {
     
     <div class="pageheader">
       <h2><i class="fa fa-user"></i>系统管理 <span>盼盼币管理</span></h2>
+      <div class="breadcrumb-wrapper1">
+          <div class="input-group ">
+              <div style="border-radius:3px; height:40px;padding-left:10px;" class="btn-primary">
+                  <a href="javascript:exp();"style="color: #ffffff;line-height:25px;">
+                      导出&nbsp;<i class="fa fa-mail-reply-all"style="line-height:30px;font-size: 14px;"></i>
+                  </a>
+              </div>
+          </div>
+      </div>
     </div>
    <div class="panelss ">
                 <div class="panel-body fu10">

@@ -2,6 +2,8 @@ package com.lsp.suc.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -30,6 +33,7 @@ import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.CommonUtil;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
+import com.lsp.pub.util.ExportExcel;
 import com.lsp.pub.util.PayCommonUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -40,6 +44,7 @@ import com.lsp.pub.util.WeiXinUtil;
 import com.lsp.pub.util.XMLUtil;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
+import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.Tourism;
@@ -1171,4 +1176,103 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	}
 
 
+	/**
+	 * 总账单导出
+	 * @throws Exception
+	 */
+	public void integeralfromexp() throws Exception {
+
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
+		String  comid=Struts2Utils.getParameter("comid");
+		if(StringUtils.isNotEmpty(comid)){
+			BasicDBList dbList = new BasicDBList();
+			dbList.add(Long.parseLong(comid));
+			whereMap.put("comids",Long.parseLong(comid));
+		} 
+		String sel_state = Struts2Utils.getParameter("sel_state");
+		if (StringUtils.isNotEmpty(sel_state)&&(!sel_state.equals("2"))) {
+			whereMap.put("state", Integer.parseInt(sel_state));
+		}
+		
+		String sel_type = Struts2Utils.getParameter("sel_type");
+		if (StringUtils.isNotEmpty(sel_type)) {
+			whereMap.put("type", sel_type);
+		}
+		if(sel_type.equals("shouyi")) {//收益导出
+			BasicDBList dblist = new BasicDBList();
+			dblist.add(new BasicDBObject("type", "ps_recovery"));
+			dblist.add(new BasicDBObject("type", "shop_bmzt"));
+			dblist.add(new BasicDBObject("type", "shop_order"));
+			// or判断
+			whereMap.put("$or", dblist);
+		}
+		
+		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate)) {			
+			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+		}
+		if (StringUtils.isNotEmpty(sel_enddate)) {
+			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+		}
+		sortMap.put("createdate", -1);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO,
+				whereMap, 0, 3000, sortMap);
+		System.out.println("---list--->"+list);
+		for (DBObject dbObject : list) {
+			if (dbObject.get("fromUserid") != null) {			 
+			 DBObject  user=wwzService.getWxUser(dbObject.get("fromUserid").toString());
+			 dbObject.put("id", dbObject.get("_id"));
+			 
+			 switch (Integer.parseInt(dbObject.get("state").toString())) {
+				case 0:
+					dbObject.put("state", "收入");
+					break;
+				case 1:
+					dbObject.put("state", "支出");
+					break;
+				default:
+					break;
+			       	}
+			 
+			 dbObject.put("value", dbObject.get("value"));
+			 String type = dbObject.get("type").toString();
+			 if(type.equals("ps_account")) {
+				 dbObject.put("type", "开通账户收益");
+			 }else if(type.equals("tj_account")) {
+				 dbObject.put("type", "推荐收益");
+			 }else if(type.equals("ps_recovery")) {
+				 dbObject.put("type", "回本后待返收益");
+			 }else if(type.equals("shop_bmzt")) {
+				 dbObject.put("type", "利润提成");
+			 }else if(type.equals("shop_jfdh")) {
+				 dbObject.put("type", "下单支出");
+			 }else if(type.equals("jfcz")) {
+				 dbObject.put("type", "盼盼币充值");
+			 }else if(type.equals("jf_withdraw")) {
+				 dbObject.put("type", "盼盼币提现");
+			 }
+			 
+			 dbObject.put("insDate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("createdate").toString())));
+			 		 
+			} 
+			
+		}
+		String[] header = { "id", "状态","金额", "类型", "时间" };
+		String[] body = { "id", "state", "value","type", "insDate"};
+		String newtime = "integeral" + ".xls";
+
+		HSSFWorkbook wb = ExportExcel
+				.exportByMongo(list, header, body, newtime);
+		Struts2Utils.getResponse().setHeader("Content-disposition",
+				"attachment;filename=" + URLEncoder.encode(newtime, "utf-8"));
+		OutputStream ouputStream = Struts2Utils.getResponse().getOutputStream();
+		wb.write(ouputStream);
+		ouputStream.flush();
+		ouputStream.close();
+	}
 }
