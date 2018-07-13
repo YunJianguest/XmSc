@@ -59,7 +59,7 @@
 			$('#type').val(json.type); 
 			$('#price').val(json.price); 
 			$('#sort').val(json.sort);
-
+			$('#picurl').val(json.picurl);
 		}, "json")
 		ps_show('inszc');
 	}
@@ -108,6 +108,7 @@
 										<tr>
 											<th class="table-action">序号</th> 
 											<th class="table-action">名称</th> 
+											<th class="table-action">图片</th> 
 											<th class="table-action">操作</th>
 										</tr>
 									</thead>
@@ -116,6 +117,7 @@
 											<tr>
 												<td>${bean.sort}</td> 
 												<td>${bean.title}</td>  
+												<td><img src="${filehttp}/${bean.picurl}" height="25px" style="background-color: black;"/></td>  
 												<td class="table-action">
 													<div class="btn-group1">
 														<a data-toggle="dropdown" class="dropdown-toggle"> <i
@@ -185,6 +187,22 @@
                                        class="form-control" placeholder="请输入"/>
                             </div>
                         </div>
+                    <div class="col-sm-6">
+                            <label class="control-label">图片：</label>
+                            <div>
+                                <div class="col-sm-8 mb-20" style="padding:0px;">
+                                    <input type="text" id="picurl" name="picurl" class=" form-control hang40"/>
+                                </div>
+                                <div class="col-sm-4 mb-20" style="padding:0px;position: relative;"
+                                     onclick="pz('picurl','200','200',false)">
+                                    <div class="btn btn-primary"
+                                         style="width: 100%;line-height: 20px;height:40px;">
+                                        上传
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="div-group-10 line-top" style="padding-left: 40px; padding-right: 40px;">
                         <button class="btn btn-primary width-10 maring-a clear weight500 hang40">提 交
@@ -197,5 +215,6 @@
 </div>
   	 
 <%@ include file="/webcom/preview.jsp"%> 
+<%@include file="/webcom/cut-img.jsp" %> 
 </body>
 </html>

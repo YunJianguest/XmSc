@@ -1275,4 +1275,12 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		ouputStream.flush();
 		ouputStream.close();
 	}
+	
+	public String digitalAsset() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(SysConfig.getProperty("custid"), fromUserid));
+		return "digitalAsset";
+	}
 }

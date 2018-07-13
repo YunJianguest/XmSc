@@ -1717,9 +1717,9 @@ public class ShopAction extends GeneralAction {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			String state=Struts2Utils.getParameter("state").toString();
-			if(state!=null&&state!="") {
+			/*if(state!=null&&state!="") {
 				whereMap.put("state", Integer.parseInt(state));
-			}
+			}*/
 			sortMap.put("insDate", -1);
 			//whereMap.put("custid", custid);
 			whereMap.put("isxs", new BasicDBObject("$ne", 1));
@@ -1744,6 +1744,9 @@ public class ShopAction extends GeneralAction {
 						//wheresMap.put("orderid",long1);
 						wheresMap.put("orderid", dbObject.get("_id").toString());
 						wheresMap.put("pro.comid",Long.parseLong(lscomis.get(i)+""));
+						if(state!=null&&state!=""){
+							whereMap.put("goodstate", Integer.parseInt(state));
+						}
 						List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, wheresMap, sortsMap);
 						System.out.println(shopcom);
 						System.out.println(lists.size());
@@ -4372,9 +4375,7 @@ public class ShopAction extends GeneralAction {
 						// 会员区
 						ord.setMembers_money(Double.parseDouble(BaseDecimal.multiplication(pro.get("price").toString(), nums[i])));
 					} 
-					System.out.println("--1-->"+ord.getPublic_money());
-					System.out.println("--2-->"+ord.getContri_money());
-					System.out.println("--3-->"+ord.getMembers_money());
+
 					baseDao.insert(PubConstants.SHOP_ODERFORMPRO, ord);
 				}
 
@@ -4402,7 +4403,8 @@ public class ShopAction extends GeneralAction {
 		getLscode();
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("state", 1);
-		String oid = Struts2Utils.getParameter("oid");
+		String oid = Struts2Utils.getParameter("orid");
+		System.out.println("===>"+oid);
 		if (StringUtils.isNotEmpty(oid)) {
 			DBObject db = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
 			if (db != null && db.get("fromUserid").equals(fromUserid)) {
@@ -4412,21 +4414,29 @@ public class ShopAction extends GeneralAction {
 				whereMap.put("orderid", oid);
 				List<DBObject> list = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, null);
 				for (DBObject dbObject : list) {
+					OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
 					DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
 							Long.parseLong(dbObject.get("pid").toString()));
 					// 验证库存
 					if (pro != null) {
 						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
-						if (obj.getNum() - obj.getGmnum() - entity.getCount() > 0) {
+						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() > 0) {
 							// 开始支付
-							if (wwzService.deljf(entity.getZfmoney() + "", fromUserid, "shop_jfdh", custid, null)) {
-								// 支付成功并更新订单状态
+							if (wwzService.deljf(obj.getPrice() + "", fromUserid, "shop_jfdh", custid, null)) {
+								System.out.println("en---->"+obj.getPrice());
+								/*
+								entity.set_id(oid);
 								entity.setState(2);
-								baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+								baseDao.insert(PubConstants.WX_ORDERFORM, entity);*/
+								//支付成功并更新订单状态
 								// 更新库存状态
 								obj.setGmnum(obj.getGmnum() + entity.getCount());
 								obj.setNum(obj.getNum() - entity.getCount());
 								baseDao.insert(PubConstants.DATA_PRODUCT, obj);
+								
+								orderFormpro.set_id(Long.parseLong(dbObject.get("_id").toString()));
+								orderFormpro.setGoodstate(2);
+								baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
 								// 支付成功
 								map.put("state", 0);
 							} else {

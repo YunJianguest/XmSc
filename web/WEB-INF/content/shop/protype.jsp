@@ -109,6 +109,7 @@
 								<table class="table table-striped table-action table-primary mb30">
 									<thead>
 										<tr>
+										    <th class="table-action">ID</th> 
 											<th class="table-action">序号</th> 
 											<th class="table-action">图片</th>
 											<th class="table-action">名称</th> 
@@ -119,6 +120,7 @@
 									<tbody>
 										<c:forEach items="${funcList}" var="bean">
 											<tr>
+											    <td>${bean._id}</td> 
 												<td>${bean.sort}</td> 
 												</td>
 												<td><img src="${filehttp}/${bean.picurl}" height="25px" style="background-color: black;"/></i>

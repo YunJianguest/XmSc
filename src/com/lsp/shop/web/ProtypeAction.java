@@ -62,6 +62,7 @@ public class ProtypeAction extends GeneralAction<ProType> {
 		}else {
 			whereMap.put("parentid",0L);
 		}
+		
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_PROTYPE,whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("funcList", list); 
 		return SUCCESS;

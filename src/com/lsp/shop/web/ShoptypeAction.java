@@ -61,7 +61,7 @@ public class ShoptypeAction extends GeneralAction<ShopType> {
 		String parentid=Struts2Utils.getParameter("parentid");
 		if(StringUtils.isNotEmpty(parentid)){
 			whereMap.put("parentid", Long.parseLong(parentid));
-			Struts2Utils.getRequest().setAttribute("title",  title);
+			Struts2Utils.getRequest().setAttribute("parentid",  parentid);
 		}
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));

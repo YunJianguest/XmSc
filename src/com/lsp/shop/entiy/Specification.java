@@ -16,6 +16,7 @@ public class Specification extends ReflectionDBObject{
 	private Long  parentid;
 	private float   price;
 	private String  sort;
+	private String  picurl;
 	public String getTitle() {
 		return title;
 	}
@@ -45,6 +46,12 @@ public class Specification extends ReflectionDBObject{
 	}
 	public void setPrice(float price) {
 		this.price = price;
+	}
+	public String getPicurl() {
+		return picurl;
+	}
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
 	}
 	
 }

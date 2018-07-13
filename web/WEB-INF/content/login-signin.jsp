@@ -184,7 +184,7 @@
 				</div>
 			</div>
 			<div class="mui-content-padded oauth-area" style="margin-top: 50px;">
-				<button class="oauth-btn wx-icon"></button>
+				<button class="oauth-btn wx-icon" onclick="javascrtpt:window.location.href='${ctx}/shop/shop!index.action'"></button>
 				
 			</div>
 		</div>
