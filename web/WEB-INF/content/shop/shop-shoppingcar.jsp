@@ -593,7 +593,7 @@ function delcar(id){
 <div class="modal" id="bt">
 	<div class="modal-cont">
 		<div style="height: 34px;font-size: 18px;text-align: center;">
-			比特币
+			BitCoin
 		</div>
 		<div id="qrcode"></div>
 		<div class="bturlBox" id="bturl" style="height: 34px;line-height: 34px;font-size: 10px;">
@@ -603,7 +603,7 @@ function delcar(id){
 			提示
 		</div>
 		<div class="modal-cont-tit">
-			<p>1.您需要支付的比特币:<span id="btnum" style="display: block; font-size: 16px;"></span></p>
+			<p>1.您需要支付的比特币:<span id="btnum" style="display: block; font-size: 16px;line-height: 34px;"></span></p>
 			<p>2.请备注你的手机号码;</p>
 			<p>3.请备注你的会员号码;</p>
 			<p>4.请交易手续费最大化;</p>
@@ -616,7 +616,7 @@ function delcar(id){
 <div class="modal" id="ytf">
 	<div class="modal-cont" >
 		<div style="height: 34px;font-size: 18px;text-align: center;">
-			太坊币
+			ETH
 		</div>
 		<div id="qrcodes"></div>
 		<div class="bturlBox" id="ytfurl" style="height: 34px;line-height: 34px;font-size: 10px;">
@@ -626,7 +626,7 @@ function delcar(id){
 			提示
 		</div>
 		<div class="modal-cont-tit">
-			<p>1.您需要支付的以太坊币:<span id="ytfnum" style="display: block; font-size: 16px;"></span></p>
+			<p>1.您需要支付的以太坊币:<span id="ytfnum" style="display: block; font-size: 16px;line-height: 34px;"></span></p>
 			<p>2.请备注你的手机号码;</p>
 			<p>3.请备注你的会员号码;</p>
 			<p>4.请交易手续费最大化;</p>
