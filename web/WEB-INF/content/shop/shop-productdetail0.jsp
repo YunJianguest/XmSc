@@ -322,13 +322,14 @@
 		.detail_cmt .cmt_list li {
 		    position: relative;
 		    padding: 10px 0;
+		    margin-bottom: 10px;
 		}
 		
 		.detail_cmt .cmt_list li::after{
 			content: '';
 			width: 100%;
 			height: 1px;
-			background: #ccc;
+			border-bottom: 1px solid #ddd;
 			position: absolute;
 			bottom: 0;
 			left: 0;
@@ -470,11 +471,15 @@
 			line-height: 16px;
 			padding: 0 30px 0 10px;
 			overflow: hidden;
+			position: relative;
 		}
 		.reply span.replybtn{
 			font-size: 18px;
 			float: right;
 			margin-right: 5px;
+			position: absolute;
+			top: 5px;
+			right: 0px;
 		}
 		.replyModal {
 				width: 100%;
@@ -771,13 +776,13 @@
 		console.log($(this))
 		$(this).click(function(){
 			
-			$('.replyModal').show()
+			$('.replyModal').css('display','block')
 		})
 	}
 	
 	$('span.replycancel').click(function() {
 		console.log($(this))
-		$('.replyModal').hide()
+		$('.replyModal').css('display','none')
 	})
 	$('.tab-switch li a').click(function(){
 		$(this).parent().addClass('on').siblings('.on').removeClass('on');
