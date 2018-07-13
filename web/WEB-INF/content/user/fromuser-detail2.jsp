@@ -333,29 +333,33 @@
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=1">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 		              <i class="fa fa-credit-card  line-height30" ></i>
-		              <span style="padding: 2px 5px;position: absolute;top: 0;right: 0;">1</span>
+		              <span style="padding: 2px 5px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;">1</span>
 		            </div>待付款
 	              </a>     
 	        </li>
 	        <li>
 	        	<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=2">	
-			       <div class="txt-c ${bean.color } maring-a border-radius5 img-wh30">
+			       <div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 			         <i class="fa fa-truck  line-height30"></i>
+			         <span style="padding: 2px 5px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;">1</span>
 			       </div>待发货
 		       </a> 
 	        </li>
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=3">	
-					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 mb-10">
+					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 mb-10" style="position: relative;">
+						
 	                  <i class="fa fa-envelope  line-height30" ></i>
+	                  <span style="padding: 2px 5px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;">1</span>
 	                </div>待收货
 	            </a>
 	        </li>
 			
 			<li>
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=4">	
-					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30">
+					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 		            	<i class="fa fa-commenting-o  line-height30" ></i>
+		            	<span style="padding: 2px 5px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;">1</span>
 		          	</div>待评价
 	          	</a>
 	        </li>
