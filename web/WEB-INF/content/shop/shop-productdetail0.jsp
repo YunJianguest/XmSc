@@ -766,24 +766,23 @@
 					<textarea name="" rows="" cols=""></textarea>
 				</div>
 				<div class="replyModal-content-foot">
-					<span class="replycancel">取消</span>
+					<span class="replycancel" onclick="replyCancel()">取消</span>
 					<span class="replyOk">提交</span>
 				</div>
 			</div>
 		</div>
 <script>
 	function replyBtn(){
-		console.log($(this))
 		$(this).click(function(){
-			
-			$('.replyModal').css('display','block')
+			$('.replyModal').show()
+		})
+	}
+	function replyCancel(){
+		$(this).click(function() {
+			$('.replyModal').hide()
 		})
 	}
 	
-	$('span.replycancel').click(function() {
-		console.log($(this))
-		$('.replyModal').css('display','none')
-	})
 	$('.tab-switch li a').click(function(){
 		$(this).parent().addClass('on').siblings('.on').removeClass('on');
 		var id = $(this).attr('href');
