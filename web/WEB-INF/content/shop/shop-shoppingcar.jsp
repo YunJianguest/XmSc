@@ -596,7 +596,7 @@ function delcar(id){
 			比特币
 		</div>
 		<div id="qrcode"></div>
-		<div class="bturlBox" id="bturl" style="height: 34px;line-height: 34px;">
+		<div class="bturlBox" id="bturl" style="height: 34px;line-height: 34px;font-size: 14px;">
 			<!--<input type="text" id="bturl" style="height: 34px;line-height: 34px;"/>-->
 		</div>
 		<div class="modal-tit">
@@ -619,7 +619,7 @@ function delcar(id){
 			太坊币
 		</div>
 		<div id="qrcodes"></div>
-		<div class="bturlBox" id="ytfurl" style="height: 34px;line-height: 34px;">
+		<div class="bturlBox" id="ytfurl" style="height: 34px;line-height: 34px;font-size: 14px;">
 			<!--<input type="text" id="ytfurl"  style="height: 34px;line-height: 34px;"/>''-->
 		</div>
 		<div class="modal-tit">
