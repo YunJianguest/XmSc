@@ -376,6 +376,13 @@
             $('.recomend').html('');
             ajaxjz();
         }
+        
+        function goods_search(){
+        	var goods_name = $("#sel").val();
+        	if(goods_name!=""&&goods_name!=null){
+        		window.location.href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&ptitle="+goods_name;
+        	}
+        }
 		</script>
 		
 
@@ -387,7 +394,7 @@
 				<span></span>
 			</div> -->
 			<div class="mui-title" style="left: 10px;right:10px;">
-				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;left: 25px;"></span>
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;left: 25px;" onclick="goods_search()"></span>
 				<input type="search" class="mui-search" name="" id="sel" value="" />
 			</div>
 			<!-- <div class="mui-pull-right">
