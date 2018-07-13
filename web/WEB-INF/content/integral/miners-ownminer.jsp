@@ -141,7 +141,7 @@
 			<h1 class="mui-title">我的矿机</h1>
 		</header>
 		<div class="mui-content"  style="overflow: scroll;height:100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
-			<ul class="mui-table-view"  style="background: none;margin-top: 0px;">
+			<ul class="mui-table-view"  style="background: none;margin-top: 0px;padding-bottom: 0;">
 				
 			</ul>
 		</div>
