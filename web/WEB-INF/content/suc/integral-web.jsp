@@ -102,7 +102,7 @@
             	<div style="margin: 5px 0;"><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font></div>
             	<div style="margin: 5px 0;"><font size="2">可用${setting.name}：<i class="zi-cheng">${jf.prostore}</i></font></div>
             	<div style="margin: 5px 0;"><font size="2">冻结${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
-            	<div style="margin: 5px 0;"><font size="2">我的${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
+            	<div style="margin: 5px 0;"><font size="2">我的LL币：<i class="zi-cheng">${jf.uservalue}</i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
@@ -123,8 +123,8 @@
             <div class="line-bottom  zi-6 overflow-hidden txt-c weight500" style="border-radius:5px 5px 0px 0px ;">
                 <div class="col-3 pt-15 pb-10"><font size="2">名称</font></div>
                 <div class="col-7 pt-15 pb-10"><font size="2">时间</font></div>
-                <div class="col-2 pt-15 pb-10"><font size="2">积分</font></div>
-            </div>
+<!--                <div class="col-2 pt-15 pb-10"><font size="2">积分</font></div>
+-->            </div>
              
             <!--循环列表开始-->
             
