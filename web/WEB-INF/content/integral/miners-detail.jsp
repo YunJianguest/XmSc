@@ -109,7 +109,7 @@
 
 	<body>
 		 <header class="mui-bar mui-bar-nav" style="background: #fff;">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
 			<h1 class="mui-title">矿机详情</h1>
 		</header> 
 		
