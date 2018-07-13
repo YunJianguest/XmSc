@@ -74,7 +74,7 @@
 				width: 100%;
 				height: 34px;
 				line-height: 34px;
-				color: rgb(34,46,110);
+				color: #fff;
 				text-align: center;
 				font-size: 12px;
 				font-weight: 600;
@@ -138,7 +138,7 @@
 		    			扫描进入熊猫商城
 		    		</div>
 		    		<div class="share-txt">
-		    			全球首家数字货币购物商城
+		    			全球首家数字资产购物商城
 		    		</div>
 		    	</div>
 		    </div>
