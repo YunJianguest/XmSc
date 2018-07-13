@@ -602,6 +602,34 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String json = JSONArray.fromObject(sub_map).toString();
 	    Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
+	/**
+	 * 生成会员编号
+	 * @return
+	 */
+	public  String  getVipNo(){
+		String vipno=null;
+		Long  count=basedao.getCount(PubConstants.USER_INFO);
+		while (true) { 
+			if(count.toString().length()>=5&&Double.parseDouble(count.toString())>=Math.pow(10,Double.parseDouble(count.toString())+1)-10000){
+				vipno=UserUtil.createVipNo(count.toString().length()+1);
+			}else{
+				vipno=UserUtil.createVipNo(5);
+			}
+			//鎺掓煡棣栦綅涓�0锛�
+			if(!vipno.startsWith("0")){
+				//妫�鏌ユ槸鍚﹀敮涓�
+				HashMap<String, Object>whereMap=new HashMap<String, Object>();
+				whereMap.put("no", vipno);
+				Long num=basedao.getCount(PubConstants.USER_INFO,whereMap);
+				if(num==0){
+					break;
+				} 
+			}
+		}
+		return vipno;
+	}
+	
 	/***
 	 * 注册
 	 * @throws Exception
@@ -650,6 +678,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 						user.setUserName(userName);
 						user.setId_card_front(id_card_front);
 						user.setId_card_reverse(id_card_reverse);
+						user.setNumber(Long.parseLong(getVipNo()));
 						basedao.insert(PubConstants.USER_INFO, user);
 						String lscode=wwzservice.createcode(user.get_id().toString());
 						sub_map.put("lscode", lscode);//注册成功
@@ -672,6 +701,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 						user.setProvince(province);
 						user.setCity(city);
 						user.setCounty(county);
+						user.setNumber(Long.parseLong(getVipNo()));
 						basedao.insert(PubConstants.USER_INFO, user);
 						String lscode=wwzservice.createcode(user.get_id().toString());
 						sub_map.put("lscode", lscode);//注册成功

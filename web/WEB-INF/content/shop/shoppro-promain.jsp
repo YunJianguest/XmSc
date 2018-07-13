@@ -213,6 +213,13 @@
                        }
                    }, "json");
        }
+       
+       function goods_search(){
+       	var goods_name = $("#sel").val();
+       	if(goods_name!=""&&goods_name!=null){
+       		window.location.href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&ptitle="+goods_name;
+       	}
+       }
 		</script>
 	</head>
 
@@ -221,8 +228,17 @@
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
 		    <h1 class="mui-title">商品列表</h1>
 		</header>
+		
+		
+		
 		<!-- <div id="showall"></div> -->
 		<div class='mui-content' style="height: 100%;background-color: #fff;">
+		    <div class="mui-input-row" style="position: relative;margin-top:6px;width:85%;margin-left:7.5%;">
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;left: 5px;" onclick="goods_search()"></span>
+				<input type="search" name=""  placeholder="Search" style="padding-left: 30px;margin-bottom:6px;background:#eee;" id="sel">
+			</div>
+			
+			
 			<div class='mui-row'>
 				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;">
 					
