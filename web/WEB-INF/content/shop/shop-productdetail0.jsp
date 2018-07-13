@@ -656,7 +656,19 @@
     	<div class="detail_row detail_cmt">
     		<div class="cmt_list_wrap">
     			<ul id="cmt_list">
-    				
+    				<li>
+	    				<div class="cmt_user">
+		    				<span class="user">1111'</span>
+		    				<span class="date">2018-06-19</span>
+	    				</div>
+	    				<div class="cmt_cnt">
+	    					测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+	    				</div>
+	    				<div class="reply">
+	    				测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+	    				<span class="replybtn fa fa-commenting-o" onclick="replyBtn()"></span>
+	    				</div>
+    				</li>'
     			</ul>
     		</div>
     	</div>
