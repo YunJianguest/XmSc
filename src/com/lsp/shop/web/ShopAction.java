@@ -337,6 +337,10 @@ public class ShopAction extends GeneralAction {
 			whereMap.put("state", Integer.parseInt(state));
 		} 
 		Struts2Utils.getRequest().setAttribute("ordercount", baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap));
+		whereMap.clear(); 
+		whereMap.put("fromUserid", fromUserid);
+		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		Struts2Utils.getRequest().setAttribute("jf",db);
 		return "orderform";
 	}
 
