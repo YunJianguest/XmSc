@@ -701,10 +701,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
    	     sub_map.put("state", 1);//操作失败
    	     String tel =Struts2Utils.getParameter("tel"); 
    	     String password =Struts2Utils.getParameter("password");
-   	     
-   	     whereMap.put("tel", tel);
+   	     System.err.println("--->"+tel);
+   	     whereMap.put("account", tel);
   	     if (StringUtils.isNotEmpty(tel)&&StringUtils.isNotEmpty(password)) {
-  		     DBObject user = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+  		     DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
   		     if(user != null){
  			   if(user.get("password").toString().equals(password)) {
                    String lscode=wwzservice.createcode(user.get("_id").toString()); 
