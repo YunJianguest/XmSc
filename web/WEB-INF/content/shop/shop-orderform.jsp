@@ -127,7 +127,7 @@
 		    		      +'<div class="hang30 line-bottom-98 zi-hui-tq weight500 overflow-hidden line-height30 pl-5 pr-5 zi-353535">'
 		    		      +'<font size="1"><div class="col-9 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>';
 //		    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
-							if(v[i].state==1){
+							/* if(v[i].state==1){
 		    		          	  xszf+='<div class="col-2 txt-r zi-bbbbbb">已下单</div>'
 		    		        }else if(v[i].state==2){
 		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">待发货</div>'
@@ -135,20 +135,35 @@
 		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+')">确认收货</div>';
 		    		        }else if(v[i].state==4){
 		    		        	xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
-		    		        	/*   xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
-		    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>';  */
+		    		        	   xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
+		    		          		 +'<div class="col-2 txt-r zi-bbbbbb" onclick="shopcom('+list[j]._id+','+list[j].pro._id+')">评价</div>'; 
 		    		         }else if(v[i].state==5){
 		    		          xszf+='<div class="col-2 txt-r zi-bbbbbb">已退款</div>';
-		    		         }
+		    		         } */
 		    		      xszf+=''
 		    		      +'</font></div>';
 		    		      if(v[i].comlist!=null){
 		    		    	   var comlist=v[i].comlist; 
 		    		    	   for(var k=0;k<comlist.length;k++){
 		    		    		   xszf+='<div><span>'+comlist[k].shop.name+'</span>';
-		    		    		   
 		    		    		    if(comlist[k].list!=null){
-		    			    		       var list=comlist[k].list; 
+		    			    		       var list=comlist[k].list;
+		    			    		       
+		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
+		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" >已下单</div>'
+		    			    		       }
+		    			    		       
+		    			    		       if(list[0].goodstate == 2){
+		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" >待发货</div>'
+		    			    		       }
+		    			    		       if(list[0].goodstate == 3){
+		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')">确认收货</div>'
+		    			    		       }
+		    			    		       
+		    			    		       if(list[0].goodstate == 4){
+		    			    		    	   xszf+='<div class="col-2 txt-r zi-bbbbbb">订单完成</div>'
+		    			    		       }
+		    			    		       
 		    			    		       for(var j=0;j<list.length;j++){
 		    			    		            xszf+='<div class="clear div-group-10 position-r hang90 border-radius5">'
 		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');"></div>'
@@ -163,7 +178,6 @@
 		    			    		           xszf+='<div class="clear sl hang30 weight100" style="line-height:35px;" onclick="getkd('+v[i].kdno+')">'
 		    			    		               +'<span class="zi-hui">'+v[i].kdcom+'<i class="zi-lan pl-5">'+v[i].kdno+'</i><span class="zi-lan-tq pl-10">点击查看</span></span>'
 		    			    		               +'</div>';
-		    			    		               
 		    			    		         }else{
 		    			    		           xszf+='<div class="clear sl hang30 weight100" style="line-height:35px;" onclick="getkd('+v[i].kdno+')">'
 		    			    		               +'<span class="zi-hui"><span class="zi-lan-tq">暂无物流信息</span></span>'
@@ -183,7 +197,7 @@
 		    			    		         }else if(list[j].goodstate==2){
 		    			    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 		    			    		         }else if(list[j].goodstate==3){
-		    			    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="resure('+list[j]._id+')">确认收货</div>';
+		    			    		         ;
 		    			    		          xszf+='<div class="col-2 txt-r zi-bbbbbb" onclick="service('+list[j]._id+')">申请售后</div>';
 		    			    		          
 		    			    		         }else if(v[i].state==4){
@@ -253,10 +267,10 @@ function del(id) {
   function  getkd(id){
    window.location.href='http://m.kuaidi100.cn/result.html#com=auto&no='+id;
   }
-  function resure(oid){
-	  alert(oid);
+  function resure(oid,comid){
 	  var submitData = {
-			  oid:oid
+			  oid:oid,
+			  comid:comid
 		    };
 
 		    $.post('${ctx}/shop/shop!delivery1.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,

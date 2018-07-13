@@ -1756,6 +1756,7 @@ public class ShopAction extends GeneralAction {
 								}
 							} 
 							shopdata.put("list",lists);
+							shopdata.put("order",lists.get(0));
 							shopdata.put("shop",shopcom);
 							//shopcom.put("list", list);
 							
@@ -3673,113 +3674,249 @@ public class ShopAction extends GeneralAction {
 	@SuppressWarnings("null")
 	public void delivery1() throws Exception {
 		getLscode();
+		HashMap<String, Object>whereMap = new HashMap<>();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		sub_map.put("state", 1);
-		String oid = Struts2Utils.getParameter("oid");
-		DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(oid));
-		System.out.println(dbObject);
-		System.err.println(fromUserid);
-		if (dbObject != null && dbObject.get("fromUserid") != null
-				&& dbObject.get("fromUserid").toString().equals(fromUserid)) {
-			OrderFormpro order = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
-			order.setGoodstate(4);
-			
-			baseDao.insert(PubConstants.WX_ORDERFORM, order);
-			// 开始返利结算
-			// 1.特约区
-			Double bl = (double) order.getContri_money();
-			// 2.大众区
-			Double bl_ty = (double) order.getPublic_money();
-			// 3.会员区
-			Double bl_hy = (double) order.getMembers_money();
-			HashMap<String, Object> whereMap = new HashMap<>();
-			DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
-			if (db != null) {
-				InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
-
-				// 记录当前购物用户的提成
-				wwzService.addjf(bl + "", fromUserid, "shop_bmzt", custid, 1, 1, 1);
-				wwzService.addjf(wwzService.getGivingPro(bl_ty), fromUserid, "shop_bmzt", custid, 1, 2, 0);
-				wwzService.addjf(wwzService.getGivingPro(bl_hy), fromUserid, "shop_bmzt", custid, 1, 2, 0);
-				bl_ty = Double.parseDouble(BaseDecimal.division(
-						BaseDecimal.multiplication(wwzService.getGivingPro(bl_ty), sett.getDzqtc() + ""), "100"));
-				bl_hy = Double.parseDouble(BaseDecimal.division(
-						BaseDecimal.multiplication(wwzService.getGivingPro(bl_hy), sett.getHyqtc() + ""), "100"));
-				// 获取直推人员
-				DBObject wxuser = wwzService.getWxUser(fromUserid);
-
-				if (Integer.parseInt(wxuser.get("tjlx").toString()) == 0) {
-					// 会员推荐
-					DBObject tjuser = wwzService.getWXuserVipNo(wxuser.get("reno").toString());
-					if (tjuser != null) {
-						// 记录提成
-						wwzService.addjf(
-								BaseDecimal.division(BaseDecimal.multiplication(bl + "", sett.getDirect() + ""), "100"),
-								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl_ty + "", sett.getDirect() + ""), "100"),
-								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 2, 0);
-						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl_hy + "", sett.getDirect() + ""), "100"),
-								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 2, 0);
-
-					}
-
-					// 获取间接推荐人员
-					if(tjuser!=null&&tjuser.get("reno")!=null){
-						tjuser = wwzService.getWXuserVipNo(tjuser.get("reno").toString());
-					} 
-					if (tjuser != null) {
-						// 记录提成
-						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
-								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-					}
-
-				} else if (Integer.parseInt(wxuser.get("tjlx").toString()) == 1) {
-					// 管理员推荐
-					whereMap.clear();
-					whereMap.put("number", Long.parseLong(wxuser.get("reno").toString()));
-					DBObject tjuser = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-					if (tjuser != null) {
-						// 记录提成
-						wwzService.addjf(
-								BaseDecimal.division(BaseDecimal.multiplication(bl + "", sett.getDirect() + ""), "100"),
-								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-					}
-					// 获取间接推荐人员 （当推荐人为管理员时候间接推荐的奖励也发放到管理员账户）
-					if (tjuser != null) {
-						// 记录提成
-						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
-								tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-					}
+		//String oid = Struts2Utils.getParameter("oid");
+		//DBObject dbObject = baseDao.getMessage(PubConstants.SHOP_ODERFORMPRO, Long.parseLong(oid));
+		//System.out.println(dbObject);
+		//System.err.println(fromUserid);
+		String oid =Struts2Utils.getParameter("oid");
+		String comid =Struts2Utils.getParameter("comid");
+		if(StringUtils.isNotEmpty(comid)){
+		    whereMap.put("orderid", oid);
+		}
+		if(StringUtils.isNotEmpty(comid)){
+			whereMap.put("pro.comid", Long.parseLong(comid));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap,null);
+		DBObject dbObjects = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
+		for (DBObject dbObject : list) {
+			if (dbObjects != null && dbObjects.get("fromUserid") != null
+					&& dbObjects.get("fromUserid").toString().equals(fromUserid)) {
+				System.out.println("进入这个方法");
+				System.out.println("---->"+dbObject);
+				OrderFormpro order = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+				order.set_id(Long.parseLong(dbObject.get("_id").toString()));
+				order.setGoodstate(4);
+				
+				baseDao.insert(PubConstants.SHOP_ODERFORMPRO, order);
+				// 开始返利结算
+				Double bl = 0.0;
+				Double bl_ty = 0.0;
+				Double bl_hy = 0.0;
+				// 1.特约区
+				if(order.getContri_money() != null){
+					bl =  order.getContri_money();
 				}
-
-				// 获取部门人员;
+				System.out.println("1--->"+order.getContri_money());
+				// 2.大众区
+				if(order.getPublic_money() != null){
+				    bl_ty =  order.getPublic_money();
+				}
+				System.out.println("2--->"+order.getContri_money());
+				// 3.会员区
+				if(order.getMembers_money() != null){
+					bl_hy = order.getMembers_money();
+				}
+				System.out.println("3--->"+order.getContri_money());
 				whereMap.clear();
-				whereMap.put("number", order.getDeptCode());
-				DBObject user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-				if (user != null) {
-					// 记录提成
-					wwzService.addjf(BaseDecimal
-							.division(BaseDecimal.multiplication(bl + "", sett.getSameDepartment() + ""), "100"),
-							user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+				DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+				if (db != null) {
+					InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 
-					// 获取县级
+					// 记录当前购物用户的提成
+					wwzService.addjf(bl + "", fromUserid, "shop_bmzt", custid, 1, 1, 1);
+					wwzService.addjf(wwzService.getGivingPro(bl_ty), fromUserid, "shop_bmzt", custid, 1, 2, 0);
+					wwzService.addjf(wwzService.getGivingPro(bl_hy), fromUserid, "shop_bmzt", custid, 1, 2, 0);
+					bl_ty = Double.parseDouble(BaseDecimal.division(
+							BaseDecimal.multiplication(wwzService.getGivingPro(bl_ty), sett.getDzqtc() + ""), "100"));
+					bl_hy = Double.parseDouble(BaseDecimal.division(
+							BaseDecimal.multiplication(wwzService.getGivingPro(bl_hy), sett.getHyqtc() + ""), "100"));
+					// 获取直推人员
+					DBObject wxuser = wwzService.getWxUser(fromUserid);
+                    if(wxuser.get("tjlx") != null){
+                    	if (Integer.parseInt(wxuser.get("tjlx").toString()) == 0) {
+    						// 会员推荐
+    						DBObject tjuser = wwzService.getWXuserVipNo(wxuser.get("reno").toString());
+    						if (tjuser != null) {
+    							// 记录提成
+    							wwzService.addjf(
+    									BaseDecimal.division(BaseDecimal.multiplication(bl + "", sett.getDirect() + ""), "100"),
+    									tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+    							wwzService.addjf(BaseDecimal
+    									.division(BaseDecimal.multiplication(bl_ty + "", sett.getDirect() + ""), "100"),
+    									tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 2, 0);
+    							wwzService.addjf(BaseDecimal
+    									.division(BaseDecimal.multiplication(bl_hy + "", sett.getDirect() + ""), "100"),
+    									tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 2, 0);
 
+    						}
+
+    						// 获取间接推荐人员
+    						if(tjuser!=null&&tjuser.get("reno")!=null){
+    							tjuser = wwzService.getWXuserVipNo(tjuser.get("reno").toString());
+    						} 
+    						if (tjuser != null) {
+    							// 记录提成
+    							wwzService.addjf(BaseDecimal
+    									.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
+    									tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+    						}
+
+    					} else if (Integer.parseInt(wxuser.get("tjlx").toString()) == 1) {
+    						// 管理员推荐
+    						whereMap.clear();
+    						whereMap.put("number", Long.parseLong(wxuser.get("reno").toString()));
+    						DBObject tjuser = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+    						if (tjuser != null) {
+    							// 记录提成
+    							wwzService.addjf(
+    									BaseDecimal.division(BaseDecimal.multiplication(bl + "", sett.getDirect() + ""), "100"),
+    									tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+    						}
+    						// 获取间接推荐人员 （当推荐人为管理员时候间接推荐的奖励也发放到管理员账户）
+    						if (tjuser != null) {
+    							// 记录提成
+    							wwzService.addjf(BaseDecimal
+    									.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
+    									tjuser.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+    						}
+    					}
+                    }
+					
+
+					// 获取部门人员;
 					whereMap.clear();
-					if(user.get("parentId") != null){
-						whereMap.put("_id", user.get("parentId").toString());
-					}
-					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+					whereMap.put("number", order.getDeptCode());
+					DBObject user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 					if (user != null) {
 						// 记录提成
 						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl + "", sett.getSameCounty() + ""), "100"),
+								.division(BaseDecimal.multiplication(bl + "", sett.getSameDepartment() + ""), "100"),
+								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+						// 获取县级
+
+						whereMap.clear();
+						if(user.get("parentId") != null){
+							whereMap.put("_id", user.get("parentId").toString());
+						}
+						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+						if (user != null) {
+							// 记录提成
+							wwzService.addjf(BaseDecimal
+									.division(BaseDecimal.multiplication(bl + "", sett.getSameCounty() + ""), "100"),
+									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+							// 县级存在，获取市级
+
+							whereMap.clear();
+							if(user.get("parentId") != null){
+								whereMap.put("_id", user.get("parentId").toString());
+							}
+							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+							if (user != null) {
+								// 记录提成
+								wwzService.addjf(BaseDecimal
+										.division(BaseDecimal.multiplication(bl + "", sett.getSameCity() + ""), "100"),
+										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+								// 县级存在，市级存在，获取省级
+								whereMap.clear();
+								if(user.get("parentId") != null){
+									whereMap.put("_id", user.get("parentId").toString());
+								}
+								user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+								if (user != null) {
+									// 记录提成
+									wwzService.addjf(BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+											user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+								}
+							} else {
+
+								// 县级存在，市级不存在， 获取省级
+
+								whereMap.clear();
+								whereMap.put("agentLevel", 1);
+								if(user.get("province") != null){
+									whereMap.put("province", user.get("province").toString());
+								}
+								user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+								if (user != null) {
+									// 记录提成
+									wwzService.addjf(BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+											user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+								}
+
+							}
+
+						} else {
+							// 县级不存在， 获取市级
+
+							whereMap.clear();
+							whereMap.put("agentLevel", 2);
+							if(user.get("county")!=null){
+								whereMap.put("county", user.get("county").toString());
+							}
+							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+							if (user != null) {
+								// 记录提成
+								wwzService.addjf(BaseDecimal
+										.division(BaseDecimal.multiplication(bl + "", sett.getSameCity() + ""), "100"),
+										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+								// 县级不存在， 市级存在，获取省级
+								whereMap.clear();
+								if(user.get("parentId") != null){
+									whereMap.put("_id", user.get("parentId").toString());
+								}
+								user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+								if (user != null) {
+									// 记录提成
+									wwzService.addjf(BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+											user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+								}
+							} else {
+								// 县级不存在，市级不存在， 获取省级
+
+								whereMap.clear();
+								whereMap.put("agentLevel", 1);
+								if(user.get("province") != null){
+									whereMap.put("province", user.get("province").toString());
+								}
+								user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+								if (user != null) {
+									// 记录提成
+									wwzService.addjf(BaseDecimal.division(
+											BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+											user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
+
+								}
+
+							}
+
+						}
+					}
+
+					// 获取异地县域
+					whereMap.clear();
+					if(user != null &&user.get("county")!=null){
+						whereMap.put("county", user.get("county").toString());
+					}
+					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+					if (user != null) {
+
+						// 县域存在 记录提成
+						wwzService.addjf(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
 								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 						// 县级存在，获取市级
@@ -3792,7 +3929,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal
-									.division(BaseDecimal.multiplication(bl + "", sett.getSameCity() + ""), "100"),
+									.division(BaseDecimal.multiplication(bl + "", sett.getDiffCity() + ""), "100"),
 									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 							// 县级存在，市级存在，获取省级
@@ -3803,8 +3940,9 @@ public class ShopAction extends GeneralAction {
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(
-										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+								wwzService.addjf(
+										BaseDecimal.division(
+												BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
 										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 							}
 						} else {
@@ -3813,14 +3951,15 @@ public class ShopAction extends GeneralAction {
 
 							whereMap.clear();
 							whereMap.put("agentLevel", 1);
-							if(user.get("province") != null){
+							if(user.get("province")!=null){
 								whereMap.put("province", user.get("province").toString());
 							}
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(
-										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+								wwzService.addjf(
+										BaseDecimal.division(
+												BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
 										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 							}
@@ -3828,8 +3967,7 @@ public class ShopAction extends GeneralAction {
 						}
 
 					} else {
-						// 县级不存在， 获取市级
-
+						// 县域不存在获取市级
 						whereMap.clear();
 						whereMap.put("agentLevel", 2);
 						if(user.get("county")!=null){
@@ -3839,7 +3977,7 @@ public class ShopAction extends GeneralAction {
 						if (user != null) {
 							// 记录提成
 							wwzService.addjf(BaseDecimal
-									.division(BaseDecimal.multiplication(bl + "", sett.getSameCity() + ""), "100"),
+									.division(BaseDecimal.multiplication(bl + "", sett.getDiffCity() + ""), "100"),
 									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 							// 县级不存在， 市级存在，获取省级
@@ -3847,11 +3985,13 @@ public class ShopAction extends GeneralAction {
 							if(user.get("parentId") != null){
 								whereMap.put("_id", user.get("parentId").toString());
 							}
+							
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(
-										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+								wwzService.addjf(
+										BaseDecimal.division(
+												BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
 										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 							}
 						} else {
@@ -3865,8 +4005,9 @@ public class ShopAction extends GeneralAction {
 							user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
 							if (user != null) {
 								// 记录提成
-								wwzService.addjf(BaseDecimal.division(
-										BaseDecimal.multiplication(bl + "", sett.getSameProvince() + ""), "100"),
+								wwzService.addjf(
+										BaseDecimal.division(
+												BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
 										user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
 
 							}
@@ -3874,121 +4015,12 @@ public class ShopAction extends GeneralAction {
 						}
 
 					}
-				}
-
-				// 获取异地县域
-				whereMap.clear();
-				if(user != null &&user.get("county")!=null){
-					whereMap.put("county", user.get("county").toString());
-				}
-				user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-				if (user != null) {
-
-					// 县域存在 记录提成
-					wwzService.addjf(BaseDecimal
-							.division(BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
-							user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-					// 县级存在，获取市级
-
-					whereMap.clear();
-					if(user.get("parentId") != null){
-						whereMap.put("_id", user.get("parentId").toString());
-					}
-					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-					if (user != null) {
-						// 记录提成
-						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl + "", sett.getDiffCity() + ""), "100"),
-								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-						// 县级存在，市级存在，获取省级
-						whereMap.clear();
-						if(user.get("parentId") != null){
-							whereMap.put("_id", user.get("parentId").toString());
-						}
-						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-						if (user != null) {
-							// 记录提成
-							wwzService.addjf(
-									BaseDecimal.division(
-											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
-									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-						}
-					} else {
-
-						// 县级存在，市级不存在， 获取省级
-
-						whereMap.clear();
-						whereMap.put("agentLevel", 1);
-						if(user.get("province")!=null){
-							whereMap.put("province", user.get("province").toString());
-						}
-						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-						if (user != null) {
-							// 记录提成
-							wwzService.addjf(
-									BaseDecimal.division(
-											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
-									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-						}
-
-					}
-
-				} else {
-					// 县域不存在获取市级
-					whereMap.clear();
-					whereMap.put("agentLevel", 2);
-					if(user.get("county")!=null){
-						whereMap.put("county", user.get("county").toString());
-					}
-					user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-					if (user != null) {
-						// 记录提成
-						wwzService.addjf(BaseDecimal
-								.division(BaseDecimal.multiplication(bl + "", sett.getDiffCity() + ""), "100"),
-								user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-						// 县级不存在， 市级存在，获取省级
-						whereMap.clear();
-						if(user.get("parentId") != null){
-							whereMap.put("_id", user.get("parentId").toString());
-						}
-						
-						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-						if (user != null) {
-							// 记录提成
-							wwzService.addjf(
-									BaseDecimal.division(
-											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
-									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-						}
-					} else {
-						// 县级不存在，市级不存在， 获取省级
-
-						whereMap.clear();
-						whereMap.put("agentLevel", 1);
-						if(user.get("province") != null){
-							whereMap.put("province", user.get("province").toString());
-						}
-						user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-						if (user != null) {
-							// 记录提成
-							wwzService.addjf(
-									BaseDecimal.division(
-											BaseDecimal.multiplication(bl + "", sett.getDiffProvince() + ""), "100"),
-									user.get("_id").toString(), "shop_bmzt", custid, 1, 1, 0);
-
-						}
-
-					}
 
 				}
-
+				sub_map.put("state", 0);//操作成功
 			}
-			sub_map.put("state", 0);//操作成功
 		}
+		
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
@@ -4335,6 +4367,9 @@ public class ShopAction extends GeneralAction {
 						// 会员区
 						ord.setMembers_money(Double.parseDouble(BaseDecimal.multiplication(pro.get("price").toString(), nums[i])));
 					} 
+					System.out.println("--1-->"+ord.getPublic_money());
+					System.out.println("--2-->"+ord.getContri_money());
+					System.out.println("--3-->"+ord.getMembers_money());
 					baseDao.insert(PubConstants.SHOP_ODERFORMPRO, ord);
 				}
 

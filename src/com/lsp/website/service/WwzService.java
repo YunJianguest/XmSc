@@ -2958,7 +2958,7 @@ public class WwzService {
 
 			}
 		}
-		return null;
+		return "0";
 	}
 	
 	/**
