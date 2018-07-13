@@ -475,9 +475,7 @@
 				right: 0;
 				z-index: 1000;
 				background: rgba(0, 0, 0, .1);
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				display: none;
 			}
 			
 			.replyModal-content {
@@ -487,6 +485,9 @@
 				border-radius: 10px;
 				box-sizing: border-box;
 				margin-top: -200px;
+				position: absolute;
+				top: 50%;
+				left: 10%;
 			}
 			
 			.replyModal-content-tit {
@@ -521,6 +522,7 @@
 				box-sizing: border-box;
 				resize: none;
 				border-radius: 5px;
+				border: 1px solid #ccc;
 			}
 			
 			.replyModal-content-foot {
@@ -741,6 +743,17 @@
 			</div>
 		</div>
 <script>
+	function replyBtn(){
+		$(this).click(function(){
+			console.log($(this))
+			$('.replyModal').show()
+		})
+	}
+	
+	$('.replycancel').click(function() {
+		console.log($(this))
+		$('.replyModal').hide()
+	})
 	$('.tab-switch li a').click(function(){
 		$(this).parent().addClass('on').siblings('.on').removeClass('on');
 		var id = $(this).attr('href');
@@ -782,14 +795,7 @@
 </script> 
 <%@ include file="/webcom/shop-spec.jsp" %>  
 <script>
-	function replyBtn(){
-		$(this).click(function(){
-			$('.replyModal').show()
-		})
-	}
-	$('.replycancel').click(function() {
-		$('.replyModal').hide()
-	})
+	
 getcom();
   wx.config({
     debug: false,
