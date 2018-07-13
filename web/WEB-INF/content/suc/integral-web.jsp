@@ -11,7 +11,7 @@
     <meta http-equiv="expires" content="0"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>我的盼盼币</title>
+    <title>数字资产</title>
     <script src="${ctx}/app/js/jquery-1.8.3.js"></script>
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/> 
     <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
