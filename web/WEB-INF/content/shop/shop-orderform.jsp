@@ -277,7 +277,19 @@ function del(id) {
 		    	
 		        	if(json.state==0){ 	
 		        	 alert("收货成功！");
-		        	 friedtx_show();
+		        	 $.post('${ctx}/shop/shop!getJf.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+		     		    	function (json) {
+		     		    	
+		     		        	if(json.state==0){ 	 
+		     		        	   if(json.data.prostore>=3000){
+		     		        		   $("#ppbjf").html("您有"+json.data.prostore+"盼盼币，可兑换一个矿机！");
+		     		        		  friedtx_show();
+		     		        	   }
+		     		        	  
+		     		        	}else{
+		     		        		alert('操作失败');
+		     		        	}
+		     		        },"json");
 		        	 //window.location.reload();
 		        	}else{
 		        		alert('操作失败');
@@ -302,10 +314,7 @@ function del(id) {
 </main>
 
 <!--底部三个按钮-->
- <%@ include file="/webcom/shop-foot1.jsp"%> 
- 
- <c:if test="${jf!=null }">
- <c:if test="${jf.prostore>=3000}">
+ <%@ include file="/webcom/shop-foot1.jsp"%>  
  <div class="fullscreen cmp640 bg-hei-5 lock" id="friedtx">
     <div class="overflow-hidden width-10">
         <a href="javascript:friedtx_hide()">
@@ -333,7 +342,7 @@ function del(id) {
                 <div class=" width-10 border-radius5 zi-hui-tq overflow-hidden">
                     <font size="2">
                         <div class="weight500">您好:</div>
-                        <div class="weight500 line-height25">&nbsp&nbsp&nbsp尊敬的：<i class="zi-green">${user.nickname}</i><i class="zi-green">您有${jf.prostore}可兑换</i></div>
+                        <div class="weight500 line-height25">&nbsp&nbsp&nbsp尊敬的：<i class="zi-green">${user.nickname}</i><i class="zi-green" id="ppbjf">您有${jf.prostore}可兑换</i></div>
                     </font>
                 </div>
 
@@ -353,9 +362,7 @@ function del(id) {
             </div>
         </div>
     </div>
-</div>
-</c:if>
- </c:if>
+</div> 
 <script>
 function  friedtx_hide(){
  $("#friedtx").hide();

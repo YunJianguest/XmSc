@@ -171,7 +171,14 @@
                 		function(json) { 
                 		     //loading.hide();
                 		 	if (json.state == 0) {
-                				alert("购买成功！");
+                				alert("下单成功！"); 
+                				var orderno=json.orderno; 
+                				$.post('${ctx}/shop/shop!OrderPayJf.action?orid='+orderno, submitData,
+                                		function(json) { 
+                                		 alert("支付成功！");
+                                		},
+                                		"json");
+                				
                 				window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
                 			}else if(json.state == 1) {
                 				alert("该账号没有开通支付"); 

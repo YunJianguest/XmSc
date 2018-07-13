@@ -1803,9 +1803,9 @@ public class WwzService {
 				//增加操作
 				if (lx == 0) {
 					//PP币种计算
-					if (isfreeze == 1) {// 冻结增加
+					if (isfreeze == 0) {// 冻结增加
 						ir.setProstore(ir.getProstore() + value); 
-					} else if (isfreeze == 0) {// 可使用增加
+					} else if (isfreeze == 1) {// 可使用增加
 						ir.setUservalue(ir.getUservalue() + value); 
 					}
 					ir.setValue(ir.getValue() + value);
@@ -1813,10 +1813,10 @@ public class WwzService {
 					return true;
 				} else if (lx == 1) {
 					//乐乐币种计算
-					if (isfreeze == 1) {// 冻结增加
+					if (isfreeze == 0) {// 冻结增加
 						ir.setLldjvalue(ir.getLldjvalue() + value);
 						
-					} else if (isfreeze == 0) {// 可用增加
+					} else if (isfreeze == 1) {// 可用增加
 						ir.setLlkyvalue(ir.getLlkyvalue() + value); 
 					}
 					ir.setLlzvalue(ir.getLlzvalue() + value);
@@ -1828,12 +1828,12 @@ public class WwzService {
 				//减少操作
 				if(lx==0) {
 					//PP盼盼币种计算
-					if(isfreeze == 1) {
+					if(isfreeze == 0) {
 						if(ir.getProstore()>value) {
 							// 冻结减少
 							ir.setProstore(ir.getProstore()-value);
 						}
-					}else if(isfreeze == 0) {
+					}else if(isfreeze == 1) {
 						if(ir.getUservalue()>value) {
 							// 可以使用减少
 							ir.setUservalue(ir.getUservalue()-value);
@@ -1846,12 +1846,12 @@ public class WwzService {
 					}
 				}else if(lx==1) {
 					//乐乐币种计算
-					if(isfreeze == 1) {
+					if(isfreeze == 0) {
 						if(ir.getLldjvalue()>value) {
 							// 冻结减少
 							ir.setLldjvalue(ir.getLldjvalue()-value);
 						}
-					}else if(isfreeze == 0) {
+					}else if(isfreeze == 1) {
 						if(ir.getLlkyvalue()>value) {
 							// 可以使用减少
 							ir.setLlkyvalue(ir.getUservalue()-value);

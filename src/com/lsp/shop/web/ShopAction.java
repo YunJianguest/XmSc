@@ -340,6 +340,7 @@ public class ShopAction extends GeneralAction {
 		whereMap.clear(); 
 		whereMap.put("fromUserid", fromUserid);
 		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		System.out.println(db);
 		Struts2Utils.getRequest().setAttribute("jf",db);
 		return "orderform";
 	}
@@ -4548,6 +4549,21 @@ public class ShopAction extends GeneralAction {
 			(URLEncoder.encode("error", "utf-8"));
 		}
 
+	}
+	public void   getJf() {
+		HashMap<String, Object>map=new HashMap<>();
+		map.put("state", 1);
+		getLscode();
+		HashMap<String, Object>whereMap=new HashMap<>();
+		whereMap.put("fromUserid",fromUserid);
+		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		if(db!=null) {
+			map.put("data", db);
+			map.put("state", 0);
+		}
+		String json = JSONArray.fromObject(map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
 	}
 
 }
