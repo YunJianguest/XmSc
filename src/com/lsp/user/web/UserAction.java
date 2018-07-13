@@ -249,6 +249,8 @@ public class UserAction extends GeneralAction<UserInfo>
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
 		HashMap<String,Object>whereMap = new HashMap<>();
 		try {
+			
+			
 			String  id=Struts2Utils.getParameter("id");
 			String  account=Struts2Utils.getParameter("account");
 			String  password=Struts2Utils.getParameter("password"); 
@@ -261,9 +263,60 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  area=Struts2Utils.getParameter("area");
 			String  province=Struts2Utils.getParameter("province");
 			String  city=Struts2Utils.getParameter("city");
+			String  county=Struts2Utils.getParameter("county"); 
 			String  agentLevel=Struts2Utils.getParameter("agentLevel");
 			String  number=Struts2Utils.getParameter("number");
 			String  renumber=Struts2Utils.getParameter("renumber");
+			
+
+			//验证省市县是否已经售卖
+			
+			if(StringUtils.isNotEmpty(agentLevel)) {
+				HashMap<String, Object>wheresMap=new HashMap<>();
+				if(Integer.parseInt(agentLevel)==1) {
+					wheresMap.put("province", province.trim());
+					wheresMap.put("agentLevel",1);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					if(db!=null) {
+						//省代存在
+						sub_Map.put("state",2);
+						String json = JSONArray.fromObject(sub_Map).toString();
+						 
+						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+					    return;
+					}
+				}else if(Integer.parseInt(agentLevel)==2) {
+					wheresMap.put("city", city.trim());
+					wheresMap.put("agentLevel",2);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					if(db!=null) {
+						//省代存在
+						sub_Map.put("state",2);
+						String json = JSONArray.fromObject(sub_Map).toString();
+						 
+						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+					    return;
+					}
+					
+				}else if(Integer.parseInt(agentLevel)==3) {
+					wheresMap.put("county", county.trim());
+					wheresMap.put("agentLevel",3);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					if(db!=null) {
+						//省代存在
+						sub_Map.put("state",2);
+						String json = JSONArray.fromObject(sub_Map).toString(); 
+						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+					    return;
+					}
+					
+				}
+				
+				
+				
+			}
+			
+			
 			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
 				id=UUID.randomUUID().toString();
@@ -285,6 +338,15 @@ public class UserAction extends GeneralAction<UserInfo>
 			user.setArea(area);
 			user.setProvince(province);
 			user.setCity(city);
+			if(StringUtils.isNotEmpty(province)) {
+				user.setAgentprovince(province);
+			}
+			if(StringUtils.isNotEmpty(city)) {
+				user.setAgentcity(city);
+			}
+			if(StringUtils.isNotEmpty(county)) {
+				user.setAgentcounty(county);
+			}
 			if(StringUtils.isNotEmpty(roleid)){
 				user.setRoleid(Long.parseLong(roleid));	
 			}
