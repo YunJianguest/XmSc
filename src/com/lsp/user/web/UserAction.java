@@ -341,6 +341,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			user.setArea(area);
 			user.setProvince(province);
 			user.setCity(city);
+			user.setAudit_status(1);
 			if(StringUtils.isNotEmpty(province)) {
 				user.setAgentprovince(province);
 			}
