@@ -180,6 +180,10 @@
                         if (json.state == 0) {
                             alert("添加成功！");
                             window.location.reload();
+                        }else if(json.state==2){
+                        	 alert("该代理已经被出售！");
+                        }else{
+                        	 alert("添加失败，请稍后再试！");
                         }
                     }, "json")
             $('#inszc').modal({

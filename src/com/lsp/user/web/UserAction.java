@@ -273,10 +273,11 @@ public class UserAction extends GeneralAction<UserInfo>
 			
 			if(StringUtils.isNotEmpty(agentLevel)) {
 				HashMap<String, Object>wheresMap=new HashMap<>();
-				if(Integer.parseInt(agentLevel)==1) {
+				if(Integer.parseInt(agentLevel)==1) { 
 					wheresMap.put("province", province.trim());
 					wheresMap.put("agentLevel",1);
-					DBObject db=basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
+					System.out.println(db);
 					if(db!=null) {
 						//省代存在
 						sub_Map.put("state",2);
@@ -285,10 +286,11 @@ public class UserAction extends GeneralAction<UserInfo>
 						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 					    return;
 					}
-				}else if(Integer.parseInt(agentLevel)==2) {
+				}else if(Integer.parseInt(agentLevel)==2) { 
 					wheresMap.put("city", city.trim());
 					wheresMap.put("agentLevel",2);
-					DBObject db=basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
+					System.out.println(db);
 					if(db!=null) {
 						//省代存在
 						sub_Map.put("state",2);
@@ -298,10 +300,11 @@ public class UserAction extends GeneralAction<UserInfo>
 					    return;
 					}
 					
-				}else if(Integer.parseInt(agentLevel)==3) {
+				}else if(Integer.parseInt(agentLevel)==3) { 
 					wheresMap.put("county", county.trim());
 					wheresMap.put("agentLevel",3);
-					DBObject db=basedao.getMessage(PubConstants.USER_INFO, whereMap);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
+					System.out.println(db);
 					if(db!=null) {
 						//省代存在
 						sub_Map.put("state",2);
