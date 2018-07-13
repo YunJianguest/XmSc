@@ -193,17 +193,17 @@
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="province" value="省份" onfocus="if(value=='省份'){value=''}"
-                               onblur="if (value ==''){value='省份'}" readonly="readonly"/>
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;"/>
                     </div>
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="city" value="城市" onfocus="if(value=='城市'){value=''}"
-                               onblur="if (value ==''){value='城市'}" readonly="readonly"/>
+                               onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;"/>
                     </div>
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
-                               onblur="if (value ==''){value='区/县'}" readonly="readonly"/>
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;"/>
                     </div>
                 </div>
                 <div class="col-2 hang50 line-height50 txt-c"><i
