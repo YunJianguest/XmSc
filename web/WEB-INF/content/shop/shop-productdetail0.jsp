@@ -373,6 +373,16 @@
         	padding: 0 10px;
         	position: relative;
         }
+        .tab-switch::before{
+        	position: absolute;
+        	top: 0;
+        	left: 0;
+        	right: 0;
+        	border-top: 1px solid #ddd;
+        	content: '';
+        	width: 100%;
+        	height: 1px;
+        }
         .tab-switch::after{
         	position: absolute;
         	bottom: 0;
