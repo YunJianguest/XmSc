@@ -243,7 +243,7 @@
             </div>
             <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
             	<span style="color: #FF0000;float:left">乐乐币:<i style="color: #000;">0.00</i></span>
-                <span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">0.00</i></span>
+                <span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">${jf}</i></span>
             </div>
         </div>
     </div>

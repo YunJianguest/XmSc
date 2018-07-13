@@ -29,6 +29,7 @@ import com.lsp.pub.util.BaseDate;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.util.WeiXinUtil;
 import com.lsp.pub.web.GeneralAction;
@@ -394,10 +395,16 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		HashMap<String, Object>sub_map=new HashMap<>();
 		sub_map.put("state",1);
 		String id=Struts2Utils.getParameter("id");
-		String value =Struts2Utils.getParameter("value");
-		if(wwzService.addjf(value, id, "xtcz", null, 1, 1, 0)) {
-			sub_map.put("state",0);
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("no",id);
+		DBObject db=baseDao.getMessage(PubConstants.USER_INFO, whereMap); 
+		if(db!=null) {
+			String value =Struts2Utils.getParameter("value");
+			if(wwzService.addjf(value, db.get("_id").toString(), "xtcz", SysConfig.getProperty("custid"), 1, 1, 0)) {
+				sub_map.put("state",0);
+			}
 		}
+		
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
