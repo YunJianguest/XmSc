@@ -21,7 +21,7 @@
         .img-100 img {
             width: 100%;
         }
-        main span{
+        main span,main p span {
         	font-size: 14px;
         } 
     </style>
