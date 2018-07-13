@@ -21,6 +21,7 @@
 		<!-- 添加到IOS主屏后的标题 -->
 		<meta name="apple-mobile-web-app-title" content="熊猫商城">
 		<title>熊猫商城</title>
+		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
 		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
 		<link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
@@ -445,8 +446,9 @@
 
 	<body>
 		<div class="page">
-			 <div class="search search-h">
-
+		
+		
+			 <div class="search search-h" style="position:static">
 				<div class="search-box">
 					<div class="search-back on-blur"></div>
 					<div class="search-box-tb ">
@@ -457,7 +459,14 @@
 					分类
 				</div>
 			</div> 
+			
+			<div class="mui-input-row" style="position: relative;margin-top:6px;width:85%;margin-left:7.5%;">
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;left: 5px;"></span>
+				<input type="search" name=""  placeholder="Search" style="padding-left: 30px;margin-bottom:6px;background:#fff;">
+			</div>
+			
 			<div class="category">
+			
 							<!-- 左侧总分类 -->
 			    <div class="category-tab">
 					<div class="category-tab-box">
@@ -470,7 +479,7 @@
 					<div class="category-content-wrapper">
 						<div class="category-content-branch">
 							<div class="category-content-branchList">
-								<div class="category-branch-content">
+								<div class="category-branch-content" style='padding-top:20px;'>
 								</div>
 							</div>
 						</div>

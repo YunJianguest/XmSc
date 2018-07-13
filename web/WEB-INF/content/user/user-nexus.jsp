@@ -42,7 +42,7 @@
 					<c:forEach items="${obj}" var="bean">
 					<li class="mui-table-view-cell" style="padding-right: 15px;">
 						<a class="mui-navigate-right link">
-							${bean.user.account }
+							<span style='font-size:22px;margin-right:5px;'>+</span>${bean.user.account }${bean.user.tel }
 						</a>
 						
 						<!-- 第二级 -->
@@ -50,15 +50,15 @@
 							<c:forEach items="${bean.son}" var="son">
 							<li class="mui-table-view-cell">
 								<a class="mui-navigate-right link">
-									${son.user.account }
+									<span style='font-size:22px;margin-right:5px;margin-left:10px;'>+</span>${son.user.account }${bean.user.tel }
 								</a>
 								
 								<!-- 第三级 -->
 								<ul class="mui-table-view mui-collapse">
 									<c:forEach items="${son.son}" var="son1">
 									<li class="mui-table-view-cell">
-										<a class="mui-navigate-right link">
-											${son1.account }
+										<a class="mui-navigate-right link" style='padding-left:40px;'>
+											${son1.account }${bean.user.tel }
 										</a>
 									</li>
 									</c:forEach>
