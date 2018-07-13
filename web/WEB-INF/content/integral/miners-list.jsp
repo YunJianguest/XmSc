@@ -118,7 +118,7 @@
 							+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].logo+'">'
 						    +'<div class="mui-media-body miner-txt">'
 							+'<div class="miner-txt-cont mui-col-xs-9">'+v[i].ptitle+''
-							+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].price+'</span></p>'
+							+'<p class="mui-ellipsis"><span>数量:</span><span>'+v[i].price+'</span></p>'
 						    +'<p class="mui-ellipsis"><span>运行周期:</span><span>'+v[i].time+'天</span></p>'
 							+'<p class="mui-ellipsis"><span>提成百分比:</span><span>'+v[i].percent+'</span></p>'	
 							+'</div>'	
