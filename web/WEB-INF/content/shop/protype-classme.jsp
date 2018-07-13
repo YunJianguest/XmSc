@@ -479,7 +479,7 @@
 					<div class="category-content-wrapper">
 						<div class="category-content-branch">
 							<div class="category-content-branchList">
-								<div class="category-branch-content">
+								<div class="category-branch-content" style='padding-top:20px;'>
 								</div>
 							</div>
 						</div>
