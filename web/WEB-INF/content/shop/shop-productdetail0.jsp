@@ -531,7 +531,7 @@
 				height: 40px;
 			}
 			
-			.replyModal-content-foot button {
+			.replyModal-content-foot span {
 				flex: 1;
 				width: 1%;
 				text-align: center;
@@ -750,8 +750,8 @@
 					<textarea name="" rows="" cols=""></textarea>
 				</div>
 				<div class="replyModal-content-foot">
-					<button class="replycancel">取消</button>
-					<button class="replyOk">提交</button>
+					<span class="replycancel">取消</span>
+					<span class="replyOk">提交</span>
 				</div>
 			</div>
 		</div>
@@ -764,7 +764,7 @@
 		})
 	}
 	
-	$('button.replycancel').click(function() {
+	$('span.replycancel').click(function() {
 		console.log($(this))
 		$('.replyModal').hide()
 	})
