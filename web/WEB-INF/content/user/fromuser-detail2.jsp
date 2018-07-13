@@ -232,7 +232,7 @@
                     </font>
                     <!-- 会员编号 -->
                    <div class="hang25 txt-c line-height25 zi-hei-tq weight500">
-                   		<span class="vipNumName">会员编号：</span><span>88888888</span>
+                   		<span class="vipNumName">会员编号：</span><span>${user.no}</span>
                    </div>
                     
                     <%-- <div class="hang25 line-height20 pt-5" style="color:#888888">
@@ -242,8 +242,8 @@
                 </font>
             </div>
             <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
-            	<span style="color: #FF0000;float:left">乐乐币:<i style="color: #000;">666666.000068</i></span>
-                <span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">800000.000089</i></span>
+            	<span style="color: #FF0000;float:left">乐乐币:<i style="color: #000;">0.00</i></span>
+                <span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">0.00</i></span>
             </div>
         </div>
     </div>
