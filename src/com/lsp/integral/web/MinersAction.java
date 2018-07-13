@@ -656,5 +656,29 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
 	    };
+	    /**
+	     * 提现
+	     * @return
+	     */
+	    public String  withweb() {
+	    	getLscode(); 
+			return "withweb"; 
+	    }
+	    /**
+	     * 兑换
+	     * @return
+	     */
+	    public String  exchangeweb() {
+	    	getLscode();
+			return "exchangeweb"; 
+	    }
+	    /**
+	     * 转账
+	     * @return
+	     */
+	    public String  transferweb() {
+	    	getLscode();
+			return "transferweb"; 
+	    }
 	    
 }
