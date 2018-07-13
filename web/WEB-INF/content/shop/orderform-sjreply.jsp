@@ -81,7 +81,7 @@
                                         <c:if test="${bean.state==0}">否</c:if>
                                         <c:if test="${bean.state!=0}"><span style="color:#F00">是</span></c:if>
                                         </td>
-                                        <td>${bean.goodstate}
+                                        <td>
                                         <c:if test="${bean.goodstate==1}">已下单</c:if>
                                         <c:if test="${bean.goodstate==2}">已付款</c:if>
                                         <c:if test="${bean.goodstate==3}">已发货</c:if>
