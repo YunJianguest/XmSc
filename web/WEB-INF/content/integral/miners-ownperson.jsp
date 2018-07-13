@@ -99,6 +99,7 @@
         	display: flex;
         	justify-content: center;
         	align-items: center;
+        	display: none;
        }
         .modal-cont{
         	width: 80%;
@@ -148,7 +149,7 @@
 <body class="cmp640">
 <main>
    <div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
-   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#fff;'></i></div>
+   <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#000;'></i></div>
         <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 50%;margin-left:-35px;margin-top:-70px;">
           <c:if test="${empty entity.headimgurl}">
             <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius50"/>

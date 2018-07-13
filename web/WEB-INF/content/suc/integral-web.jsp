@@ -11,7 +11,7 @@
     <meta http-equiv="expires" content="0"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>我的盼盼币</title>
+    <title>数字资产</title>
     <script src="${ctx}/app/js/jquery-1.8.3.js"></script>
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/> 
     <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
@@ -93,16 +93,16 @@
  
 <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
 		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
-			商品详情
+			数字资产
 	</header>
 <main class="lock cmp640" id="section1"> 
-    <div class="top_foot bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
+    <div class=" bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
         <a href="#">
             <div class="zi-hei weight500 pl-15">
-            	<div><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font></div>
-            	<div><font size="2">可用${setting.name}：<i class="zi-cheng">${jf.prostore}</i></font></div>
-            	<div><font size="2">冻结${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
-            	<div><font size="2">我的${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
+            	<div style="margin: 5px 0;"><font size="2">我的${setting.name}总计：<i class="zi-cheng">${jf.value}</i></font></div>
+            	<div style="margin: 5px 0;"><font size="2">可用${setting.name}：<i class="zi-cheng">${jf.prostore}</i></font></div>
+            	<div style="margin: 5px 0;"><font size="2">冻结${setting.name}：<i class="zi-cheng">${jf.uservalue}</i></font></div>
+            	<div style="margin: 5px 0;"><font size="2">我的LL币：<i class="zi-cheng">${jf.uservalue}</i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
@@ -123,8 +123,8 @@
             <div class="line-bottom  zi-6 overflow-hidden txt-c weight500" style="border-radius:5px 5px 0px 0px ;">
                 <div class="col-3 pt-15 pb-10"><font size="2">名称</font></div>
                 <div class="col-7 pt-15 pb-10"><font size="2">时间</font></div>
-                <div class="col-2 pt-15 pb-10"><font size="2">积分</font></div>
-            </div>
+<!--                <div class="col-2 pt-15 pb-10"><font size="2">积分</font></div>
+-->            </div>
              
             <!--循环列表开始-->
             

@@ -108,7 +108,7 @@
 									+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].kj.logo+'">'
 								    +'<div class="mui-media-body miner-txt">'
 								    +'<div class="miner-txt-cont mui-col-xs-9">'
-									+'<p class="mui-ellipsis"><span>积分数量:</span><span>'+v[i].kj.price+'</span></p>'
+									+'<p class="mui-ellipsis"><span>数量:</span><span>'+v[i].kj.price+'</span></p>'
 								    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
 									+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
 									+'</div>'	
@@ -141,7 +141,7 @@
 			<h1 class="mui-title">我的矿机</h1>
 		</header>
 		<div class="mui-content"  style="overflow: scroll;height:100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
-			<ul class="mui-table-view"  style="background: none;margin-top: 0px;">
+			<ul class="mui-table-view"  style="background: none;margin-top: 0px;padding-bottom: 0;">
 				
 			</ul>
 		</div>
