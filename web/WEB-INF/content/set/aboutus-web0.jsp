@@ -21,6 +21,9 @@
         .img-100 img {
             width: 100%;
         }
+        main span{
+        	font-size: 14px;
+        } 
     </style>
 </head>
 <body class="bg-bai">
@@ -28,7 +31,7 @@
 		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;"><</a>
 			关于我们
 	</header>
-	<main class="cmp640 img-100" style='padding-top: 40px;'>
+	<main class="cmp640 img-100" style='padding-top: 40px;font-size: 14px;'>
 	    ${entity.content}
 	</main>
 </body>
