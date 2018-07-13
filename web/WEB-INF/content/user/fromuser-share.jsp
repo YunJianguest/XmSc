@@ -25,8 +25,7 @@
 			}
 			.share{
 				width: 100%;
-				padding: 80px 38px 35px 38px;
-				position: relative;
+				margin-top: 90px;
 			}
 			.share-canvas{
 				width: 100%;
