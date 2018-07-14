@@ -76,8 +76,10 @@
             } 
             issend = false;
             
+            console.log('${lscode}');
             var submitData = {
-            		lscode:'${lscode}'
+            		lscode:'${lscode}',
+            		custid:'${custid}'
 				};
 				$.post('${ctx}/user/fromuser!ajaxnexus.action', submitData,
 	                    function (json) {
