@@ -256,7 +256,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100)); 
 			  } 
 			  //积分 
-			  Struts2Utils.getRequest().setAttribute("jf", wwzservice.getJf(SysConfig.getProperty("custid"), fromUserid));
+			  if (wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+				  Struts2Utils.getRequest().setAttribute("jf",wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("uservalue") );
+			  }
+			
 			  Struts2Utils.getRequest().setAttribute("entity", wxUser);
 		  }else{
 			 
