@@ -277,7 +277,7 @@
 		    			    		       var list=comlist[k].list;
 		    			    		       
 		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
-		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay()">去支付</span></div>'
+		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay('+v[i]._id+','+(v[i].zfmoney+v[i].kdprice)+')">去支付</span></div>'
 		    			    		    		   
 		    			    		       }
 		    			    		       
@@ -363,7 +363,7 @@
 		},"json")
 		
 	}
-
+	 
 function find(oid,sid){
 	window.location.href="${ctx}/shop/service!find.action?custid=${custid}&agid=${agid}&lscode=${lscode}&orderid="+oid+"&sid="+sid;
 }
@@ -430,8 +430,8 @@ function del(id) {
 				pay_bt();
 				//二维码生成
 				$('#qrcode').qrcode({ 
-				  width : w,
-			      height : w,
+				  width : 200,
+			      height : 200,
 			      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
 			    });
 			    $("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
@@ -441,15 +441,15 @@ function del(id) {
 				pay_ytf();
 				//二维码生成
 				$('#qrcodes').qrcode({ 
-				  width : w,
-			      height : w,
+				  width : 200,
+			      height : 200,
 			      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
 			    });
 				$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
    	 }
    	 if(val == 2){
    		 var submitData = { 
-   				 orid:$('#orderno').val()
+   				 orid:$('#oid').val()
         	};
    		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
             		function(json) {
@@ -460,25 +460,62 @@ function del(id) {
     					}else if(json.state == 1){
     						alert("操作失败");
     					}else{
-    						alert("支付失败！");
+    						alert("支付失败，余额不足！");
     					}
             		},
             		"json");
    	 }
       } 
-  function choosePay(){
+  function choosePay(v,p){
+	  $("#totalPrice").val(p); 
+	  $("#oid").val(v);
 	  $(this).click(function(){
 			$('.mask').css('display','block');
-			moneypay();
+			 
 		})
   }
    
 	$('#close').click(function(){
 		$('.mask').css('display','none')
 	})
+	 function pay_ytf(){
+	    	var totalPrice = $('#totalPrice').val(); 
+	    	var submitData = {
+	    	};
+	    	$.post('${ctx}/integral/miners!getETHSrice.action?lscode=${lscode}', submitData,
+	    		function(json) {
+	    	    if(json.state==0){
+	    	       if(totalPrice != '0.00'){
+	    	    	   $('#ytfnum').html(parseFloat(totalPrice)/json.data); 
+	    	       }else{
+	    	    	   $('#ytfnum').html(0.00);
+	    	       }
+	    	   }			
+	    	},"json")
+	    }
+	 
+    function pay_bt(){
+    	var totalPrice = $('#totalPrice').val(); 
+    	var submitData = {
+    	};
+    	$.post('${ctx}/integral/miners!getBTCSrice.action?lscode=${lscode}', submitData,
+    		function(json) {
+    	    if(json.state==0){
+    	       if(totalPrice != '0.00'){
+    	    	   $('#btnum').html(parseFloat(totalPrice)/json.data); 
+    	       }else{
+    	    	   $('#btnum').html(0.00);
+    	       }
+    	    	
+    	   }
+    				
+    	},"json")
+    }
 </script>
 </head>
 <body>
+    <input type="hidden" id="totalPrice" />
+    <input type="hidden" id="oid" />
 	<header style="background: #fefefe;width: 100%;height: 44px;position: fixed;top: 0;left: 0;padding: 0 10px;line-height: 44px;text-align: center;">
 			<a  href="javascript:history.go(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
 			<h1 class="mui-title">订单列表</h1>
