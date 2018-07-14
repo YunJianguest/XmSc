@@ -113,7 +113,7 @@
         <input type="hidden" value="<fmt:formatNumber value='${entity.price}'  pattern="0.0#"/>" id="price"/><!--单价-->
         <div class=" cmp640 position-f position-r" style="bottom:10px;left:0px;z-index: 100000;height: auto;">
             <div class="bg-bai overflow-hidden border-radius3 width-9_5 maring-a">
-                <div class="line-bottom pr-10 pl-10 overflow-hidden position-r" style="height:80px;">
+                <div class="line-bottom pr-10 pl-10 overflow-hidden position-r">
                     <div class="img-bj bk border-radius3 position-a"
                          style="top: 10px;background-image: url(${filehttp}/${entity.logo});"></div>
                     <div style="padding-left:90px;" class="pt-10">
