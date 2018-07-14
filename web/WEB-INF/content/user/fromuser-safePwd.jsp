@@ -130,7 +130,6 @@
 		</header>
 		<div class="mui-content" style="padding: 0 20px;background: #fff;height: 100%;padding-top: 44px;">
 			<form action="" class="mui-input-group">
-			${user }
 				<div class="mui-input-row">
 					<label>编号</label>
 					<input id="number" type="text" value="${user.number }" class="mui-input-clear" maxlength="16" placeholder="编号" readonly="readonly" >
@@ -242,6 +241,7 @@
 			</div>
 		</div>
 		<script>
+		console.log('${user }');
 		//提交
 		function update_submit(){
 			console.log('${lscode}');
