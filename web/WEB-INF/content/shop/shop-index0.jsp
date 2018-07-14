@@ -394,7 +394,7 @@
 				<span></span>
 			</div> -->
 			<div class="mui-title" style="left: 10px;right:10px;">
-				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;left: 25px;" onclick="goods_search()"></span>
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;right: 25px;" onclick="goods_search()"></span>
 				<input type="search" class="mui-search" name="" id="sel" value="" />
 			</div>
 			<!-- <div class="mui-pull-right">
