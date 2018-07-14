@@ -199,7 +199,7 @@
 			
 			
 			<!-- 身份证上传 -->
-			<div class="mui-input-row afterhide" style="height:300px;overflow: hidden;">
+			<div class="mui-input-row afterhide" style="height:280px;overflow: hidden;">
 					<label style="width: 100%;font-size:10px;">上传身份证照片</label>
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
