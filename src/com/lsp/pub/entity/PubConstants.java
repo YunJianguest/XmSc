@@ -357,6 +357,6 @@ public class PubConstants
   public static String SHOP_SHOPATTENTION ="shop_shopattention"; //店铺关注
   public static String SHOP_SHOPCOLLECT ="shop_shopcollect"; //店铺收藏
   
-  
+  public static String USER_AGENTAREA ="user_agentarea"; //代理地区
   
 }
