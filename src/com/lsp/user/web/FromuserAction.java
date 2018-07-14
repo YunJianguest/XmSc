@@ -988,8 +988,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		List<Object> userInfoList = new ArrayList<Object>();
 		try {
 			HashMap<String, Object>whereMap=new HashMap<>();
-			whereMap.put("_id", fromUserid);
-			System.out.println(fromUserid);
+			whereMap.put("_id", lscode);
+			System.out.println(lscode);
 			List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
 			System.out.println(list.size());
 			for(int i=0;i<list.size();i++) {
