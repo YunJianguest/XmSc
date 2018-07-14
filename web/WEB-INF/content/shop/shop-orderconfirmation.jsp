@@ -493,8 +493,11 @@
     </style>
 </head>
 <body>
- 
-<main class="clear cmp640 lock">
+ <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+			商品购买
+	</header>
+<main class="clear cmp640 lock"style='padding-top: 40px;'>
     <c:if test="${not empty address}">
      <a href="${ctx}/shop/shop!useraddress.action?lscode=${lscode}&custid=${custid}&agid=${agid}&addressis=ok&backurl=/shop/shop!orderconfirmation.action?pid=${entity._id}&count=${count}&price=${price}&spec=${spec}">
         
