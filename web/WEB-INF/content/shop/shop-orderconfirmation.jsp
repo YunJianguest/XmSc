@@ -435,7 +435,7 @@
 				height: auto;
 				z-index: 1002;
 				margin: 0 auto;
-				margin-top: 80px;
+				margin-top: 50px;
 				text-align: center;
 				background: #fefefe;
 				border-radius: 5px;
