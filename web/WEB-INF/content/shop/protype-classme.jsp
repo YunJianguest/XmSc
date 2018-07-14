@@ -217,6 +217,7 @@
 		
 		.category-branch-content {
 			margin: 19px 7px 0 7px;
+			padding-top:20px;
 		}
 		
 		.category-branch-content h4 {

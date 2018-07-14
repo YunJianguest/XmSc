@@ -3,6 +3,7 @@ package com.lsp.suc.web;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import net.sf.json.JSONObject;
@@ -79,6 +80,30 @@ public class RollAction extends GeneralAction<RollInfo>{
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		
 		return SUCCESS;
+	}
+	/***
+	 * s
+	 * @return
+	 */
+	public String kuaibaoList(){
+		getLscode();
+		Map<String, Object> map = new HashMap<String, Object>(); 
+		HashMap<String, Object> whereMap=new HashMap<String, Object>();
+		HashMap<String, Object> sortMap=new HashMap<String, Object>();
+		HashMap<String, Object> backMap =new HashMap<String, Object>();
+//		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
+		
+		
+		
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		
+		List<DBObject> list=baseDao.getList(PubConstants.SUC_ROLL,whereMap,fypage,10,sortMap,backMap);
+		fycount=baseDao.getCount(PubConstants.SUC_ROLL,whereMap);
+		Struts2Utils.getRequest().setAttribute("rollList", list);
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		return "kuaibao";
 	}
 
 
