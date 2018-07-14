@@ -67,9 +67,9 @@
         		$('#close').click(function(){
         			$('.mask').css('display','none')
         		})
-        		$('.modal').click(function(){
-        			$('.modal').css('display','none')
-        		})
+//      		$('.modal').click(function(){
+//      			$('.modal').css('display','none')
+//      		})
         		 
         	if('${entity.jfdh}'==''||'${entity.jfdh}'==0){ 
         	   var totalPrice='${entity.price}'*'${count}'; 
