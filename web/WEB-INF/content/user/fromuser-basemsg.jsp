@@ -128,7 +128,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">基础信息</h1>
 		</header>
-		<div class="mui-content" style="padding: 0 30px;padding-top: 44px;background: #fff;">
+		<div class="mui-content" style="padding: 0 20px;padding-top: 44px;background: #fff;">
 			<form action="" class="mui-input-group">
 				<div class="mui-input-row">
 					<label>姓名</label>
