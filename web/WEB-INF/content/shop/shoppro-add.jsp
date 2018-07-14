@@ -416,6 +416,18 @@
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <div class="col-2 pl-10">
+                                    <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">
+                                       快递费用
+                                    </div>
+                                    <div class="line-bottom line-right line-left1 hang40 overflow-hidden">
+                                        <input class="width-10 size14 zi-hui hang40 pl-10 pr-10 weight100"
+                                               type="text"
+                                               id="kdprice" value="<s:property value='kdprice'/>" name="kdprice"
+                                               placeholder="请输入快递费用">
+                                    </div>
+                                </div>
                    
                     </div>
 
