@@ -81,6 +81,8 @@
 				};
 				$.post('${ctx}/user/fromuser!ajaxnexus.action', submitData,
 	                    function (json) {
+					console.log("111111");
+					console.log(json);
 					loadings.hide();
 		    		var xszf=$('#ajaxdiv').html(); 
 		    		xszf="";
