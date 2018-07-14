@@ -188,10 +188,11 @@
      
 </head>
 <body class="cmp640">
-	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
-			个人中心
-	</header>
+	<header style="background: #fefefe;width: 100%;height: 44px;position: fixed;top: 0;left: 0;padding: 0 10px;line-height: 44px;text-align: center;">
+			<a  href="javascript:history.go(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
+			<h1 class="mui-title">个人中心</h1>
+	</header> 
+	
 <main style='padding-bottom: 50px;z-index: -10;'>
    	<div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
    	<div style="width: 100%;height: 45px;">
