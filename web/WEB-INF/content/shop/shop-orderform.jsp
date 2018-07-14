@@ -476,9 +476,7 @@ function del(id) {
 		})
   }
    
-	$('#close').click(function(){
-		$('.mask').css('display','none')
-	})
+	
 	 function pay_ytf(){
 	    	var totalPrice = $('#totalPrice').val(); 
 	    	var submitData = {
@@ -650,7 +648,9 @@ $("#friedtx").hide();
 function  friedtx_show(){
  $("#friedtx").show();
 }
- 
+ $('#close').click(function(){
+		$('.mask').css('display','none')
+	})
 </script>
 </body>
 <script>

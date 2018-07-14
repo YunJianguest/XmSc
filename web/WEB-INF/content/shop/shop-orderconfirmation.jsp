@@ -420,15 +420,16 @@
 			.virtualcoin{
 				display: block;
     			line-height: 24px;
+    			color: #e4393c;
 			}
     </style>
 </head>
 <body>
- <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+ <header style="width: 100%;height: 44px;line-height: 44px;text-align: center;padding: 0 10px;background: #fff;">
+		<a  href="javascript:history.back(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
 			商品购买
 	</header>
-<main class="clear cmp640 lock"style='padding-top: 40px;'>
+<main class="clear cmp640 lock"style='padding-top: 44px;'>
     <c:if test="${not empty address}">
      <a href="${ctx}/shop/shop!useraddress.action?lscode=${lscode}&custid=${custid}&agid=${agid}&addressis=ok&backurl=/shop/shop!orderconfirmation.action?pid=${entity._id}&count=${count}&price=${price}&spec=${spec}">
         
@@ -499,7 +500,7 @@
                       <span class="zi-cheng">平台币<fmt:formatNumber value='${entity.jfdh}'  pattern="0.0#"/>
                       </c:if>
                        <i class="pl-10 zi-6">数量:${count}件</i></span>
-                       <span class="virtualcoin">PP:0.00</span>
+                       <span class="virtualcoin">PPB:0.00</span>
                     </div>
                 </font>
             </div>
