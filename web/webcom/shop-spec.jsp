@@ -107,7 +107,7 @@
             <div class="width-10 overflow-hidden" style="height:1000px;"></div>
         </a>
         <input type="hidden" value="<fmt:formatNumber value='${entity.price}'  pattern="0.0#"/>" id="price"/><!--单价-->
-        <div class=" cmp640 position-f position-r" style="bottom:10px;left:0px;z-index: 100000;">
+        <div class=" cmp640 position-f position-r" style="bottom:10px;left:0px;z-index: 100000;height: auto;">
             <div class="bg-bai overflow-hidden border-radius3 width-9_5 maring-a">
                 <div class="line-bottom pr-10 pl-10 overflow-hidden position-r" style="height:80px;">
                     <div class="img-bj bk border-radius3 position-a"
@@ -141,7 +141,7 @@
                 </div>
                 <div class="pl-10 pb-10 overflow-hidden weight500 yListr3">
                     <c:forEach items="${spelist}" var="bean"> 
-                    <li class="pt-10 pr-10 col-3">
+                    <li class="pt-10 pr-10 col-4">
                         <div class="div3 txt-c zi-hui-wx line-lu border-radius3 hang25 line-height25" price="${bean.price}">
                            ${bean.title}
                         </div>
