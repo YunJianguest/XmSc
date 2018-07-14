@@ -24,6 +24,8 @@
     <script src="${ctx}/app/js/iosOverlay.js"></script>
     <script src="${ctx}/app/js/spin.min.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
+    <script type="text/javascript" src="${ctx}/app/js/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="${ctx}/app/js/qrcode.js"></script> 
     <script type="text/javascript">
      
     </script>
@@ -67,6 +69,131 @@
         .hang-sl-2{
             overflow: hidden;text-overflow:ellipsis;display: -webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;
         }
+        .mask,
+			.modal {
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .1);
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 100;
+				display: none;
+			}
+			
+			.mask-cont {
+				width: 100%;
+				height: auto;
+				background: #fff;
+				position: absolute;
+				bottom: 50px;
+				left: 0;
+				padding: 0 10px;
+				z-index: 101;
+			}
+			
+			.mask-cont-tit {
+				width: 100%;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				position: relative;
+			}
+			
+			.mask-cont-tit::after {
+				content: '';
+				width: 100%;
+				height: 0.5px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				background: #ddd;
+			}
+			
+			.mask-cont-cont {
+				width: 100%;
+				height: auto;
+				padding-bottom: 10px;
+			}
+			
+			.mask-cont-cont button {
+				width: 100%;
+				height: 34px;
+				line-height: 34px;
+				background: none;
+				border: 1px solid #000;
+				border-radius: 5px;
+				display: block;
+				margin-top: 10px;
+			}
+			
+			.modal {
+				z-index: 1001;
+				background: rgb(127, 127, 127);
+			}
+			
+			.modal-cont {
+				width: 80%;
+				height: auto;
+				z-index: 1002;
+				margin: 0 auto;
+				text-align: center;
+				background: #fefefe;
+				border-radius: 5px;
+				padding: 10px;
+				overflow-y: auto;
+				position: absolute;
+			    top: 40px;
+			    left: 10%;
+			    right: 10%;
+			}
+			.modal-tit{
+				line-height: 16px;
+				position: relative;
+				font-size: 12px;
+				margin-top: 10px;
+			}
+			.modal-cont-tit{
+				line-height: 16px;
+				font-size: 11px;
+				padding: 5px 10px;
+				text-align: left;
+				
+			}
+			.modal-cont-tit p{
+				margin: 0;
+			}
+			canvas{
+				background: #fefefe;
+				border-radius: 10px;
+				padding: 10px;
+			}
+			.gopayBtn{
+				width: 100px;
+				height: 34px;
+				line-height: 34px;
+				color: #fff;
+				background: #E4393C;
+				display: inline-block;
+				border-radius: 5px;
+				margin-top: 15px;
+				text-decoration: none;
+			}
+			.bturlBox{
+				width: 100%;
+				height: 24px;
+			}
+			input:focus{
+				outline: none;
+			}
+			#bturl{
+				width: 80%;
+				margin: 0 auto;
+				border: none;
+				border-bottom: 1px solid #e3e3e3;
+			}
     </style>
     <script>
     
@@ -145,12 +272,12 @@
 		    		      if(v[i].comlist!=null){
 		    		    	   var comlist=v[i].comlist; 
 		    		    	   for(var k=0;k<comlist.length;k++){
-		    		    		   xszf+='<div><span>'+comlist[k].shop.name+'</span>';
+		    		    		   xszf+='<div style="line-height:30px"><span>'+comlist[k].shop.name+'</span>';
 		    		    		    if(comlist[k].list!=null){
 		    			    		       var list=comlist[k].list;
 		    			    		       
 		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
-		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay()">去支付</span></div>'
+		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay()">去支付</span></div>'
 		    			    		    		   
 		    			    		       }
 		    			    		       
@@ -352,11 +479,12 @@ function del(id) {
 </script>
 </head>
 <body>
- <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
-			订单列表
-	</header>
-<main class="clear cmp640 lock bg-hui-92" style='padding-top: 40px;'>
+	<header style="background: #fefefe;width: 100%;height: 44px;position: fixed;top: 0;left: 0;padding: 0 10px;line-height: 44px;text-align: center;">
+			<a  href="javascript:history.go(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
+			<h1 class="mui-title">订单列表</h1>
+	</header> 
+ 
+<main class="clear cmp640 lock bg-hui-92" style='padding-top: 44px;'>
 
     <div id="ajaxdiv"></div>
     <c:if test="${ordercount==0}">
