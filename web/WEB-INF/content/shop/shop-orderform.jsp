@@ -272,7 +272,7 @@
 		    		      if(v[i].comlist!=null){
 		    		    	   var comlist=v[i].comlist; 
 		    		    	   for(var k=0;k<comlist.length;k++){
-		    		    		   xszf+='<div><span>'+comlist[k].shop.name+'</span>';
+		    		    		   xszf+='<div style="line-height:30px"><span>'+comlist[k].shop.name+'</span>';
 		    		    		    if(comlist[k].list!=null){
 		    			    		       var list=comlist[k].list;
 		    			    		       
