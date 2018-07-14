@@ -70,7 +70,7 @@ public class UserInfo extends ReflectionDBObject {
 	private String lisense_photo;//营业证照片
 	private int audit_status;//审核状态  1为通过  2为不通过
 	
-	
+	private String uskd;//uskd账号
 	/**
 	 * 用户所在县
 	 */
@@ -1073,6 +1073,14 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setAudit_status(int audit_status) {
 		this.audit_status = audit_status;
+	}
+
+	public String getUskd() {
+		return uskd;
+	}
+
+	public void setUskd(String uskd) {
+		this.uskd = uskd;
 	}
 	
 	

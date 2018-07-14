@@ -132,20 +132,20 @@
 			<form action="" class="mui-input-group">
 				<div class="mui-input-row">
 					<label>姓名</label>
-					<input type="text" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
+					<input id="name" type="text" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
 				</div>
 				<div class="mui-input-row">
 					<label>电话</label>
-					<input type="tel" class="mui-input-clear" maxlength="11" placeholder="请输入电话">
+					<input id="tel" type="tel" class="mui-input-clear" maxlength="11" placeholder="请输入电话">
 				</div>
 				<div class="mui-input-row" style="position: relative;">
 					<label>USKD账号</label>
-					<input type="text" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
+					<input id="uskd" type="text" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
 					<a class="link" href="">去注册</a>
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
-					<input type="password" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+					<input id="password" type="password" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
 				
 
@@ -158,17 +158,17 @@
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="province" value="省份" onfocus="if(value=='省份'){value=''}"
-                               onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;"/>
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;border:none;margin-bottom:0;"/>
                     </div>
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="city" value="城市" onfocus="if(value=='城市'){value=''}"
-                               onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;"/>
+                               onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
                     </div>
                     <div class="col-4">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
-                               onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;"/>
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
                     </div>
                 </div>
                 <div class="col-2 hang50 line-height50 txt-c"><i
@@ -200,10 +200,80 @@
 				</div>
 
 			<div class="mui-row" style="margin-top: 15px;">
-				<button class="mui-btn mui-btn-block baseBtn">提交</button>
+				<button class="mui-btn mui-btn-block baseBtn" onclick="update_submit()">提交</button>
 			</div>
 		</div>
-
+		<script>
+		//提交
+		function update_submit(){
+			console.log('${lscode}');
+			var tel = $("#tel").val();
+			if(tel==""){//手机
+				mui.alert('手机号不能为空')
+				return;
+			}
+			
+			var name = $("#name").val();
+			if(name==""){//姓名
+				mui.alert('姓名不能为空')
+				return;
+			}
+			
+			var password = $("#password1").val();
+			if(password==""){
+				mui.alert('密码不能为空')
+				return;
+			}
+			
+			var uskd = $("#uskd").val();
+			if(uskd==""){
+				mui.alert('uskd账号不能为空')
+				return;
+			}
+			
+			var province = $("#province").val();
+			if(province==""){
+				mui.alert('地区不能为空')
+				return;
+			}
+			
+			var up_picture_front = $("#up_picture_front").val();
+			if(up_picture_front==""){
+				mui.alert('身份证正面不能为空')
+				return;
+			}
+			
+			var up_picture_reverse = $("#up_picture_reverse").val();
+			if(up_picture_reverse==""){
+				mui.alert('身份证反面不能为空')
+				return;
+			}
+			
+			$.ajax({
+				type:"post",
+				url:"${ctx}/user/fromuser!ajaxUserUpdate.action",
+				async:true,
+				data:{
+					lscode:'${lscode}',
+					name:$('#name').val(),
+					tel:$('#tel').val(),
+					uskd:$('#uskd').val(),
+					password:$('#password').val(),
+					province:$('#province').val(),
+					city:$('#city').val(),
+					county:$('#county').val(),
+					id_card_front:$('#up_picture_front').val(),
+					id_card_reverse:$('#up_picture_reverse').val()
+				},
+				success:function(json){
+					if(json.state==0){
+						mui.alert('信息完善成功！')
+						location.href='';
+					}
+				}
+			});
+		}
+		</script>
 		
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>

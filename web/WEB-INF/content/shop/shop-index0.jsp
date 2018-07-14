@@ -67,8 +67,7 @@
 			.mui-bar .mui-title .mui-search {
 				background-color: #fff;
 				border-radius: 14px;
-				padding-left: 30px;
-				
+				padding-right: 30px;				
 			}
 			
 			.mui-indicator.mui-active {
@@ -394,7 +393,7 @@
 				<span></span>
 			</div> -->
 			<div class="mui-title" style="left: 10px;right:10px;">
-				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;left: 25px;" onclick="goods_search()"></span>
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 10px;right: 25px;" onclick="goods_search()"></span>
 				<input type="search" class="mui-search" name="" id="sel" value="" />
 			</div>
 			<!-- <div class="mui-pull-right">
@@ -477,7 +476,7 @@
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news mui-col-xs-12 mui-row">
 					<div class="news-cont mui-col-xs-10">
-						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 30px;height:30px;margin-top: 5px;"/></div>
+						<div class="mui-col-xs-2" style="color: #F83111;font-size: 12px;"><img src="${ctx}/xmMobile/img/newsimg.jpg" style="width: 24px;height:24px;margin-top: 8px;"/></div>
 						<div class="mui-col-xs-10" style="color: #000;display: flex;overflow: hidden;" id='news'>
 							<span class="mui-icon icon-logo"></span>
 							
@@ -500,7 +499,7 @@
 						</div>
 					</div>
 					<div class="mui-col-xs-2" id="newsmore">
-						<a href="${ctx}/suc/roll!kuaibaoList.action" style="font-size: 12px;">更多</a>
+						<a href="${ctx}/suc/roll!kuaibaoList.action?custid=${custid}&agid=${agid}&lscode=${lscode}" style="font-size: 12px;">更多</a>
 					</div>
 				</div>
 			</div>

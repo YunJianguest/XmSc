@@ -65,6 +65,55 @@
 		</style>
 </head>
 <body>
+<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="${ctx}/xmMobile/js/mui.min.js"></script>
+<script>
+		//提交
+		function update_submit(){
+			console.log('${lscode}');
+			var oldpassword = $("#oldpassword").val();
+			if(oldpassword==""){//旧密码
+				mui.alert('旧密码不能为空')
+				return;
+			}
+			
+			var newpassword = $("#newpassword").val();
+			if(newpassword==""){//新密码
+				mui.alert('新密码不能为空')
+				return;
+			}
+			
+			var twopassword = $("#twopassword").val();
+			if(twopassword==""){//确认密码
+				mui.alert('旧密码不能为空')
+				return;
+			}
+			if(newpassword!=twopassword){
+				mui.alert('二次密码不一致')
+				return;
+			}
+			
+			$.ajax({
+				type:"post",
+				url:"${ctx}/user/fromuser!ajaxsafePwd.action",
+				async:true,
+				data:{
+					lscode:'${lscode}',
+					oldPwd:oldpassword,
+					newPwd:newpassword
+				},
+				success:function(json){
+					console.log(json.state);
+					if(json.state==1){
+						mui.alert('密码修改成功！')
+						location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=&lscode=${lscode}';
+					}else if(json.state==0){
+						mui.alert('旧密码错误！')
+					}
+				}
+			});
+		}
+		</script>	
 <header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">修改密码</h1>
@@ -73,17 +122,17 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>旧密码</label>
-					<input type="password" class="mui-input-password" maxlength="16" id="oldpwd" placeholder="请输入密码">
+					<input id="oldpassword" type="password" class="mui-input-password" maxlength="16" id="oldpwd" placeholder="请输入密码">
 				</div>
 				<div class="mui-input-row">
 					<label>新密码</label>
-					<input type="password" class="mui-input-password" maxlength="16" id="newPwd" placeholder="请输入新密码">
+					<input id="newpassword" type="password" class="mui-input-password" maxlength="16" id="newPwd" placeholder="请输入新密码">
 				</div>
 				<div class="mui-input-row">
 					<label>确认密码</label>
-					<input type="password" class="mui-input-password" maxlength="16" id="surePwd" placeholder="确认新密码">
+					<input id="twopassword" type="password" class="mui-input-password" maxlength="16" id="surePwd" placeholder="确认新密码">
 				</div>
-				<div class="title-txt">
+				<!-- <div class="title-txt">
 					<span class="title-txt-txt">二级安全码</span>
 				</div>
 				<div class="mui-input-row">
@@ -97,10 +146,10 @@
 				<div class="mui-input-row">
 					<label>确认安全码</label>
 					<input type="password" class="mui-input-password" maxlength="16" id="sureSafe" placeholder="确认新安全码">
-				</div>
+				</div> -->
 			</form>
 			<div class="mui-button-row">
-				<button class="mui-btn mui-btn-block">保存密码</button>
+				<button class="mui-btn mui-btn-block" onclick="update_submit()">保存密码</button>
 			</div>
 		</div>
 </body>

@@ -113,7 +113,7 @@
         <input type="hidden" value="<fmt:formatNumber value='${entity.price}'  pattern="0.0#"/>" id="price"/><!--单价-->
         <div class=" cmp640 position-f position-r" style="bottom:10px;left:0px;z-index: 100000;height: auto;">
             <div class="bg-bai overflow-hidden border-radius3 width-9_5 maring-a">
-                <div class="line-bottom pr-10 pl-10 overflow-hidden position-r" style="height:80px;">
+                <div class="line-bottom pr-10 pl-10 overflow-hidden position-r">
                     <div class="img-bj bk border-radius3 position-a"
                          style="top: 10px;background-image: url(${filehttp}/${entity.logo});"></div>
                     <div style="padding-left:90px;" class="pt-10">
@@ -121,7 +121,7 @@
                             <div class="zi-6 weight500 hang30 sl zi-hei line-height30">${entity.ptitle}
                             </div>
                             <div class=" pull-left weight500">
-                                <div class="sl hang30" style="line-height:35px;">
+                                <div class="sl" style="line-height:24px;">
                                     <span class="zi-cheng" id="totalPrice">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/>元</span>
                                     <span class="virtualcoin">0.00</span>
                                 </div>

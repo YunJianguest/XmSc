@@ -18,31 +18,35 @@
 		</style>
 	</head>
 	<body>
-		<div class="mui-content">
-		    <ul class="mui-table-view" style="margin-top: 0;">
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1);"></a>
+		    <h1 class="mui-title">快报列表</h1>
+		</header>
+		<div class="mui-content" style="background: #ececec;">
+		    <ul class="mui-table-view" style="margin-top: 0;padding-bottom: 0;">
 		    	<c:forEach items="${rollList }" var="obj">
-			            <li class="mui-table-view-cell">
-			                <a class="">
+		    	
+		    		<li class="mui-table-view-cell">
+		    			<c:if test="${not empty obj.url}">
+			    			<a class="mui-navigate-right" href="${obj.url}">
 			                    <div class="mui-table">
 			                    	<div class="mui-table-cell mui-col-xs-10">
-			                    	<c:if test="${not empty obj.url}">
-			                    		<h5 class="mui-ellipsis-2" style="color: #000;">
-			                    		<a href="${obj.url}" style="text-decoration: underline;">${obj.title }</a>
-			                    		</h5>
-			                    	</c:if>
-			                    	
-			                    	<c:if test="${empty obj.url}">
-			                    		<h5 class="mui-ellipsis-2" style="color: #000;">
-			                    			<a href="javascript:void(0);" style="text-decoration: underline;">
-			                    				${obj.title }
-			                    			</a>
-			                    		</h5>
-			                    	</c:if>
-			                    		<!-- <p class="mui-h6 mui-ellipsis">Hi，李明明，申请交行信息卡，100元等你拿，李明明，申请交行信息卡，100元等你拿，</p> -->
+			                    		<h5 class="mui-ellipsis-2" style="color: #000;">${obj.title }</h5>
 			                    	</div>
 			                    </div>
 			                </a>
-			            </li>
+				    	</c:if>
+				    	<c:if test="${empty obj.url}">
+				    		<a class="mui-navigate-right" href="javascript:void(0);">
+			                    <div class="mui-table">
+			                    	<div class="mui-table-cell mui-col-xs-10">
+			                    		<h5 class="mui-ellipsis-2" style="color: #000;">${obj.title }</h5>
+			                    	</div>
+			                    </div>
+			                </a>
+				    	</c:if>
+		            </li>
+			            
 		            </c:forEach>
 		            
 		        </ul>
