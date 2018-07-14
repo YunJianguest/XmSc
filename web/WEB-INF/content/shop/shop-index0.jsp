@@ -161,7 +161,7 @@
 				background: url(${ctx}/xmMobile/img/icon/icon-logo.png) no-repeat;
 				background-size: 100% auto;
 				/*margin-top: 10px;*/
-				margin-right: 3px;
+				margin-right: 10px;
 			}
 			
 			.public::before,
