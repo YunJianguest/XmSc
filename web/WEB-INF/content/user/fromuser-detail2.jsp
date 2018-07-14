@@ -217,16 +217,8 @@
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
                     <font size="1">
                         <div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
-                            <div class="pull-left hang20 line-height22 bg-green zi-bai border-radius3 pl-5 pr-5 mr-5">LV<i
-                                    class="pl-2">${entity.level}</i></div>
-                            <c:if test="${empty isAgent}">
-                             <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
-                                    class="fa fa-user line-height20"></i><i class="pl-2">普通会员</i></div>
-                            </c:if>
-                            <c:if test="${not empty isAgent}">
                             <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
-                                    class="fa fa-diamond line-height20"></i><i class="pl-2">店铺已认证</i></div>
-                            </c:if>
+                                    class="fa fa-user line-height20"></i><i class="pl-2">${daili }</i></div>
                            
                         </div>
                     </font>

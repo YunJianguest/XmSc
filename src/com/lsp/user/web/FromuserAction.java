@@ -311,7 +311,35 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		 
 		 Struts2Utils.getRequest().setAttribute("shopattentionCount",shopattentionCount);
 		 Struts2Utils.getRequest().setAttribute("shopcollectCount",shopcollectCount);
-		  if(mb!=null&&mb.get("mb")!=null){
+		 
+		 /*********2018/7/14 获取当前用户代理************************/
+		 String daili="";
+		 UserInfo user = (UserInfo) UniObject.DBObjectToObject(wxUser,UserInfo.class);
+		 if(user!=null) {
+			 //1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
+			 int agentLevel = user.getAgentLevel();
+			 
+			 String agentprovince=user.getAgentprovince();
+			 String agentcity = user.getAgentcity();
+			 String agentcounty =user.getAgentcounty();
+			 if(agentLevel==1) {
+				 daili=agentprovince+"代理";
+			 }else if(agentLevel==2) {
+				 daili=agentprovince+agentcity+"代理";
+			 }else if(agentLevel==3) {
+				 daili=agentprovince+agentcity+agentcounty+"代理";
+			 }else if(agentLevel==4) {
+				 daili="报单中心";
+			 }else if(agentLevel==5) {
+				 daili="会员";
+			 }else if(agentLevel==6) {
+				 daili="商家";
+			 }
+		 }
+		 Struts2Utils.getRequest().setAttribute("daili", daili);
+		 
+		 
+		 if(mb!=null&&mb.get("mb")!=null){
 			  return "detail"+mb.get("mb");  
 		  }
 		return "detail2";   
