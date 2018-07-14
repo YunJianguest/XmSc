@@ -27,11 +27,11 @@
     </style>
 </head>
 <body class="bg-bai">
-	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;"><</a>
-			关于我们
-	</header>
-	<main class="cmp640 img-100" style='padding: 0 10px;padding-top: 40px;font-size: 14px;'>
+	<header style="background: #fefefe;width: 100%;height: 44px;position: fixed;top: 0;left: 0;padding: 0 10px;line-height: 44px;text-align: center;border-bottom: 1px solid #ddd;">
+			<a  href="javascript:history.go(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
+			<h1 class="mui-title">关于我们</h1>
+	</header> 
+	<main class="cmp640 img-100" style='padding: 0 10px;padding-top: 44px;font-size: 14px;'>
 	    ${entity.content}
 	</main>
 </body>
