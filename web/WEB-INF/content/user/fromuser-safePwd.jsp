@@ -123,7 +123,7 @@
 			}
 		</style>
 </head>
-<body>
+<body style="background: #fff;">
 <header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left"></a>
 			<h1 class="mui-title">基础信息</h1>
