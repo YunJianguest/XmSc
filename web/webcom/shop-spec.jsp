@@ -20,6 +20,10 @@
         .line-height33 {
             line-height: 33px;
         }
+        .virtualcoin{
+        	display: block;
+        	font-size: 12px;
+        }
   </style>
 <script type="text/javascript" src="${ctx }/app/js/jquery.Spinner.js"></script>
 <script>
@@ -119,6 +123,7 @@
                             <div class=" pull-left weight500">
                                 <div class="sl hang30" style="line-height:35px;">
                                     <span class="zi-cheng" id="totalPrice">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/>元</span>
+                                    <span class="virtualcoin">0.00</span>
                                 </div>
                             </div>
                             <div class="border-radius3 pull-right overflow-hidden">
