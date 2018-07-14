@@ -136,7 +136,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>一级密码</label>
-					<input id="password" type="password" value="${user.password }" class="mui-input-clear" maxlength="16" placeholder="请输入密码">
+					<input id="onepassword" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
 				
 				<div class="mui-input-row">
@@ -257,7 +257,7 @@
 				return;
 			}
 			
-			var password = $("#password").val();
+			var password = $("#onepassword").val();
 			if(password==""){
 				mui.alert('密码不能为空')
 				return;
@@ -290,13 +290,13 @@
 					name:$('#name').val(),
 					tel:$('#tel').val(),
 					uskd:$('#uskd').val(),
-					password:$('#password').val(),
+					password:$('#onepassword').val(),
 					paypassword:$('#paypassword').val(),
 					province:$('#province').val(),
 					city:$('#city').val(),
 					county:$('#county').val(),
-					id_card_front:$('#up_picture_front').val(),
-					id_card_reverse:$('#up_picture_reverse').val()
+					up_picture_front:$('#up_picture_front').val(),
+					up_picture_reverse:$('#up_picture_reverse').val()
 				},
 				success:function(json){
 					if(json.state==0){
