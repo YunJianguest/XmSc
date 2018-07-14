@@ -195,12 +195,11 @@
     </head>
     <body style="background: #fff;">
     	<header class="mui-bar mui-bar-nav">
-    	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;"></a>
-    	    <h1 class="mui-title">注册</h1>
+    	    <a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" style="color: #000;"></a>
+    	    <h1 class="mui-title">商家入驻</h1>
     	</header>
-    	<div class="mui-content" style="background: #fff;padding: 0 20px;">
+    	<div class="mui-content" style="background: #fff;padding: 0 20px;padding-top: 44px;">
 			<div class="mui-row">
-				<p class="mui-popup-title">商家入驻</p>
 				 <p class="mui-popup-title zhuce-fenlei">
 					<span style="float: left;" class="personal"></span>
 					<span style="float: right;" class="personal"></span>
