@@ -216,6 +216,8 @@
      						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
      					}else if(json.state == 1){
      						alert("操作失败");
+     					}else{
+     						alert("支付失败！");
      					}
              		},
              		"json");

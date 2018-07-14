@@ -1,5 +1,4 @@
 package com.lsp.shop.web;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -3378,7 +3377,7 @@ public class ShopAction extends GeneralAction {
 				InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 
 				// 记录当前购物用户的提成
-				wwzService.addjf(bl + "", fromUserid, "shop_bmzt", custid, 1, 1, 1);
+				wwzService.addjf(bl + "", fromUserid, "shop_djzj", custid, 1, 1, 1);
 				wwzService.addjf(wwzService.getGivingPro(bl_ty), fromUserid, "shop_bmzt", custid, 1, 2, 0);
 				wwzService.addjf(wwzService.getGivingPro(bl_hy), fromUserid, "shop_bmzt", custid, 1, 2, 0);
 				bl_ty = Double.parseDouble(BaseDecimal.division(
@@ -3734,7 +3733,7 @@ public class ShopAction extends GeneralAction {
 					InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 
 					// 记录当前购物用户的提成
-					wwzService.addjf(bl + "", fromUserid, "shop_bmzt", custid, 1, 1, 1);
+					wwzService.addjf(bl + "", fromUserid, "shop_djzj", custid, 1, 1, 1);
 					wwzService.addjf(wwzService.getGivingPro(bl_ty), fromUserid, "shop_bmzt", custid, 1, 2, 0);
 					wwzService.addjf(wwzService.getGivingPro(bl_hy), fromUserid, "shop_bmzt", custid, 1, 2, 0);
 					bl_ty = Double.parseDouble(BaseDecimal.division(
@@ -3808,10 +3807,16 @@ public class ShopAction extends GeneralAction {
 
 					// 获取部门人员;
 					whereMap.clear();
-					whereMap.put("no", order.getDeptCode());
+					System.out.println("--------------------------"+order.getDeptCode());
+					whereMap.put("number",order.getDeptCode());
 					DBObject user = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+					System.out.println(user);
 					if (user != null) {
+						System.out.println(user);
 						// 记录提成
+						System.out.println(BaseDecimal
+								.division(BaseDecimal.multiplication(bl + "", sett.getSameDepartment() + ""), "100"));
+						System.out.println("开始则鞥见+++"+user.get("_id").toString());
 						wwzService.addjf(BaseDecimal
 								.division(BaseDecimal.multiplication(bl + "", sett.getSameDepartment() + ""), "100"),
 								user.get("_id").toString(), "shop_bmzt",  SysConfig.getProperty("custid"), 1, 1, 0);
@@ -4062,6 +4067,7 @@ public class ShopAction extends GeneralAction {
 		String price = Struts2Utils.getParameter("price");
 		// 获取提交的商品名称
 		String remark = Struts2Utils.getParameter("remark");
+		String deptCode= Struts2Utils.getParameter("deptCode");
 		// 商品类型
 		int lx = Integer.parseInt(Struts2Utils.getParameter("lx"));
 		// 总金额
@@ -4155,6 +4161,9 @@ public class ShopAction extends GeneralAction {
 		entity.setZfmoney(Double.parseDouble(price));// 7
 		entity.setRecordid(recordid);
 		entity.setRemoney(remoney);
+		if (StringUtils.isNotEmpty(deptCode)) {
+			entity.setDeptCode(Long.parseLong(deptCode));
+		} 
 
 		entity.setRemark(remark + "-" + spec);
 		// 验证
@@ -4172,6 +4181,9 @@ public class ShopAction extends GeneralAction {
 			o.setFromUserid(fromUserid);
 			o.setPid(Long.parseLong(pro.get("_id").toString()));
 			baseDao.insert(PubConstants.SHOP_ODERFORMPRO, o);
+			if (StringUtils.isNotEmpty(deptCode)) {
+				o.setDeptCode(Long.parseLong(deptCode));
+			} 
 		}
 
 		params.put("state", 0);
@@ -4223,6 +4235,7 @@ public class ShopAction extends GeneralAction {
 		String name = Struts2Utils.getParameter("name");
 		String tel = Struts2Utils.getParameter("tel");
 		String address = Struts2Utils.getParameter("address");
+		String deptCode = Struts2Utils.getParameter("deptCode");
 		String no = Struts2Utils.getParameter("no");
 		// 店铺编号
 		Long comid = 0L;
@@ -4256,6 +4269,10 @@ public class ShopAction extends GeneralAction {
 		entity.setTel(tel);
 		entity.setAddress(address);
 		entity.setInsDate(new Date());
+		if (StringUtils.isNotEmpty(deptCode)) {
+			entity.setDeptCode(Long.parseLong(deptCode));
+		}
+		
 
 		entity.setComid(comid);// 14
 		entity.setCounts(num);// 15
@@ -4372,6 +4389,9 @@ public class ShopAction extends GeneralAction {
 					ord.setPro(pro);
 					ord.setPid(Long.parseLong(pro.get("_id").toString()));
 					ord.setSpec(specs[i]);
+					if (StringUtils.isNotEmpty(deptCode)) {
+						ord.setDeptCode(Long.parseLong(deptCode));
+					}
 					
 					if (pro.get("goodstype").toString().equals("3")) {
 						// 大众区
@@ -4430,8 +4450,8 @@ public class ShopAction extends GeneralAction {
 					if (pro != null) {
 						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
 						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() > 0) {
-							// 开始支付
-							if (wwzService.deljf(obj.getPrice() + "", fromUserid, "shop_jfdh", custid, null)) {
+							// 开始支付 
+							if (wwzService.deljf(obj.getPrice()+"", fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
 								System.out.println("en---->"+obj.getPrice());
 								/*
 								entity.set_id(oid);
