@@ -112,10 +112,10 @@
             alert("数量不能为空请重新选择购买");
             return ;
            }
-           if($('#deptcode').val() == ''){
+          /*  if($('#deptcode').val() == ''){
         	   alert('请填写部门编号');
         	   return;
-           }
+           } */
             var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
         	var submitData = { 
         			lx:0,

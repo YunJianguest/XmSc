@@ -90,10 +90,27 @@ public class UserAction extends GeneralAction<UserInfo>
       whereMap.put("nickname", pattern);
       Struts2Utils.getRequest().setAttribute("name", name);
     }
-    whereMap.put("custid",SpringSecurityUtils.getCurrentUser().getId());
+    String no = Struts2Utils.getParameter("wxno");
+    if (StringUtils.isNotEmpty(no)) {
+     
+      whereMap.put("no", no);
+      Struts2Utils.getRequest().setAttribute("wxno", no);
+    }
+    String renumber = Struts2Utils.getParameter("wxrenumber");
+    if (StringUtils.isNotEmpty(renumber)) {
+      whereMap.put("renumber", Long.parseLong(renumber));
+      Struts2Utils.getRequest().setAttribute("wxenumber", renumber);
+    }
+   // whereMap.put("custid",SpringSecurityUtils.getCurrentUser().getId());
     List<DBObject> list = this.basedao.getList(PubConstants.USER_INFO, whereMap, sortMap); 
     for (DBObject dbObject : list) {
-		dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
+    	/*if(dbObject.get("custid") != null){
+    		if(wwzservice.getCustName(dbObject.get("custid").toString())!=null){
+    			dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
+    		}
+    		
+    	}*/
+		
 		if(dbObject.get("roleid") != null){
 			DBObject dbObject2 =basedao.getMessage(PubConstants.ROLE_INFO, Long.parseLong(dbObject.get("roleid").toString()));
 		    if(dbObject2 != null){
@@ -105,7 +122,7 @@ public class UserAction extends GeneralAction<UserInfo>
 		}else{
 			dbObject.put("rolename", "无");
 		}
-		dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
+		/*dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));*/
 	}
     Struts2Utils.getRequest().setAttribute("userList", list);
     this.fycount = this.basedao.getCount(PubConstants.USER_INFO,whereMap);
@@ -265,6 +282,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  agentLevel=Struts2Utils.getParameter("agentLevel");
 			String  number=Struts2Utils.getParameter("number");
 			String  renumber=Struts2Utils.getParameter("renumber");
+			String  headimgurl=Struts2Utils.getParameter("headimgurl");
 			
 
 			//验证省市县是否已经售卖
@@ -351,6 +369,9 @@ public class UserAction extends GeneralAction<UserInfo>
 			}
 			if(StringUtils.isNotEmpty(roleid)){
 				user.setRoleid(Long.parseLong(roleid));	
+			}
+			if(StringUtils.isNotEmpty(headimgurl)){
+				user.setHeadimgurl(headimgurl);
 			}
 			if(StringUtils.isNotEmpty(renumber)){
 				user.setRenumber(Long.parseLong(renumber));

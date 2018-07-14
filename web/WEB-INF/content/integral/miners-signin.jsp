@@ -206,9 +206,9 @@
 	            error:function(XMLHttpRequest, textStatus, errorThrown){
 	               alert("登录失败！");
 				},
-	            success:function(data){
-	            	if(data.state==0){
-	            		window.location.href ="${ctx}/integral/miners!list.action?lscode="+data.lscode;
+	            success:function(json){
+	            	if(json.state==0){
+	            		window.location.href ="${ctx}/integral/miners!list.action?lscode="+json.lscode;
 	            	}else if(json.state == 1){
 						alert('请求超时，重新登录');
 					}else if(json.state == 2){

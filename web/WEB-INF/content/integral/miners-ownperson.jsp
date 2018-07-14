@@ -15,6 +15,7 @@
     <title>个人中心</title>
     <!-- Resource style -->
     <script src="${ctx }/app/js/jquery-1.8.3.js"></script>
+    <link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
@@ -143,10 +144,15 @@
         	line-height: 24px;
         	border: 1px solid #fff;
         }
+        
     </style>
      
 </head>
 <body class="cmp640">
+	 <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
+		<a href="javascript:history.go(-1);" style="float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="mui-icon mui-icon-undo"></a>
+			个人中心
+	</header>
 <main>
    <div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
    <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-right:15px;'><i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#000;'></i></div>
@@ -163,7 +169,7 @@
             <div class=" hang70">
                 <font size="2">
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
-                    <font size="1">
+                    <!--<font size="1">
                         <div class="clear txt-c pt-5" style='display:flex;justify-content: center;'>
                             <div class="pull-left hang20 line-height22 bg-green zi-bai border-radius3 pl-5 pr-5 mr-5">LV<i
                                     class="pl-2">${entity.level}</i></div>
@@ -177,7 +183,7 @@
                             </c:if>
                            
                         </div>
-                    </font>
+                    </font>-->
                     
                     <!--<div class="hang25 line-height20 pt-5" style="color:#888888">
                         <div class="txt-c"><i class="pr-10 zi-cheng">积分<i class="pl-2 zi-cheng">${entity.jf}</i></i><c:if test="${not empty  entity.email}">${entity.email}</c:if><c:if test="${empty entity.email}">这家伙很懒，没有邮箱！</c:if></div>-->
@@ -319,9 +325,9 @@
     		</a>
     	</li>
     	<li class="my_cate_item">
-    		<a href="">
+    		<a href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
     			<span class="my_cate_item_logo bg-cheng"><i class="fa fa-diamond"></i></span>
-    			<p class="my_cate_item_name ">我的待定</p>
+    			<p class="my_cate_item_name ">数字交易</p>
     		</a>
     	</li>
     	<li class="my_cate_item">

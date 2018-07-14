@@ -101,6 +101,7 @@
 			.mask-body::after{top: 0;}
 			.mask-body::before{bottom: 0;}
 			.mask-foot{width: 100%;height: 40px;text-align: right;}
+			
 		</style>
 		<script>
 		var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
@@ -161,7 +162,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;"></a>
+		    <a class="mui-action-back mui-icon mui-icon mui-icon-undo mui-pull-left" style="color: #000;" href="javascript:history.back(-1);"></a>
 		    <h1 class="mui-title">注册</h1>
 		</header>
 		<div class="mui-content" style="background: #fff;padding: 0 16px; padding-top: 44px;">

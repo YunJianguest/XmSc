@@ -13,6 +13,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>数字资产</title>
     <script src="${ctx}/app/js/jquery-1.8.3.js"></script>
+    <link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/> 
     <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/> 
      <script src="${contextPath}/mvccol/js/fomatdate2.js"></script>
@@ -52,16 +53,16 @@
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">回本后待返</font></div>';
 	    		    }   
 	    		    if(v[i].type=='jfcz'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">充值</font></div>';
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">积分充值</font></div>';
 	    		    }
 	    		    if(v[i].type=='shop_bmzt'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">盼盼收益</font></div>';
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">商城收益</font></div>';
 	    		    }   
 	    		    if(v[i].type=='shop_jfdh'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">下单使用</font></div>';
 	    		    } 
 	    		    if(v[i].type=='jf_withdraw'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">提现</font></div>';
+	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">积分提现</font></div>';
 	    		    } 
 	    		    if(v[i].type=='shop_order'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">订单收益</font></div>';
@@ -92,7 +93,7 @@
 <body>
  
 <header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="mui-icon mui-icon-undo"></a>
 			数字资产
 	</header>
 <main class="lock cmp640" id="section1"> 
@@ -102,16 +103,14 @@
             	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">${setting.name}总计：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.value}'  pattern="0.00"/></i></font></div>            	
 				<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.prostore}'  pattern="0.00"/></i></font></div>
             	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.uservalue}'  pattern="0.00"/></i></font></div>
-            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">我的乐乐币：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${ll}'  pattern="0.00"/></i></font></div>
+            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">我的LLB：<i class="zi-cheng"  style="float: right;margin-right: 15px;">${jf.uservalue}</i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
             <div class="pull-right zi-green weight500 pr-15"><font size="2">充值</font></div>
         </a> --%>
     </div>
-	<!--<div style="height: 50px;line-height: 50px;width: 100%;padding: 8px 10px; display: flex;justify-content: space-between;align-items: center;">
-		<a href="">数字交易</a><a href="">乐乐币</a>
-	</div>-->
+
     <div class="txt-c zi-cheng  div-group-5">
 
         <div class="line-left1 line-top line-bottom line-right border-radius5">
@@ -136,7 +135,7 @@
             <a href="#">
                 <div class="zi-hui zi-green overflow-hidden txt-c"
                      style="border-radius:5px 5px 0px 0px ;">
-                    <div class="col-15 pt-15 pb-10"><font size="2">以上为盼盼明细</font></div>
+                    <div class="col-15 pt-15 pb-10"><font size="2">以上所有明细</font></div>
                 </div>
             </a>
         </div>
