@@ -33,7 +33,7 @@
     			   comid:$("#comid").val(),
     			   content:$("#sj_huifu").val()
           }; 
-    	  $.post('${ctx}/shop/shopcom!ajaxReplayAdm.action', submitData,
+    	  $.post('${ctx}/shop/shopcom!ajaxReplayAdm.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
                   function (json ) {
     		  			alert(json.state);
                       if (json.state == 0) {

@@ -151,7 +151,7 @@
                 }
             })
         })
-        
+       
          function getcom() {
 			loading();
             var submitData = {
@@ -167,8 +167,11 @@
                             	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
                             	 +'<div class="cmt_cnt">'+list[i].content+'</div>';
                             	 if(list[i].sjreply!=null && list[i].sjreply!=""){
-                            		 html+='<div class="reply">'+list[i].sjreply+'<span class="replybtn fa fa-commenting-o" onclick="replyBtn()"></span></div>';
+                            		 html+='<div class="reply">'+list[i].sjreply+'<span class="replybtn fa fa-commenting-o" onclick="replyBtn('+list[i]._id+','+list[i].reply_id+')"></span></div>';
                             	 } 
+                            	 if(list[i].yhreply!=null && list[i].yhreply!=""){
+                            		 html+='<div class="reply">'+list[i].yhreply+'</div>';
+                            	 }
                             	 html+='</li>';
                              }
                              $('#cmt_list').html(html);
@@ -752,20 +755,41 @@
 					回复
 				</div>
 				<div class="replyModal-content-cont">
-					<textarea name="" rows="" cols=""></textarea>
+					<textarea name="" rows="" cols="" id="yh_reply"></textarea>
 				</div>
 				<div class="replyModal-content-foot">
 					<span class="replycancel" onclick="replyCancel()">取消</span>
-					<span class="replyOk">提交</span>
+					<span class="replyOk" onclick="reply_Ok()">提交</span>
 				</div>
 			</div>
 		</div>
 <script>
-	function replyBtn(){
+	var comid;
+	var parentid;
+	function replyBtn(cid,pid){
+		comid=cid;
+		parentid=pid;
 		$(this).click(function(){
-			$('.replyModal').show()
-		})
+			$('.replyModal').show();
+		});
 	}
+	function reply_Ok(){
+		var submitData = { 
+				comid:comid,
+				parentid:parentid,
+				content:$("#yh_reply").val()
+        };
+		 $.post('${ctx}/shop/shopcom!ajaxReplayUser.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+
+                    function (json) { 
+			 			alert(json);
+                        if (json.state == 0) {
+                        	 window.location.reload();
+                        }  
+                    }, "json");
+	}
+	
+	
 	function replyCancel(){
 		$(this).click(function() {
 			$('.replyModal').hide()

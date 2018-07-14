@@ -272,6 +272,8 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 	 */
 	public void ajaxReplayUser() {
 		getLscode();
+		Map<String,Object>sub_map = new HashMap<>();
+		sub_map.put("state", 1);
 		//评论id
 		String comid=Struts2Utils.getParameter("comid");
 		//父ID
@@ -293,7 +295,13 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 			} 
 			reply.setPicurl(picurl);
 			reply.setTitle(title);
-			baseDao.insert(PubConstants.SHOP_SHOPCOMREPLY, reply);
+			int i =baseDao.insert(PubConstants.SHOP_SHOPCOMREPLY, reply);
+			if (i>0) {	
+				sub_map.put("state", 0);
+			}
+			String json = JSONArray.fromObject(sub_map).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			System.out.println(json);
 		}
 	}
 	
@@ -367,9 +375,24 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 					DBObject obj = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,whereMap);
 					if(obj!=null) {
 						dbObject.put("sjreply",obj.get("content"));
+						dbObject.put("reply_id",obj.get("_id"));
+						if(obj.get("_id")!=null) {
+							whereMap.clear();
+							whereMap.put("parentid", Long.parseLong(obj.get("_id").toString()));
+							DBObject objs = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,whereMap);
+							System.out.println(objs);
+							System.out.println(objs.get("content"));
+							if(objs!=null) {
+								if(objs.get("content")!=null) {
+									dbObject.put("yhreply",objs.get("content"));
+								}
+								
+							}
+						}
 					}				
 				}
 			}
+			sub_map.put("state", 0);
 			sub_map.put("list",list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();

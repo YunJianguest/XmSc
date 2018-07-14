@@ -113,13 +113,13 @@
                                 <thead>
                                 <tr>
                                     <th class="table-action">账户</th>
-                                    <th class="table-action">预返
+                                    <th class="table-action">预送
                                  <c:choose>
                                     <c:when test="${jfname!=null}">${jfname}</c:when>
                                    <c:otherwise>金币</c:otherwise>
                                  </c:choose>   
                                                                                          数量</th>
-                                    <th class="table-action">预返状态</th>
+                                    <th class="table-action">预送状态</th>
                                     <th class="table-action">添加时间</th>
                                     <th class="table-action">截止时间</th>
                                     <th class="table-action">操作</th>
