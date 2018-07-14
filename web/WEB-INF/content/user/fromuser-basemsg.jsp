@@ -48,7 +48,7 @@
 			.mui-input-row textarea::-webkit-input-placeholder {
 				font-size: 12px;
 			}
-			
+/*	/*	/*	/*
 			.mui-row::after {
 				content: '';
 				width: calc(100% - 15px);
@@ -60,7 +60,7 @@
 				-webkit-transform: scaleY(.5);
 				transform: scaleY(.5);
 			}
-			
+			*/
 			.mui-radio::after,
 			.mui-input-group::after {
 				display: none;

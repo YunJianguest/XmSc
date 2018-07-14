@@ -49,7 +49,7 @@
 				font-size: 12px;
 			}
 			
-			.mui-row::after {
+			/*.mui-row::after {
 				content: '';
 				width: calc(100% - 15px);
 				height: 1px;
@@ -60,7 +60,7 @@
 				-webkit-transform: scaleY(.5);
 				transform: scaleY(.5);
 			}
-			
+			*/
 			.mui-radio::after,
 			.mui-input-group::after {
 				display: none;
