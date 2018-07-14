@@ -42,7 +42,6 @@
 			overflow-y: scroll;
 			height: 100%;
 			position: fixed;
-			padding-top: 40px;
 		}
 		
 		.category-tab-box {
@@ -217,7 +216,6 @@
 		
 		.category-branch-content {
 			margin: 19px 7px 0 7px;
-			padding-top:20px;
 		}
 		
 		.category-branch-content h4 {
@@ -487,7 +485,7 @@
 					<div class="category-content-wrapper">
 						<div class="category-content-branch">
 							<div class="category-content-branchList">
-								<div class="category-branch-content" style='padding-top:20px;'>
+								<div class="category-branch-content">
 								</div>
 							</div>
 						</div>
