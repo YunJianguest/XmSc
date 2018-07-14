@@ -48,8 +48,8 @@
 			.mui-input-row textarea::-webkit-input-placeholder {
 				font-size: 12px;
 			}
-/*	/*	/*	/*
-			.mui-row::after {
+			
+			/*.mui-row::after {
 				content: '';
 				width: calc(100% - 15px);
 				height: 1px;
@@ -128,8 +128,21 @@
 			<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left"></a>
 			<h1 class="mui-title">基础信息</h1>
 		</header>
-		<div class="mui-content" style="padding: 0 20px;padding-top: 44px;background: #fff;">
+		<div class="mui-content" style="padding: 0 20px;background: #fff;height: 100%;padding-top: 44px;">
 			<form action="" class="mui-input-group">
+				<div class="mui-input-row">
+					<label>编号</label>
+					<input id="number" type="text" value="${user.number }" class="mui-input-clear" maxlength="16" placeholder="编号" readonly="readonly" >
+				</div>
+				<div class="mui-input-row">
+					<label>一级密码</label>
+					<input id="onepassword" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+				</div>
+				
+				<div class="mui-input-row">
+					<label>二级密码</label>
+					<input id="paypassword" type="password" value="${user.paypassword }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+				</div>
 				<div class="mui-input-row">
 					<label>姓名</label>
 					<input id="name" type="text" value="${user.userName }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
@@ -143,12 +156,6 @@
 					<input id="uskd" type="text" value="${user.uskd }" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
 					<a class="link" href="http://www.uskdpro.com">去注册</a>
 				</div>
-				<div class="mui-input-row">
-					<label>密码</label>
-					<input id="password" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
-				</div>
-				
-
 			</form>
 			
 			<div class="line-bottom overflow-hidden">
@@ -209,6 +216,7 @@
 	        				</c:if>
 	        				<span class="Idimg" id="Idimg1">身份证正面</span>
 	        				<c:if test="${user.id_card_front!=''&&user.id_card_front!=null }">
+	        				${ctx}/uploads/${user.id_card_front } 
 	        				<img class="Idimg" src="${ctx}/uploads/${user.id_card_front } " alt="" id="imgss_front" />
 	        				</c:if>
 	        			</label>
@@ -249,9 +257,15 @@
 				return;
 			}
 			
-			var password = $("#password1").val();
+			var password = $("#onepassword").val();
 			if(password==""){
 				mui.alert('密码不能为空')
+				return;
+			}
+			
+			var paypassword = $("#paypassword").val();
+			if(paypassword==""){
+				mui.alert('支付密码不能为空')
 				return;
 			}
 			
@@ -267,18 +281,6 @@
 				return;
 			}
 			
-			var up_picture_front = $("#up_picture_front").val();
-			if(up_picture_front==""){
-				mui.alert('身份证正面不能为空')
-				return;
-			}
-			
-			var up_picture_reverse = $("#up_picture_reverse").val();
-			if(up_picture_reverse==""){
-				mui.alert('身份证反面不能为空')
-				return;
-			}
-			
 			$.ajax({
 				type:"post",
 				url:"${ctx}/user/fromuser!ajaxUserUpdate.action",
@@ -288,17 +290,18 @@
 					name:$('#name').val(),
 					tel:$('#tel').val(),
 					uskd:$('#uskd').val(),
-					password:$('#password').val(),
+					password:$('#onepassword').val(),
+					paypassword:$('#paypassword').val(),
 					province:$('#province').val(),
 					city:$('#city').val(),
 					county:$('#county').val(),
-					id_card_front:$('#up_picture_front').val(),
-					id_card_reverse:$('#up_picture_reverse').val()
+					up_picture_front:$('#up_picture_front').val(),
+					up_picture_reverse:$('#up_picture_reverse').val()
 				},
 				success:function(json){
 					if(json.state==0){
-						mui.alert('信息完善成功！')
-						location.href='';
+						mui.alert('信息完善成功！');
+						window.location.href='${ctx}/integral/miners!list.action?lscode=${lscode}';
 					}
 				}
 			});
