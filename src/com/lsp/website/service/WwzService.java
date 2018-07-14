@@ -739,6 +739,9 @@ public class WwzService {
 		if (db.get("no") == null || StringUtils.isEmpty(db.get("no").toString())) {
 			createVipNo(db);
 		}
+		if(db.get("number")==null||db.get("number").toString().equals("0")){
+			createNumber(db);
+		}
 		if (!db.get("fromUser").equals("notlogin") && db.get("nickname") != null && StringUtils.isNotEmpty(fromUser)
 				&& StringUtils.isNotEmpty(custid)) {
 
@@ -749,6 +752,14 @@ public class WwzService {
 
 	}
 
+	public void createNumber(DBObject user){
+	    if(user!=null){
+	    	UserInfo us=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
+	    	us.setNumber(Long.parseLong(us.getNo()));
+	    	baseDao.insert(PubConstants.USER_INFO, us);
+	    }	
+	}
+	
 	public boolean updateUser(WxToken token, DBObject db) {
 		try {
 			JSONObject map = WeiXinUtil.getUserInfo(token.getAccess_token(), db.get("fromUser").toString());
@@ -894,6 +905,7 @@ public class WwzService {
 			user.setLanguage(map.getString("language"));
 			user.setCreatedate(new Date());
 			user.setNickname(map.getString("nickname"));
+			user.setNumber(Long.parseLong(user.getNo()));
 			baseDao.insert(PubConstants.USER_INFO, user);
 			return true;
 		} catch (NumberFormatException e) {
@@ -926,6 +938,7 @@ public class WwzService {
 				user.setCustid(user.getCustid() + "," + custid);
 				user.setFromUser(fromUser);
 				user.setNo(getVipNo());
+				user.setNumber(Long.parseLong(user.getNo()));
 				baseDao.insert(PubConstants.USER_INFO, user); 
 				updateUser(token, baseDao.getMessage(PubConstants.USER_INFO, id));
 
