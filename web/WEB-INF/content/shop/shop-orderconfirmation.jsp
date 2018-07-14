@@ -201,7 +201,7 @@
     			      height : w,
     			      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
     			    });
-    			    $("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
+    			    $("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
         	 }
         	 if(val == 1){
         		 $('#ytf').css('display','block');
@@ -212,7 +212,7 @@
     			      height : w,
     			      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
     			    });
-    				$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
+    				$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
         	 }
         	 if(val == 2){
         		 var submitData = { 
