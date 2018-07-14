@@ -109,7 +109,7 @@
 				width: 100%;
 				height: 150px;
 				display: flex;
-				justify-content: center;
+				justify-content: flex-end;
 				align-items: center;
 			}
 			
@@ -172,7 +172,7 @@
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block" onclick="login()">登录</button>
 				<div class="link-area">
-					<a id='reg' href="${ctx}/integral/miners!signup.action">注册</a>
+					<!--<a id='reg' href="${ctx}/integral/miners!signup.action">注册</a>-->
 					<a id='forgetPassword' href="${ctx}/integral/miners!forgetpw.action">忘记密码</a>
 				</div>
 			</div>
