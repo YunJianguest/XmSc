@@ -224,6 +224,52 @@
 				margin-right: 5px;
 				border-radius: 5px;
 			}
+			    .yListr3 .zhiding .div3 {
+            border: 1px solid #45c01a;
+            position: relative;
+            color: #45c01a;
+        }
+        .bg-zong {
+            background: #630601
+        }
+        .border-radius5s {
+            border-radius: 5px 5px 0 0;
+        }
+        .shadow-wai1 {
+            box-shadow: 0px 0px 0px rgba(255, 255, 255, .5), /*左边阴影*/ 1px 0px 10px rgba(140, 140, 140, .5), /*右边阴影*/ 0 -1px 5px rgba(140, 140, 140, .5), /*顶部阴影*/ 0 1px 5px rgba(140, 140, 140, .5); /*底边阴影*/
+        }
+        .line-left-green {
+            border-left: 5px solid #ec5254;
+        }
+        .sc-hong {
+            background-color: #ec5254
+        }
+        .line-height35 {
+            line-height: 35px;
+        }
+        
+        .collectbox{
+        position: fixed;
+        right: 5px;
+        bottom: 100px;
+        z-index: 999;
+      }
+      .collectbox span{
+        cursor: pointer;
+        display: block;
+        width: 50px;
+        height: 30px;
+        font-size: 12px;
+        margin-top: 10px;
+        /*border: 1px solid #e3e3e3;*/
+        text-align: center;
+      }
+      .collectbox span i{
+        font-size: 18px;
+      }
+      .collectbox span.on{
+        color: #E4393C;
+      }
 		</style>
 </head>
 <body class="cmp640 bg-hui-98 lock">
