@@ -9,6 +9,7 @@
 	<title>我的关系</title>
 	<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mui.min.css" />
 	<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+	<link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
 	<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
      <script src="${ctx}/app/js/iosOverlay.js"></script>
     <script src="${ctx}/app/js/spin.min.js"></script>
@@ -68,13 +69,12 @@
        
         function ajaxjz() {//加载
         	if(loadings==""){
-        		//loading();
+        		loading();
         	} 
             if (!issend) {
                 return;
             } 
             issend = false;
-            
             
             var submitData = {
 					fromUserid:'${lscode}'

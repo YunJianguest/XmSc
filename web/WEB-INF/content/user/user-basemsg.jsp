@@ -131,24 +131,31 @@
 		<div class="mui-content" style="padding: 0 20px;padding-top: 44px;background: #fff;">
 			<form action="" class="mui-input-group">
 				<div class="mui-input-row">
+					<label>编号</label>
+					<input id="number" type="text" value="${user.number }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名" readonly="readonly" >
+				</div>
+				<div class="mui-input-row">
+					<label>一级密码</label>
+					<input id="password" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+				</div>
+				
+				<div class="mui-input-row">
+					<label>二级密码</label>
+					<input id="paypassword" type="password" value="${user.paypassword }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
 					<label>姓名</label>
-					<input id="name" type="text" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
+					<input id="name" type="text" value="${user.userName }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
 				</div>
 				<div class="mui-input-row">
 					<label>电话</label>
-					<input id="tel" type="tel" class="mui-input-clear" maxlength="11" placeholder="请输入电话">
+					<input id="tel" type="tel" value="${user.tel }" class="mui-input-clear" maxlength="11" placeholder="请输入电话">
 				</div>
 				<div class="mui-input-row" style="position: relative;">
 					<label>USKD账号</label>
-					<input id="uskd" type="text" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
-					<a class="link" href="">去注册</a>
+					<input id="uskd" type="text" value="${user.uskd }" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
+					<a class="link" href="http://www.uskdpro.com">去注册</a>
 				</div>
-				<div class="mui-input-row">
-					<label>密码</label>
-					<input id="password" type="password" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
-				</div>
-				
-
 			</form>
 			
 			<div class="line-bottom overflow-hidden">
@@ -156,19 +163,41 @@
                 
                 <div class="col-7" id='showCityPicker3'>
                     <div class="col-4">
-                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
-                               id="province" value="省份" onfocus="if(value=='省份'){value=''}"
+                    	<c:if test="${user.province!=''&&user.province!=null }">
+                    		<input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               value="${user.province }" id="province" onfocus="if(value=='省份'){value=''}"
                                onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                    	</c:if>
+                    	<c:if test="${user.province==''||user.province==null }">
+                    		<input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               id="province" onfocus="if(value=='省份'){value=''}"
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                    	</c:if>
+                        
                     </div>
                     <div class="col-4">
+                    <c:if test="${user.city!=''&&user.city!=null }">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               value="${user.city }" id="city" value="城市" onfocus="if(value=='城市'){value=''}"
+                               onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                  	</c:if>
+                  	<c:if test="${user.city==''||user.city==null }">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="city" value="城市" onfocus="if(value=='城市'){value=''}"
                                onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                  	</c:if>
                     </div>
                     <div class="col-4">
+                    <c:if test="${user.county!=''&&user.county!=null }">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               value="${user.county }" id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                   	</c:if>
+                   	<c:if test="${user.county==''||user.county==null }">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
                                onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                   	</c:if>
                     </div>
                 </div>
                 <div class="col-2 hang50 line-height50 txt-c"><i
@@ -182,18 +211,26 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
 	        			<label for="upload">
-	        				
+	        				<c:if test="${user.id_card_front==''||user.id_card_front==null }">
 	        				<img class="Idimg" src="" alt="" id="imgss_front" />
+	        				</c:if>
 	        				<span class="Idimg" id="Idimg1">身份证正面</span>
+	        				<c:if test="${user.id_card_front!=''&&user.id_card_front!=null }">
+	        				<img class="Idimg" src="${ctx}/uploads/${user.id_card_front } " alt="" id="imgss_front" />
+	        				</c:if>
 	        			</label>
 	        			<input type="hidden" id="up_picture_front"/>
 					</p>
 					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture1" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload1" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse()"/>
 	        			<label for="upload">
-	        				
+	        				<c:if test="${user.id_card_reverse==''||user.id_card_reverse==null }">
 	        				<img class="Idimg" src="" alt="" id="imgss_reverse" />
+	        				</c:if>
 	        				<span class="Idimg" id="Idimg2">身份证反面</span>
+	        				<c:if test="${user.id_card_reverse!=''&&user.id_card_reverse!=null }">
+	        				<img class="Idimg" src="${ctx}/uploads/${user.id_card_reverse } " alt="" id="imgss_reverse" />
+	        				</c:if>
 	        			</label>
 	        			<input type="hidden" id="up_picture_reverse"/>
 					</p>
@@ -219,9 +256,15 @@
 				return;
 			}
 			
-			var password = $("#password1").val();
+			var password = $("#password").val();
 			if(password==""){
 				mui.alert('密码不能为空')
+				return;
+			}
+			
+			var paypassword = $("#paypassword").val();
+			if(paypassword==""){
+				mui.alert('支付密码不能为空')
 				return;
 			}
 			
@@ -237,18 +280,6 @@
 				return;
 			}
 			
-			var up_picture_front = $("#up_picture_front").val();
-			if(up_picture_front==""){
-				mui.alert('身份证正面不能为空')
-				return;
-			}
-			
-			var up_picture_reverse = $("#up_picture_reverse").val();
-			if(up_picture_reverse==""){
-				mui.alert('身份证反面不能为空')
-				return;
-			}
-			
 			$.ajax({
 				type:"post",
 				url:"${ctx}/user/fromuser!ajaxUserUpdate.action",
@@ -259,6 +290,7 @@
 					tel:$('#tel').val(),
 					uskd:$('#uskd').val(),
 					password:$('#password').val(),
+					paypassword:$('#paypassword').val(),
 					province:$('#province').val(),
 					city:$('#city').val(),
 					county:$('#county').val(),
@@ -267,8 +299,8 @@
 				},
 				success:function(json){
 					if(json.state==0){
-						mui.alert('信息完善成功！')
-						location.href='';
+						mui.alert('信息完善成功！');
+						window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=&lscode=${lscode}';
 					}
 				}
 			});
