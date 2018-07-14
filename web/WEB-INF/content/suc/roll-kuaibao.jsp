@@ -28,7 +28,7 @@
 		    	
 		    		<li class="mui-table-view-cell">
 		    			<c:if test="${not empty obj.url}">
-			    			<a class="" href="${obj.url}">
+			    			<a class="mui-navigate-right" href="${obj.url}">
 			                    <div class="mui-table">
 			                    	<div class="mui-table-cell mui-col-xs-10">
 			                    		<h5 class="mui-ellipsis-2" style="color: #000;">${obj.title }</h5>
@@ -37,7 +37,7 @@
 			                </a>
 				    	</c:if>
 				    	<c:if test="${empty obj.url}">
-				    		<a class="" href="javascript:void(0);">
+				    		<a class="mui-navigate-right" href="javascript:void(0);">
 			                    <div class="mui-table">
 			                    	<div class="mui-table-cell mui-col-xs-10">
 			                    		<h5 class="mui-ellipsis-2" style="color: #000;">${obj.title }</h5>
