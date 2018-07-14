@@ -19,6 +19,7 @@ import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoDbUtil;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DictionaryUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -445,6 +446,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 							dbObject.put("comname", "默认小店");
 						}
 					}
+					dbObject.put("ppb_price", BaseDecimal.division(dbObject.get("price").toString(), wwzservice.getPPBSprice()+"",2));
 				}
 		}
 		
