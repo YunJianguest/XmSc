@@ -334,6 +334,7 @@
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=1">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 		              <i class="fa fa-credit-card  line-height30" ></i>
+		              <span id="dfkcount"></span>
 		              <!--<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">1</span>-->
 		            </div>待付款
 	              </a>     
@@ -342,6 +343,7 @@
 	        	<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=2">	
 			       <div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 			         <i class="fa fa-truck  line-height30"></i>
+			         <span id="dfhcount"></span>
 			         <!--<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">1</span>-->
 			       </div>待发货
 		       </a> 
@@ -351,6 +353,7 @@
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30 mb-10" style="position: relative;">
 						
 	                  <i class="fa fa-envelope  line-height30" ></i>
+	                   <span id="dshcount"></span>
 	                  <!--<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">1</span>-->
 	                </div>待收货
 	            </a>
@@ -360,6 +363,7 @@
 				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=4">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 		            	<i class="fa fa-commenting-o  line-height30" ></i>
+		            	 <span id="dpjcount"></span>
 		            	<!--<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">1</span>-->
 		          	</div>待评价
 	          	</a>
@@ -462,6 +466,32 @@
 </div>
 <%@include file="/webcom/shop-foot.jsp" %>
 <script>
+function ajaxcount() {
+    var submitData = { 
+    };
+    $.post('${ctx}/shop/orderform!getOrderCount.action?custid=${custid}&lscode=${lscode}', submitData,
+            function (json) { 
+                if (json.state == 0) {
+                    if(json.dfkcount>0){
+                    	$("#dfkcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dfkcount+'</span>'); 
+                    	
+                    }
+                    if(json.dfhcount>0){
+                    	$("#dfhcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dfhcount+'</span>'); 
+                    	
+                    }
+                    if(json.dshcount>0){
+                    	$("#dshcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dshcount+'</span>'); 
+                    	
+                    }
+                    if(json.dpjcount>0){
+                    	$("#dpjcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dpjcount+'</span>'); 
+                    	
+                    }
+                   }
+            }, "json");
+}
+ajaxcount();
  $('.modal-cont-foot span').click(function(){
  	$('.modal').css('display','none')
  })

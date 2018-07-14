@@ -4446,6 +4446,7 @@ public class ShopAction extends GeneralAction {
 				HashMap<String, Object> whereMap = new HashMap<>();
 				whereMap.put("orderid", oid);
 				List<DBObject> list = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, null);
+				String  zfmoney="0";
 				for (DBObject dbObject : list) {
 					OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
 					DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
@@ -4453,38 +4454,53 @@ public class ShopAction extends GeneralAction {
 					// 验证库存
 					if (pro != null) {
 						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
-						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() > 0) {
-							// 开始支付 
-							if (wwzService.deljf(BaseDecimal.add(obj.getPrice()+"",obj.getKdprice()+""), fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
-								System.out.println("en---->"+obj.getPrice());
-								/*
-								entity.set_id(oid);
-								entity.setState(2);
-								baseDao.insert(PubConstants.WX_ORDERFORM, entity);*/
-								//支付成功并更新订单状态
-								// 更新库存状态
-								obj.setGmnum(obj.getGmnum() + entity.getCount());
-								obj.setNum(obj.getNum() - entity.getCount());
-								baseDao.insert(PubConstants.DATA_PRODUCT, obj);
-								
-								orderFormpro.set_id(Long.parseLong(dbObject.get("_id").toString()));
-								orderFormpro.setGoodstate(2);
-								baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
-								// 支付成功
-								map.put("state", 0);
-							} else {
-								// 乐乐币不足
-								map.put("state", 2);
-							}
-						} else {
-							// 库存不足
-							map.put("state", 3);
-						}
+						zfmoney=BaseDecimal.add(zfmoney, BaseDecimal.add(BaseDecimal.multiplication(obj.getPrice()+"",orderFormpro.getCount()+""), obj.getKdprice()+""));
+						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() <=0) {
+							//库存不足 
+						   map.put("state", 3);
+						   String json = JSONArray.fromObject(map).toString();
+						   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+						   return;
+						} 
+						
 
 					} else {
 						// 商品已下架
 						map.put("state", 4);
 					}
+				}
+				
+				// 开始支付 
+				if (wwzService.deljf(zfmoney, fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
+					 
+					/*
+					entity.set_id(oid);
+					entity.setState(2);
+					baseDao.insert(PubConstants.WX_ORDERFORM, entity);*/
+					//支付成功并更新订单状态
+					// 更新库存状态
+					
+					for (DBObject dbObject2 : list) {
+						OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
+						DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
+								Long.parseLong(dbObject2.get("pid").toString()));
+						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
+						
+						obj.setGmnum(obj.getGmnum() + entity.getCount());
+						obj.setNum(obj.getNum() - entity.getCount());
+						baseDao.insert(PubConstants.DATA_PRODUCT, obj);
+						
+						orderFormpro.set_id(Long.parseLong(dbObject2.get("_id").toString()));
+						orderFormpro.setGoodstate(2);
+						baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
+					} 
+					entity.setState(2);
+					baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+					// 支付成功
+					map.put("state", 0);
+				} else {
+					// 乐乐币不足
+					map.put("state", 2);
 				}
 
 			} else {
