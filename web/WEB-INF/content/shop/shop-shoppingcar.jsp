@@ -255,7 +255,7 @@ function ajaxjz(){//加载
 	    		 for(var i=0;i<v.length;i++){ 
 	    		  if(v[i].product!=null){
 	    		    spec+=v[i].spec+",";
-	    		    xszf+='<div id="'+v[i]._id+'_lb" class="line-bottom pt-10 pb-10 pr-10 pl-5 overflow-hidden position-r" style="height:90px;">'
+	    		    xszf+='<div id="'+v[i]._id+'_lb" class="line-bottom pt-10 pb-10 pr-10 pl-5 overflow-hidden position-r" >'
 	    		  +'<div class="col-1"><div class="mt-30 clear pr-5">'
 	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price.toFixed(2)+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
 	    		  +'<font size="1"><i id="'+v[i]._id+'"  class="fa fa-check zi-green" style="line-height:11px; display:none"></i>'
@@ -269,13 +269,13 @@ function ajaxjz(){//加载
 	    		  +'<div class=" pull-left weight500"><font size="2">'
 	    		  +'<div class="clear sl hang30" style="line-height:35px;">'
 	    		  +'<span class="zi-hui  kd" kd='+v[i].product.kdprice+'>快递:'+v[i].product.kdprice.toFixed(2)+'元</span>&nbsp; 规格：'+v[i].spec+'</div>'
-	    		  +'<div class="sl hang30" style="line-height:30px;">';
+	    		  +'<div class="sl" style="line-height:20px;">';
 	    		  if(v[i].price==0){
 	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].product.price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  }else{
 	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  } 
-	    		  xszf+='数量:'+v[i].count+'件</i></span></div></font></div>'
+	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:0.00</span></div></font></div>'
 	    		  +'</div></div></div>';
 	    		   }
 	    	     

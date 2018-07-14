@@ -166,7 +166,7 @@
 		    			    		       }
 		    			    		       
 		    			    		       for(var j=0;j<list.length;j++){
-		    			    		            xszf+='<div class="clear div-group-10 position-r hang90 border-radius5">'
+		    			    		            xszf+='<div class="clear div-group-10 position-r  border-radius5" style="overflow:hidden;">'
 		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');"></div>'
 		    			    		         +'</div>'
 		    			    		         +'<div style="padding-left:80px;">'
@@ -184,8 +184,8 @@
 		    			    		               +'<span class="zi-hui"><span class="zi-lan-tq">暂无物流信息</span></span>'
 		    			    		               +'</div>';
 		    			    		         }
-		    			    		         xszf+='<div class=" hang30 width-10 line-height30 zi-6">'  
-		    			    		         +'<div class="col-9">共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></div>';
+		    			    		         xszf+='<div class=" width-10 line-height20 zi-6">'  
+		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;"></div>';
 		    			    		         if(list[j].goodstate<4){
 		    				    		          if(list[j].state==1 || list[j].state==3){
 		    				    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')" style="color:#e4393c">退货查看</div>';
