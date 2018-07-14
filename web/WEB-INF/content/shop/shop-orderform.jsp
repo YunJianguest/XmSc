@@ -348,7 +348,7 @@ function del(id) {
                 </div>
 
                 <div class="width-10 pt-15">
-                    <div class="button_group1" onclick="window.location.href='${ctx}/integral/miners!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}&state=1'">
+                    <div class="button_group1" onclick="window.location.href='${ctx}/user/fromuser!basemsg.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
                         <div class="width-8 maring-a border-radius3 btn-green zi-bai txt-c hang30 line-height30">
                           立即兑换
                         </div>
