@@ -791,4 +791,131 @@ public class FromuserAction extends GeneralAction<WxUser>{
   		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     }
 	 
+    /**
+	 * ajax用户信息完善
+	 */
+	public void  ajaxuserupdate(){
+		getLscode();
+		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		try {
+			
+			String name =  Struts2Utils.getParameter("name");//姓名
+			String tel =  Struts2Utils.getParameter("tel");//电话
+			String uskd =  Struts2Utils.getParameter("uskd");//uskd账号
+			String password =  Struts2Utils.getParameter("password");//密码
+			String province =  Struts2Utils.getParameter("province");//省
+			String city =  Struts2Utils.getParameter("city");//市
+			String county =  Struts2Utils.getParameter("county");//区
+			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
+			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
+			DBObject db = basedao.getMessage(PubConstants.USER_INFO, lscode);
+			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+			user.setUserName(name);
+			user.setTel(tel);
+			user.setAccount(tel);
+			user.setUskd(uskd);
+			user.setPassword(password);
+			user.setProvince(province);
+			user.setCity(city);
+			user.setCounty(county);
+			user.setId_card_front(up_picture_front);
+			user.setId_card_reverse(up_picture_reverse);
+			basedao.insert(PubConstants.USER_INFO, user);
+			sub_Map.put("state", 0);//修改成功
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			sub_Map.put("state", 1);
+			e.printStackTrace();
+		}
+	  	String json = JSONArray.fromObject(sub_Map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	/**
+	 * 个人信息完善
+	 */
+	public String basemsg()throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		return "basemsg";
+	}
+	
+	/**
+	 * ajax用户信息完善
+	 */
+	public void  ajaxUserUpdate(){
+		getLscode();
+		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		try {
+			
+			String name =  Struts2Utils.getParameter("name");//姓名
+			String tel =  Struts2Utils.getParameter("tel");//电话
+			String uskd =  Struts2Utils.getParameter("uskd");//uskd账号
+			String password =  Struts2Utils.getParameter("password");//密码
+			String province =  Struts2Utils.getParameter("province");//省
+			String city =  Struts2Utils.getParameter("city");//市
+			String county =  Struts2Utils.getParameter("county");//区
+			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
+			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
+			DBObject db = basedao.getMessage(PubConstants.USER_INFO, lscode);
+			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+			user.setUserName(name);
+			user.setTel(tel);
+			user.setAccount(tel);
+			user.setUskd(uskd);
+			user.setPassword(password);
+			user.setProvince(province);
+			user.setCity(city);
+			user.setCounty(county);
+			user.setId_card_front(up_picture_front);
+			user.setId_card_reverse(up_picture_reverse);
+			basedao.insert(PubConstants.USER_INFO, user);
+			sub_Map.put("state", 0);//修改成功
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			sub_Map.put("state", 1);
+			e.printStackTrace();
+		}
+	  	String json = JSONArray.fromObject(sub_Map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
+	/**
+	 * 个人安全
+	 */
+	public String safePwd()throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		return "safePwd";
+	}
+	
+	/**
+	 * ajax 个人安全  密码修改
+	 */
+	public void ajaxsafePwd()throws Exception{
+		getLscode();
+		Map<String, Object> sub_Map=new HashMap<String, Object>();
+		String oldPwd = Struts2Utils.getParameter("oldPwd");
+		String newPwd = Struts2Utils.getParameter("newPwd");
+		HashMap<String, Object> whereMap=new HashMap<>();
+		whereMap.put("_id", lscode);
+		DBObject db = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+		UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+		if(user!=null) {
+			String loginpasswd =user.getPassword();
+			//判断旧密码是否输入正确
+			if(oldPwd.equals(loginpasswd)) {
+				user.setPassword(newPwd);
+				basedao.insert(PubConstants.USER_INFO, user);
+				sub_Map.put("state", 1);//修改成功
+			}else {
+				sub_Map.put("state", 0);//旧密码错误
+			}
+			
+		}
+		String json = JSONArray.fromObject(sub_Map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
 }
