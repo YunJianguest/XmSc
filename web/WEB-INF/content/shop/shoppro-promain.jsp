@@ -81,6 +81,7 @@
 			    bottom: 0;
 			    left: 0;
 			    line-height: 20px;
+			    color: #e4393c;
 			}
 			.mui-table-view.mui-grid-view .mui-table-view-cell{
 				padding-left: 5px;
@@ -168,7 +169,7 @@
                 						if(v[i].price!=null){
                 							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';
                 						} 
-                						html+='<span class="virtualcoin">0.00</span><span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
+                						html+='<span class="virtualcoin">PPB:0.00</span><span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
                 						+'</div></div></div></li>';		
             		    	              
             					

@@ -600,6 +600,7 @@
 			.virtualcoin{
 				display: inline-block;
     			line-height: 24px;
+    			color: #e4393c;
 			}
 			.collectbox.on,.attentbox.on{
 				color: #e4393c;
@@ -671,7 +672,7 @@
                 <div class="pt-10">
                     <font size="3">
                         <i class="zi-hong" style="display: block;">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/></i>
-                        <span class="virtualcoin">PP:0.00</span>
+                        <span class="virtualcoin">PPB:0.00</span>
                     </font>
                 </div>
                 <div class="clear pt-10 pb-5 zi-hui overflow-hidden">
