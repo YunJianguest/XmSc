@@ -19,9 +19,9 @@
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1);"></a>
-		    <h1 class="mui-title">快报列表</h1>
-		</header>
+    	    <a class=" mui-icon mui-icon-undo mui-pull-left" style="color: #000;"></a>
+    	    <h1 class="mui-title">快报列表</h1>
+    	</header>
 		<div class="mui-content" style="background: #ececec;">
 		    <ul class="mui-table-view" style="margin-top: 0;padding-bottom: 0;">
 		    	<c:forEach items="${rollList }" var="obj">
