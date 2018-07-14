@@ -99,8 +99,7 @@ public class ShopAction extends GeneralAction {
 	 * @throws Exception
 	 */
 	public String index() throws Exception {
-		String comid = Struts2Utils.getParameter("comid");
-		System.out.println("comid--->" + comid);
+		String comid = Struts2Utils.getParameter("comid"); 
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		String comnums = Struts2Utils.getParameter("comnums");
@@ -150,11 +149,7 @@ public class ShopAction extends GeneralAction {
 			shopmb=baseDao.getMessage(PubConstants.SHOP_SHOPMB, whereMap);
 		} else {
 			// whereMap.put("lx",1);
-		}
-		System.out.println("comid--->" + comid); 
-		System.out.println("custid--->" + custid);
-		
-		System.out.println("shopmb--->" + shopmb);
+		} 
 		if (StringUtils.isEmpty(agid) || agid.equals("")) {
 			// agid=wwzService.getAgid(shopmb.get("_id").toString(),
 			// wwzService.getVipNo(fromUserid));
@@ -263,6 +258,9 @@ public class ShopAction extends GeneralAction {
 					baseDao.insert(PubConstants.DATA_WXUSER, user);
 				}
 			}
+		}
+		if(shopmb!=null){
+			System.out.println(shopmb.get("mb"));	
 		}
 
 		if (shopmb != null) {
