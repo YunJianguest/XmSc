@@ -486,6 +486,10 @@
 				border: none;
 				border-bottom: 1px solid #e3e3e3;
 			}
+			.virtualcoin{
+				display: inline-block;
+    			line-height: 24px;
+			}
     </style>
 </head>
 <body>
@@ -529,7 +533,9 @@
     </a>
     </c:if>
     <div class="clear"></div>
-
+	<div style="width: 100%;height: 40px;padding: 0 10px;">
+		<input type="text" name="" id="" value="" style="width: 100%;height: 100%;border-bottom: 1px solid #ddd;" placeholder="请填写你的部门编号"/>
+	</div>
     <div class="line-bottom div-group-10 overflow-hidden position-r" style="height:90px;">
         <div class=" position-a">
             <div class="img-bj bk border-radius3" style="background-image: url(${filehttp}/${entity.logo});"></div>
@@ -545,7 +551,7 @@
                     <div class="clear sl hang30" style="line-height:35px;">
                         <span class="zi-hui">规格：${spec}</span>
                     </div>
-                    <div class="sl hang30" style="line-height:30px;">
+                    <div class="sl " style="line-height:30px;">
                       <c:if test="${empty entity.jfdh||entity.jfdh==0}">
                        <c:if test="${empty price}">
                        <span class="zi-cheng">￥<fmt:formatNumber value='${entity.price}'  pattern="0.0#"/>元
@@ -559,6 +565,7 @@
                       <span class="zi-cheng">平台币<fmt:formatNumber value='${entity.jfdh}'  pattern="0.0#"/>
                       </c:if>
                        <i class="pl-10 zi-6">数量:${count}件</i></span>
+                       <span class="virtualcoin">PP:0.00</span>
                     </div>
                 </font>
             </div>
