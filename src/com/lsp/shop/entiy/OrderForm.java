@@ -84,6 +84,10 @@ public class OrderForm extends ReflectionDBObject{
 	 */
 	private double postage;
 	/**
+	 * 快递费
+	 */
+	private double kdprice;
+	/**
 	 * 提醒
 	 */
 	private String remind;
@@ -138,6 +142,12 @@ public class OrderForm extends ReflectionDBObject{
 	 */
 	private List<Long> comids;
 	
+	public double getKdprice() {
+		return kdprice;
+	}
+	public void setKdprice(double kdprice) {
+		this.kdprice = kdprice;
+	}
 	public Double getPublic_money() {
 		return public_money;
 	}

@@ -57,6 +57,10 @@ public class OrderFormpro extends ReflectionDBObject {
 	 */															
 	private String kdno;
 	/**
+	 * 快递价格
+	 */
+	private Double kdprice;
+	/**
 	 * 发货
 	 */
 	private Date deliveryDate;
@@ -207,5 +211,13 @@ public class OrderFormpro extends ReflectionDBObject {
 	public void setResureDate(Date resureDate) {
 		this.resureDate = resureDate;
 	}
+
+	public Double getKdprice() {
+		return kdprice;
+	}
+
+	public void setKdprice(Double kdprice) {
+		this.kdprice = kdprice;
+	} 
 
 }
