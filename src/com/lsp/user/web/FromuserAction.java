@@ -987,20 +987,16 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		}
 		List<Object> userInfoList = new ArrayList<Object>();
 		try {
-			HashMap<String, Object>whereMap=new HashMap<>();
-			whereMap.put("_id", lscode);
-			System.out.println(lscode);
-			List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap,null);
-			System.out.println(list.size());
-			for(int i=0;i<list.size();i++) {
+			    DBObject   user=wwzservice.getWxUser(fromUserid);
+			    HashMap<String, Object>whereMap=new HashMap<>(); 
 				Map<String, Object>sub_Map1=new HashMap<String, Object>();
-				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(list.get(i), UserInfo.class);
+				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
 				Long number = info.getNumber();//用户的编号
 				sub_Map1.put("user", info);
 				whereMap=new HashMap<>();
 				whereMap.put("renumber", number);
 				
-				List<DBObject>list1=basedao.getList(PubConstants.USER_INFO, whereMap,null);
+				List<DBObject>list1=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
 				List<Object> userInfoList1 = new ArrayList<Object>();
 				for(int j=0;j<list1.size();j++) {
 					Map<String, Object>sub_Map2=new HashMap<String, Object>();
@@ -1010,7 +1006,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					whereMap=new HashMap<>();
 					whereMap.put("renumber", number1);
 					
-					List<DBObject>list2=basedao.getList(PubConstants.USER_INFO, whereMap,null);
+					List<DBObject>list2=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
 					
 					sub_Map2.put("son", list2);
 					userInfoList1.add(sub_Map2);
@@ -1019,8 +1015,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				
 				userInfoList.add(sub_Map1);
 				//sub_Map.put("userinfo", sub_Map1);
-			}
-			
+		 
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
