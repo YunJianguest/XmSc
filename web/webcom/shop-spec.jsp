@@ -123,7 +123,7 @@
                             <div class=" pull-left weight500">
                                 <div class="sl" style="line-height:24px;">
                                     <span class="zi-cheng" id="totalPrice">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/>元</span>
-                                    <span class="virtualcoin">PP:0.00</span>
+                                    <span class="virtualcoin">PPB:0.00</span>
                                 </div>
                             </div>
                             <div class="border-radius3 pull-right overflow-hidden">
