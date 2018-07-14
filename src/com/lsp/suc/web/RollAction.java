@@ -19,6 +19,7 @@ import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.suc.entity.Bbstypeinfo;
@@ -82,7 +83,7 @@ public class RollAction extends GeneralAction<RollInfo>{
 		return SUCCESS;
 	}
 	/***
-	 * s
+	 * 快报
 	 * @return
 	 */
 	public String kuaibaoList(){
@@ -92,13 +93,17 @@ public class RollAction extends GeneralAction<RollInfo>{
 		HashMap<String, Object> sortMap=new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
 //		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-		
-		
-		
+//		String custid=SpringSecurityUtils.getCurrentUser().getId();
+		String custid=SysConfig.getProperty("custid");
+		String comid=Struts2Utils.getParameter("comid"); 
+		if(StringUtils.isEmpty(comid)){
+			whereMap.put("custid", custid);
+		}else if(StringUtils.isEmpty(custid)){
+			whereMap.put("comid", comid);
+		}
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		
 		List<DBObject> list=baseDao.getList(PubConstants.SUC_ROLL,whereMap,fypage,10,sortMap,backMap);
 		fycount=baseDao.getCount(PubConstants.SUC_ROLL,whereMap);
 		Struts2Utils.getRequest().setAttribute("rollList", list);
