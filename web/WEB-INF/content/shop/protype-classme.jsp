@@ -207,6 +207,7 @@
 			height: 100%;
 			overflow-y: scroll;
 			position: fixed;
+			padding-bottom: 50px;
 		}
 		
 		.category-content-branchList {
@@ -217,7 +218,7 @@
 		
 		.category-branch-content {
 			margin: 19px 7px 0 7px;
-			padding-bottom: 50px;
+			
 		}
 		
 		.category-branch-content h4 {
