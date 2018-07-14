@@ -462,8 +462,12 @@ function delcar(id){
     </style>
 </head>
 <body>
- 
-<main class="clear cmp640 lock">
+ <header class="mui-bar mui-bar-nav" style="background: #fff;">
+				<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
+				<h1 class="mui-title">购物车</h1>
+			</header> 
+			
+<main class="clear cmp640 lock" style="padding-top: 44px;">
  <c:if test="${not empty address}">
      <a href="${ctx}/shop/shop!useraddress.action?lscode=${lscode}&custid=${custid}&agid=${agid}&address=ok&backurl=/shop/shop!shoppingcar.action?1=1">
          

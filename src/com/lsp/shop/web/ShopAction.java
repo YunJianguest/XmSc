@@ -4261,8 +4261,7 @@ public class ShopAction extends GeneralAction {
 		entity.set_id(orderno);
 		entity.setState(1);
 		entity.setNo(no);
-		entity.setLx(lx);
-
+		entity.setLx(lx); 
 		entity.setFromUserid(fromUserid);
 		entity.setCustid(custid);
 		entity.setName(name);
@@ -4290,6 +4289,7 @@ public class ShopAction extends GeneralAction {
 		String contri_money = "0";
 		// 会员区支付金额
 		String members_money = "0";
+		String kd_money = "0";
 
 		String[] ids = recordid.split(",");
 		String[] nums = num.split(",");
@@ -4366,8 +4366,8 @@ public class ShopAction extends GeneralAction {
 									BaseDecimal.multiplication(pro.get("price").toString(), nums[i]));
 						}
 					}
-				}
-
+				} 
+				
 				// 生成信息
 				if (pro != null) {
 					List<Long>lscom=new ArrayList<>();
@@ -4381,6 +4381,7 @@ public class ShopAction extends GeneralAction {
 					if (pro.get("jffh") != null) {
 						jffh = jffh + Double.parseDouble(pro.get("jffh").toString());
 					}
+					
 					OrderFormpro ord = new OrderFormpro();
 					ord.set_id(mongoSequence.currval(PubConstants.SHOP_ODERFORMPRO));
 
@@ -4389,6 +4390,10 @@ public class ShopAction extends GeneralAction {
 					ord.setPro(pro);
 					ord.setPid(Long.parseLong(pro.get("_id").toString()));
 					ord.setSpec(specs[i]);
+					if(pro.get("kdprice")!=null){
+						kd_money=BaseDecimal.add(kd_money, pro.get("kdprice").toString());
+						ord.setKdprice(Double.parseDouble(pro.get("kdprice").toString()));
+					}
 					if (StringUtils.isNotEmpty(deptCode)) {
 						ord.setDeptCode(Long.parseLong(deptCode));
 					}
@@ -4410,6 +4415,7 @@ public class ShopAction extends GeneralAction {
 
 			}
 		}
+		entity.setKdprice(Double.parseDouble(kd_money));
 		entity.setZfmoney(Double.parseDouble(zfmoney));
 		entity.setCost(Double.parseDouble(cost));
 		entity.setPublic_money(Double.parseDouble(public_money));
@@ -4451,7 +4457,7 @@ public class ShopAction extends GeneralAction {
 						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
 						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() > 0) {
 							// 开始支付 
-							if (wwzService.deljf(obj.getPrice()+"", fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
+							if (wwzService.deljf(BaseDecimal.add(obj.getPrice()+"",obj.getKdprice()+""), fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
 								System.out.println("en---->"+obj.getPrice());
 								/*
 								entity.set_id(oid);

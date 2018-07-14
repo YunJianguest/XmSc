@@ -607,13 +607,13 @@
     </style>
 </head>
 <body class="cmp640">
-	<header class="mui-bar mui-bar-nav" style="background: #fff;">
-				<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
-				<h1 class="mui-title">商品详情</h1>
-			</header> 
+	<header style="background: #fefefe;width: 100%;height: 44px;position: fixed;top: 0;left: 0;padding: 0 10px;line-height: 44px;text-align: center;">
+			<a  href="javascript:history.go(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 5px;"></a>
+			<h1 class="mui-title">商品详情</h1>
+	</header> 
 			
 	
-<main style="position: relative;padding-top: 40px;">
+<main style="position: relative;padding-top: 44px;">
     <c:if test="${not empty slide}">
         <div id="banner_box" class="box_swipe overflow-hidden position-r" style="width:100%">
             <ul>
