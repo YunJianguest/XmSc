@@ -466,7 +466,6 @@ function delcar(id){
 				height: auto;
 				z-index: 1002;
 				margin: 0 auto;
-				margin-top: 80px;
 				text-align: center;
 				background: #fefefe;
 				border-radius: 5px;
