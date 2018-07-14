@@ -241,7 +241,6 @@
 			</div>
 		</div>
 		<script>
-		console.log('${user }');
 		//提交
 		function update_submit(){
 			console.log('${lscode}');

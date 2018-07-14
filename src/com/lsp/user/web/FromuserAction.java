@@ -896,7 +896,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			String county =  Struts2Utils.getParameter("county");//区
 			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
 			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
-			DBObject db = basedao.getMessage(PubConstants.USER_INFO, lscode);
+			DBObject db = basedao.getMessage(PubConstants.USER_INFO, fromUserid);
 			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
 			user.setUserName(name);
 			user.setTel(tel);
