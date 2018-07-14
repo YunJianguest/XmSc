@@ -92,15 +92,15 @@ public class RollAction extends GeneralAction<RollInfo>{
 		HashMap<String, Object> whereMap=new HashMap<String, Object>();
 		HashMap<String, Object> sortMap=new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
-//		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-//		String custid=SpringSecurityUtils.getCurrentUser().getId();
 		String custid=SysConfig.getProperty("custid");
 		String comid=Struts2Utils.getParameter("comid"); 
-		if(StringUtils.isEmpty(comid)){
-			whereMap.put("custid", custid);
-		}else if(StringUtils.isEmpty(custid)){
-			whereMap.put("comid", comid);
+		//String custid1=Struts2Utils.getParameter("custid");
+		if(StringUtils.isNotEmpty(comid)) {
+			whereMap.put("comid",Long.parseLong(comid));
+		}else {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
 		}
+		
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
