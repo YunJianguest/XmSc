@@ -487,7 +487,7 @@
 				border-bottom: 1px solid #e3e3e3;
 			}
 			.virtualcoin{
-				display: inline-block;
+				display: block;
     			line-height: 24px;
 			}
     </style>
@@ -536,7 +536,7 @@
 	<div style="width: 100%;height: 40px;padding: 0 10px;">
 		<input type="text" name="" id="" value="" style="width: 100%;height: 100%;border-bottom: 1px solid #ddd;" placeholder="请填写你的部门编号"/>
 	</div>
-    <div class="line-bottom div-group-10 overflow-hidden position-r" style="height:90px;">
+    <div class="line-bottom div-group-10 overflow-hidden position-r" >
         <div class=" position-a">
             <div class="img-bj bk border-radius3" style="background-image: url(${filehttp}/${entity.logo});"></div>
         </div>
