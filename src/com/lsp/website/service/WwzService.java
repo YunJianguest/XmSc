@@ -2995,7 +2995,7 @@ public class WwzService {
      * @return https://IP+Port/ws/BatchSend2.aspx?CorpID=*&Pwd=*&Mobile=*&Content=*&SendTime=* 
      */
 
-    public boolean sendSMS(String tel,String content) {
+    public boolean sendSMS_ts(String tel,String content) {
     	String account ="N4103166";
     	// 用户平台API密码(非登录密码)
     	String pswd ="eDqwluLbWSe971";
@@ -3019,7 +3019,7 @@ public class WwzService {
      * @return https://IP+Port/ws/BatchSend2.aspx?CorpID=*&Pwd=*&Mobile=*&Content=*&SendTime=* 
      */
 
-    public boolean sendSMS_Js(String tel,String content) {
+    public boolean sendSMS(String tel,String content) {
     	//https://sdk2.028lk.com/sdk2/ 
     	String url="https://sdk2.028lk.com/sdk2/BatchSend2.aspx?CorpID="+SysConfig.getProperty("lk_sms_id")+"&Pwd="+SysConfig.getProperty("lk_sms_pwd")+"&Mobile="+tel+"&Content="+content;  
     	String str=HttpClient.http(url, null); 
@@ -3056,6 +3056,18 @@ public class WwzService {
     	JSONObject json=JSONObject.parseObject(str);
     	if(json.get("CNY")!=null) {
     		return Double.parseDouble(json.get("CNY").toString());
+    	};
+		return 0; 
+    }
+    /**
+     * 获取盼盼币实时价格
+     * @return
+     */
+    public double getPPBSprice() { 
+    	String str=HttpClient.sendGet(SysConfig.getProperty("uskd_price_api"));
+    	JSONObject json=JSONObject.parseObject(str);
+    	if(json.get("new_price")!=null) {
+    		return Double.parseDouble(json.get("new_price").toString());
     	};
 		return 0; 
     }
