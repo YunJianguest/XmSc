@@ -198,9 +198,9 @@
    		<div class="pull-left" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-left:15px;'>
    			<i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#000;'></i>
    		</div>
-   		<div class="pull-right" style="margin-top: 15px;margin-right: 15px;">
+   		<!-- <div class="pull-right" style="margin-top: 15px;margin-right: 15px;">
    			<i class="zi-lan-tq fa fa-commenting-o" style='font-size:16px;color:#000;'></i>
-   		</div>
+   		</div> -->
    	</div>
         <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 0;margin-left:20px;margin-top:-35px;">
           <c:if test="${empty entity.headimgurl}">
@@ -216,11 +216,13 @@
                 <font size="2">
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
                     <font size="1">
-                        <div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
-                            <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
-                                    class="fa fa-user line-height20"></i><i class="pl-2">${daili }</i></div>
-                           
-                        </div>
+                    	<c:if test="${not empty daili}">
+	                    	<div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
+	                            <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
+	                                    class="fa fa-user line-height20"></i><i class="pl-2">${daili }</i></div>
+	                           
+	                        </div>
+                    	</c:if>
                     </font>
                     <!-- 会员编号 -->
                    <div class="hang25 txt-c line-height25 zi-hei-tq weight500">
