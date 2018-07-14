@@ -213,8 +213,10 @@
         		$.post('${ctx}/shop/productattention!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
 	                function (json) {
 	                    if(json.state =="1"){
-	                 	   confirm("关注成功");
-	                 	   $('.Attent').html('取消关注')
+//	                 	   confirm("关注成功");
+	                 	   $('.Attent').html('取消关注');
+	                 	   $('.Attent').siblings('i.fa').removeClass('fa-heart-o').addClass('fa-heart');
+	                 	   $('.Attent').parent('div.attentbox').addClass('on');
 	                    }else{
 	                 	   confirm("抱歉,添加过程中出现异常!");
 	                    }
@@ -222,8 +224,10 @@
         	} else{
         		$.post('${ctx}/shop/productattention!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
                   	function (json1) {
-    		 	 	confirm("取消关注成功!");
-    		 	 	$('.Attent').html('关注')
+//  		 	 	confirm("取消关注成功!");
+    		 	 	$('.Attent').html('关注');
+    		 	 	$('.Attent').siblings('i.fa').removeClass('fa-heart').addClass('fa-heart-o');
+	                $('.Attent').parent('div.attentbox').removeClass('on');
               	}, "json");
         	}
     	}
@@ -239,8 +243,11 @@
             	$.post('${ctx}/shop/productcollect!ajaxsave.action?agid=${agid}&lscode=${lscode}', submitData,
                     function (json) {
                         if(json.state =="1"){
-                     	   confirm("收藏成功");
+                        	console.log($('div.collectbox'))
+//                   	   confirm("收藏成功");
                      	   $('.Collect').html('取消收藏')
+                     	   $('.Collect').siblings('i.fa').removeClass('fa-heart-o').addClass('fa-heart');
+                     	   $('.Collect').parent('div.collectbox').addClass('on');
                         }else{
                      	   confirm("抱歉,添加过程中出现异常!");
                         }
@@ -248,8 +255,10 @@
 	       	} else{
 	        	$.post('${ctx}/shop/productcollect!ajaxdelete.action?agid=${agid}&lscode=${lscode}&productId='+productId,
 	                function (json1) {
-	        		 	confirm("取消收藏成功!");
-	        		 	$('.Collect').html('收藏')
+//	        		 	confirm("取消收藏成功!");
+	        		 	$('.Collect').html('收藏');
+	        		 	$('.Collect').siblings('i.fa').removeClass('fa-heart').addClass('fa-heart-o');
+	        		 	$('.Collect').parent('div.collectbox').removeClass('on');
 	            }, "json");
 	       	}
        	}
@@ -262,19 +271,28 @@
             };
         	$.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
 		        function (json) {
-		            if(json.state =="0"){
-		            	$('.Collect').html('收藏')
+		        	console.log(json.state)
+		            if(json.state ==0){
+		            	$('.Collect').html('收藏');
+		            	$('.Collect').siblings('i.fa').removeClass('fa-heart').addClass('fa-heart-o');
+		            	$('.Collect').parent('div.collectbox').removeClass('on');
 		            }else{
-		            	$('.Collect').html('取消收藏')
+		            	$('.Collect').html('取消收藏');
+		            	$('.Collect').siblings('i.fa').removeClass('fa-heart-o').addClass('fa-heart');
+		            	$('.Collect').parent('div.collectbox').addClass('on');
 		        	}
 		    	}, "json");
 		    $.post('${ctx}/shop/productattention!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
               function (json) {
               	console.log(json.state)
-              	if(json.state =="0"){
-		            $('.Attent').html('关注')
+              	if(json.state ==0){
+		            $('.Attent').html('关注');
+		            $('.Attent').siblings('i.fa').removeClass('fa-heart').addClass('fa-heart-o');
+		            $('.Attent').parent('div.attentbox').removeClass('on');
 		        }else{
-		            $('.Attent').html('取消关注')
+		            $('.Attent').html('取消关注');
+		            $('.Attent').siblings('i.fa').removeClass('fa-heart-o').addClass('fa-heart');
+		            $('.Attent').parent('div.attentbox').addClass('on');
 		        }
               }, "json");
        	}
@@ -583,6 +601,9 @@
 				display: inline-block;
     			line-height: 24px;
 			}
+			.collectbox.on,.attentbox.on{
+				color: #e4393c;
+			}
     </style>
 </head>
 <body class="cmp640">
@@ -631,11 +652,11 @@
                       </div>          
                       <div class="attentbox" style="width: 30%;float: right;">
                       	
-                      	<div class=""  onclick="productCollect(${entity._id});">
+                      	<div class="collectbox"  onclick="productCollect(${entity._id});">
                       		<i class="fa fa-heart-o"></i>
                       		<span class="Collect"></span>
                       	</div>
-                      	<div class="" onclick="productAttent(${entity._id})">
+                      	<div class="attentbox" onclick="productAttent(${entity._id})">
                       		<i class="fa fa-heart-o"></i>
                       		<span class="Attent" ></span>  
                       	</div>
@@ -648,7 +669,7 @@
                 <div class="pt-10">
                     <font size="3">
                         <i class="zi-hong" style="display: block;">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/></i>
-                        <span class="virtualcoin">0.00</span>
+                        <span class="virtualcoin">PP:0.00</span>
                     </font>
                 </div>
                 <div class="clear pt-10 pb-5 zi-hui overflow-hidden">
