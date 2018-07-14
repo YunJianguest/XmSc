@@ -15,19 +15,19 @@
     <link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
     <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">
-    <link href="${ctx }/app/css/style_0.css" rel="stylesheet"> 
-    
-    <link href="${ctx}/mvccol/SweetAlert2/css/sweetalert2.min.css" rel="stylesheet"/>
-    <link href="${ctx}/mvccol/SweetAlert2/css/animo.css" rel="stylesheet"/>
-    <link href="${ctx}/mvccol/SweetAlert2/css/buttons.css" rel="stylesheet"/>
-    <script src="${ctx}/mvccol/js/fomatdate1.js"></script>
-    <script src="${ctx}/mvccol/SweetAlert2/js/sweetalert2.min.js"></script>
-    <script src="${ctx}/mvccol/SweetAlert2/js/promise.js"></script>
+    <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet">  
+    <script src="${ctx}/mvccol/js/fomatdate1.js"></script> 
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script src="${ctx }/mvccol/js/mtlb.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
+    <link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		<link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+    <script src="${ctx}/app/js/iosOverlay.js"></script>
+    	<script src="${ctx}/app/js/spin.min.js"></script>
+    	<script type="text/javascript" src="${ctx }/app/js/jquery.Spinner.js"></script>
     <script>
         $(function () {
             new Swipe(document.getElementById('banner_box'), {
@@ -58,6 +58,33 @@
         })
     </script>
     <script>
+    var loadings="";
+    function  loading(){
+    var opts = {
+	lines: 13, // The number of lines to draw
+	length: 8, // The length of each line
+	width: 4, // The line thickness
+	radius: 13, // The radius of the inner circle
+	corners: 1, // Corner roundness (0..1)
+	rotate: 0, // The rotation offset
+	color: '#FFF', // #rgb or #rrggbb
+	speed: 1, // Rounds per second
+	trail: 60, // Afterglow percentage
+	shadow: false, // Whether to render a shadow
+	hwaccel: false, // Whether to use hardware acceleration
+	className: 'spinner', // The CSS class to assign to the spinner
+	zIndex: 2e9, // The z-index (defaults to 2000000000)
+	top: 'auto', // Top position relative to parent in px
+	left: 'auto' // Left position relative to parent in px
+}; 
+   var target = document.createElement("div");
+   document.body.appendChild(target);
+   var spinner = new Spinner(opts).spin(target);
+   loadings=iosOverlay({
+	text: "Loading", 
+	spinner: spinner
+   });
+ }
         var issend = true;
         var fypage = 0;
         var xszf = "";
@@ -65,369 +92,146 @@
         var lx = "";
         var sel = "";
         function ajaxjz() {//加载
+        	if(loadings==""){
+        		loading();
+        	} 
             if (!issend) {
                 return;
-            }
-            var submitData = {
-                "cid": '${entity._id}',
-                "lx": lx,
-                "sel": sel
-            };
+            } 
+            var submitData = { 
+              cid:"${entity._id}"
+            }; 
             issend = false;
             $.post('${ctx}/shop/shop!ajaxweb.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
-                        var xszfleft = $('#ajaxdivleft').html();
-                        var xszfright = $('#ajaxdivright').html();
+            	     loadings.hide();
+                        var html = $('.recomend').html();
                         if (json.state == 0) {
                             var v = json.list;
+                            /* html+='<div class="mui-content" style="padding-top: 44px;padding-bottom: 50px;background: #fff;">'
+                                +'<div class="mui-row ">'
+                            	+'<ul class="mui-table-view">'; */
                             for (var i = 0; i < v.length; i++) {
-                                if (i & 1 != 0) {
-                                    xszfleft += '<a href="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid=' + v[i]._id + '"><div class="width-10 mt-15 shadow-wai1 overflow-hidden border-radius5 zi-6">'
-                                    + '<div class="position-r"><img src="${filehttp}' + v[i].logo + '" class="width-10 border-radius5s">';
-                                    if(v[i].bq==1){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">包邮</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==2){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">热卖</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==3){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">定制</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==4){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">折扣</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==5){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">下架</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==6){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">半价</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==7){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">秒杀</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==8){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">砍价</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==9){
-                                        xszfleft +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">团购</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    xszfleft += '<div class="position-a width-10 bg-hei-8" style="bottom: 0px; right:0px;">'
-                                    + '<div class="pull-right zi-bai div-group-5 txt-c zi-bai weight500">'
-                                    + '<font size="1">';
-                                    if(v[i].bq==8){
-                                    xszfleft+='<i class="pr-5">剩余:</i>' + v[i].num + '<i class="pl-5">件</i></font>';
-                                    }else{
-                                    xszfleft+='<i class="pr-5">已售:</i>' + v[i].gmnum + '<i class="pl-5">件</i></font>';
-                                    } 
-                                   xszfleft+= '</div></div></div>'
-                                    + '<div class="col-12 div-group-5 zi-6 bg-bai weight500">'
-                                    + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>'
-                                    + '<div class="pt-3"> 现价:' + v[i].price.toFixed(2);
-                                    if(v[i].bq==8){
-                                     xszfleft+='<i class="zi-green pl-10">可砍至:' + v[i].lowprice.toFixed(2) + '</i>'
-                                    + '</div></font></div></div></a>';
-                                    }else{
-                                    xszfleft+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice.toFixed(2) + '</i>'
-                                    + '</div></font></div></div></a>';
-                                    }
-                                } else {
-                                    xszfright += '<a href="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid=' + v[i]._id + '"><div class="width-10 mt-15 shadow-wai1 overflow-hidden border-radius5 zi-6">'
-                                    + '<div class="position-r">'
-                                    + '<img src="${filehttp}' + v[i].logo + '" class="width-10 border-radius5s">';
-                                    if(v[i].bq==1){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">包邮</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==2){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">热卖</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==3){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">定制</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==4){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">折扣</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==5){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">下架</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==6){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">半价</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==7){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">秒杀</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==8){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">砍价</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                    if(v[i].bq==9){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">团购</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                     if(v[i].bq==9){
-                                        xszfright +='<div class="position-a width-3" style="top: 0px; right:10px;">'
-                                        + '<div class="pt-5 txt-c zi-bai weight500 bg-zong">'
-                                        + '<font  size="1">通用</font>'
-                                        + '</div> <div class="">'
-                                        + '<img src="${ctx}/mvccol/img/shop.png" width="100%"></div></div>';
-                                    }
-                                      xszfright +=  '<div class="position-a width-10 bg-hei-8" style="bottom: 0px; right:0px;">'
-                                    + '<div class="pull-right zi-bai div-group-5 txt-c zi-bai weight500">'
-                                    + '<font size="1">';
-                                    if(v[i].bq==8){
-                                     xszfright+='<i class="pr-5">剩余:</i>' + v[i].num + '<i class="pl-5">件</i></font>';
-                                    }else{
-                                     xszfright+='<i class="pr-5">已售:</i>' + v[i].gmnum + '<i class="pl-5">件</i></font>';
-                                    } 
-                                     xszfright+='</div></div></div>'
-                                    + '<div class="col-12 div-group-5 zi-6 bg-bai weight500">'
-                                    + '<font size="1"><div class="clear sl">' + v[i].ptitle + '</div>'
-                                    + '<div class="pt-3"> 现价:' + v[i].price.toFixed(2) ;
-                                    if(v[i].bq==8){
-                                     xszfright+='<i class="zi-green pl-10">可砍至:' + v[i].lowprice.toFixed(2) + '</i>'
-                                    + '</div></font></div></div></a>';
-                                    }else{
-                                    xszfright+='<i class="zi-hui pl-10" style="text-decoration: line-through;">原价:' + v[i].oldprice.toFixed(2) + '</i>'
-                                    + '</div></font></div></div></a>';
-                                    }
-                                }
+//                              if (i & 1 != 0) {
+                                	
+                                	html +='<li class="mui-table-view-cell mui-media mui-col-xs-6" >'
+                						+'<div class="mui-card" style="margin: 2px;">'
+                						+'<div class="mui-card-content">'
+                						+'<a href="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid=' + v[i]._id + '">'
+                						+'<img src="${filehttp}' + v[i].logo + '" />'
+                						+'</a>'	
+                						+'</div>'
+                						+'<div class="mui-card-footer" style="padding: 10px 5px;display: block;">'
+                						+'<span class="similar-product-text" style="height:40px;text-align: left;"><span class="shopping-name">${entity.name}</span>' + v[i].ptitle + ' </span>'
+                						+'<div class="similar-product-info ">';
+                						if(v[i].price!=null){
+                							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';
+                						} 
+                						html+='<span class="virtualcoin">0.00</span><span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
+                						+'</div></div></div></li>';		
+            		    	              
+            					
+//                              }
                             }
+                          /*   html+='</ul></div></div>'; */
                             fypage++;
-                            $('#ajaxdivleft').html(xszfleft);
-                            $('#ajaxdivright').html(xszfright);
+                            $('.recomend').html(html);
+                            issend = true;
                         } else {
+                        	//$('.recomend').html('暂无数据');
                         }
-                        issend = true;
+                       
                     }, "json")
-        }
-        function ajaxtg() {
-            var submitData = {
-                "comid": '${entity._id}'
-            };
-            $.post('${ctx}/shop/shop!ajaxgettg.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
-                    function (json) {
-                        var sxfs = $('#ajaxtg').html();
-                        if (json.state == 0) {
-                            var v = json.list;
-                            for (var i = 0; i < v.length; i+=3) {
-                                sxfs+='<div class="width-10 overflow-hidden">';
-                                if(v[i].lx==1){
-                                    sxfs+='<div class="col-6 line-bottom line-right overflow-hidden" style="height:180px;">'
-                                    +'<font size="2">'
-                                    +'<div class="pt-5 pl-5 hang20">'
-                                    +'<div class=" weight500" style="color: #333333;">四字真言</div>'
-                                    +'</div></font>'
-                                    +'<font size="1">'
-                                    +'<div class="pt-5 pl-5 hang20 zi-hui-tq">'
-                                    +'<div class=" weight500">四字真言</div>'
-                                    +'</div></font>'
-                                    +'<div class=" maring-a" style="width:140px;height:140px;"><img src="img/mote2.png" width="100%"></div>'
-                                    +'</div>';
-                                }
-                                sxfs+='<div class="col-6 line-bottom line-right overflow-hidden" style="height:180px;">';
-                                if(v[i].lx==2){
-                                    sxfs+='<div class="clear hang90 line-bottom"><div class="col-6 pl-5">'
-                                    +' <font size="2">'
-                                    +'<div class="pt-5 hang30">'
-                                    +'<div class="width-10 sl weight500" style="color: #333333;">标题标题标题1</div></div></font>'
-                                    +'<font size="1">'
-                                    +'<div class=" hang30 zi-hui-tq">'
-                                    +'<div class="width-10 sl weight500">简介简介简介1</div>'
-                                    +'</div></font></div>'
-                                    +'<div class="col-6 div-group-5">'
-                                    +'<div class="img-wh80 pull-right">'
-                                    +'<img src="img/mote2.png" width="100%"></div></div></div>';
-                                }
-                                if(v[i].lx==3){
-                                    sxfs+='<div class="clear hang90 line-bottom">'
-                                    +'<div class="col-6 pl-5">'
-                                    +'<font size="2">'
-                                    +'<div class="pt-5 hang30">'
-                                    +'<div class="width-10 sl weight500" style="color: #333333;">标题标题标题2</div></div></font>'
-                                    +'<font size="1"><div class="pt-5 hang30 zi-hui-tq"> <div class="width-10 sl weight500">简介简介简介2</div></div></font></div>'
-                                    +' <div class="col-6 div-group-5">'
-                                    +'<div class="img-wh80 pull-right">'
-                                    +'<img src="img/mote2.png" width="100%"></div></div></div>';
-                                }
-                                sxfs+='</div></div>';
-                            }
-                            fypage++;
-                            $('#ajaxtg').html(sxfs);
-                        } else {
-                        }
-                    }, "json");
-        }
-        function fxsel(v) {
-            $('#fl_tanchu').hide();
-            lx = v;
-            fypage = 0;
-            $('#ajaxdivleft').html('');
-            $('#ajaxdivright').html('');
-            ajaxjz();
-        }
-        function ajaxsel() {
-            sel = $('#sel').val().replace('搜索', '');
-            fypage = 0;
-            $('#ajaxdivleft').html('');
-            $('#ajaxdivright').html('');
-            ajaxjz();
-        }
+              } 
+        function goods_search(){
+           	var goods_name = $("#sel").val();
+           	if(goods_name!=""&&goods_name!=null){
+           		window.location.href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&ptitle="+goods_name;
+           	}
+           }
     </script>
-    <style>
-        .yListr3 .zhiding .div3 {
-            border: 1px solid #45c01a;
-            position: relative;
-            color: #45c01a;
-        }
-        .bg-zong {
-            background: #630601
-        }
-        .border-radius5s {
-            border-radius: 5px 5px 0 0;
-        }
-        .shadow-wai1 {
-            box-shadow: 0px 0px 0px rgba(255, 255, 255, .5), /*左边阴影*/ 1px 0px 10px rgba(140, 140, 140, .5), /*右边阴影*/ 0 -1px 5px rgba(140, 140, 140, .5), /*顶部阴影*/ 0 1px 5px rgba(140, 140, 140, .5); /*底边阴影*/
-        }
-        .line-left-green {
-            border-left: 5px solid #ec5254;
-        }
-        .sc-hong {
-            background-color: #ec5254
-        }
-        .line-height35 {
-            line-height: 35px;
-        }
-        
-        .collectbox{
-        position: fixed;
-        right: 5px;
-        bottom: 100px;
-        z-index: 999;
-      }
-      .collectbox span{
-        cursor: pointer;
-        display: block;
-        width: 50px;
-        height: 30px;
-        font-size: 12px;
-        margin-top: 10px;
-        /*border: 1px solid #e3e3e3;*/
-        text-align: center;
-      }
-      .collectbox span i{
-        font-size: 18px;
-      }
-      .collectbox span.on{
-        color: #E4393C;
-      }
-    </style>
+    <style type="text/css">
+			.mui-table-view .mui-media-object{
+				margin-top: 10px;
+				max-width: 60px;
+				height: 60px;
+				vertical-align: middle;
+				border-radius: 5px;
+			}
+			.mui-card .mui-card-content img {
+				height: 124px;
+			}
+			.mui-table-view:after{
+				display: none;
+			}
+			.similar-product-text {
+				line-height: 33px;
+				font-size: 12px;
+				overflow: hidden;
+				-o-text-overflow: ellipsis;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				word-break: break-word;
+				color: #232326;
+				margin-top: 5px;
+				line-height: 20px;
+				margin-bottom: 3px;
+				padding: 0 4px;
+			}
+			
+			.similar-product-info {
+				display: block;
+				position: relative;
+				overflow: hidden;
+				height: 40px;
+			}
+			.similar-product-info span.similar-product-shopCar,.similar-product-info .similar-product-price{
+				display: block;
+				overflow: hidden;
+			}
+			.similar-product-shopCar {
+				width: 18px;
+				height: 18px;
+				display: block;
+				background: url(${ctx}/xmMobile/img/icon/icon-shopCar.png) no-repeat;
+				background-size: 100% auto;
+				position: absolute;
+				right: 5px;
+				top: 15px;
+			}
+			.similar-product-price{
+				color: #fd0707;
+				position: absolute;
+				top: 0;
+				left: 0px;
+			}
+			.virtualcoin{
+				display: block;
+			    position: absolute;
+			    bottom: 0;
+			    left: 0;
+			    line-height: 20px;
+			}
+			.mui-table-view.mui-grid-view .mui-table-view-cell{
+				padding-left: 5px;
+			}
+			.shopping-name{
+				padding: 2px 5px;
+				background: rgba(0,94,172,.5);
+				color: #fff;
+				margin-right: 5px;
+				border-radius: 5px;
+			}
+		</style>
 </head>
 <body class="cmp640 bg-hui-98 lock">
-<main style="position: relative">
-    <c:if test="${empty entity.searchcolor }">
-        <div class="pt-5 pb-5 pr-5 overflow-hidden pl-5 bg-hui-qj cmp640 position-f width-10"
-             style="z-index: 99;left: 0px;">
-            <div class=" overflow-hidden border-radius5 bg-hui-qj line-lu">
-                <div class="col-10 bg-bai" style="height: 25px;">
-                    <input class=" width-10 txt-c line-height35 zi-hui" style="background-color: transparent;line-height: 25px;"
-                           type="text" id="sel" value="搜索" onfocus="if(value=='搜索'){value=''}"
-                           onblur="if (value ==''){value='搜索'}">
-                </div>
-                <a href="javascript:ajaxsel()">
-                    <div class="col-2 txt-c bg-bai" style="height: 25px;">
-                        <i class="fa fa-search zi-hui" style="line-height: 25px;"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </c:if>
-    <c:if test="${not empty entity.searchcolor }">
-        <div class="pt-5 pb-5 pr-5 overflow-hidden pl-5 cmp640 position-f width-10"
-             style="z-index: 99;left: 0px;background-color:#${entity.searchcolor}">
-            <div class=" overflow-hidden border-radius5 bg-hui-qj line-lu">
-                <div class="col-10 bg-bai" style="height: 25px;">
-                    <input class=" width-10 txt-c line-height35 zi-hui" style="background-color: transparent;line-height: 25px;"
-                           type="text" id="sel" value="搜索" onfocus="if(value=='搜索'){value=''}"
-                           onblur="if (value ==''){value='搜索'}">
-                </div>
-                <a href="javascript:ajaxsel()">
-                    <div class="col-2 txt-c bg-bai" style="height: 25px;">
-                        <i class="fa fa-search zi-hui" style="line-height: 25px;"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </c:if>
-    <div class="clear" style="height: 37px;"></div>
+<main style="position: relative"> 
+    <header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
+		    <h1 class="mui-title">${entity.name}</h1>
+	</header>
     <c:if test="${not empty slide}">
         <div id="banner_box" class="box_swipe overflow-hidden position-r" style="width:100%">
             <ul>
@@ -581,25 +385,19 @@
     	</div>
 	</div> 
 	</c:if>
-    <div id="ajaxtg">
-    </div>
-    <font size="2">
-        <div class="div-group-5 pt-10 pb-10 bg-hui-tx position-r">
-            <div class="line-left-green"><i class="pl-10">推荐商品</i></div>
-            <div class="position-a overflow-hidden"style="left:80px;top:0px;height:37px;line-height:37px;">
-                <c:if test="${not empty roll}">
-                    <%@ include file="/webcom/roll.jsp" %>
-                </c:if>
-            </div>
-        </div>
-    </font>
-    <div class="div-group-5">
-        <div class="col-6" style="padding-right: 5px;" id="ajaxdivleft">
-        </div>
-        <div class="col-6" style="padding-left: 5px;" id="ajaxdivright">
-        </div>
-    </div>
-    
+    	<div class='mui-content' style="height: 100%;background-color: #fff;">
+		    <div class="mui-input-row" style="position: relative;margin-top:6px;width:85%;margin-left:7.5%;">
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;right: 5px;" onclick="goods_search()"></span>
+				<input type="search" name=""  placeholder="Search" style="padding-left: 30px;margin-bottom:6px;background:#eee;text-align: left;" id="sel">
+			</div>
+			
+			
+			<div class='mui-row'>
+				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;padding-bottom:50px;">
+					
+				</ul>
+			</div>
+		</div>
     <!-- 店铺关注收藏 -->
 	<div class="collectbox">
 		<span id="attention_span"><i class="mui-icon mui-icon-star " id="attention_i"></i>关注</span>
@@ -688,40 +486,7 @@
 <%@include file="/webcom/return-top.jsp" %>
 <div class="hang50 clear"></div>
 <%@ include file="/webcom/shop-foot.jsp"%> 
-<script>
-    function  check_task(){
-       var submitData = { 
-                type:"allshare",
-            };
-            $.post('${ctx}/suc/bbs!ajaxCheckTask.action?custid=${custid}&agid=${agid}&&lscode=${lscode}', submitData,
-
-                    function (json) { 
-                        if (json.state == 0) {
-                            var text='分享成功!'; 
-                            if(json.expreward>0){
-                                text+="经验+"+json.expreward+" "
-                            }
-                            if(json.jfreward>0){
-                                text+="平台币+"+json.jfreward
-                            } 
-                          swal({
-                                text: text,
-                                timer: 2000,
-                                type: 'success',
-                                showConfirmButton: false
-                            }).then(function () {
-                                    },
-                                    function (dismiss) {
-                                        if (dismiss === 'timer') {
-
-                                        }
-                                    }
-                            );
-                        }  
-                    }, "json");
-     
-     }
-</script> 
+ 
 <script>
     ajaxjz();
     $(window).scroll(function () {
@@ -766,22 +531,7 @@
     });
 </script>
 
-
-<c:if test="${not empty com.ewmurl}">
- <c:if test="${com.ewmxs==0}">
-  <%@ include file="/webcom/focus-page.jsp" %>
- </c:if>
-</c:if>
-<%@ include file="/webcom/toast.jsp" %>
-<c:if test="${com.zsjf>0}">
-  <c:if test="${sczs==1}">
-  <%@ include file="/webcom/jfts-page.jsp" %>
-  </c:if> 
-</c:if>
-<!--客服-->
-    <div class="position-f img-wh35 txt-c bj-lan1 zi-bai border-radius50"style="bottom:60px; right: 3px;" onclick="window.location.href='${ctx}/android/reply!index.action?custid=${custid}&lscode=${lscode}&id=${entity._id}'">
-        <i class="fa fa-commenting"style="line-height: 35px;"></i>
-    </div>
-<!--客服结束--> 
+ 
+<%@ include file="/webcom/toast.jsp" %> 
 </body>
 </html> 
