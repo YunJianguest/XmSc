@@ -605,5 +605,39 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		
 		return "orderreply";
 	}
+	/**
+	 * 获取订单数量
+	 */
+	public void  getOrderCount(){
+		getLscode();
+		HashMap<String, Object>sub_map=new HashMap<>();
+		sub_map.put("state",1);
+		HashMap<String, Object>whereMap=new HashMap<>();
+		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("state",1);
+		Long  dfkcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
+		
+		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("state",2);
+		Long  dfhcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
+		
+		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("state",3);
+		Long  dshcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
+		
+		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("state",4);
+		Long  dpjcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
+		sub_map.put("state",0);
+		sub_map.put("dfkcount", dfkcount);
+		sub_map.put("dfhcount", dfhcount);
+		sub_map.put("dshcount", dshcount);
+		sub_map.put("dpjcount", dpjcount);
+        String json = JSONArray.fromObject(sub_map).toString();
+		
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
+		
+	}
 	
 }
