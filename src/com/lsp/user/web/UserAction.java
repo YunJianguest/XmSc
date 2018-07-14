@@ -921,4 +921,12 @@ public class UserAction extends GeneralAction<UserInfo>
 	public String safePwd()throws Exception{
 		return "safePwd";
 	}
+	
+	/**
+	 * 个人信息完善
+	 */
+	public String basemsg()throws Exception{
+		return "basemsg";
+	}
+	
 }
