@@ -53,7 +53,7 @@
 				display: block;
 				position: relative;
 				overflow: hidden;
-				height: 20px;
+				height: 40px;
 			}
 			.similar-product-info span.similar-product-shopCar,.similar-product-info .similar-product-price{
 				display: block;
@@ -67,7 +67,7 @@
 				background-size: 100% auto;
 				position: absolute;
 				right: 5px;
-				top: 0;
+				top: 15px;
 			}
 			.similar-product-price{
 				color: #fd0707;
@@ -76,7 +76,11 @@
 				left: 0px;
 			}
 			.virtualcoin{
-				display:blcok;
+				display: block;
+			    position: absolute;
+			    bottom: 0;
+			    left: 0;
+			    line-height: 20px;
 			}
 			.mui-table-view.mui-grid-view .mui-table-view-cell{
 				padding-left: 5px;
@@ -164,7 +168,7 @@
                 						if(v[i].price!=null){
                 							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';
                 						} 
-                						html+='<span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
+                						html+='<span class="virtualcoin">0.00</span><span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
                 						+'</div></div></div></li>';		
             		    	              
             					

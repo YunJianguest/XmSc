@@ -579,6 +579,10 @@
 				background: #007AFF;
 				border-bottom-right-radius: 5px;
 			}
+			.virtualcoin{
+				display: inline-block;
+    			line-height: 24px;
+			}
     </style>
 </head>
 <body class="cmp640">
@@ -643,7 +647,8 @@
 
                 <div class="pt-10">
                     <font size="3">
-                        <i class="zi-hong">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/></i>
+                        <i class="zi-hong" style="display: block;">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/></i>
+                        <span class="virtualcoin">0.00</span>
                     </font>
                 </div>
                 <div class="clear pt-10 pb-5 zi-hui overflow-hidden">
