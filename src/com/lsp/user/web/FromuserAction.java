@@ -990,7 +990,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			HashMap<String, Object>whereMap=new HashMap<>();
 			whereMap.put("_id", lscode);
 			System.out.println(lscode);
-			List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+			List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap,null);
 			System.out.println(list.size());
 			for(int i=0;i<list.size();i++) {
 				Map<String, Object>sub_Map1=new HashMap<String, Object>();
@@ -1000,7 +1000,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				whereMap=new HashMap<>();
 				whereMap.put("renumber", number);
 				
-				List<DBObject>list1=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+				List<DBObject>list1=basedao.getList(PubConstants.USER_INFO, whereMap,null);
 				List<Object> userInfoList1 = new ArrayList<Object>();
 				for(int j=0;j<list1.size();j++) {
 					Map<String, Object>sub_Map2=new HashMap<String, Object>();
@@ -1010,7 +1010,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					whereMap=new HashMap<>();
 					whereMap.put("renumber", number1);
 					
-					List<DBObject>list2=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+					List<DBObject>list2=basedao.getList(PubConstants.USER_INFO, whereMap,null);
 					
 					sub_Map2.put("son", list2);
 					userInfoList1.add(sub_Map2);
