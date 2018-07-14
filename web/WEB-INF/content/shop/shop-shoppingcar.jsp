@@ -426,7 +426,7 @@ function delcar(id){
 				padding: 5px 10px;
 				text-align: left;
 				overflow-y: auto;
-				height: 200px;
+				height: 80px;
 			}
 			.modal-cont-tit p{
 				margin: 0;
