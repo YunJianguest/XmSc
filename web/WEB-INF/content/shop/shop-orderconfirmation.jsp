@@ -425,7 +425,7 @@
     </style>
 </head>
 <body>
- <header style="width: 100%;height: 44px;line-height: 44px;text-align: center;padding: 0 10px;background: #fff;">
+ <header style="width: 100%;height: 44px;line-height: 44px;text-align: center;padding: 0 10px;background: #fff;border-bottom: 1px solid #ddd;">
 		<a  href="javascript:history.back(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
 			商品购买
 	</header>
