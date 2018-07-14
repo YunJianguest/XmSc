@@ -500,7 +500,7 @@
 						</div>
 					</div>
 					<div class="mui-col-xs-2" id="newsmore">
-						<a href="" style="font-size: 12px;">更多</a>
+						<a href="${ctx}/suc/roll!kuaibaoList.action" style="font-size: 12px;">更多</a>
 					</div>
 				</div>
 			</div>
