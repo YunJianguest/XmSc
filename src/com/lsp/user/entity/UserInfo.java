@@ -71,6 +71,8 @@ public class UserInfo extends ReflectionDBObject {
 	private int audit_status;//审核状态  1为通过  2为不通过
 	
 	private String uskd;//uskd账号
+	
+	private String paypassword;//支付密码
 	/**
 	 * 用户所在县
 	 */
@@ -1081,6 +1083,14 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setUskd(String uskd) {
 		this.uskd = uskd;
+	}
+
+	public String getPaypassword() {
+		return paypassword;
+	}
+
+	public void setPaypassword(String paypassword) {
+		this.paypassword = paypassword;
 	}
 	
 	
