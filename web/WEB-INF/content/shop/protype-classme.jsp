@@ -467,7 +467,7 @@
 			</div> 
 			
 			<div class="mui-input-row" style="position: relative;margin-top:6px;width:85%;margin-left:7.5%;">
-				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;left: 5px;" onclick="goods_search()"></span>
+				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;right: 5px;" onclick="goods_search()"></span>
 				<input type="search" name=""  placeholder="Search" style="padding-left: 30px;margin-bottom:6px;background:#fff;" id="sel">
 			</div>
 			
