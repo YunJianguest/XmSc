@@ -607,10 +607,12 @@
     </style>
 </head>
 <body class="cmp640">
-	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="mui-icon mui-icon-undo"></a>
-			商品详情
-	</header>
+	<header class="mui-bar mui-bar-nav" style="background: #fff;">
+				<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
+				<h1 class="mui-title">商品详情</h1>
+			</header> 
+			
+	
 <main style="position: relative;padding-top: 40px;">
     <c:if test="${not empty slide}">
         <div id="banner_box" class="box_swipe overflow-hidden position-r" style="width:100%">
