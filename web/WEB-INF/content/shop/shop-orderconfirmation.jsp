@@ -62,7 +62,8 @@
           
           $(function(){ 
         		$('#ConfirmPay').click(function(){
-        			$('.mask').css('display','block')
+        			$('.mask').css('display','block');
+        			moneypay();
         		})
         		$('#close').click(function(){
         			$('.mask').css('display','none')
@@ -111,6 +112,10 @@
             alert("数量不能为空请重新选择购买");
             return ;
            }
+           if($('#deptcode').val() == ''){
+        	   alert('请填写部门编号');
+        	   return;
+           }
             var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
         	var submitData = { 
         			lx:0,
@@ -131,7 +136,7 @@
         			spec:'${spec}',
         			jffh:'${entity.jffh}',
         			jfdh:jfdh,
-        			
+        			deptCode:$('#deptcode').val()
         	}; 
         	//loading();
         	/* $.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
@@ -171,15 +176,9 @@
                 		function(json) { 
                 		     //loading.hide();
                 		 	if (json.state == 0) {
-                				alert("下单成功！"); 
+                		 		alert("下单成功！");
                 				var orderno=json.orderno; 
-                				$.post('${ctx}/shop/shop!OrderPayJf.action?orid='+orderno, submitData,
-                                		function(json) { 
-                                		 alert("支付成功！");
-                                		},
-                                		"json");
-                				
-                				window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+                				$('#orderno').val(json.orderno);
                 			}else if(json.state == 1) {
                 				alert("该账号没有开通支付"); 
                 			}else if(json.state == 3){
@@ -192,114 +191,46 @@
         	 
         } 
          
-         function popcode(val){
-             if('${address.tel}'==""){
-                alert("请先设置收货地址");
-                return ;
-               }
-               if('${entity.jfdh}'>0&&'${entity.kdprice}'==0){
-                 jfpay();
-                 return;
-               }
-               if('${count}'==0){
-                alert("数量不能为空请重新选择购买");
-                return ;
-               }
-                var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
-            	var submitData = { 
-            			lx:0,
-            			no:'0',
-            			name:'${address.name}',
-            			tel:'${address.tel}',
-            			address:address, 
-            			total:total, 
-                    	remoney:'${entity.price}',
-                    	recordid:'${entity._id}', 
-            			price:total,
-            			remark:'${entity.ptitle}',
-            			comid:'${entity.comid}',
-            			kjid:$("#kdpric").val(),
-            			num:'${count}',
-            			logo:'${entity.logo}',
-            			title:'${entity.title}',
-            			spec:'${spec}',
-            			jffh:'${entity.jffh}',
-            			jfdh:jfdh,
-            			
-            	}; 
-            	//loading();
-            	/* $.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
-            		function(json) { 
-            		     loading.hide();
-            		 	if (json.state == 0) { 
-            				WeixinJSBridge.invoke('getBrandWCPayRequest',{
-            			  		 "appId" : json.appId,"timeStamp" : json.timeStamp, "nonceStr" : json.nonceStr, "package" : json.packageValue,"signType" : json.signType, "paySign" : json.paySign 
-            			   			},function(res){  
-            			   				if(res.err_msg == "get_brand_wcpay_request:ok"){  
-            			   					 var text='购买成功！';
-            			   					 if(!jQuery.isEmptyObject(json.jffh)){
-            			   					   text="购买成功！获得平台币"+json.jffh
-            			   					 }
-            			   					 noty({text: text,type:'alert', layout: "top", timeout: 1000,callback: { // 回调函数
-                                                  afterClose: function() {
-                                            window.location.href="${ctx}/shop/shop!orderform.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
-                                                  } // 关闭之后
-                                                },});
-            			   				}else{
-            			   				
-            			   					//alert(res.err_code+res.err_desc+res.err_msg);
-            			   					 
-            			   				}
-            						}); 
-            				return;
-            			}else if(json.state == 1) {
-            				alert("该账号没有开通支付"); 
-            			}else if(json.state == 3){
-            			  alert("没有登录");
-            			}else if(json.state==10){
-            			  alert("购买次数已完");
-            			}
-            		},
-            		"json") */
-            		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}&isgwc=1', submitData,
-                    		function(json) { 
-                    		     //loading.hide();
-                    		 	if (json.state == 0) {
-                    				alert("下单成功，请支付");
-                    				if(val == 0){
-                    					$('#bt').css('display','block');
-                    					pay_bt();
-                    					//二维码生成
-                    					$('#qrcode').qrcode({ 
-                    					  width : w,
-                    				      height : w,
-                    				      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
-                    				    });
-                    					$("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
-                    				}
-                    				if(val == 1){
-                    					$('#ytf').css('display','block');
-                    					pay_ytf();
-                    					//二维码生成
-                    					$('#qrcodes').qrcode({ 
-                    					  width : w,
-                    				      height : w,
-                    				      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
-                    				    });
-                    					$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
-                    				}
-                    			}else if(json.state == 1) {
-                    				alert("该账号没有开通支付"); 
-                    			}else if(json.state == 3){
-                    			  alert("没有登录");
-                    			}else if(json.state==10){
-                    			  alert("购买次数已完");
-                    			}
-                    		},
-                    		"json")
-            	 
-            } 
-         
+         function popcode(val){ 
+        	 if(val == 0){
+        		 $('#bt').css('display','block');
+    				pay_bt();
+    				//二维码生成
+    				$('#qrcode').qrcode({ 
+    				  width : w,
+    			      height : w,
+    			      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
+    			    });
+    			    $("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
+        	 }
+        	 if(val == 1){
+        		 $('#ytf').css('display','block');
+    				pay_ytf();
+    				//二维码生成
+    				$('#qrcodes').qrcode({ 
+    				  width : w,
+    			      height : w,
+    			      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
+    			    });
+    				$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
+        	 }
+        	 if(val == 2){
+        		 var submitData = { 
+        				 orid:$('#orderno').val()
+             	}; 
+        		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
+                 		function(json) {
+    					//alert(json.state);
+         					if(json.state == 0){
+         						alert("支付成功！");
+         						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+         					}else if(json.state == 1){
+         						alert("操作失败");
+         					}
+                 		},
+                 		"json");
+        	 }
+           } 
         function  jfpay(){
          var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
         	var submitData = { 
@@ -537,7 +468,7 @@
     </c:if>
     <div class="clear"></div>
 	<div style="width: 100%;height: 40px;padding: 0 10px;">
-		<input type="text" name="" id="" value="" style="width: 100%;height: 100%;border-bottom: 1px solid #ddd;" placeholder="请填写你的部门编号"/>
+		<input type="text" name="" id="deptcode" value="" style="width: 100%;height: 100%;border-bottom: 1px solid #ddd;" placeholder="请填写你的部门编号"/>
 	</div>
     <div class="line-bottom div-group-10 overflow-hidden position-r" >
         <div class=" position-a">
@@ -587,7 +518,7 @@
     <input type="hidden" value="<fmt:formatNumber value='${entity.kdprice}'  pattern="0.0#"/>" id="kdprice"/><!--单价-->
    
 </main>
-
+<input id="orderno" type="hidden"></input>
 <div class=" button_foot shadow-wai overflow-hidden bg-bai cmp640">
  
     <div class="div-group-5 hang50 overflow-hidden line-top">
@@ -621,7 +552,7 @@
 		<div class="mask-cont-cont">
 			<button onclick="popcode(0)" class="currency">比特币</button>
 			<button onclick="popcode(1)" class="currency">以太坊</button>
-			<button onclick="moneypay()" class="currency">盼盼币</button>
+			<button onclick="popcode(2)" class="currency">盼盼币</button>
 		</div>
 	</div>
 </div>

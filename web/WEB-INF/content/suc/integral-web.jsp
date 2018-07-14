@@ -99,10 +99,10 @@
     <div class=" bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
         <a href="#">
             <div class="zi-hei weight500 pl-15" style="overflow: hidden;">
-            	<div style="margin: 5px 0;"><font size="2">${setting.name}总计：<i class="zi-cheng" style="float: right;margin-right: 15px;">${jf.value}</i></font></div>            	
-				<div style="margin: 5px 0;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;">${jf.prostore}</i></font></div>
-            	<div style="margin: 5px 0;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;">${jf.uservalue}</i></font></div>
-            	<div style="margin: 5px 0;"><font size="2">我的乐乐币：<i class="zi-cheng"  style="float: right;margin-right: 15px;">${jf.uservalue}</i></font></div>
+            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">${setting.name}总计：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.value}'  pattern=".00"/></i></font></div>            	
+				<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.prostore}'  pattern=".00"/></i></font></div>
+            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.uservalue}'  pattern=".00"/></i></font></div>
+            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">我的乐乐币：<i class="zi-cheng"  style="float: right;margin-right: 15px;">${jf.uservalue}</i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
@@ -134,7 +134,7 @@
             <a href="#">
                 <div class="zi-hui zi-green overflow-hidden txt-c"
                      style="border-radius:5px 5px 0px 0px ;">
-                    <div class="col-15 pt-15 pb-10"><font size="2">以上是您的PP币获得/消费明细</font></div>
+                    <div class="col-15 pt-15 pb-10"><font size="2">所有明细</font></div>
                 </div>
             </a>
         </div>
