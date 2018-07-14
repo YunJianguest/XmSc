@@ -90,7 +90,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
+		    <a class=" mui-icon mui-icon-undo mui-pull-left" style="color: #000;" href="javascript:history.go(-1)"></a>
 		    <h1 class="mui-title">币兑换</h1>
 		</header>
 		<div class="top" style="padding-top: 44px;"><img src="${ctx}/xmMobile/img/banner1.jpg" alt="" /></div>

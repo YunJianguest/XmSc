@@ -458,7 +458,7 @@
 		
 		
 			<header class="mui-bar mui-bar-nav" style="background: #fff;">
-				<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
+				<a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
 				<h1 class="mui-title">分类</h1>
 			</header> 
 			
