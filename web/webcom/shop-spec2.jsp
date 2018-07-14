@@ -79,6 +79,7 @@
         } 
 </script>
 <div class="fullscreen cmp640 bg-hei-5 lock display-none" id="specs">
+	333
     <div class="overflow-hidden width-10">
         <a href="javascript:hidespec()">
             <div class="width-10 overflow-hidden" style="height:1000px;"></div>
