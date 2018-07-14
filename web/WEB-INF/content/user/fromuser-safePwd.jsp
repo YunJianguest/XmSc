@@ -136,7 +136,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>一级密码</label>
-					<input id="password" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+					<input id="password" type="password" value="${user.password }" class="mui-input-clear" maxlength="16" placeholder="请输入密码">
 				</div>
 				
 				<div class="mui-input-row">
@@ -216,6 +216,7 @@
 	        				</c:if>
 	        				<span class="Idimg" id="Idimg1">身份证正面</span>
 	        				<c:if test="${user.id_card_front!=''&&user.id_card_front!=null }">
+	        				${ctx}/uploads/${user.id_card_front } 
 	        				<img class="Idimg" src="${ctx}/uploads/${user.id_card_front } " alt="" id="imgss_front" />
 	        				</c:if>
 	        			</label>
