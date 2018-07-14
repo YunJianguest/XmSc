@@ -989,7 +989,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		try {
 			HashMap<String, Object>whereMap=new HashMap<>();
 			whereMap.put("_id", fromUserid);
+			System.out.println(fromUserid);
 			List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+			System.out.println(list.size());
 			for(int i=0;i<list.size();i++) {
 				Map<String, Object>sub_Map1=new HashMap<String, Object>();
 				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(list.get(i), UserInfo.class);
