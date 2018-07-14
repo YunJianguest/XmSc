@@ -156,19 +156,41 @@
                 
                 <div class="col-7" id='showCityPicker3'>
                     <div class="col-4">
-                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                    	<c:if test="${user.province!=''&&user.province!=null }">
+                    		<input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               value="${user.province }" id="province" onfocus="if(value=='省份'){value=''}"
+                               onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                    	</c:if>
+                    	<c:if test="${user.province==''||user.province==null }">
+                    		<input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="province" onfocus="if(value=='省份'){value=''}"
                                onblur="if (value ==''){value='省份'}" readonly="readonly"  style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                    	</c:if>
+                        
                     </div>
                     <div class="col-4">
+                    <c:if test="${user.city!=''&&user.city!=null }">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               value="${user.city }" id="city" value="城市" onfocus="if(value=='城市'){value=''}"
+                               onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                  	</c:if>
+                  	<c:if test="${user.city==''||user.city==null }">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="city" value="城市" onfocus="if(value=='城市'){value=''}"
                                onblur="if (value ==''){value='城市'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                  	</c:if>
                     </div>
                     <div class="col-4">
+                    <c:if test="${user.county!=''&&user.county!=null }">
+                        <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
+                               value="${user.county }" id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
+                               onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                   	</c:if>
+                   	<c:if test="${user.county==''||user.county==null }">
                         <input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
                                id="county" value="区/县" onfocus="if(value=='区/县'){value=''}"
                                onblur="if (value ==''){value='区/县'}" readonly="readonly" style="padding: 10px 5px;border:none;margin-bottom:0;"/>
+                   	</c:if>
                     </div>
                 </div>
                 <div class="col-2 hang50 line-height50 txt-c"><i
@@ -182,18 +204,26 @@
 					<p style="margin:40px 0 5px 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload" value="" placeholder="" style="display: none;" onclick="upload_id_card_front()"/>
 	        			<label for="upload">
-	        				
+	        				<c:if test="${user.id_card_front==''||user.id_card_front==null }">
 	        				<img class="Idimg" src="" alt="" id="imgss_front" />
+	        				</c:if>
 	        				<span class="Idimg" id="Idimg1">身份证正面</span>
+	        				<c:if test="${user.id_card_front!=''&&user.id_card_front!=null }">
+	        				<img class="Idimg" src="${ctx}/uploads/${user.id_card_front } " alt="" id="imgss_front" />
+	        				</c:if>
 	        			</label>
 	        			<input type="hidden" id="up_picture_front"/>
 					</p>
 					<p style="margin:0 0 0 10%;width: 80%;height:100px;position:relative">
 						<input type="file" class="picture1" style="width: 100%;height:100%;position:absolute;z-index: 1;opacity: 0;" name="zb_tupian" id="upload1" value="" placeholder="" style="display: none;" onclick="upload_id_card_reverse()"/>
 	        			<label for="upload">
-	        				
+	        				<c:if test="${user.id_card_reverse==''||user.id_card_reverse==null }">
 	        				<img class="Idimg" src="" alt="" id="imgss_reverse" />
+	        				</c:if>
 	        				<span class="Idimg" id="Idimg2">身份证反面</span>
+	        				<c:if test="${user.id_card_reverse!=''&&user.id_card_reverse!=null }">
+	        				<img class="Idimg" src="${ctx}/uploads/${user.id_card_reverse } " alt="" id="imgss_reverse" />
+	        				</c:if>
 	        			</label>
 	        			<input type="hidden" id="up_picture_reverse"/>
 					</p>

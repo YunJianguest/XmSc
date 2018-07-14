@@ -36,7 +36,7 @@ var fileInput=function(v,l,p){
 	        function (results) {
 	        setTimeout(function () {
 	            $.post(
-	            	"suc/lrzimg!imginput.action",
+	            	"http://xmshop365.com/suc/lrzimg!imginput.action",
 	            	{
 	                    imgBase64:results.base64,
 	                    imgSize: results.base64.length, // 校验用，防止未完整接收
