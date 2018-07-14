@@ -275,7 +275,7 @@
                     				      height : w,
                     				      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
                     				    });
-                    					$("#bturl").val('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
+                    					$("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
                     				}
                     				if(val == 1){
                     					$('#ytf').css('display','block');
@@ -286,7 +286,7 @@
                     				      height : w,
                     				      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
                     				    });
-                    					$("#ytfurl").val('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
+                    					$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
                     				}
                     			}else if(json.state == 1) {
                     				alert("该账号没有开通支付"); 
@@ -626,19 +626,21 @@
 	</div>
 </div>
 <div class="modal" id="bt">
-	<div class="modal-cont" >
-		<div id="qrcode">	
+	<div class="modal-cont">
+		<div style="height: 34px;font-size: 18px;text-align: center;">
+			BitCoin
 		</div>
-		<div class="bturlBox">
-			<input type="text" id="bturl" />
+		<div id="qrcode"></div>
+		<div class="bturlBox" id="bturl" style="height: 34px;line-height: 34px;font-size: 10px;">
+			<!--<input type="text" id="bturl" style="height: 34px;line-height: 34px;"/>-->
 		</div>
 		<div class="modal-tit">
 			提示
 		</div>
 		<div class="modal-cont-tit">
-			<p>1.请备注你的手机号码;</p>
-			<p>2.请备注你的会员号码;</p>
-			<p>3.您需要支付的比特币:<span id="btnum"></span></p>
+			<p>1.您需要支付的比特币:<span id="btnum" style="display: block; font-size: 16px;line-height: 34px;"></span></p>
+			<p>2.请备注你的手机号码;</p>
+			<p>3.请备注你的会员号码;</p>
 			<p>4.请交易手续费最大化;</p>
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
@@ -648,19 +650,20 @@
 </div>
 <div class="modal" id="ytf">
 	<div class="modal-cont" >
-		<div id="qrcodes">
-			
+		<div style="height: 34px;font-size: 18px;text-align: center;">
+			ETH
 		</div>
-		<div class="bturlBox">
-			<input type="text" id="ytfurl" />
+		<div id="qrcodes"></div>
+		<div class="bturlBox" id="ytfurl" style="height: 34px;line-height: 34px;font-size: 10px;">
+			<!--<input type="text" id="ytfurl"  style="height: 34px;line-height: 34px;"/>''-->
 		</div>
 		<div class="modal-tit">
 			提示
 		</div>
 		<div class="modal-cont-tit">
-			<p>1.请备注你的手机号码;</p>
-			<p>2.请备注你的会员号码;</p>
-			<p>3.您需要支付的以太坊币:<span id="ytfnum"></span></p>
+			<p>1.您需要支付的以太坊币:<span id="ytfnum" style="display: block; font-size: 16px;line-height: 34px;"></span></p>
+			<p>2.请备注你的手机号码;</p>
+			<p>3.请备注你的会员号码;</p>
 			<p>4.请交易手续费最大化;</p>
 			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
 			<p>6.请复制上方的付款码</p>
