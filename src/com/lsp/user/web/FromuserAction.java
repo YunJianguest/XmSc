@@ -992,6 +992,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				Map<String, Object>sub_Map1=new HashMap<String, Object>();
 				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
 				Long number = info.getNumber();//用户的编号
+				System.out.println(number);
+				
 				sub_Map1.put("user", info);
 				whereMap=new HashMap<>();
 				whereMap.put("renumber", number);
