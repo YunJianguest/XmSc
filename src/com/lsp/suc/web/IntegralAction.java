@@ -92,6 +92,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
+		System.out.println("--1-->"+ SpringSecurityUtils.getCurrentUser().getId());
         if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
         	whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
         }

@@ -236,8 +236,14 @@
                 </font>
             </div>
             <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
-            	<span style="color: #FF0000;float:left">乐乐币:<i style="color: #000;">0.00</i></span>
-                <span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">${jf}</i></span>
+            	<span style="color: #FF0000;float:left">乐乐币:<i style="color: #000;">0.00</i></span> 
+            	<c:if test="${jf>0}">
+            	<span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">${jf}</i></span> 
+            	</c:if> 
+            	<c:if test="${jf==0}">
+            	<span style="color: #FF0000;float:right">盼盼币:<i style="color: #000;">0.00</i></span> 
+            	</c:if>   
+               
             </div>
         </div>
     </div>
@@ -371,7 +377,7 @@
 				</span>
 			</a>
 	</div>
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="7">
+    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="8">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
                <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">

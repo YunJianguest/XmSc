@@ -1,6 +1,4 @@
 package com.lsp.user.web;
-
-
 import com.lsp.email.entity.Email; 
 import com.lsp.email.util.EmailUtils;
 import com.lsp.integral.entity.InteProstore;
@@ -758,7 +756,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}else if(type == 2){
 				if(db.get("returnCity")!=null){
-					 info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCity").toString(), "3")).floatValue());
+					 info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCity").toString(), "3")));
 					info.setTime(sett.getCityTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getCityTime()+"")));
 					if(user!=null){
@@ -769,7 +767,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}else if(type == 3){
 				if(db.get("returnCounty")!=null){
-					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCounty").toString(), "3")).floatValue());
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCounty").toString(), "3")));
 					info.setTime(sett.getCountyTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getCountyTime()+"")));
 					if(user!=null){
@@ -781,7 +779,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}else if(type == 4){
 				if(db.get("returnDept")!=null){
-					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnDept").toString(), "3")).floatValue());
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnDept").toString(), "3")));
 					info.setTime(sett.getDeptTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getDeptTime()+"")));
 					if(user!=null){

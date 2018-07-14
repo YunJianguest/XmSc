@@ -1780,7 +1780,7 @@ public class WwzService {
 	 * @param value
 	 * @param type  0增加1减少
 	 * @param isfreeze
-	 *            0--冻结 1--可使用
+	 *            0--未冻结 1--已冻结
 	 * @param lx
 	 *            0--PP 1--LL
 	 */
@@ -1803,9 +1803,11 @@ public class WwzService {
 				//增加操作
 				if (lx == 0) {
 					//PP币种计算
-					if (isfreeze == 0) {// 冻结增加
+					if (isfreeze == 1) {// 冻结增加
+						System.out.println("冻结增加");
 						ir.setProstore(ir.getProstore() + value); 
-					} else if (isfreeze == 1) {// 可使用增加
+					} else if (isfreeze == 0) {// 可使用增加
+						System.out.println("可用增加");
 						ir.setUservalue(ir.getUservalue() + value); 
 					}
 					ir.setValue(ir.getValue() + value);
@@ -1813,10 +1815,10 @@ public class WwzService {
 					return true;
 				} else if (lx == 1) {
 					//乐乐币种计算
-					if (isfreeze == 0) {// 冻结增加
+					if (isfreeze == 1) {// 冻结增加
 						ir.setLldjvalue(ir.getLldjvalue() + value);
 						
-					} else if (isfreeze == 1) {// 可用增加
+					} else if (isfreeze == 0) {// 可用增加
 						ir.setLlkyvalue(ir.getLlkyvalue() + value); 
 					}
 					ir.setLlzvalue(ir.getLlzvalue() + value);
@@ -1828,14 +1830,14 @@ public class WwzService {
 				//减少操作
 				if(lx==0) {
 					//PP盼盼币种计算
-					if(isfreeze == 0) {
+					if(isfreeze == 1) {
 						if(ir.getProstore()>value) {
 							// 冻结减少
 							ir.setProstore(ir.getProstore()-value);
 						}else {
 							return false;
 						}
-					}else if(isfreeze == 1) {
+					}else if(isfreeze == 0) {
 						if(ir.getUservalue()>value) {
 							// 可以使用减少
 							ir.setUservalue(ir.getUservalue()-value);
@@ -1850,14 +1852,14 @@ public class WwzService {
 					}
 				}else if(lx==1) {
 					//乐乐币种计算
-					if(isfreeze == 0) {
+					if(isfreeze == 1) {
 						if(ir.getLldjvalue()>value) {
 							// 冻结减少
 							ir.setLldjvalue(ir.getLldjvalue()-value);
 						}else {
 							return false;
 						}
-					}else if(isfreeze == 1) {
+					}else if(isfreeze == 0) {
 						if(ir.getLlkyvalue()>value) {
 							// 可以使用减少
 							ir.setLlkyvalue(ir.getUservalue()-value);
@@ -1930,6 +1932,23 @@ public class WwzService {
 			return Float.parseFloat(db.get("value").toString());
 		}
 		return 0;
+	}
+	/**
+	 * 获取用户积分
+	 * 
+	 * @param custid
+	 * @param fromUserid
+	 * @return
+	 */
+	public DBObject getJfOBJ(String custid, String fromUserid) {
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("custid", custid);
+		whereMap.put("fromUserid", fromUserid);
+		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		if (db != null) {
+			return db;
+		}
+		return null;
 	}
 	
 	/**
@@ -2823,7 +2842,7 @@ public class WwzService {
 						info.setCustid(custid);
 						info.setIsfreeze(isfreeze);
 						baseDao.insert(PubConstants.INTEGRAL_INFO, info);
-						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0, 0)) {
+						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 0)) {
 							return true;
 						} else {
 							return false;
@@ -2838,7 +2857,7 @@ public class WwzService {
 						info.setState(0);
 						info.setCustid(custid);
 						baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
-						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0, 1)) {
+						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
 							return true;
 						} else {
 							return false;
@@ -2860,7 +2879,7 @@ public class WwzService {
 							info.setCustid(custid);
 							info.setIsfreeze(isfreeze);
 							baseDao.insert(PubConstants.INTEGRAL_INFO, info);
-							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0, 0)) {
+							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 0)) {
 								if (updateTotalIntegral(jflx, price)) {
 									return true;
 								}
@@ -2877,7 +2896,7 @@ public class WwzService {
 							info.setState(0);
 							info.setCustid(custid);
 							baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
-							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0, 1)) {
+							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
 								if (updateTotalIntegral(jflx, price)) {
 									return true;
 								}
