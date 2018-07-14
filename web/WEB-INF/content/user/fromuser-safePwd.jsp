@@ -267,18 +267,6 @@
 				return;
 			}
 			
-			var up_picture_front = $("#up_picture_front").val();
-			if(up_picture_front==""){
-				mui.alert('身份证正面不能为空')
-				return;
-			}
-			
-			var up_picture_reverse = $("#up_picture_reverse").val();
-			if(up_picture_reverse==""){
-				mui.alert('身份证反面不能为空')
-				return;
-			}
-			
 			$.ajax({
 				type:"post",
 				url:"${ctx}/user/fromuser!ajaxUserUpdate.action",
@@ -298,7 +286,7 @@
 				success:function(json){
 					if(json.state==0){
 						mui.alert('信息完善成功！')
-						location.href='';
+						//location.href='';
 					}
 				}
 			});
