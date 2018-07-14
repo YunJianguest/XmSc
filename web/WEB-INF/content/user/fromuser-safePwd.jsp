@@ -285,8 +285,8 @@
 				},
 				success:function(json){
 					if(json.state==0){
-						mui.alert('信息完善成功！')
-						//location.href='';
+						mui.alert('信息完善成功！');
+						window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=&lscode=${lscode}';
 					}
 				}
 			});
