@@ -457,17 +457,10 @@
 		<div class="page">
 		
 		
-			 <div class="search search-h" style="position:static">
-				<div class="search-box">
-					<div class="search-back on-blur"></div>
-					<div class="search-box-tb ">
-						<div class="search-box-urlBack" onclick="javascript:window.history.back(-1)">
-							<span class="search-box-urlBack-back iconLeft">返回</span>
-						</div>
-					</div>
-					分类
-				</div>
-			</div> 
+			<header class="mui-bar mui-bar-nav" style="background: #fff;">
+				<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>
+				<h1 class="mui-title">分类</h1>
+			</header> 
 			
 			<div class="mui-input-row" style="position: relative;margin-top:6px;width:85%;margin-left:7.5%;">
 				<span class="mui-icon mui-icon-search" style="position: absolute;top: 5px;right: 5px;" onclick="goods_search()"></span>

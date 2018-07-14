@@ -608,7 +608,7 @@
 </head>
 <body class="cmp640">
 	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
+		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="mui-icon mui-icon-undo"></a>
 			商品详情
 	</header>
 <main style="position: relative;padding-top: 40px;">
