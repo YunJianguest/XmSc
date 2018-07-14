@@ -921,6 +921,12 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		
+		HashMap<String, Object> whereMap=new HashMap<>();
+		whereMap.put("_id", lscode);
+		DBObject db = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+		UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+		Struts2Utils.getRequest().setAttribute("user", user);
 		return "safePwd";
 	}
 	
