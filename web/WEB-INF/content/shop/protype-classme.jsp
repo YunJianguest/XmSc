@@ -206,6 +206,7 @@
 		.category-content-branch {
 			height: 100%;
 			overflow-y: scroll;
+			position: fixed;
 		}
 		
 		.category-content-branchList {
