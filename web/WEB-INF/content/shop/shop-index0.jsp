@@ -428,7 +428,8 @@
 							<c:forEach items="${typelist}" var="bean"  begin="0" end="9">
 				                <c:if test="${not empty bean.url}">
 									<li class="mui-table-view-cell mui-media" style="width: 20%">
-										<a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}">
+										<%-- <a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}"> --%>
+										<a href="${bean.url}">
 											<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
 											<div class="mui-media-body">${bean.name}</div>
 										</a>
