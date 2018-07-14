@@ -1832,11 +1832,15 @@ public class WwzService {
 						if(ir.getProstore()>value) {
 							// 冻结减少
 							ir.setProstore(ir.getProstore()-value);
+						}else {
+							return false;
 						}
 					}else if(isfreeze == 1) {
 						if(ir.getUservalue()>value) {
 							// 可以使用减少
 							ir.setUservalue(ir.getUservalue()-value);
+						}else {
+							return false;
 						}
 					}
 					
@@ -1850,11 +1854,15 @@ public class WwzService {
 						if(ir.getLldjvalue()>value) {
 							// 冻结减少
 							ir.setLldjvalue(ir.getLldjvalue()-value);
+						}else {
+							return false;
 						}
 					}else if(isfreeze == 1) {
 						if(ir.getLlkyvalue()>value) {
 							// 可以使用减少
 							ir.setLlkyvalue(ir.getUservalue()-value);
+						}else {
+							return false;
 						}
 					}
 					 

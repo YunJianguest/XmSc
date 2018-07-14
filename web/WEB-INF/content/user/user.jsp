@@ -28,7 +28,7 @@
                             $('#number1').val(json.number);
                             //$('#number').val(json.number);
                             $('#upIds1').val(json.upIds);
-                            $('#renumber1').attr('disabled',true);
+                           // $('#renumber1').attr('disabled',true);
                             $('#renumber1').val(json.renumber);
                             
                             $('#username').val(json.userName);
@@ -85,7 +85,7 @@
             $('#area').val('');
             $('#number').val('');
             //$('#renumber').val('');
-            $('#renumber').attr('disabled',false);
+            //$('#renumber').attr('disabled',false);
             $('#inszc').modal({
                 show: true
             });
@@ -106,11 +106,13 @@
                         $('#province').val(json.province);
                         $('#city').val(json.city);
                         $('#agentLevel').val(json.agentLevel).trigger("change");
-                        $('#number').val(json.number);
+                        $('#number').val(json.no);
+                        $('#headimgurl').val(json.headimgurl);
                         //$('#number').val(json.number);
                         $('#upIds').val(json.upIds);
-                        $('#renumber').attr('disabled',true);
+                        //$('#renumber').attr('disabled',true);
                         $('#renumber').val(json.renumber);
+                        $('#fromUser').val(json.fromUser);
                        
                         var funcs = json.funclist;
                         $('.ch_type').each(function () {
@@ -173,7 +175,9 @@
                 agentLevel: agentLevel_show,
                 number: $('#number').val(),
                 renumber: $('#renumber').val(),
-                upIds: $('#upIds').val()
+                upIds: $('#upIds').val(),
+                headimgurl: $('#headimgurl').val(),
+                fromUser: $('#fromUser').val()
             };
             $.post('${ctx}/user/user!ajaxsave.action', submitData,
                     function (json) {
@@ -293,6 +297,14 @@
                             <input type="text" name="wxname" value="${name}"
                                    placeholder="昵称" class="form-control"/>
                         </div>
+                        <div class="form-group col-sm-1d">
+                            <input type="text" name="wxno" value="${wxno}"
+                                   placeholder="会员编号" class="form-control"/>
+                        </div>
+                        <div class="form-group col-sm-1d">
+                            <input type="text" name="wxrenumber" value="${wxrenumber}"
+                                   placeholder="推荐会员编号" class="form-control"/>
+                        </div>
                         <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
                     </div>
                 </div>
@@ -311,6 +323,7 @@
                                     <th class="th8">角色</th>
                                     <th class="th8">代理商等级</th>
                                     <th class="th8">会员编号</th>
+                                    <th class="th8">推荐会员编号</th>
                                     <th class="th8">创建者</th>
                                     <th class="th8">操作</th>
                                 </tr>
@@ -319,7 +332,7 @@
                                 <c:forEach items="${userList}" var="bean">
                                     <tr>
                                         <td>${bean._id}</td>
-                                        <td>${bean.account}</td>
+                                        <td>${bean.account}/${bean.nickname}</td>
                                         <td>${bean.password}</td>
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm'
                                                             value='${bean.createdate}'/></td>
@@ -339,13 +352,14 @@
 										   <c:otherwise>非代理商</c:otherwise>
 										</c:choose>
 										</td>
-										<th class="th8">${bean.number}</th>
+										<th class="th8">${bean.no}/${bean.number}</th>
+										<th class="th8">${bean.renumber}</th>
                                         <td>${bean.custid}</td>
                                         <td class="table-action">
                                             <div class="btn-group1">
                                                 <a data-toggle="dropdown" class="dropdown-toggle"> <i
                                                         class="fa fa-cog"></i> </a>
-                                                <c:if test="${bean.custid==custid}">
+                                              <%--   <c:if test="${bean.custid==custid}"> --%>
                                                     <ul role="menu" class="dropdown-menu pull-right">
                                                         <li><a
                                                                 href="javascript:upd('${bean._id}');">
@@ -360,7 +374,7 @@
                                                         </li>
                                                         </c:if>
                                                     </ul>
-                                                </c:if>
+                                              <%--   </c:if> --%>
                                             </div>
                                         </td>
                                     </tr>
@@ -391,6 +405,8 @@
                     <input type="hidden" id="_id" name="_id"/>
                     <input type="hidden" id="funcs" name="funcs"/>
                     <input type="hidden" id="number" name="number"/>
+                    <input type="hidden" id="headimgurl" name="headimgurl"/>
+                    <input type="hidden" id="fromUser" name="fromUser"/>
                     
                     <input type="hidden" id="upIds" name="upIds"/>
                     <div class="row">
