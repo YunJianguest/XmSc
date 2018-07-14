@@ -247,7 +247,7 @@
 			
 			
 			<div class='mui-row'>
-				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;">
+				<ul class="mui-table-view mui-grid-view goods recomend" style="padding: 0;padding-bottom:50px;">
 					
 				</ul>
 			</div>

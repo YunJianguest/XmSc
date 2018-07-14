@@ -167,7 +167,7 @@
             		function(json) { 
             		     loading.hide();
             		 	if (json.state == 0) {
-            				alert("下单成功！");
+            				alert("下单成功！请尽快付款！！！");
             				var orderno=json.orderno; 
             				$('#orderno').val(json.orderno);
             			}else if(json.state == 1) {
@@ -207,7 +207,7 @@
     	 if(val == 2){
     		 var submitData = { 
     				 orid:$('#orderno').val()
-         	}; 
+         	};
     		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
              		function(json) {
 					//alert(json.state);

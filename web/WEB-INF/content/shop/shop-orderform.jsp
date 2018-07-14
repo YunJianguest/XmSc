@@ -150,7 +150,7 @@
 		    			    		       var list=comlist[k].list;
 		    			    		       
 		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
-		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >已下单</div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay()">去支付</span></div>'
 		    			    		    		   
 		    			    		       }
 		    			    		       
@@ -158,7 +158,7 @@
 		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >待发货</div>'
 		    			    		       }
 		    			    		       if(list[0].goodstate == 3){
-		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')">确认收货</div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')" style="color:#e4393c;float: right;margin-right: 5px;">确认收货</div>'
 		    			    		       }
 		    			    		       
 		    			    		       if(list[0].goodstate == 4){
@@ -167,7 +167,7 @@
 		    			    		       
 		    			    		       for(var j=0;j<list.length;j++){
 		    			    		            xszf+='<div class="clear div-group-10 position-r  border-radius5" style="overflow:hidden;">'
-		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');"></div>'
+		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');" onclick=""></div>'
 		    			    		         +'</div>'
 		    			    		         +'<div style="padding-left:80px;">'
 		    			    		         +'<font size="2">'
@@ -185,7 +185,7 @@
 		    			    		               +'</div>';
 		    			    		         }
 		    			    		         xszf+='<div class=" width-10 line-height20 zi-6">'  
-		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;"></div>';
+		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;"></span></div>';
 		    			    		         if(list[j].goodstate<4){
 		    				    		          if(list[j].state==1 || list[j].state==3){
 		    				    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')" style="color:#e4393c">退货查看</div>';
@@ -297,6 +297,58 @@ function del(id) {
 		        	}
 		        },"json");
   }
+  function popcode(val){ 
+   	 if(val == 0){
+   		 $('#bt').css('display','block');
+				pay_bt();
+				//二维码生成
+				$('#qrcode').qrcode({ 
+				  width : w,
+			      height : w,
+			      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
+			    });
+			    $("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
+   	 }
+   	 if(val == 1){
+   		 $('#ytf').css('display','block');
+				pay_ytf();
+				//二维码生成
+				$('#qrcodes').qrcode({ 
+				  width : w,
+			      height : w,
+			      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
+			    });
+				$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
+   	 }
+   	 if(val == 2){
+   		 var submitData = { 
+   				 orid:$('#orderno').val()
+        	};
+   		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
+            		function(json) {
+					//alert(json.state);
+    					if(json.state == 0){
+    						alert("支付成功！");
+    						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+    					}else if(json.state == 1){
+    						alert("操作失败");
+    					}else{
+    						alert("支付失败！");
+    					}
+            		},
+            		"json");
+   	 }
+      } 
+  function choosePay(){
+	  $(this).click(function(){
+			$('.mask').css('display','block');
+			moneypay();
+		})
+  }
+   
+	$('#close').click(function(){
+		$('.mask').css('display','none')
+	})
 </script>
 </head>
 <body>
@@ -363,7 +415,66 @@ function del(id) {
             </div>
         </div>
     </div>
-</div> 
+</div>
+<div class="mask">
+	<div class="mask-cont">
+		<div class="mask-cont-tit">
+			付款方式
+			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
+		</div>
+		<div class="mask-cont-cont">
+			<button onclick="popcode(0)" class="currency">比特币</button>
+			<button onclick="popcode(1)" class="currency">以太坊</button>
+			<button onclick="popcode(2)" class="currency">盼盼币</button>
+		</div>
+	</div>
+</div>
+<div class="modal" id="bt">
+	<div class="modal-cont">
+		<div style="height: 34px;font-size: 18px;text-align: center;">
+			BitCoin
+		</div>
+		<div id="qrcode"></div>
+		<div class="bturlBox" id="bturl" style="height: 34px;line-height: 34px;font-size: 10px;">
+			<!--<input type="text" id="bturl" style="height: 34px;line-height: 34px;"/>-->
+		</div>
+		<div class="modal-tit">
+			提示
+		</div>
+		<div class="modal-cont-tit">
+			<p>1.您需要支付的比特币:<span id="btnum" style="display: block; font-size: 16px;line-height: 34px;"></span></p>
+			<p>2.请备注你的手机号码;</p>
+			<p>3.请备注你的会员号码;</p>
+			<p>4.请交易手续费最大化;</p>
+			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
+			<p>6.请复制上方的付款码</p>
+		</div>
+		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
+	</div>
+</div>
+<div class="modal" id="ytf">
+	<div class="modal-cont" >
+		<div style="height: 34px;font-size: 18px;text-align: center;">
+			ETH
+		</div>
+		<div id="qrcodes"></div>
+		<div class="bturlBox" id="ytfurl" style="height: 34px;line-height: 34px;font-size: 10px;">
+			<!--<input type="text" id="ytfurl"  style="height: 34px;line-height: 34px;"/>''-->
+		</div>
+		<div class="modal-tit">
+			提示
+		</div>
+		<div class="modal-cont-tit">
+			<p>1.您需要支付的以太坊币:<span id="ytfnum" style="display: block; font-size: 16px;line-height: 34px;"></span></p>
+			<p>2.请备注你的手机号码;</p>
+			<p>3.请备注你的会员号码;</p>
+			<p>4.请交易手续费最大化;</p>
+			<p>5.平台确认收币后发货，若由此造成的延误由个人承担</p>
+			<p>6.请复制上方的付款码</p>
+		</div>
+		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
+	</div>
+</div>
 <script>
 function  friedtx_hide(){
  $("#friedtx").hide();
