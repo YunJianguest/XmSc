@@ -724,7 +724,7 @@
 							data:{
 								tel:$('#phone').val(),
 								password:$('#password').val(),
-								yzcode:$('#verCode').val(),
+								verCode:$('#verCode').val(),
 								status:1,
 								province:$('#province').val(),
 								city:$('#city').val(),
