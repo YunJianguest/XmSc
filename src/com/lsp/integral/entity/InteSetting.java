@@ -47,13 +47,13 @@ public class InteSetting extends ReflectionDBObject {
 	 * 预返金额设置
 	 */
 	private double returnProvince;//省级预返值
-	private double provinceTime;//省级预返时间
+	private int provinceTime;//省级预返时间
 	private double returnCity;//市级预返值
-	private double cityTime;//市级预返时间
+	private int cityTime;//市级预返时间
 	private double returnCounty;//县级预返值
-	private double countyTime;//县级预返时间
+	private int countyTime;//县级预返时间
 	private double returnDept;//部门预返值
-	private double deptTime;//部门预返时间
+	private int deptTime;//部门预返时间
 	
 	private Date createdate;
 	
@@ -189,28 +189,29 @@ public class InteSetting extends ReflectionDBObject {
 	public void setNums(String nums) {
 		this.nums = nums;
 	}
-	public double getProvinceTime() {
+	
+	public int getProvinceTime() {
 		return provinceTime;
 	}
-	public void setProvinceTime(double provinceTime) {
+	public void setProvinceTime(int provinceTime) {
 		this.provinceTime = provinceTime;
 	}
-	public double getCityTime() {
+	public int getCityTime() {
 		return cityTime;
 	}
-	public void setCityTime(double cityTime) {
+	public void setCityTime(int cityTime) {
 		this.cityTime = cityTime;
 	}
-	public double getCountyTime() {
+	public int getCountyTime() {
 		return countyTime;
 	}
-	public void setCountyTime(double countyTime) {
+	public void setCountyTime(int countyTime) {
 		this.countyTime = countyTime;
 	}
-	public double getDeptTime() {
+	public int getDeptTime() {
 		return deptTime;
 	}
-	public void setDeptTime(double deptTime) {
+	public void setDeptTime(int deptTime) {
 		this.deptTime = deptTime;
 	}
 	public String getRemarks() {

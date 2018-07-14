@@ -370,8 +370,10 @@ public class UserAction extends GeneralAction<UserInfo>
 			}
 			if(number == null||number.equals("")){
 				user.setNumber(Long.parseLong(getVipNo()));
+				user.setNo(user.getNumber()+"");
 			}else{
 				user.setNumber(Long.parseLong(number));
+				user.setNo(number);
 			}
 			user.setCreatedate(new Date());
 			
@@ -746,7 +748,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				if(db.get("returnProvince")!=null){
 					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnProvince").toString(), "3")));
 					System.out.println("钱数----》"+info.getMoney());
-					info.setTime(Integer.parseInt(sett.getProvinceTime()+""));
+					info.setTime(sett.getProvinceTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getProvinceTime()+"")));
 					if(user!=null){
 						//推荐收益
@@ -756,8 +758,8 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}else if(type == 2){
 				if(db.get("returnCity")!=null){
-					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCity").toString(), "3")));
-					info.setTime(Integer.parseInt(sett.getCityTime()+""));
+					 info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCity").toString(), "3")).floatValue());
+					info.setTime(sett.getCityTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getCityTime()+"")));
 					if(user!=null){
 						//推荐收益
@@ -767,8 +769,8 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}else if(type == 3){
 				if(db.get("returnCounty")!=null){
-					info.setMoney(Float.valueOf(Long.parseLong(db.get("returnCounty").toString())*3));
-					info.setTime(Integer.parseInt(sett.getCountyTime()+""));
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnCounty").toString(), "3")).floatValue());
+					info.setTime(sett.getCountyTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getCountyTime()+"")));
 					if(user!=null){
 						//推荐收益
@@ -779,8 +781,8 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}else if(type == 4){
 				if(db.get("returnDept")!=null){
-					info.setMoney(Float.valueOf(Long.parseLong(db.get("returnDept").toString())*3));
-					info.setTime(Integer.parseInt(sett.getDeptTime()+""));
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnDept").toString(), "3")).floatValue());
+					info.setTime(sett.getDeptTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getDeptTime()+"")));
 					if(user!=null){
 						//推荐收益

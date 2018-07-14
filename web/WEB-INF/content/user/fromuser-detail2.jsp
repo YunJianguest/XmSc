@@ -387,8 +387,7 @@
               </div>
           </c:when>
           <c:otherwise>
-          	<c:if test="${bean.title=='退换产品'}">
-		      <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}&state=7'">
+              <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
                    <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>
                    </div>
@@ -398,19 +397,6 @@
                     </font>
                   </div>
               </div>
-		    </c:if>
-		    <c:if test="${bean.title!='退换产品'}">
-		      <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
-                   <div class="txt-c  ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
-                     <i class="fa ${bean.ioc}  line-height30"></i>
-                   </div>
-                  <div class="txt-c">
-                    <font size="2">
-                     <div class="hang40 line-height40 zi-6b6b6b">${bean.title}</div>
-                    </font>
-                  </div>
-              </div>
-		    </c:if>
           
           </c:otherwise> 
         </c:choose>

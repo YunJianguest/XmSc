@@ -109,7 +109,9 @@
             <div class="pull-right zi-green weight500 pr-15"><font size="2">充值</font></div>
         </a> --%>
     </div>
-
+	<!--<div style="height: 50px;line-height: 50px;width: 100%;padding: 8px 10px; display: flex;justify-content: space-between;align-items: center;">
+		<a href="">数字交易</a><a href="">乐乐币</a>
+	</div>-->
     <div class="txt-c zi-cheng  div-group-5">
 
         <div class="line-left1 line-top line-bottom line-right border-radius5">
