@@ -104,7 +104,7 @@
                         $('#roleid').val(json.roleid);
                         $('#type').val(json.type); 
                         $('#province').val(json.province);
-                        $('#city').val(json.city);
+                        $('#city').val(json.city); 
                         $('#agentLevel').val(json.agentLevel).trigger("change");
                         $('#number').val(json.no);
                         $('#headimgurl').val(json.headimgurl);

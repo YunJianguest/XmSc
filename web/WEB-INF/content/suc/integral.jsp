@@ -215,7 +215,7 @@ function exp() {
                       	  <c:when test="${bean.type == 'jf_withdraw'}">盼盼币提现</c:when>
                       	</c:choose>
                       	</td>
-                      	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/>${bean.fromUserid}</td>
+                      	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
                         <td class="table-action">
                               
                               <div class="btn-group1">

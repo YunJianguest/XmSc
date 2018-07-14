@@ -245,7 +245,9 @@ public class UserAction extends GeneralAction<UserInfo>
 		DBObject db = basedao.getMessage(PubConstants.USER_INFO, _id);
 		List<DBObject>list=wwzservice.getfromusermb(_id);
 		db.put("funclist", list);
-		db.put("mb",wwzservice.getfromusermbs(_id).get("mb"));
+		if(wwzservice.getfromusermbs(_id)!=null){
+			db.put("mb",wwzservice.getfromusermbs(_id).get("mb"));
+		} 
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
   } 
@@ -283,6 +285,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  number=Struts2Utils.getParameter("number");
 			String  renumber=Struts2Utils.getParameter("renumber");
 			String  headimgurl=Struts2Utils.getParameter("headimgurl");
+			String  fromUser=Struts2Utils.getParameter("fromUser");
 			
 
 			//验证省市县是否已经售卖
@@ -372,6 +375,9 @@ public class UserAction extends GeneralAction<UserInfo>
 			}
 			if(StringUtils.isNotEmpty(headimgurl)){
 				user.setHeadimgurl(headimgurl);
+			}
+			if(StringUtils.isNotEmpty(fromUser)){
+				user.setFromUser(fromUser);
 			}
 			if(StringUtils.isNotEmpty(renumber)){
 				user.setRenumber(Long.parseLong(renumber));
