@@ -195,7 +195,7 @@
     </head>
     <body style="background: #fff;">
     	<header class="mui-bar mui-bar-nav">
-    	    <a class="mui-action-back mui-icon mui-icon-undo mui-pull-left" style="color: #000;"></a>
+    	    <a class=" mui-icon mui-icon-undo mui-pull-left" style="color: #000;"></a>
     	    <h1 class="mui-title">商家入驻</h1>
     	</header>
     	<div class="mui-content" style="background: #fff;padding: 0 20px;padding-top: 44px;">
