@@ -1,0 +1,106 @@
+*{
+	margin:0;
+	padding:0;
+	box-sizing:border-box;
+}
+a{
+	text-decoration:none;
+}
+li{
+	list-style:none;
+}
+body{
+	background: url(../img/bei.jpg) no-repeat left top;
+	background-size:100%;
+}
+.top{
+	width: 100%;
+	height:50px;
+	text-align: center;
+	line-height: 50px;
+	font-size:16px;
+	font-weight:bold;
+	font-family: "微软雅黑";
+	color:#fff;
+	padding: 0 20px;
+}
+.top>img,.top>a>img{
+	height:20px;
+	margin-top: 15px;
+}
+.serch{
+	width: 80%;
+	height:40px;
+	text-align: center;
+	margin:0 auto;
+	position:relative;
+	display: none;
+}
+.serch>input{
+	width: 100%;
+	height:30px;
+	border-radius:30px;
+	font-size:12px;
+	color:#000;
+	padding-left: 10px;
+	margin-top:5px;
+	border: none;
+	outline: none;
+}
+.serch>button{
+	width:40px;
+	height:30px;
+	background:#149173 url(../img/serch.png) no-repeat center center;
+	background-size:50%;
+	position:absolute;
+	top:5px;
+	right:0;
+	outline:none;
+	border:none;
+	border-radius:0 15px 15px 0;
+}
+.zichan{
+	width: 100%;
+	height:auto;
+	overflow: hidden;
+}
+.zichan>p{
+	width: 100%;
+	height:60px;
+	line-height: 60px;
+	padding: 0 20px;
+	font-size:14px;
+	font-weight:bold;
+	font-family: "微软雅黑";
+	color:#fff;
+	border-bottom: 1px solid #eee;
+}
+.zichan>p:first-of-type{
+	height:58px;
+	line-height:58px;
+	border-top: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+}
+/*修改后的  */
+.zichan>p>span{
+	text-align: center;
+	float:left;
+	display:inline-block;
+	width: 33.33%;
+	height:100%;
+	
+}
+.zichan>p>span:first-of-type{
+	text-align: left !important;
+}
+.zichan>p>span:last-of-type{
+	text-align: right;
+}
+.zichan>p>span>img{
+	height: 30px;
+	margin-top: 15px;
+}
+.zichan>p>span:first-of-type>img{
+	margin-right: 5px;
+	float: left;
+}

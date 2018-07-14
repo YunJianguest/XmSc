@@ -1280,7 +1280,10 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(SysConfig.getProperty("custid"), fromUserid));
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
+		whereMap.put("fromUserid", fromUserid);
+		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		Struts2Utils.getRequest().setAttribute("jf", db);
 		return "digitalAsset";
 	}
 }
