@@ -673,7 +673,7 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	DBObject dbuser=wwzService.getWxUser(fromUserid);
 	    	//获取当前登录人所在市
 			UserInfo user=(UserInfo) UniObject.DBObjectToObject(dbuser, UserInfo.class);
-			Struts2Utils.getRequest().setAttribute("address", user.getAddress());
+			Struts2Utils.getRequest().setAttribute("address", user.getCounty());
 			return "exchangeweb"; 
 	    }
 	    /**

@@ -104,29 +104,33 @@
 			function exchange() {
 				var address="${address}";
 				var btn = ["取消", "确认"];
-				mui.confirm("是否进行兑换", "兑换提示", btn, function(e) {
-					 $.ajax({
-						type:"post",
-						url:"${ctx}/integral/miners!dhZsb.action",
-						async:true,
-						data:{
-							address:address
-						},
-						success:function(json){
-							if(json.state == 0){
-								alert("兑换成功");
-							}else if(json.state == 1){
-								alert("抱歉兑换过程异常");
-							}else if(json.state == 2){
-								alert("服务器未开通该功能");
+				var flag = mui.confirm("是否进行兑换", "兑换提示", btn, function(e) {
+					if(e.index==1){
+						$.ajax({
+							type:"post",
+							url:"${ctx}/integral/miners!dhZsb.action",
+							async:true,
+							data:{
+								address:address
+							},
+							success:function(json){
+								if(json.state == 0){
+									alert("兑换成功");
+								}else if(json.state == 1){
+									alert("抱歉兑换过程异常");
+								}else if(json.state == 2){
+									alert("服务器未开通该功能");
+								}
+								else if(json.state == 3){
+									alert("余额不足");
+								}else if(json.state == 4){
+									alert("未选择所属县域");
+								}
 							}
-							else if(json.state == 3){
-								alert("余额不足");
-							}else if(json.state == 4){
-								alert("未选择所属县域");
-							}
-						}
-					}); 
+						});
+						
+					}
+					  
 				})
 			}
 		</script>
