@@ -220,7 +220,7 @@
 					<li class="fav_item">
 						<span class="fav_select checkbox" style="display: none;">
 							<input type="checkbox" class="" name="shopId" id="" value="${bean.list.shopId }" />
-						</span>/shop/shop!index.action?lscode=6e43439f-6134-4fe2-b8b9-8b104569cc00&comid=13
+						</span>
 						<a href="${ctx}/shop/shop!index.action?custid=${custid}&agid=${agid}&lscode=${lscode}&comid=${bean.shop._id}" class="fav_link fav_link_shop">
 							<img class="image" src="${filehttp}${bean.shop.logo}" />
 							<div class="title">
