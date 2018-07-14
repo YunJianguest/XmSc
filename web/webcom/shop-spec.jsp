@@ -121,7 +121,7 @@
                             <div class="zi-6 weight500 hang30 sl zi-hei line-height30">${entity.ptitle}
                             </div>
                             <div class=" pull-left weight500">
-                                <div class="sl hang30" style="line-height:35px;">
+                                <div class="sl" style="line-height:24px;">
                                     <span class="zi-cheng" id="totalPrice">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/>元</span>
                                     <span class="virtualcoin">0.00</span>
                                 </div>
