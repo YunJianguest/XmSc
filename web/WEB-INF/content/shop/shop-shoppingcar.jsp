@@ -471,6 +471,11 @@ function delcar(id){
 				background: #fefefe;
 				border-radius: 5px;
 				padding: 10px;
+				overflow-y: auto;
+				position: absolute;
+			    top: 40px;
+			    left: 10%;
+			    right: 10%;
 			}
 			.modal-tit{
 				line-height: 16px;
