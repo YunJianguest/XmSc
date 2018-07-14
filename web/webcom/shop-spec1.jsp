@@ -78,7 +78,6 @@
         <a href="javascript:hidespec()">
             <div class="width-10 overflow-hidden" style="height:1000px;"></div>
         </a>
-        111
         <input type="hidden" value="<fmt:formatNumber value='${entity.price}'  pattern="0.0#"/>" id="price"/><!--单价-->
         <div class=" cmp640 position-f position-r" style="bottom:10px;left:0px;z-index: 100000;">
             <div class="bg-bai overflow-hidden border-radius3 width-9_5 maring-a">
