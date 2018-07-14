@@ -131,6 +131,19 @@
 		<div class="mui-content" style="padding: 0 20px;padding-top: 44px;background: #fff;">
 			<form action="" class="mui-input-group">
 				<div class="mui-input-row">
+					<label>编号</label>
+					<input id="number" type="text" value="${user.number }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名" readonly="readonly" >
+				</div>
+				<div class="mui-input-row">
+					<label>一级密码</label>
+					<input id="password" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+				</div>
+				
+				<div class="mui-input-row">
+					<label>二级密码</label>
+					<input id="paypassword" type="password" value="${user.paypassword }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
 					<label>姓名</label>
 					<input id="name" type="text" value="${user.userName }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
 				</div>
@@ -143,12 +156,6 @@
 					<input id="uskd" type="text" value="${user.uskd }" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
 					<a class="link" href="http://www.uskdpro.com">去注册</a>
 				</div>
-				<div class="mui-input-row">
-					<label>密码</label>
-					<input id="password" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
-				</div>
-				
-
 			</form>
 			
 			<div class="line-bottom overflow-hidden">
@@ -249,9 +256,15 @@
 				return;
 			}
 			
-			var password = $("#password1").val();
+			var password = $("#password").val();
 			if(password==""){
 				mui.alert('密码不能为空')
+				return;
+			}
+			
+			var paypassword = $("#paypassword").val();
+			if(paypassword==""){
+				mui.alert('支付密码不能为空')
 				return;
 			}
 			
@@ -277,6 +290,7 @@
 					tel:$('#tel').val(),
 					uskd:$('#uskd').val(),
 					password:$('#password').val(),
+					paypassword:$('#paypassword').val(),
 					province:$('#province').val(),
 					city:$('#city').val(),
 					county:$('#county').val(),

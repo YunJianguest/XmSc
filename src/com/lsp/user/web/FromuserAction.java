@@ -886,7 +886,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			String name =  Struts2Utils.getParameter("name");//姓名
 			String tel =  Struts2Utils.getParameter("tel");//电话
 			String uskd =  Struts2Utils.getParameter("uskd");//uskd账号
-			String password =  Struts2Utils.getParameter("password");//密码
+			String password =  Struts2Utils.getParameter("password");//一级密码
+			String paypassword = Struts2Utils.getParameter("paypassword");//二级密码
 			String province =  Struts2Utils.getParameter("province");//省
 			String city =  Struts2Utils.getParameter("city");//市
 			String county =  Struts2Utils.getParameter("county");//区
@@ -899,6 +900,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			user.setAccount(tel);
 			user.setUskd(uskd);
 			user.setPassword(password);
+			user.setPaypassword(paypassword);
 			user.setProvince(province);
 			user.setCity(city);
 			user.setCounty(county);
