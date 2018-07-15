@@ -36,7 +36,6 @@
     $.post('${ctx}/suc/integral!ajaxweb.action?custid=${custid}&lscode=${lscode}&fypage='+fypage, submitData,
        	function(json) { 
     		var xszf=$('#ajaxdiv').html();
-    		 
 	    	if(json.state=='0'){
 	    		var v = json.list; 
 	    		 for(var i=0;i<v.length;i++){  
