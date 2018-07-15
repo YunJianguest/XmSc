@@ -736,7 +736,7 @@ public class WwzService {
 		sortMap.put("sort", -1);
 		DBObject db = getWxUser(whereMap);
 		// 如何没有会员号则生成
-		if (db.get("no") == null || StringUtils.isEmpty(db.get("no").toString())) {
+		if (db.get("no") == null || StringUtils.isEmpty(db.get("no").toString())||db.get("no").toString().equals("未注册")) {
 			createVipNo(db);
 		}
 		if(db.get("number")==null||db.get("number").toString().equals("0")){
