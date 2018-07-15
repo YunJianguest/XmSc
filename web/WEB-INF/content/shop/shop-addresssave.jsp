@@ -127,11 +127,12 @@
     </style>
 </head>
 <body class="lock"> 
-	<header style="width: 100%;height: 40px;line-height: 40px;text-align: center;padding: 0 10px;background: #fff;">
-		<a href="javascript:history.go(-1);" style="font-size: 18px;float: left;color: #000;width: 30px;display: inline-block;height: 40px;line-height: 40px;" class="fa fa-angle-left"></a>
-			添加地址
+	
+	<header style="background: #fefefe;width: 100%;height: 44px;position: fixed;top: 0;left: 0;padding: 0 10px;line-height: 44px;text-align: center;border-bottom: 1px solid #ddd;">
+			<a  href="javascript:history.go(-1);" style="display: inline-block;float: left;width: 30px;height: 30px;background: url('${ctx}/xmMobile/img/goback.png') no-repeat;background-size: 100% 100%;margin-top: 10px;"></a>
+			<h1 class="mui-title">添加地址</h1>
 	</header>
-<main class="cmp640" style='padding-top: 40px;'> 
+<main class="cmp640" style='padding-top: 44px;'> 
 
      <div class="div-group-10 pt-15">
 

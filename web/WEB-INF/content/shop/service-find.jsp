@@ -77,10 +77,11 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav" style="background: #fff;">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		
+		<header class="mui-bar mui-bar-nav">
+		    <a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.back(-1)"></a>
 		    <h1 class="mui-title">售后详情</h1>
-		</header>-->
+		</header>
 		<div class="mui-content">
 		    <div class="mui-row">
 		    	<div class="tip-msg">
