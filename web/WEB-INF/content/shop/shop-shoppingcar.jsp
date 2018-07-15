@@ -616,8 +616,10 @@ $(window).scroll(function () {
 
 });
 $('#ConfirmPay').click(function(){
-		$('.mask').css('display','block');
-		moneypay();
+		if(confirm("是否支付?")){
+			$('.mask').css('display','block');
+			moneypay();
+		}
 	})
 	$('#close').click(function(){
 		$('.mask').css('display','none')
