@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lsp.integral.entity.InteProstore;
 import com.lsp.integral.entity.InteSetting;
 import com.lsp.integral.entity.Miner;
+import com.lsp.integral.entity.TopupOrder;
 import com.lsp.integral.entity.TransferOrder;
 import com.lsp.integral.entity.WithdrawalOrder;
 import com.lsp.pub.dao.BaseDao;
@@ -602,7 +603,52 @@ public class MinersAction extends GeneralAction<Miner> {
 	     * 充值
 	     */
 	    public void   topup() {
-	    	
+	    	HashMap<String, Object>map=new HashMap<>(); 
+			String sign=null; 
+			String eth=Struts2Utils.getParameter("eth");
+			String num=Struts2Utils.getParameter("num");
+			String username=Struts2Utils.getParameter("username");
+			String orderid=Struts2Utils.getParameter("orderid");
+			String key=Struts2Utils.getParameter("key");
+			sign= PayCommonUtil.createKey("UTF-8", eth+num+username+orderid, SysConfig.getProperty("jyskey"));
+			if (sign!=null&&sign.equals(key)) { 
+				//开始充值 
+				String fromid=wwzService.getfromUseridVipNo(eth);
+				if(StringUtils.isNotEmpty(fromid)){
+					
+					TopupOrder order=new TopupOrder();
+					order.set_id(mongoSequence.currval(PubConstants.INTEGRAL_TOPUPORDER));
+					order.setCreatedate(new Date());
+					order.setFromid(fromid);
+					order.setPrice(Double.parseDouble(num));
+					order.setState(0);
+					order.setFromorderid(orderid);
+					baseDao.insert(PubConstants.INTEGRAL_TOPUPORDER, order);
+					
+					if(wwzService.addjf(num, fromid, "jyscz", SysConfig.getProperty("custid"),0, 1, 0)){
+	                    map.put("state", "10005");
+						map.put("msg", "成功！");
+						order.setState(1);
+						baseDao.insert(PubConstants.INTEGRAL_TOPUPORDER, order);
+					}else{
+						 map.put("state", "10004");
+						 map.put("msg", "充值失败！");
+						 order.setState(2);
+						 baseDao.insert(PubConstants.INTEGRAL_TOPUPORDER, order);
+					} 
+				}else{
+					map.put("state", "10003");
+					map.put("msg", "账号不存在！");
+				}
+				
+			} else {
+				map.put("state", "10002");
+				map.put("msg", "key错误");
+			
+			}
+			String json = JSONArray.fromObject(map).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
 	    }
 	    /**
 	     * 获取可提现金额
