@@ -611,6 +611,14 @@ public class MinersAction extends GeneralAction<Miner> {
 			String orderid=Struts2Utils.getParameter("orderid");
 			String key=Struts2Utils.getParameter("key");
 			sign= PayCommonUtil.createKey("UTF-8", eth+num+username+orderid, SysConfig.getProperty("jyskey"));
+			if(StringUtils.isEmpty(eth)||StringUtils.isEmpty(num)||StringUtils.isEmpty(orderid)||StringUtils.isEmpty(key)){
+				map.put("state", "10006");
+				map.put("msg", "数据错误");
+				String json = JSONArray.fromObject(map).toString();
+				Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+				return;
+			}
+			
 			if (sign!=null&&sign.equals(key)) { 
 				//开始充值 
 				String fromid=wwzService.getfromUseridVipNo(eth);
