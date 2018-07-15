@@ -112,7 +112,7 @@
 					if(e.index==1){
 						$.ajax({
 							type:"post",
-							url:"${ctx}/integral/miners!dhZsb.action",
+							url:"${ctx}/integral/miners!dhZsb.action?lscode=${lscode}&custid=${custid}",
 							async:true,
 							data:{
 								address:address
