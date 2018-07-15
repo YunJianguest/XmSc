@@ -489,7 +489,7 @@ function del(id) {
 		  $("#totalPrice").val(p); 
 		  $("#oid").val(v);
 		  $(this).click(function(){
-				$('.masks').show("slow");
+				$('.masks').show();
 				 
 			})
 	  }
