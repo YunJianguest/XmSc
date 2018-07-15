@@ -623,7 +623,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		  	sub_map.put("state", 1);
 	    	String address=Struts2Utils.getParameter("address");
 	    	HashMap<String, Object> whereMap = new HashMap<>();
-	    	whereMap.put("custid",SysConfig.getProperty("custid"));
+	    	//whereMap.put("custid",SysConfig.getProperty("custid"));
 			DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
 			if(StringUtils.isEmpty(address)) {
 				//未选择所属县域

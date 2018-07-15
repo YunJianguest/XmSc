@@ -484,13 +484,15 @@ function del(id) {
       } 
   var shoptype;
   function choosePay(v,p,f){
-	  shoptype=f;
-	  $("#totalPrice").val(p); 
-	  $("#oid").val(v);
-	  $(this).click(function(){
-			$('.mask').css('display','block');
-			 
-		})
+	  if(confirm("是否支付?")){
+		  shoptype=f;
+		  $("#totalPrice").val(p); 
+		  $("#oid").val(v);
+		  $(this).click(function(){
+				$('.mask').css('display','block');
+				 
+			})
+	  }
   }
    
 	
