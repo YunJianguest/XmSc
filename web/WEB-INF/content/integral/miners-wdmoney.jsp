@@ -164,13 +164,15 @@
 		      function withdrawal(){
 		    	  if($('#eth').val() == ''){
 		    		  alert('请输入账号');
+		    		  $('.modal').hide();
 		    		  return ;
 		    	  }
-		    	  if($('#price').val() != ''){
+		    	  if($('#price').val() == ''){
 		    		  alert('请输入提现金额');
+		    		  $('.modal').hide();
 		    		  return ;
 		    	  }
-		    	  if($('#password').val() != ''){
+		    	  if($('#password').val() == ''){
 		    		  alert('请输入支付密码');
 		    		  return ;
 		    	  }
@@ -204,6 +206,7 @@
 					            		alert('账号不存在');
 					            	}else  if(json.state==3){
 					            		alert('未设置密码，请先设置支付密码');
+					            		window.location.href="${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 					            	}else  if(json.state==4){
 					            		alert('密码错误');
 					            	}
@@ -248,12 +251,18 @@
 					</div>
 					<div class="modal-cont-cont">
 						<div class="sixpwd">
-							<input type="password" name="" class="pwd" id="" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="16" />
+							<!-- <input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" /> -->
+							<!-- <input type="password" name="" class="pwd" id="password" value="" maxlength="1" /> -->
 						</div>
 
 					</div>
 					<div class="madol-foot">
-						<button class="cancel">取消</button><button>确认</button>
+						<button class="cancel">取消</button><button onclick="withdrawal()">确认</button>
 					</div>
 				</div>
 			</div>
@@ -266,7 +275,7 @@
 			$('.cancel').click(function(){
 				$('.modal').hide()
 			})
-			function sixPwd() {
+			/* function sixPwd() {
 				var flg = 2;
 				var txts = $('.pwd');
 				for(var i = 0; i < txts.length; i++) {
@@ -296,7 +305,7 @@
 					}
 				}
 			}
-			sixPwd()
+			sixPwd() */
 		</script>
 	</body>
 </html>
