@@ -247,16 +247,14 @@ public class ShopAction extends GeneralAction {
 				Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
 			}
 		}
-		if (StringUtils.isNotEmpty(comnums)) {
-			DBObject dbObject = baseDao.getMessage(PubConstants.DATA_WXUSER, fromUserid);
-			System.out.println("db---->" + dbObject);
+		if (StringUtils.isNotEmpty(comnums)&&Integer.parseInt(comnums)>1000) {
+			DBObject dbObject = baseDao.getMessage(PubConstants.USER_INFO, fromUserid); 
 			if (dbObject != null) {
-				WxUser user = (WxUser) UniObject.DBObjectToObject(dbObject, WxUser.class);
-				if (user.getReno() == 0) {
-					user.setReno(Integer.parseInt(comnums));
-					System.out.println("userreno---->" + user.getReno());
-					baseDao.insert(PubConstants.DATA_WXUSER, user);
-				}
+				UserInfo user = (UserInfo) UniObject.DBObjectToObject(dbObject, UserInfo.class);
+				user.set_id(fromUserid);
+			    user.setReno(comnums);
+			    user.setRenumber(Long.parseLong(comnums));
+			    baseDao.insert(PubConstants.USER_INFO, user);
 			}
 		}
 		if(shopmb!=null){
@@ -3718,12 +3716,12 @@ public class ShopAction extends GeneralAction {
 				if(order.getPublic_money() != null){
 				    bl_ty =  order.getPublic_money();
 				}
-				System.out.println("2--->"+order.getContri_money());
+				System.out.println("2--->"+order.getPublic_money());
 				// 3.会员区
 				if(order.getMembers_money() != null){
 					bl_hy = order.getMembers_money();
 				}
-				System.out.println("3--->"+order.getContri_money());
+				System.out.println("3--->"+order.getMembers_money());
 				whereMap.clear();
 				whereMap.put("_id",SysConfig.getProperty("custid"));
 				DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
@@ -3744,8 +3742,7 @@ public class ShopAction extends GeneralAction {
                     	if (Integer.parseInt(wxuser.get("tjlx").toString()) == 0) {
     						System.out.println("----->"+wxuser.get("renumber"));
                     		// 会员推荐
-    						DBObject tjuser = wwzService.getWXuserVipNo(wxuser.get("renumber").toString());
-    						System.out.println("657438--->"+tjuser);
+    						DBObject tjuser = wwzService.getWXuserVipNo(wxuser.get("renumber").toString()); 
     						if (tjuser != null) {
     							// 记录提成
     							System.out.println(bl);
@@ -3782,7 +3779,7 @@ public class ShopAction extends GeneralAction {
     					} else if (Integer.parseInt(wxuser.get("tjlx").toString()) == 1) {
     						// 管理员推荐
     						whereMap.clear();
-    						whereMap.put("number", Long.parseLong(wxuser.get("reno").toString()));
+    						whereMap.put("number", Long.parseLong(wxuser.get("renumber").toString()));
     						DBObject tjuser = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
     						if (tjuser != null) {
     							// 记录提成

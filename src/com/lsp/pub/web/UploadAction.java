@@ -167,6 +167,28 @@ public class UploadAction extends ActionSupport {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
+	public void testjr1() throws IOException {
+
+		HashMap<String, Object>map=new HashMap<>(); 
+		String sign=null; 
+		String eth=Struts2Utils.getParameter("eth");
+		String num=Struts2Utils.getParameter("num");
+		String username=Struts2Utils.getParameter("username");
+		String orderid=Struts2Utils.getParameter("orderid");
+		String key=Struts2Utils.getParameter("key");
+		sign= PayCommonUtil.createKey("UTF-8", eth+num+username+orderid, "uskdpro6623");
+		if (sign!=null&&sign.equals(key)) {
+			map.put("state", "10005");
+			map.put("msg", "成功！");
+		} else {
+			map.put("state", "10002");
+			map.put("msg", "key错误");
+		
+		}
+		String json = JSONArray.fromObject(map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
+	}
 
    
 }

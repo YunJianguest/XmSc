@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
@@ -736,8 +737,10 @@ public class WwzService {
 		sortMap.put("sort", -1);
 		DBObject db = getWxUser(whereMap);
 		// 如何没有会员号则生成
-		if (db.get("no") == null || StringUtils.isEmpty(db.get("no").toString())||db.get("no").toString().equals("未注册")) {
-			createVipNo(db);
+		if (db.get("no") == null || StringUtils.isEmpty(db.get("no").toString())) {
+			if(!db.get("no").toString().equals("未注册")){
+				createVipNo(db);
+			} 
 		}
 		if(db.get("number")==null||db.get("number").toString().equals("0")){
 			createNumber(db);
@@ -979,6 +982,9 @@ public class WwzService {
 				user.setNo(getVipNo());
 				// 推荐人推荐号码保存
 				user.setReno(number);
+				if(StringUtils.isNotEmpty(number)){
+					user.setRenumber(Long.parseLong(number));;
+				} 
 				baseDao.insert(PubConstants.USER_INFO, user);
 				updateUser(token, baseDao.getMessage(PubConstants.USER_INFO, id));
 
@@ -3033,12 +3039,21 @@ public class WwzService {
      */
 
     public boolean sendSMS(String tel,String content) {
-    	//https://sdk2.028lk.com/sdk2/   
-    	String url="https://sdk2.028lk.com/sdk2/BatchSend2.aspx?CorpID="+SysConfig.getProperty("lk_sms_id")+"&Pwd="+SysConfig.getProperty("lk_sms_pwd")+"&Mobile="+tel+"&Content="+content;  
-    	String str=HttpClient.sendGet(url); 
-    	System.out.println(str);
-    	if (Integer.parseInt(str.trim())>0) {
-    		return true; 
+    	//https://sdk2.028lk.com/sdk2/  
+    	try {
+			String send_content=URLEncoder.encode(content.replaceAll("<br/>", " "), "GBK");//发送内容
+			String url="https://sdk2.028lk.com/sdk2/BatchSend2.aspx?CorpID="+SysConfig.getProperty("lk_sms_id")+"&Pwd="+SysConfig.getProperty("lk_sms_pwd")+"&Mobile="+tel+"&Content="+send_content;  
+			String str=HttpClient.sendGet(url); 
+			System.out.println(str);
+			if (Integer.parseInt(str.trim())>0) {
+				return true; 
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return false; 
     }

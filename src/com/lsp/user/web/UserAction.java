@@ -102,7 +102,7 @@ public class UserAction extends GeneralAction<UserInfo>
       Struts2Utils.getRequest().setAttribute("wxenumber", renumber);
     }
    // whereMap.put("custid",SpringSecurityUtils.getCurrentUser().getId());
-    List<DBObject> list = this.basedao.getList(PubConstants.USER_INFO, whereMap, sortMap); 
+    List<DBObject> list = this.basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap); 
     for (DBObject dbObject : list) {
     	/*if(dbObject.get("custid") != null){
     		if(wwzservice.getCustName(dbObject.get("custid").toString())!=null){
