@@ -636,7 +636,7 @@ public class MinersAction extends GeneralAction<Miner> {
 				//获取部门价格
 				InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 				double bl=sett.getReturnDept()/3;
-				if(wwzService.deljf(bl+"", fromUserid,"jfdh", custid, 0, 1, 0)) {
+				if(wwzService.deljf(bl+"", fromUserid,"jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
 					//购买成功
 					DBObject dbuser=wwzService.getWxUser(fromUserid);
 					UserInfo user=(UserInfo) UniObject.DBObjectToObject(dbuser, UserInfo.class);
