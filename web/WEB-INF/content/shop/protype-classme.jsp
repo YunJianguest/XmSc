@@ -42,10 +42,12 @@
 			overflow-y: scroll;
 			height: 100%;
 			position: fixed;
+			padding-bottom:60px;
 		}
 		
 		.category-tab-box {
 			overflow: hidden;
+			padding-bottom:20px;
 		}
 		
 		.category-tab-list {
