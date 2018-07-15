@@ -213,7 +213,7 @@ public class HttpClient {
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
             // 设置通用的请求属性
-            connection.setRequestProperty("Accept-Charset", "gb2312");
+            connection.setRequestProperty("Accept-Charset", "GBK");
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent",
