@@ -69,7 +69,7 @@
         .hang-sl-2{
             overflow: hidden;text-overflow:ellipsis;display: -webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;
         }
-        .mask,
+        .masks,
 			.modal {
 				width: 100%;
 				height: 100%;
@@ -248,7 +248,7 @@
 	    		
 		    	if(json.state=='0'){
 		    		var v = json.list; 
-		    		
+		    		console.log(v);
 		    		 for(var i=0;i<v.length;i++){  
 		    		  xszf+='<div class="pl-10 pr-10 pt-10 overflow-hidden">'
 		    		      +'<div class="bg-bai border-radius5">'
@@ -313,7 +313,7 @@
 		    			    		               +'</div>';
 		    			    		         }
 		    			    		         xszf+='<div class=" width-10 line-height20 zi-6">'  
-		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+list[j].pro.price.toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;"></span></div>';
+		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+(list[j].pro.price*1+list[j].pro.kdprice*1).toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;">PPB:0.00</span></div>';
 		    			    		         if(list[j].goodstate<4){
 		    				    		          if(list[j].state==1 || list[j].state==3){
 		    				    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')" style="color:#e4393c">退货查看</div>';
@@ -489,7 +489,7 @@ function del(id) {
 		  $("#totalPrice").val(p); 
 		  $("#oid").val(v);
 		  $(this).click(function(){
-				$('.mask').css('display','block');
+				$('.masks').show("slow");
 				 
 			})
 	  }
@@ -532,6 +532,7 @@ function del(id) {
     function prodetail(id){
     	window.location.href='${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid='+id;
     }
+  
 </script>
 </head>
 <body>
@@ -602,11 +603,11 @@ function del(id) {
         </div>
     </div>
 </div>
-<div class="mask">
+<div class="masks" id="masks">
 	<div class="mask-cont">
 		<div class="mask-cont-tit">
 			付款方式
-			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
+			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="closes"></i>
 		</div>
 		<div class="mask-cont-cont">
 			<button onclick="popcode(0)" class="currency">比特币</button>
@@ -671,9 +672,11 @@ $("#friedtx").hide();
 function  friedtx_show(){
  $("#friedtx").show();
 }
- $('#close').click(function(){
-		$('.mask').css('display','none')
-	})
+ $("#closes").on('click',function(){
+		 console.log($('.masks').hide("slow"))
+			$('.masks').hide("slow")
+		}) 
+ 
 </script>
 </body>
 <script>
