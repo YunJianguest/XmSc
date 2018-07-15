@@ -781,7 +781,20 @@ public class FromuserAction extends GeneralAction<WxUser>{
  				  sub_map.put("state", 3);//密码错误
  			   }
   		    }else{
-  		    	sub_map.put("state", 2);//用户不存在
+  		    	whereMap = new HashMap<String, Object>();
+  		    	whereMap.put("number", tel);
+  		    	user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+  		    	if(user != null){
+  	 			   if(user.get("password").toString().equals(password)) {
+  	                   String lscode=wwzservice.createcode(user.get("_id").toString()); 
+  	                   sub_map.put("state", 0);//登陆成功
+  	                   sub_map.put("lscode", lscode);
+  	 			   }else{
+  	 				  sub_map.put("state", 3);//密码错误
+  	 			   }
+  	  		    }else{
+  	  		    	sub_map.put("state", 2);//用户不存在
+  	  		    }
   		    }
 	    }
   	    String json = JSONArray.fromObject(sub_map).toString();
