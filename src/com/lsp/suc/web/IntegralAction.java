@@ -1139,7 +1139,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		DBObject dbObject2 =baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
 		Struts2Utils.getRequest().setAttribute("setting", dbObject2);
 		
-		return "web";
+		return "webll";
 	}
 
 	/**

@@ -32,10 +32,9 @@
     }; 
    
     issend=false; 
-    $.post('${ctx}/suc/integralll!ajaxweb.action?custid=${custid}&lscode=${lscode}&fypage='+fypage, submitData,
+    $.post('${ctx}/suc/integral!ajaxwebll.action?custid=${custid}&lscode=${lscode}&fypage='+fypage, submitData,
        	function(json) { 
     		var xszf=$('#ajaxdiv').html();
-    		 
 	    	if(json.state=='0'){
 	    		var v = json.list; 
 	    		 for(var i=0;i<v.length;i++){  
