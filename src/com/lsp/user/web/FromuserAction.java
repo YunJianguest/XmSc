@@ -782,7 +782,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
  			   }
   		    }else{
   		    	whereMap = new HashMap<String, Object>();
-  		    	whereMap.put("number", tel);
+  		    	whereMap.put("no", tel);
   		    	user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
   		    	if(user != null){
   	 			   if(user.get("password").toString().equals(password)) {
