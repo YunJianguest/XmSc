@@ -321,28 +321,28 @@ public class LoginAction extends ActionSupport
 	  }
   public void   delAll(){
 		HashMap<String, Object>map=new HashMap<>();
-		
-		basedao.delete(PubConstants.WX_ORDERFORM);
-		basedao.delete(PubConstants.SHOP_ODERFORMPRO);
-		basedao.delete(PubConstants.SUC_SHOPPINGCART);
-		basedao.delete(PubConstants.SHOP_SHOPCOMMENTS);
-		basedao.delete(PubConstants.SHOP_SHOPCOMREPLY);
-		basedao.delete(PubConstants.SHOP_AFTERSERVICE);
-		
-		basedao.delete(PubConstants.INTEGRAL_INFO);
-		basedao.delete(PubConstants.INTEGRALLL_INFO);
-		//
-		basedao.delete(PubConstants.SUC_INTEGRALRECORD);
-		basedao.delete(PubConstants.INTEGRALM);
-		basedao.delete(PubConstants.JF_TOTAL);
-		
-		
-		
-		
-		basedao.delete(PubConstants.INTEGRAL_TOPUPORDER);
-		basedao.delete(PubConstants.INTEGRAL_PROSTORE);
-		basedao.delete(PubConstants.INTEGRAL_TRANSFERORDER);
-		basedao.delete(PubConstants.INTEGRAL_WITHDRAWALORDER);
+//		
+//		basedao.delete(PubConstants.WX_ORDERFORM);
+//		basedao.delete(PubConstants.SHOP_ODERFORMPRO);
+//		basedao.delete(PubConstants.SUC_SHOPPINGCART);
+//		basedao.delete(PubConstants.SHOP_SHOPCOMMENTS);
+//		basedao.delete(PubConstants.SHOP_SHOPCOMREPLY);
+//		basedao.delete(PubConstants.SHOP_AFTERSERVICE);
+//		
+//		basedao.delete(PubConstants.INTEGRAL_INFO);
+//		basedao.delete(PubConstants.INTEGRALLL_INFO);
+//		//
+//		basedao.delete(PubConstants.SUC_INTEGRALRECORD);
+//		basedao.delete(PubConstants.INTEGRALM);
+//		basedao.delete(PubConstants.JF_TOTAL);
+//		
+//		
+//		
+//		
+//		basedao.delete(PubConstants.INTEGRAL_TOPUPORDER);
+//		basedao.delete(PubConstants.INTEGRAL_PROSTORE);
+//		basedao.delete(PubConstants.INTEGRAL_TRANSFERORDER);
+//		basedao.delete(PubConstants.INTEGRAL_WITHDRAWALORDER);
 		String json = JSONArray.fromObject(map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}

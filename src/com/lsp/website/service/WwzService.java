@@ -515,18 +515,22 @@ public class WwzService {
 	 */
 	public DBObject getWxUsers(String fromUser) {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		whereMap.put("fromUser", fromUser);
-		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
-		if (db == null) {
-			db = new UserInfo();
-			db.put("nickname", "游客");
-			db.put("no", "未注册");
-			db.put("humor", "暂无心情");
-			db.put("fromUser", "notlogin");
-			db.put("level", 1);
-		}
+		if(StringUtils.isNotEmpty(fromUser)){
+			whereMap.put("fromUser", fromUser);
+			DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap);
+			if (db == null) {
+				db = new UserInfo();
+				db.put("nickname", "游客");
+				db.put("no", "未注册");
+				db.put("humor", "暂无心情");
+				db.put("fromUser", "notlogin");
+				db.put("level", 1);
+			}
 
-		return db;
+			return db;
+		}
+		return null;
+		
 	}
 
 	/**
@@ -758,8 +762,11 @@ public class WwzService {
 	public void createNumber(DBObject user){
 	    if(user!=null){
 	    	UserInfo us=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
-	    	us.setNumber(Long.parseLong(us.getNo()));
-	    	baseDao.insert(PubConstants.USER_INFO, us);
+	    	if(StringUtils.isNotEmpty(us.getNo())&&!us.getNo().equals("未注册")){
+	    		us.setNumber(Long.parseLong(us.getNo()));
+		    	baseDao.insert(PubConstants.USER_INFO, us);
+	    	}
+	    	
 	    }	
 	}
 	
