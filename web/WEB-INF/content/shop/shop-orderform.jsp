@@ -278,7 +278,7 @@
 		    			    		       var list=comlist[k].list;
 		    			    		       
 		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
-		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay('+v[i]._id+','+(v[i].zfmoney+v[i].kdprice)+','+comlist[k].type+')">去支付</span></div>'
+		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >待付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay('+v[i]._id+','+(v[i].zfmoney+v[i].kdprice)+','+comlist[k].type+')">去支付</span></div>'
 		    			    		    		   
 		    			    		       }
 		    			    		       
