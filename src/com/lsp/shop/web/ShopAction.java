@@ -1714,9 +1714,9 @@ public class ShopAction extends GeneralAction {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			String state=Struts2Utils.getParameter("state").toString();
-			/*if(state!=null&&state!="") {
+			if(StringUtils.isNotEmpty(state)) {
 				whereMap.put("state", Integer.parseInt(state));
-			}*/
+			}
 			sortMap.put("insDate", -1);
 			//whereMap.put("custid", custid);
 			whereMap.put("isxs", new BasicDBObject("$ne", 1));
