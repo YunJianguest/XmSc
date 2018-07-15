@@ -75,8 +75,8 @@
         
         }
      
-        
-        function check(v,id,price){
+        var shoptype=-1;
+        function check(v,id,price,type){
         if($(v).find('i').css('display')=="none"){
          $(v).find('i').show();
           var quantity =$('#'+id+'_lb').find('.count').attr('count'); 
@@ -89,6 +89,12 @@
          counts+=$("#"+id+"_lb").find(".count").attr('count')+",";
          remarks+=$("#"+id+"_lb").find(".title").html()+",";
          kd=kd+parseFloat($("#"+id+"_lb").find(".kd").attr('kd'));
+         if(shoptype==-1){
+        	 shoptype=type;
+         }else if(shoptype!=type){
+        	 alert("请选择同一区的产品进行结算！");
+        	 return;
+         }
         }else{
          $(v).find('i').hide();
          var quantity =$('#'+id+'_lb').find('.count').attr('count');
@@ -99,7 +105,7 @@
          prices=prices.replace(price+",", "");
          counts=counts.replace($("#"+id+"_lb").find(".count").attr('count')+",", "");
          remarks=remarks.replace($("#"+id+"_lb").find(".title").html()+" ","");
-         kd=kd-parseFloat($("#"+id+"_lb").find(".kd").attr('kd'));
+         kd=kd-parseFloat($("#"+id+"_lb").find(".kd").attr('kd')); 
         }
         total=zj;
         if('${byprice}'<=0||totalPrice<'${byprice}'){ 
@@ -257,7 +263,7 @@ function ajaxjz(){//加载
 	    		    spec+=v[i].spec+",";
 	    		    xszf+='<div id="'+v[i]._id+'_lb" class="line-bottom pt-10 pb-10 pr-10 pl-5 overflow-hidden position-r" >'
 	    		  +'<div class="col-1"><div class="mt-30 clear pr-5">'
-	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price.toFixed(2)+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
+	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price+','+[i].product.goodstype+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
 	    		  +'<font size="1"><i id="'+v[i]._id+'"  class="fa fa-check zi-green" style="line-height:11px; display:none"></i>'
 	    		  +'</font></div></div></div>'
 	    		  +'<div class="col-11"><div class=" position-a">'

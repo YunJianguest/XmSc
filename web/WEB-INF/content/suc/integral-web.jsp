@@ -101,8 +101,8 @@
         <a href="#">
             <div class="zi-hei weight500 pl-15" style="overflow: hidden;">
             	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">${setting.name}总计：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.value}'  pattern="0.00"/></i></font></div>            	
-				<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.prostore}'  pattern="0.00"/></i></font></div>
-            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.uservalue}'  pattern="0.00"/></i></font></div>
+				<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.uservalue}'  pattern="0.00"/></i></font></div>
+            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.prostore}'  pattern="0.00"/></i></font></div>
             	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">我的LLB：<i class="zi-cheng"  style="float: right;margin-right: 15px;">${jf.uservalue}</i></font></div>
             </div>
         </a>

@@ -3770,12 +3770,12 @@ public class ShopAction extends GeneralAction {
     						// 获取间接推荐人员
     						if(tjuser!=null&&tjuser.get("renumber")!=null){
     							tjuser = wwzService.getWXuserVipNo(tjuser.get("renumber").toString());
-    						 
-        							// 记录提成
+    						    if(tjuser!=null){
+    						    	// 记录提成
         							wwzService.addjf(BaseDecimal
         									.division(BaseDecimal.multiplication(bl + "", sett.getBetween() + ""), "100"),
         									tjuser.get("_id").toString(), "shop_bmzt",  SysConfig.getProperty("custid"), 1, 1, 0);
- 
+    						    } 	 
 
     						} 
     						
@@ -4041,6 +4041,27 @@ public class ShopAction extends GeneralAction {
 			}
 		}
 		
+		//检测收货情况
+		if(StringUtils.isNotEmpty(oid)){
+			whereMap.clear();
+			whereMap.put("orderid", oid);
+			whereMap.put("goodstate",4); 
+			Long count=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO,whereMap);
+			whereMap.clear();
+			whereMap.put("orderid", oid);
+			Long count1=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO,whereMap);
+			if(count==count1){
+				//全部发货
+				DBObject db=baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
+				if(db!=null){
+					OrderForm form=(OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
+					form.setState(4);
+					baseDao.insert(PubConstants.WX_ORDERFORM, form);
+				}
+			
+			}
+		}
+		 
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}

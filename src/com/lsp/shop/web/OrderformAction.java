@@ -280,6 +280,27 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			}
 			sub_map.put("state", 0);
 		}
+		//检测全部发货情况
+		if(StringUtils.isNotEmpty(orderid)){
+			whereMap.clear();
+			whereMap.put("orderid", orderid);
+			whereMap.put("goodstate",3); 
+			Long count=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO,whereMap);
+			whereMap.clear();
+			whereMap.put("orderid", orderid);
+			Long count1=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO,whereMap);
+			if(count==count1){
+				//全部发货
+				DBObject db=baseDao.getMessage(PubConstants.WX_ORDERFORM, orderid);
+				if(db!=null){
+					OrderForm form=(OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
+					form.setState(3);
+					baseDao.insert(PubConstants.WX_ORDERFORM, form);
+				}
+			
+			}
+		}
+		
         String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
@@ -614,18 +635,21 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		sub_map.put("state",1);
 		HashMap<String, Object>whereMap=new HashMap<>();
 		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("isxs",0);
 		whereMap.put("state",1);
 		Long  dfkcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
-		
+		whereMap.put("isxs",0);
 		whereMap.put("fromUserid",fromUserid);
 		whereMap.put("state",2);
 		Long  dfhcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
 		
 		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("isxs",0);
 		whereMap.put("state",3);
 		Long  dshcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
 		
 		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("isxs",0);
 		whereMap.put("state",4);
 		Long  dpjcount=baseDao.getCount(PubConstants.WX_ORDERFORM, whereMap);
 		sub_map.put("state",0);
