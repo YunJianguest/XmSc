@@ -504,6 +504,14 @@ public class MinersAction extends GeneralAction<Miner> {
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    	
 	    }
+	    
+	    public String wdmoney() throws Exception{
+	    	getLscode();
+	    	Struts2Utils.getRequest().setAttribute("custid", custid);
+			Struts2Utils.getRequest().setAttribute("lscode", lscode);
+	    	return "wdmoney";
+	    }
+	    
 	    /**
 	     * 提现
 	     */
@@ -560,6 +568,32 @@ public class MinersAction extends GeneralAction<Miner> {
 		    		sub_map.put("state", 2);
 		    	} 
 	    	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    }
+	    /**
+	     * 提现
+	     */
+	    public void   wdpassword() {
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+		  	String password = Struts2Utils.getParameter("password");
+		  	DBObject dbObject =baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		  	if(dbObject !=null){
+		  		if(dbObject.get("paypassword")!=null){
+		  			if(dbObject.get("paypassword").toString().equals(password)){
+		  				sub_map.put("state", 0);//操作成功
+		  			}else{
+		  				sub_map.put("state", 4);//密码错误，重新输入
+		  			}
+		  		}else{
+		  			sub_map.put("state", 3);//未设置支付密码，请先完善资料
+		  		}
+		  	}else{
+		  		sub_map.put("state", 2);//账号不存在
+		  	}
 	    	String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    			 

@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.record.formula.functions.If;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -64,6 +65,22 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 		Struts2Utils.getRequest().setAttribute("shopmbList", list);
 		Struts2Utils.getRequest().setAttribute("custid", SpringSecurityUtils.getCurrentUser().getId()); 
 		return SUCCESS;
+	}
+	
+	public  void  change(){
+		String sid = Struts2Utils.getParameter("sid");
+		String custid = Struts2Utils.getParameter("custid");
+		DBObject dbObject =baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(sid));
+		if(dbObject != null){
+			ShopMb  mb=(ShopMb) UniObject.DBObjectToObject(dbObject, ShopMb.class);
+			mb.set_id(Long.parseLong(sid));
+			mb.setCustid(custid);
+			baseDao.insert(PubConstants.SHOP_SHOPMB, mb);
+		}
+	}
+	
+	public void delcar() {
+		baseDao.delete(PubConstants.SUC_SHOPPINGCART);
 	}
 
 	@Override

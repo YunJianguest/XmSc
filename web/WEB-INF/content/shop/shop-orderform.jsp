@@ -295,7 +295,7 @@
 		    			    		       
 		    			    		       for(var j=0;j<list.length;j++){
 		    			    		            xszf+='<div class="clear div-group-10 position-r  border-radius5" style="overflow:hidden;">'
-		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');" onclick="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid='+list[j].pro._id+'"></div>'
+		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');" onclick="prodetail('+list[j].pro._id+')"></div>'
 		    			    		         +'</div>'
 		    			    		         +'<div style="padding-left:80px;">'
 		    			    		         +'<font size="2">'
@@ -527,6 +527,9 @@ function del(id) {
     				
     	},"json")
     }
+    function prodetail(id){
+    	window.location.href='${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid='+id;
+    }
 </script>
 </head>
 <body>
@@ -548,7 +551,7 @@ function del(id) {
 </main>
 
 <!--底部三个按钮-->
- <%@ include file="/webcom/shop-foot1.jsp"%>  
+<%@include file="/webcom/shop-foot.jsp" %> 
  <div class="fullscreen cmp640 bg-hei-5 lock" id="friedtx">
     <div class="overflow-hidden width-10">
         <a href="javascript:friedtx_hide()">
@@ -656,6 +659,7 @@ function del(id) {
 		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
+
 <script>
 function  friedtx_hide(){
  $("#friedtx").hide();
