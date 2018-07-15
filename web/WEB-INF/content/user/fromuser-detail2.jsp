@@ -55,10 +55,12 @@
     		line-height: 24px !important;
 		}
 		.tab-nav{
-			width:100%;height:80px;display:flex;padding-top:20px;
+			width:100%;height:80px;display:-webkit-box;display:-ms-flexbox;display:flex;padding-top:20px;
 		}
 		.tab-nav li{
-			flex:1;
+			-webkit-box-flex:1;
+			    -ms-flex:1;
+			        flex:1;
 			width:1%;
 			text-align: center;
 			font-size: 12px;
@@ -78,7 +80,8 @@
     		overflow: hidden;
 		}
 		.my_cate_item {
-		    box-sizing: border-box;
+		    -webkit-box-sizing: border-box;
+		            box-sizing: border-box;
 		    float: left;
 		    width: 25%;
 		    margin-bottom: 10px;
@@ -113,9 +116,15 @@
         	right: 0;
         	bottom: 0;
         	z-index: 1001;
+        	display: -webkit-box;
+        	display: -ms-flexbox;
         	display: flex;
-        	justify-content: center;
-        	align-items: center;
+        	-webkit-box-pack: center;
+        	    -ms-flex-pack: center;
+        	        justify-content: center;
+        	-webkit-box-align: center;
+        	    -ms-flex-align: center;
+        	        align-items: center;
         	display: none;
        }
         .modal-cont{
@@ -163,12 +172,16 @@
         .collector{
         	width: 100%;
         	height: 80px;
+        	display: -webkit-box;
+        	display: -ms-flexbox;
         	display: flex;
         	padding: 20px 0;
         	background: #fff;
         }
         .collector li{
-        	flex: 1;
+        	-webkit-box-flex: 1;
+        	    -ms-flex: 1;
+        	        flex: 1;
         	width: 1%;
         	text-align: center;
         }

@@ -61,7 +61,7 @@
 				line-height: 20px;
 				font-size: 14px;
 				font-family: "微软雅黑";
-				text-align: left;
+				text-align: justify;
 				margin-bottom: 10px;
 			}
 			

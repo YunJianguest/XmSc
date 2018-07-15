@@ -314,7 +314,7 @@
 </head>
 <body>
 	<header class="mui-bar mui-bar-nav" >
-		    <a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1)"></a>
+		    <!-- <a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1)"></a> -->
 		    <h1 class="mui-title">商品收藏</h1>
 		    <!--<span class="mui-pull-right">保存到手机</span>-->
 		</header>
