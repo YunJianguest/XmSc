@@ -40,7 +40,7 @@
 	    	if(json.state=='0'){
 	    		var v = json.list; 
 	    		 for(var i=0;i<v.length;i++){  
-	    		    xszf+='<a href="#"><div class="line-bottom zi-6 overflow-hidden txt-c">'
+	    		    xszf+='<a href="javascript:void(0)"><div class="line-bottom zi-6 overflow-hidden txt-c">'
 	    		    +'<div class="col-3 pt-15 pb-10 sl">';
 	    		  
 	    		     if(v[i].type=='ps_account'){
@@ -55,9 +55,11 @@
 	    		    if(v[i].type=='jfcz'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">积分充值</font></div>';
 	    		    }
-	    		    if(v[i].type=='shop_bmzt'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">商城收益</font></div>';
-	    		    }   
+	    		    if(v[i].state == 0){
+	    		    	if(v[i].type=='shop_bmzt'){
+	   	    		         xszf+='<div class="width-9 maring-a clear sl"><font size="2">商城收益</font></div>';
+	   	    		    }  
+	    		    }
 	    		    if(v[i].type=='shop_jfdh'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">下单使用</font></div>';
 	    		    } 

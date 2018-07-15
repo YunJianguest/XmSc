@@ -645,6 +645,17 @@ public class MinersAction extends GeneralAction<Miner> {
 					user.setAgentedate(new Date());
 					user.setAgentcounty(address);
 					baseDao.insert(PubConstants.USER_INFO, user);
+					
+					InteProstore info = new InteProstore();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+					info.setType("ps_account");//寮�閫氳处鎴� 
+			        info.setCreatedate(new Date()); 
+					info.setFromUserid(fromUserid);
+					info.setState(0); 
+					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnDept").toString(), "3")));
+					info.setTime(sett.getDeptTime());
+					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getDeptTime()+"")));
+					baseDao.insert(PubConstants.INTEGRAL_PROSTORE, info);
 					//购买成功
 					sub_map.put("state",0);
 				}else {
