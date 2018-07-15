@@ -86,6 +86,59 @@ public class HttpClient {
 		
 		return buffer.toString();
 	}
+	public static String httpGb2312(String url,String str) {
+		URL u = null;
+		HttpURLConnection con = null;
+
+		try {
+			u = new URL(url);
+			
+				// TODO Auto-generated catch block
+				
+			
+				con = (HttpURLConnection) u.openConnection();
+			
+			con.setRequestMethod("POST");
+			con.setConnectTimeout(30000);
+			con.setReadTimeout(30000);
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			con.setUseCaches(false);
+			con.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded");
+			OutputStreamWriter osw = new OutputStreamWriter(
+					con.getOutputStream(), "GBK");
+			if(str!=null) 
+				osw.write(str);
+			osw.flush();
+			osw.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+		} finally {
+			if (con != null) {
+				con.disconnect();
+			}
+		}
+
+		// 璇诲彇杩斿洖鍐呭
+		StringBuffer buffer = new StringBuffer();
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					con.getInputStream(), "UTF-8"));
+			String temp;
+			while ((temp = br.readLine()) != null) {
+				buffer.append(temp);
+				buffer.append("\n");
+			}
+			br.close();
+		} catch (Exception e) {
+			
+		}
+		
+		return buffer.toString();
+	}
 	public static String httpwrite(String url, String str) {
 		URL u = null;
 		HttpURLConnection con = null;
@@ -336,6 +389,8 @@ public class HttpClient {
         }
         return result;
     }
+    
+    
 
 /**
      * 发送Http post请求

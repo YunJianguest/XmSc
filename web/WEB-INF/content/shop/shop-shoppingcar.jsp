@@ -263,7 +263,7 @@ function ajaxjz(){//加载
 	    		    spec+=v[i].spec+",";
 	    		    xszf+='<div id="'+v[i]._id+'_lb" class="line-bottom pt-10 pb-10 pr-10 pl-5 overflow-hidden position-r" >'
 	    		  +'<div class="col-1"><div class="mt-30 clear pr-5">'
-	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price+','+[i].product.goodstype+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
+	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
 	    		  +'<font size="1"><i id="'+v[i]._id+'"  class="fa fa-check zi-green" style="line-height:11px; display:none"></i>'
 	    		  +'</font></div></div></div>'
 	    		  +'<div class="col-11"><div class=" position-a">'

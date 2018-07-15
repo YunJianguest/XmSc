@@ -3034,8 +3034,13 @@ public class WwzService {
 
     public boolean sendSMS(String tel,String content) {
     	//https://sdk2.028lk.com/sdk2/ 
+    	content="【xmsc】"+content;
+    	content="【xmsc】验证码：8888（10分钟内有效）请勿泄露该验证码。";
+    	System.out.println(content);
+    	
     	String url="https://sdk2.028lk.com/sdk2/BatchSend2.aspx?CorpID="+SysConfig.getProperty("lk_sms_id")+"&Pwd="+SysConfig.getProperty("lk_sms_pwd")+"&Mobile="+tel+"&Content="+content;  
-    	String str=HttpClient.http(url, null); 
+    	String str=HttpClient.sendGet(url); 
+    	System.out.println(str);
     	if (Integer.parseInt(str.trim())>0) {
     		return true; 
 		}
