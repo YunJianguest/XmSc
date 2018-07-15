@@ -86,59 +86,6 @@ public class HttpClient {
 		
 		return buffer.toString();
 	}
-	public static String httpGb2312(String url,String str) {
-		URL u = null;
-		HttpURLConnection con = null;
-
-		try {
-			u = new URL(url);
-			
-				// TODO Auto-generated catch block
-				
-			
-				con = (HttpURLConnection) u.openConnection();
-			
-			con.setRequestMethod("POST");
-			con.setConnectTimeout(30000);
-			con.setReadTimeout(30000);
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			con.setUseCaches(false);
-			con.setRequestProperty("Content-Type",
-					"application/x-www-form-urlencoded");
-			OutputStreamWriter osw = new OutputStreamWriter(
-					con.getOutputStream(), "GBK");
-			if(str!=null) 
-				osw.write(str);
-			osw.flush();
-			osw.close();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			
-		} finally {
-			if (con != null) {
-				con.disconnect();
-			}
-		}
-
-		// 璇诲彇杩斿洖鍐呭
-		StringBuffer buffer = new StringBuffer();
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					con.getInputStream(), "UTF-8"));
-			String temp;
-			while ((temp = br.readLine()) != null) {
-				buffer.append(temp);
-				buffer.append("\n");
-			}
-			br.close();
-		} catch (Exception e) {
-			
-		}
-		
-		return buffer.toString();
-	}
 	public static String httpwrite(String url, String str) {
 		URL u = null;
 		HttpURLConnection con = null;
@@ -213,16 +160,13 @@ public class HttpClient {
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
             // 设置通用的请求属性
-            connection.setRequestProperty("Accept-Charset", "GBK");
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             // 建立实际的连接
-            connection.connect(); 
-            // 获取所有响应头字段
-            Map<String, List<String>> map = connection.getHeaderFields();
-            
+            connection.connect();
+            // 获取所有响应头字段  
             // 定义 BufferedReader输入流来读取URL的响应
           
             in = new BufferedReader(new InputStreamReader(
@@ -390,8 +334,6 @@ public class HttpClient {
         }
         return result;
     }
-    
-    
 
 /**
      * 发送Http post请求

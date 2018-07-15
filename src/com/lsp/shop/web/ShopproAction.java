@@ -435,6 +435,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
+		double  bl=wwzservice.getPPBSprice();
 		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);  
 		for (DBObject dbObject : list) {
 				if(dbObject.get("comid") != null){
@@ -446,7 +447,12 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 							dbObject.put("comname", "默认小店");
 						}
 					}
-					dbObject.put("ppb_price", BaseDecimal.division(dbObject.get("price").toString(), wwzservice.getPPBSprice()+"",2));
+					if(bl>0){
+						dbObject.put("ppb_price", BaseDecimal.division(dbObject.get("price").toString(), bl+"",2));
+					}else{
+						dbObject.put("ppb_price",0.00);
+					}
+				
 				}
 		}
 		

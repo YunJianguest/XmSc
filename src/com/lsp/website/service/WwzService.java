@@ -3079,10 +3079,13 @@ public class WwzService {
      */
     public double getPPBSprice() { 
     	String str=HttpClient.sendGet(SysConfig.getProperty("uskd_price_api"));
-    	JSONObject json=JSONObject.parseObject(str);
-    	if(json.get("new_price")!=null) {
-    		return Double.parseDouble(json.get("new_price").toString());
-    	};
+    	if(StringUtils.isNotEmpty(str)){
+    		JSONObject json=JSONObject.parseObject(str);
+        	if(json.get("new_price")!=null) {
+        		return Double.parseDouble(json.get("new_price").toString());
+        	};
+    	}
+    	
 		return 0; 
     }
 
