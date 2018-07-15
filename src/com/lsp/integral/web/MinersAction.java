@@ -734,6 +734,8 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	//获取当前登录人所在市
 			UserInfo user=(UserInfo) UniObject.DBObjectToObject(dbuser, UserInfo.class);
 			Struts2Utils.getRequest().setAttribute("address", user.getCounty());
+			Struts2Utils.getRequest().setAttribute("custid", custid);
+			Struts2Utils.getRequest().setAttribute("lscode", lscode);
 			return "exchangeweb"; 
 	    }
 	    /**

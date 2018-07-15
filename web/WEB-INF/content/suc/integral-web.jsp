@@ -134,12 +134,13 @@
             <div id="ajaxdiv"></div>
          
             <!--下面代码不要删除或者循环-->
-            <a href="#">
+            <a href="javascript:void(0)">
                 <div class="zi-hui zi-green overflow-hidden txt-c"
                      style="border-radius:5px 5px 0px 0px ;">
                     <div class="col-15 pt-15 pb-10"><font size="2">以上所有明细</font></div>
                 </div>
             </a>
+           <a href="${ctx}/suc/integral!webll.action?custid=${custid}&agid=${agid}&lscode=${lscode}">返回LLB明细</a>
         </div>
     </div>
 
