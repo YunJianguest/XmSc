@@ -59,7 +59,7 @@
 				overflow: hidden;
 			}
 			
-			.content>ul>li {
+			.content>ul>span {
 				width: 100%;
 				line-height: 20px;
 				font-size: 12px;
