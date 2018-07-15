@@ -46,7 +46,7 @@
 
 	<body style="background: #fff;">
 		<header class="mui-bar mui-bar-nav" style="background: #fff;">
-			<a class=" mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class=" mui-icon mui-icon-undo mui-pull-left"  href="javascript:history.go(-1)"></a>
 			<h1 class="mui-title">评价中心</h1>
 		</header>
 		<div class="mui-content" style="background: #fff;">
