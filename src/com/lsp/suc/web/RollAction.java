@@ -94,6 +94,7 @@ public class RollAction extends GeneralAction<RollInfo>{
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
 		String custid=SysConfig.getProperty("custid");
 		String comid=Struts2Utils.getParameter("comid"); 
+		String lscode=Struts2Utils.getParameter("lscode"); 
 		//String custid1=Struts2Utils.getParameter("custid");
 		if(StringUtils.isNotEmpty(comid)) {
 			whereMap.put("comid",Long.parseLong(comid));
@@ -108,6 +109,7 @@ public class RollAction extends GeneralAction<RollInfo>{
 		fycount=baseDao.getCount(PubConstants.SUC_ROLL,whereMap);
 		Struts2Utils.getRequest().setAttribute("rollList", list);
 		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		return "kuaibao";
 	}
 
