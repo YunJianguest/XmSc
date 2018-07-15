@@ -399,7 +399,8 @@
 				font-size: 11px;
 				padding: 5px 10px;
 				text-align: left;
-				
+				height:80px;
+				overflow-y: auto;
 			}
 			.modal-cont-tit p{
 				margin: 0;
