@@ -92,11 +92,12 @@
  
 
 <main class="lock cmp640" id="section1"> 
-    <div class="top_foot bg-hui-92 zi-bai hang40 line-height40 cmp640 line-bottom">
+    <div class="bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
         <a href="#">
-            <div class="pull-left zi-hei weight500 pl-15"><font size="2">我的${setting.names}总计：<i class="zi-cheng">${jf.llzvalue}</i></font>
-            <font size="2">可用${setting.names}：<i class="zi-cheng">${jf.llkyvalue}</i></font>
-            <font size="2">冻结${setting.names}：<i class="zi-cheng">${jf.lldjvalue}</i></font>
+            <div class="zi-hei weight500 pl-15" style="overflow: hidden;">
+            <div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">${setting.names}总计：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.llzvalue}'  pattern="0.00"/></i></font></div>            	
+			<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.llkyvalue}'  pattern="0.00"/></i></font></div>
+            <div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.lldjvalue}'  pattern="0.00"/></i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
@@ -104,7 +105,7 @@
         </a> --%>
     </div>
 
-    <div class="txt-c zi-cheng  div-group-5 pt-50">
+   <div class="txt-c zi-cheng  div-group-5">
 
         <div class="line-left1 line-top line-bottom line-right border-radius5">
             <!--<a href="#">-->
@@ -117,7 +118,7 @@
             <div class="line-bottom  zi-6 overflow-hidden txt-c weight500" style="border-radius:5px 5px 0px 0px ;">
                 <div class="col-3 pt-15 pb-10"><font size="2">名称</font></div>
                 <div class="col-7 pt-15 pb-10"><font size="2">时间</font></div>
-                <div class="col-2 pt-15 pb-10"><font size="2">积分</font></div>
+                <div class="col-2 pt-15 pb-10"><font size="2">LLB</font></div>
             </div>
              
             <!--循环列表开始-->
