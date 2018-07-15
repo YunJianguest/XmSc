@@ -217,7 +217,7 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1)"></a>
 			<h1 class="mui-title">提现</h1>
 		</header>
 		<div class="mui-content" style="background: #fff;padding-left:10px ;padding-right: 10px;">

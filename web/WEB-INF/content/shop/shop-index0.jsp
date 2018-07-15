@@ -534,7 +534,7 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell mui-media mui-col-xs-12">
-						<a href="${ctx}/shop/shop!index.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=4"style="padding: 0;">
+						<a href="${ctx}/shop/shop!index.action?custid=${custid}&agid=${agid}&lscode=${lscode}&type=4"style="padding: 0;">
 							<!--<div class="mui-media-body" style="line-height: 30px;font-size: 16px;font-weight: 600;height: 30px;">特约区</div>-->
 							<div class="title-txt">
 								<span class="title-layout"> 
