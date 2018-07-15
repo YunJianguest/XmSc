@@ -278,7 +278,7 @@
 		    			    		       var list=comlist[k].list;
 		    			    		       
 		    			    		       if(list[0].goodstate == 1 || list[0].goodstate == 0){
-		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay('+v[i]._id+','+(v[i].zfmoney+v[i].kdprice)+')">去支付</span></div>'
+		    			    		    	   xszf+='<div class="col-5 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >代付款<span href="" style="color:#e4393c;margin-left: 5px;" onclick="choosePay('+v[i]._id+','+(v[i].zfmoney+v[i].kdprice)+','+comlist[k].type+')">去支付</span></div>'
 		    			    		    		   
 		    			    		       }
 		    			    		       
@@ -426,7 +426,15 @@ function del(id) {
 		        },"json");
   }
   function popcode(val){ 
-   	 if(val == 0){
+	  var txt="1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu";
+   	 if(val == 0){ 
+   		 if(shoptype==3){
+      		  txt="3AYHYGbC9uE5vBWfbQutyrEmyUd3cAwEdY";
+      	  }else if(shoptype==5){
+      		  txt="3MKiB7ZX16zgwAwbXxM4LugGXm3Co1fFJe";
+      	  }else if(shoptype==4){
+      		  txt="3CS2WvYFnrwL1G3e9jKg6o4guGh4boP4Pr";
+      	  }
    		 $('#bt').css('display','block');
 				pay_bt();
 				//二维码生成
@@ -438,6 +446,13 @@ function del(id) {
 			    $("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
    	 }
    	 if(val == 1){
+   		 if(shoptype==3){
+      		  txt="0xefa03a9B480A9890C5541065A398F43f82F32832";
+      	  }else if(shoptype==5){
+      		  txt="0xc3d8d8fBDb34dA5930d95869b692D80B668d4b98";
+      	  }else if(shoptype==4){
+      		  txt="0x842B0afCaA759ea325A915D2a5e5963B618DcEf1";
+      	  }
    		 $('#ytf').css('display','block');
 				pay_ytf();
 				//二维码生成
@@ -467,7 +482,9 @@ function del(id) {
             		"json");
    	 }
       } 
-  function choosePay(v,p){
+  var shoptype;
+  function choosePay(v,p,f){
+	  shoptype=f;
 	  $("#totalPrice").val(p); 
 	  $("#oid").val(v);
 	  $(this).click(function(){
