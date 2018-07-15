@@ -295,7 +295,7 @@
 		    			    		       
 		    			    		       for(var j=0;j<list.length;j++){
 		    			    		            xszf+='<div class="clear div-group-10 position-r  border-radius5" style="overflow:hidden;">'
-		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');" onclick=""></div>'
+		    			    		         +'<div class=" position-a"><div class="img-bj bk border-radius3" style="background-image:url(${filehttp}/'+list[j].pro.logo+');" onclick="${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid='+list[j].pro._id+'"></div>'
 		    			    		         +'</div>'
 		    			    		         +'<div style="padding-left:80px;">'
 		    			    		         +'<font size="2">'
