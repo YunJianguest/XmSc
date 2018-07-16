@@ -168,7 +168,7 @@
 		    		  return ;
 		    	  }
 		    	  if($('#price').val() == ''){
-		    		  alert('请输入提现金额');
+		    		  alert('请输入提币金额');
 		    		  $('.modal').hide();
 		    		  return ;
 		    	  }
@@ -190,14 +190,14 @@
 							    		 $.post('${ctx}/integral/miners!withdrawal.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData1,
 										        	function (json) {
 										            	if(json.state==0){
-										            		alert('提现申请成功，请等待审核');
+										            		alert('提币申请成功，请等待审核');
 										            		//window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 										            	}else if(json.state==1){
-										            		alert('提现失败，请重新提交');
+										            		alert('提币失败，请重新提交');
 										            	}else if(json.state==2){
 										            		alert('余额不足');
 										            	}else {
-										            		alert('提现失败');
+										            		alert('提币失败');
 										            	}
 										},"json")
 					            	}else if(json.state==1){
@@ -218,7 +218,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1)"></a>
-			<h1 class="mui-title">提现</h1>
+			<h1 class="mui-title">提币</h1>
 		</header>
 		<div class="mui-content" style="background: #fff;padding-left:10px ;padding-right: 10px;">
 			<div class="mui-row">
@@ -242,7 +242,7 @@
 		    	</div>-->
 			</div>
 			<div class="mui-row" style="width: 100%;display: flex;justify-content: center;margin-top: 20px;">
-				<button class="mui-btn mui-btn-block liftBtn">申请提现</button>
+				<button class="mui-btn mui-btn-block liftBtn">申请提币</button>
 			</div>
 			<div class="modal">
 				<div class="modal-cont">
