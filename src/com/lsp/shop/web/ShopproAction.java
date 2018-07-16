@@ -435,7 +435,7 @@ public class ShopproAction extends GeneralAction<ProductInfo> {
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		double  bl=0;
+		double  bl=wwzservice.getPPBSprice();
 		List<DBObject> list =baseDao.getList(PubConstants.DATA_PRODUCT,whereMap,fypage,10, sortMap);  
 		for (DBObject dbObject : list) {
 				if(dbObject.get("comid") != null){

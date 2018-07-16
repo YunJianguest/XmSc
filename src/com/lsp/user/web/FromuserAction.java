@@ -262,6 +262,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			  System.out.println(wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
 			  //llb 
 			  if (wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+				  System.out.println(wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue"));
 				  Struts2Utils.getRequest().setAttribute("llb",wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue") );
 			  }
 			

@@ -23,7 +23,14 @@ public class OrderForm extends ReflectionDBObject{
 	 * 支付的金钱
 	 */
 	private double zfmoney;
+	/**
+	 * 支付的第三方价格
+	 */
 	private double money;
+	/**
+	 * 支付类型0人民币，1比特币2以太坊3PP币
+	 */
+	private int  zflx;
 	
 	private double jfdh;
 	/**
@@ -137,11 +144,38 @@ public class OrderForm extends ReflectionDBObject{
 	private Double members_money;
 	
 	private Double other_money;//退款手续费
+	private double btc_money;
+	private double eth_money;
+	private double ppb_money;
+	
+	public double getBtc_money() {
+		return btc_money;
+	}
+	public void setBtc_money(double btc_money) {
+		this.btc_money = btc_money;
+	}
+	public double getEth_money() {
+		return eth_money;
+	}
+	public void setEth_money(double eth_money) {
+		this.eth_money = eth_money;
+	}
+	public double getPpb_money() {
+		return ppb_money;
+	}
+	public void setPpb_money(double ppb_money) {
+		this.ppb_money = ppb_money;
+	}
 	/**
 	 * 所有的店铺ID
 	 */
-	private List<Long> comids;
-	
+	private List<Long> comids; 
+	public int getZflx() {
+		return zflx;
+	}
+	public void setZflx(int zflx) {
+		this.zflx = zflx;
+	}
 	public double getKdprice() {
 		return kdprice;
 	}

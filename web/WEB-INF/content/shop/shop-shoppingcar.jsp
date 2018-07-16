@@ -176,6 +176,9 @@
             				alert("下单成功！请尽快付款！！！");
             				var orderno=json.orderno; 
             				$('#orderno').val(json.orderno);
+            				if(confirm("是否支付?")){
+            					$('.mask').css('display','block'); 
+            				}
             			}else if(json.state == 1) {
             				alert("该账号没有开通支付"); 
             			}else if(json.state == 3){
@@ -188,46 +191,64 @@
     	 
            } 
      function popcode(val){ 
-    	 if(val == 0){
-    		 $('#bt').css('display','block');
-				pay_bt();
-				//二维码生成
-				$('#qrcode').qrcode({ 
-				  width : w,
-			      height : w,
-			      text	: '1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'
-			    });
-			    $("#bturl").text('1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu'); 
-    	 }
-    	 if(val == 1){
-    		 $('#ytf').css('display','block');
-				pay_ytf();
-				//二维码生成
-				$('#qrcodes').qrcode({ 
-				  width : w,
-			      height : w,
-			      text	: '0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'
-			    });
-				$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
-    	 }
-    	 if(val == 2){
-    		 var submitData = { 
-    				 orid:$('#orderno').val()
-         	};
-    		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
-             		function(json) {
-					//alert(json.state);
-     					if(json.state == 0){
-     						alert("支付成功！");
-     						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
-     					}else if(json.state == 1){
-     						alert("操作失败");
-     					}else{
-     						alert("支付失败！");
-     					}
-             		},
-             		"json");
-    	 }
+   	  var txt="1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu";
+	  
+	 if(val == 0){
+		 zflx=1;
+		 if(shoptype==3){
+   		  txt="3AYHYGbC9uE5vBWfbQutyrEmyUd3cAwEdY";
+   	  }else if(shoptype==5){
+   		  txt="3MKiB7ZX16zgwAwbXxM4LugGXm3Co1fFJe";
+   	  }else if(shoptype==4){
+   		  txt="3CS2WvYFnrwL1G3e9jKg6o4guGh4boP4Pr";
+   	  }
+		 $('#bt').css('display','block');
+			pay_bt();
+			//二维码生成
+			$('#qrcode').qrcode({ 
+			  width : w,
+		      height : w,
+		      text	: txt
+		    });
+		    $("#bturl").text(txt); 
+	 }
+	 if(val == 1){
+		 zflx=2;
+		 if(shoptype==3){
+   		  txt="0xefa03a9B480A9890C5541065A398F43f82F32832";
+   	  }else if(shoptype==5){
+   		  txt="0xc3d8d8fBDb34dA5930d95869b692D80B668d4b98";
+   	  }else if(shoptype==4){
+   		  txt="0x842B0afCaA759ea325A915D2a5e5963B618DcEf1";
+   	  }
+		 $('#ytf').css('display','block');
+			pay_ytf();
+			//二维码生成
+			$('#qrcodes').qrcode({ 
+			  width : w,
+		      height : w,
+		      text	: txt
+		    });
+			$("#ytfurl").text(txt); 
+	 }
+	 if(val == 2){
+		 zflx=3;
+		 var submitData = { 
+				 orid:$('#orderno').val(),
+				 zflx:zflx,
+     	}; 
+		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
+         		function(json) {
+				//alert(json.state);
+ 					if(json.state == 0){
+ 						alert("支付成功！");
+ 						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+ 					}else if(json.state == 1){
+ 						alert("操作失败");
+ 					}
+         		},
+         		"json");
+	 }
        } 
  
     </script>
@@ -263,7 +284,7 @@ function ajaxjz(){//加载
 	    		    spec+=v[i].spec+",";
 	    		    xszf+='<div id="'+v[i]._id+'_lb" class="line-bottom pt-10 pb-10 pr-10 pl-5 overflow-hidden position-r" >'
 	    		  +'<div class="col-1"><div class="mt-30 clear pr-5">'
-	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
+	    		  +'<div onclick="check(this,'+v[i]._id+','+v[i].product.price+','+v[i].product.goodstype+')" class="img-wh15 bg-bai-5 maring-a txt-c border-radius50" style="border: solid #45c01a 2px;">'
 	    		  +'<font size="1"><i id="'+v[i]._id+'"  class="fa fa-check zi-green" style="line-height:11px; display:none"></i>'
 	    		  +'</font></div></div></div>'
 	    		  +'<div class="col-11"><div class=" position-a">'
@@ -281,7 +302,7 @@ function ajaxjz(){//加载
 	    		  }else{
 	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  } 
-	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:0.00</span></div></font></div>'
+	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
 	    		  +'</div></div></div>';
 	    		   }
 	    	     
@@ -535,7 +556,7 @@ function delcar(id){
         <div class="col-4 zi-bai size14 weight500 txt-c pull-right">
             <!--<a href="javascript:moneypay()">-->
                 <div class=" hang40 ">
-                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay">确认付款</div>
+                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay" onclick="moneypay()">确认付款</div>
                 </div>
             <!--</a>-->
         </div>
@@ -616,10 +637,7 @@ $(window).scroll(function () {
 
 });
 $('#ConfirmPay').click(function(){
-		if(confirm("是否支付?")){
-			$('.mask').css('display','block');
-			moneypay();
-		}
+		
 	})
 	$('#close').click(function(){
 		$('.mask').css('display','none')

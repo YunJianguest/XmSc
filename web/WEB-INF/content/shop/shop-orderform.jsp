@@ -195,6 +195,155 @@
 				border: none;
 				border-bottom: 1px solid #e3e3e3;
 			}
+				input:focus {
+				outline: none;
+			}
+			
+			.mui-input-row {
+				position: relative;
+			}
+			
+			.mui-input-row label {
+				width: 20%;
+				font-size: 14px;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 80%;
+			}
+			
+			.mui-input-row::after {
+				width: 100%;
+				content: '';
+				height: 1px;
+				background: #ccc;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.liftCash-tit {
+				line-height: 20px;
+				font-size: 12px;
+				color: #999;
+				margin-top: 5px;
+			}
+			
+			.rank {
+				width: 100%;
+				height: auto;
+				margin-top: 10px;
+			}
+			
+			.liftBtn {
+				margin: 0 auto;
+				background: #E4393C;
+				border: none;
+				color: #fff;
+			}
+			
+			.modal {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background: rgba(0, 0, 0, .6);
+				z-index: 100;
+				display: none;
+			}
+			
+			.modal-cont {
+				width: 80%;
+				height: 200px;
+				background: #fff;
+				border-radius: 10px;
+				margin: 0 auto;
+				margin-top: 150px;
+			}
+			
+			.modal-cont-tit {
+				width: 100%;
+				height: 34px;
+				line-height: 34px;
+				text-align: center;
+				position: relative;
+			}
+			
+			.modal-cont-tit::after {
+				content: '';
+				width: 100%;
+				height: 1px;
+				background: #e3e3e3;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.modal-cont-cont {
+				width: 100%;
+				height: 132px;
+				line-height: 132px;
+				position: relative;
+			}
+			
+			.sixpwd {
+				width: 80%;
+				margin: 0 auto;
+				border: 1px solid #000;
+				position: absolute;
+				top: 50%;
+				left: 10%;
+				height: 34px;
+				line-height: 34px;
+				margin-top: -17px;
+				border-radius: 5px;
+				display: flex;
+				box-sizing: border-box;
+				z-index: 10;
+			}
+			
+			.sixpwd input {
+				flex: 1;
+				width: 1%;
+				margin: 0;
+				height: 32px;
+				line-height: 32px;
+				position: relative;
+				border: none;
+				border-right: 1px solid #000;
+				border-radius: 0;
+			}
+			
+			.sixpwd input:last-child {
+				border: none;
+			}
+			.madol-foot{
+				width: 100%;
+				display: flex;
+				height: 34px;
+				line-height: 34px;
+			}
+			.madol-foot button{
+				width: 1%;
+				flex: 1;
+				border: none;
+				color: #fff;				
+				border-radius:0 ;
+			}
+			.madol-foot button:first-child{
+				border-bottom-left-radius: 5px;
+				background: #E4393C;
+			}
+			.madol-foot button:last-child{
+				
+				background: #007AFF;
+				border-bottom-right-radius: 5px;
+			}
     </style>
     <script>
     
@@ -313,7 +462,7 @@
 		    			    		               +'</div>';
 		    			    		         }
 		    			    		         xszf+='<div class=" width-10 line-height20 zi-6">'  
-		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">￥'+(list[j].pro.price*1+list[j].pro.kdprice*1).toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;">PPB:0.00</span></div>';
+		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">单价:￥'+(list[j].pro.price*1+list[j].pro.kdprice*1).toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_money+'</span></div>';
 		    			    		         if(list[j].goodstate<4){
 		    				    		          if(list[j].state==1 || list[j].state==3){
 		    				    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')" style="color:#e4393c">退货查看</div>';
@@ -464,22 +613,7 @@ function del(id) {
 				$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
    	 }
    	 if(val == 2){
-   		 var submitData = { 
-   				 orid:$('#oid').val()
-        	};
-   		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
-            		function(json) {
-					//alert(json.state);
-    					if(json.state == 0){
-    						alert("支付成功！");
-    						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
-    					}else if(json.state == 1){
-    						alert("操作失败");
-    					}else{
-    						alert("支付失败，余额不足！");
-    					}
-            		},
-            		"json");
+   		ppbpay();
    	 }
       } 
   var shoptype;
@@ -532,6 +666,27 @@ function del(id) {
     function prodetail(id){
     	window.location.href='${ctx}/shop/shop!shopproduct.action?custid=${custid}&agid=${agid}&lscode=${lscode}&pid='+id;
     }
+    
+    
+    function  ppbpay(){
+      	 var submitData = { 
+  				 orid:$('#orderno').val(),
+  				 zflx:3,
+       	};
+  		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
+           		function(json) {
+  				//alert(json.state);
+   					if(json.state == 0){
+   						alert("支付成功！");
+   						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+   					}else if(json.state == 1){
+   						alert("操作失败");
+   					}else{
+   						alert("支付失败！");
+   					}
+           		},
+           		"json");
+       }
   
 </script>
 </head>
@@ -663,6 +818,8 @@ function del(id) {
 	</div>
 </div>
 
+ 
+
 <script>
 function  friedtx_hide(){
  $("#friedtx").hide();
@@ -692,6 +849,10 @@ $(window).scroll(function () {
    
 });
 
+$('.cancel').click(function(){
+	$('.modal').hide()
+})
+ 
 </script>
 
 

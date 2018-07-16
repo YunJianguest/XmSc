@@ -392,22 +392,22 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		System.err.println(l/60000);
 	    }
 	public void  cz() {
-//		HashMap<String, Object>sub_map=new HashMap<>();
-//		sub_map.put("state",1);
-//		String id=Struts2Utils.getParameter("id");
-//		HashMap<String,Object>whereMap=new HashMap<>();
-//		whereMap.put("no",id);
-//		DBObject db=baseDao.getMessage(PubConstants.USER_INFO, whereMap); 
-//		if(db!=null) {
-//			String value =Struts2Utils.getParameter("value");
-//			if(wwzService.addjf(value, db.get("_id").toString(), "xtcz", SysConfig.getProperty("custid"), 1, 1, 0)) {
-//				sub_map.put("state",0);
-//			}
-//		}
-//		
-//		String json = JSONArray.fromObject(sub_map).toString();
-//		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-//		
+		HashMap<String, Object>sub_map=new HashMap<>();
+		sub_map.put("state",1);
+		String id=Struts2Utils.getParameter("id");
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("no",id);
+		DBObject db=baseDao.getMessage(PubConstants.USER_INFO, whereMap); 
+		if(db!=null) {
+			String value =Struts2Utils.getParameter("value");
+			if(wwzService.addjf(value, db.get("_id").toString(), "xtcz", SysConfig.getProperty("custid"), 1, 1, 0)) {
+				sub_map.put("state",0);
+			}
+		}
+		
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
 	}
 	
 }

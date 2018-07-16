@@ -115,7 +115,7 @@ function exp() {
 	var sel_type=$("#sel_type").val();
 	var sel_insdate=$("#sel_insdate").val();
 	var sel_enddate=$("#sel_enddate").val(); 
-	location.href = "${ctx }/suc/integral!integeralfromexp.action?comid=${comid}&sel_state="+sel_state+"&sel_insdate="+sel_insdate+"&sel_enddate="+sel_enddate+"&sel_type="+sel_type;
+	location.href = "${ctx }/suc/integral!integerallfromexp.action?comid=${comid}&sel_state="+sel_state+"&sel_insdate="+sel_insdate+"&sel_enddate="+sel_enddate+"&sel_type="+sel_type;
 	
 }
 </script>
@@ -205,30 +205,12 @@ function exp() {
                       	<c:if test="${bean.value<0}"><td><span style="color:green;">-${bean.value}</span></td>
                       	</c:if>
                       	<td>
-                      	<c:choose>
-                      	  <c:when test="${bean.type == 'ps_account'}">开通账户收益</c:when>
-                      	  <c:when test="${bean.type == 'tj_account'}">推荐收益</c:when>
-                      	  <c:when test="${bean.type == 'ps_recovery'}">回本后待返收益</c:when>
-                      	  <c:when test="${bean.type == 'shop_bmzt'}">利润提成</c:when>
-                      	  <c:when test="${bean.type == 'shop_jfdh'}">下单支出</c:when>
-                      	  <c:when test="${bean.type == 'jfcz'}">盼盼币充值</c:when>
-                      	  <c:when test="${bean.type == 'jf_withdraw'}">盼盼币提现</c:when>
+                      	<c:choose> 
+                      	  <c:when test="${bean.type == 'shop_djzj'}">商城收益</c:when>
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
-                        <td class="table-action">
-                              
-                              <div class="btn-group1">
-                                  <a data-toggle="dropdown" class="dropdown-toggle">
-                                      <i class="fa fa-cog"></i>
-                                  </a>
-                                  <ul role="menu" class="dropdown-menu pull-right">
-                                      <li><a href="javascript:upd('${bean._id}');">
-                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;充值</a></li>
-                                       
-                                  </ul>
-                              </div>
-                          </td>
+                       
                       </tr>
                       </c:forEach>
 

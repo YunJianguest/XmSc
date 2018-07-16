@@ -1797,6 +1797,60 @@ public class WwzService {
 			return false;
 		}
 	}
+	
+	/**
+	 * 积分更新
+	 * 
+	 * @param custid
+	 * @param fromUserid
+	 * @param value
+	 * @param type
+	 * @param isfreeze
+	 *            0--冻结积分增加 1--可使用积分增加
+	 */
+	public boolean changeKjJf(String custid, String fromUserid, double value, int type, int isfreeze) {
+		try {
+			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			whereMap.put("custid", custid);
+			whereMap.put("fromUserid", fromUserid);
+			IntegralRecord ir = null;
+			DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+			if (db == null) {
+				ir = new IntegralRecord();
+				ir.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
+			} else {
+				ir = (IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+			}
+			ir.setCustid(custid);
+			ir.setFromUserid(fromUserid);
+			if (type == 0) {
+				if (isfreeze == 1) {// 冻结积分增加
+					ir.setProstore(ir.getProstore() + value);
+					ir.setValue(ir.getValue() + value);
+				} else if (isfreeze == 0) {// 可使用积分增加
+					ir.setUservalue(ir.getUservalue() + value);
+					ir.setValue(ir.getValue() + value);
+				}
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				return true;
+			} else if (type == 1 && ir.getValue() > value) {
+				ir.setValue(ir.getValue() - value);
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				return true;
+			} else if (type == 2) {
+				ir.setValue(value);
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	/**
 	 * 积分更新
@@ -1841,10 +1895,12 @@ public class WwzService {
 					return true;
 				} else if (lx == 1) {
 					//乐乐币种计算
+					System.out.println("llz..");
 					if (isfreeze == 1) {// 冻结增加
 						ir.setLldjvalue(ir.getLldjvalue() + value);
 						
 					} else if (isfreeze == 0) {// 可用增加
+						System.out.println("llz");
 						ir.setLlkyvalue(ir.getLlkyvalue() + value); 
 					}
 					ir.setLlzvalue(ir.getLlzvalue() + value);
@@ -2922,6 +2978,7 @@ public class WwzService {
 							info.setState(0);
 							info.setCustid(custid);
 							baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
+							System.out.println("增加ll");
 							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
 								if (updateTotalIntegral(jflx, price)) {
 									return true;
@@ -2990,12 +3047,20 @@ public class WwzService {
 	public String getGivingPro(double price) {
 		if (price > 0) {
 			HashMap<String, Object> whereMap = new HashMap<>();
+			whereMap.put("_id",SysConfig.getProperty("custid"));
 			DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
 			if (db != null) {
 				InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 				// 获取当前赠送数量
-				double now = Double.parseDouble(inteSetting.getNownums());
-				if (now > 0 && now < 50000000) {
+				double now =0;
+				if(inteSetting.getNownums()!=null){
+					System.out.println("***********"+inteSetting.getNownums());
+					
+					now=Double.parseDouble(inteSetting.getNownums());
+				}
+				
+				System.out.println("----------------"+now);
+				if (now >= 0 && now < 50000000) {
 					// 1倍
 					return BaseDecimal.multiplication(price + "", "1");
 				} else if (now >= 50000000 && now < 75000000) {
@@ -3108,7 +3173,7 @@ public class WwzService {
         	};
     	}
     	
-		return 0; 
+		return 1; 
     }
 
 }

@@ -61,10 +61,12 @@ public class ShopcustserviceAction extends GeneralAction<ShopCustService> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("_id", -1);  
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
+		//whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
 	
 		String wid=Struts2Utils.getParameter("wid");
-		whereMap.put("wid",Long.parseLong(wid));
+		if(StringUtils.isNotEmpty(wid)){
+			whereMap.put("wid",Long.parseLong(wid));
+		} 
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPCUSTSERVICE,whereMap, sortMap);
 		for (DBObject dbObject : list) {
 			dbObject.put("no", wwzservice.getWxUsertype(dbObject.get("fromUserid").toString(),"no"));
@@ -130,7 +132,9 @@ public class ShopcustserviceAction extends GeneralAction<ShopCustService> {
 			entity.set_id(_id);
 			entity.setCreatedate(new Date());
 			String no=Struts2Utils.getParameter("no");
+			System.out.println(no);
 			String fromUserid=wwzservice.getfromUseridVipNo(no);
+			System.out.println(fromUserid);
 			if(StringUtils.isNotEmpty(fromUserid)){
 				entity.setFromUserid(fromUserid);
 				entity.setHeadimgurl(wwzservice.getWxUsertype(fromUserid, "headimgurl"));

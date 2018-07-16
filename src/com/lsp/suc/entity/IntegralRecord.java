@@ -13,9 +13,24 @@ public class IntegralRecord extends ReflectionDBObject {
 	private double   value;
 	private double   prostore;
 	private double   uservalue; 
+	private double   kjvalue; 
+	private int      kjlx;
 	private double   llzvalue; //乐乐总计
 	private double   llkyvalue; //乐乐可用
-	private double   lldjvalue; //乐乐冻结
+	private double   lldjvalue; //乐乐冻结 
+	
+	public int getKjlx() {
+		return kjlx;
+	}
+	public void setKjlx(int kjlx) {
+		this.kjlx = kjlx;
+	}
+	public double getKjvalue() {
+		return kjvalue;
+	}
+	public void setKjvalue(double kjvalue) {
+		this.kjvalue = kjvalue;
+	}
 	public String getCustid() {
 		return custid;
 	}

@@ -18,6 +18,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.ShopMb;
@@ -94,11 +95,11 @@ public class TimerService {
 				System.out.println("type---->"+dbObject.get("type"));
 				if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 					if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
-						//积分添加  添加积分类型为冻结
-						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,1,dbObject.get("_id").toString(), null);
+						//挖矿到矿机账号
+						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
 						
 					}else{
-						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), null,1,dbObject.get("_id").toString(), null);
+						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
 					}
 					
 					

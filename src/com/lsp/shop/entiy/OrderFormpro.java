@@ -47,6 +47,14 @@ public class OrderFormpro extends ReflectionDBObject {
 	 * 会员区支付金额
 	 */
 	private Double members_money;
+	/**
+	 * 第三方支付的金额
+	 */
+	private Double money;
+	/**
+	 * 支付类型0人民币，1比特币2以太坊3PP币
+	 */
+	private int  zflx;
 	private Long deptCode; 
 	/**
 	 * 快递公司
@@ -68,6 +76,23 @@ public class OrderFormpro extends ReflectionDBObject {
 	 * 确认收货时间
 	 */
 	private Date resureDate;
+	
+	public Double getMoney() {
+		return money;
+	}
+
+	public void setMoney(Double money) {
+		this.money = money;
+	}
+
+	public int getZflx() {
+		return zflx;
+	}
+
+	public void setZflx(int zflx) {
+		this.zflx = zflx;
+	}
+
 	public Long getDeptCode() {
 		return deptCode;
 	}

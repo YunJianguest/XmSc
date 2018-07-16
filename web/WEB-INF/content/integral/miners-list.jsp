@@ -179,7 +179,7 @@
 					<span>0</span>
 					</c:if>
 					<c:if test="${dbObject != null}">
-					<span>${dbObject.value}</span>
+					<span>${dbObject.prostore}</span>
 					</c:if>
 				</div>
 			</div>

@@ -421,22 +421,15 @@ public class HttpClient {
             String ResponseString = new String(bis, "UTF-8");
             if ((ResponseString == null) || ("".equals(ResponseString.trim()))) {
                 System.out.println("返回空");
-            }
+            } 
+            instr.close();
             System.out.println("返回数据为:" + ResponseString);
             return ResponseString;
  
         } catch (Exception e) {
             e.printStackTrace();
             return "0";
-        } finally {
-            try {
-                out.close();
-                instr.close();
- 
-            } catch (Exception ex) {
-                return "0";
-            }
-        }
+        }  
     }
 
 

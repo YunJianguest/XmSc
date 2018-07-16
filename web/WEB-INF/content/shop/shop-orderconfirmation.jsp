@@ -33,6 +33,7 @@
          var jfdh=0;
          var loading;
          var w= $(window).width()/2; 
+         var zflx=0;
           function  loading(){
         var opts = {
 		lines: 13, // The number of lines to draw
@@ -62,10 +63,7 @@
           
           $(function(){ 
         		$('#ConfirmPay').click(function(){
-        			if(confirm("是否支付?")){
-        				$('.mask').css('display','block');
-            			moneypay();
-        			}
+        			
         		})
         		$('#close').click(function(){
         			$('.mask').css('display','none')
@@ -138,7 +136,8 @@
         			spec:'${spec}',
         			jffh:'${entity.jffh}',
         			jfdh:jfdh,
-        			deptCode:$('#deptcode').val()
+        			deptCode:$('#deptcode').val(),
+        			zflx:zflx
         	}; 
         	//loading();
         	/* $.post('${ctx}/shop/shop!wxpay.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
@@ -178,9 +177,12 @@
                 		function(json) { 
                 		     //loading.hide();
                 		 	if (json.state == 0) {
-                		 		alert("下单成功！");
+                		 		alert("下单成功！"); 
                 				var orderno=json.orderno; 
                 				$('#orderno').val(json.orderno);
+                				if(confirm("是否支付?")){
+                    				$('.mask').css('display','block'); 
+                    			}
                 			}else if(json.state == 1) {
                 				alert("该账号没有开通支付"); 
                 			}else if(json.state == 3){
@@ -195,7 +197,7 @@
          
          function popcode(val){ 
         	  var txt="1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu";
-        	  
+        	  zflx=val;
         	 if(val == 0){
         		 if('${entity.goodstype}'==3){
            		  txt="3AYHYGbC9uE5vBWfbQutyrEmyUd3cAwEdY";
@@ -234,7 +236,8 @@
         	 }
         	 if(val == 2){
         		 var submitData = { 
-        				 orid:$('#orderno').val()
+        				 orid:$('#orderno').val(),
+        				 zflx:3
              	}; 
         		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
                  		function(json) {
@@ -519,7 +522,7 @@
                       <span class="zi-cheng">平台币<fmt:formatNumber value='${entity.jfdh}'  pattern="0.0#"/>
                       </c:if>
                        <i class="pl-10 zi-6">数量:${count}件</i></span>
-                       <span class="virtualcoin">PPB:0.00</span>
+                       <span class="virtualcoin">PPB:${ppb_price}</span>
                     </div>
                 </font>
             </div>
@@ -557,7 +560,7 @@
             <!--<a href="javascript:moneypay()">-->
             
                 <div class=" hang40 ">
-                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay">确认付款</div>
+                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay" onclick="moneypay()">确认付款</div>
                 </div>
             <!--</a>-->
         </div>

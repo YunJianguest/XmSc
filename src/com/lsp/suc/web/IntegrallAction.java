@@ -2,6 +2,8 @@ package com.lsp.suc.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +18,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -30,6 +33,7 @@ import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.CommonUtil;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
+import com.lsp.pub.util.ExportExcel;
 import com.lsp.pub.util.PayCommonUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -40,8 +44,8 @@ import com.lsp.pub.util.WeiXinUtil;
 import com.lsp.pub.util.XMLUtil;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
+import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.suc.entity.IntegralInfo;
-import com.lsp.suc.entity.IntegralLlInfo;
 import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.Tourism;
 import com.lsp.suc.entity.Comunit;
@@ -62,7 +66,7 @@ import com.mongodb.DBObject;
  */
 @Namespace("/suc")
 @Results({ @Result(name = "reload", location = "integralll.action", type = "redirect") })
-public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
+public class IntegrallAction extends GeneralAction<IntegralInfo> {
 
 	private static final long serialVersionUID = -6784469775589971579L;
 	@Autowired
@@ -79,7 +83,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 	@Autowired
 	private WebsiteService webService;
 
-	private IntegralLlInfo entity = new IntegralLlInfo();
+	private IntegralInfo entity = new IntegralInfo();
 	private Long _id;
 
 	@Override
@@ -87,8 +91,11 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		sortMap.put("createdate", -1);
+		System.out.println("--1-->"+ SpringSecurityUtils.getCurrentUser().getId());
+        if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
+        	whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+        }
 		String state = Struts2Utils.getParameter("state");
 		if (StringUtils.isNotEmpty(state)) {
 			if (!state.equals("2")) {
@@ -118,13 +125,17 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return SUCCESS;
 	}
 
-	
+	/**
+	 * 收入
+	 * 
+	 */
 	public String profit() throws Exception {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
@@ -160,8 +171,9 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 		// or判断
 		whereMap.put("$or", dblist);
 		whereMap.put("state", 0);// 收益
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "profit";
 	}
@@ -209,8 +221,9 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		whereMap.put("state", 1);// 支出
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "pay";
 	}
@@ -242,8 +255,9 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		whereMap.put("type", "jfcz");// 充值记录
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "recharge";
 	}
@@ -275,8 +289,9 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
 		whereMap.put("type", "jf_withdraw");// 提现记录
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		return "withdraw";
 	}
@@ -318,15 +333,16 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 		dblist.add(new BasicDBObject("type", "shop_bmzt"));
 		// or判断
 		whereMap.put("$or", dblist);
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		Struts2Utils.getRequest().setAttribute("toUser", toUser);
 		return "day";
 	}
 
 	@Override
-	public IntegralLlInfo getModel() {
+	public IntegralInfo getModel() {
 		// TODO Auto-generated method stub
 		return entity;
 	}
@@ -389,10 +405,10 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 		// TODO Auto-generated method stub
 		try {
 			if (_id != null) {
-				DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INFO, _id);
-				entity = (IntegralLlInfo) UniObject.DBObjectToObject(db, IntegralLlInfo.class);
+				DBObject db = baseDao.getMessage(PubConstants.INTEGRALLL_INFO, _id);
+				entity = (IntegralInfo) UniObject.DBObjectToObject(db, IntegralInfo.class);
 			} else {
-				entity = new IntegralLlInfo();
+				entity = new IntegralInfo();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -405,7 +421,63 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 		this._id = _id;
 	}
 
-	
+	/**
+	 * 积分详情
+	 * 
+	 * @return
+	 */
+	public String web() {
+		getLscode();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("_id", fromUserid);
+		DBObject wxuser = wwzService.getWxUser(whereMap);
+		
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		whereMap.clear();
+		DBObject dbObject =wwzService.getJfObj(custid, fromUserid);
+		Struts2Utils.getRequest().setAttribute("entity", wxuser);
+		Struts2Utils.getRequest().setAttribute("jf", dbObject);
+		
+		DBObject dbObject2 =baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("setting", dbObject2);
+		
+		return "web";
+	}
+
+	/**
+	 * 获取个人积分详情列表
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void ajaxweb() throws Exception {
+		getLscode();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		sortMap.put("createdate", -1);
+		whereMap.put("fromUserid", fromUserid);
+		whereMap.put("custid", custid);
+		if (Struts2Utils.getParameter("fypage") != null) {
+			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+
+		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 13, sortMap);
+
+		if (comList.size() > 0) {
+			sub_map.put("state", 0);
+		} else {
+			sub_map.put("state", 1);
+		}
+
+		sub_map.put("list", comList);
+		String json = JSONArray.fromObject(sub_map).toString();
+
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
+	}
+
 	/**
 	 * 充值
 	 * 
@@ -631,7 +703,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 	public void delAllerr() {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		whereMap.put("value", 0);
-		baseDao.delete(PubConstants.INTEGRAL_INFO, whereMap);
+		baseDao.delete(PubConstants.INTEGRALLL_INFO, whereMap);
 	}
 
 	/**
@@ -645,7 +717,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("fromUserid", fromUserid);
 			whereMap.put("custid", custid);
-			List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 			if (list.size() > 0) {
 				float value = 0;
 				for (DBObject dbObject : list) {
@@ -681,7 +753,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("fromUserid", fromUserid);
 			whereMap.put("custid", custid);
-			baseDao.delete(PubConstants.INTEGRAL_INFO, whereMap);
+			baseDao.delete(PubConstants.INTEGRALLL_INFO, whereMap);
 			submap.put("state", 0);
 		}
 		String json = JSONArray.fromObject(submap).toString();
@@ -736,7 +808,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			whereMap.put("createdate", dateCondition);
 			whereMap.put("fromUserid", custid);
 			whereMap.put("state", 0);
-			List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 			String total = "0";
 			for (DBObject dbObject : list) {
 				if (dbObject.get("value") != null) {
@@ -756,7 +828,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 			whereMap.put("createdate", dateCondition);
 			whereMap.put("fromUserid", custid);
 			whereMap.put("state", 1);
-			list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 			total = "0";
 			for (DBObject dbObject : list) {
 				if (dbObject.get("value") != null) {
@@ -798,7 +870,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("createdate", dateCondition);
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
-				List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						sum = BaseDecimal.add(sum, dbObject.get("value").toString());
@@ -810,7 +882,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
 				whereMap.put("type", "ps_account");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -834,7 +906,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
 				whereMap.put("type", "tj_account");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
@@ -859,7 +931,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
 				whereMap.put("type", "ps_recovery");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -884,7 +956,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
 				whereMap.put("type", "shop_order");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -909,7 +981,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
 				whereMap.put("type", "shop_bmzt");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -934,7 +1006,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 0);
 				whereMap.put("type", "jfcz");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -967,7 +1039,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("createdate", dateCondition);
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 1);
-				List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						sum = BaseDecimal.add(sum, dbObject.get("value").toString());
@@ -981,7 +1053,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 1);
 				whereMap.put("type", "shop_jfdh");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -1006,7 +1078,7 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 				whereMap.put("fromUserid", custid);
 				whereMap.put("state", 1);
 				whereMap.put("type", "jf_withdraw");
-				list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, null);
 				for (DBObject dbObject : list) {
 					if (dbObject.get("value") != null) {
 						add = BaseDecimal.add(add, dbObject.get("value").toString());
@@ -1045,5 +1117,168 @@ public class IntegralllAction extends GeneralAction<IntegralLlInfo> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 
 	}
+	
+	
+	/**
+	 * ll积分详情
+	 * 
+	 * @return
+	 */
+	public String webll() {
+		getLscode();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("_id", fromUserid);
+		DBObject wxuser = wwzService.getWxUser(whereMap);
+		
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		whereMap.clear();
+		DBObject dbObject =wwzService.getJfObj(custid, fromUserid);
+		Struts2Utils.getRequest().setAttribute("entity", wxuser);
+		Struts2Utils.getRequest().setAttribute("jf", dbObject);
+		
+		DBObject dbObject2 =baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("setting", dbObject2);
+		
+		return "webll";
+	}
 
+	/**
+	 * 获取个人ll积分详情列表
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public void ajaxwebll() throws Exception {
+		getLscode();
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		sortMap.put("createdate", -1);
+		whereMap.put("fromUserid", fromUserid);
+		whereMap.put("custid", custid);
+		if (Struts2Utils.getParameter("fypage") != null) {
+			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+
+		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 13, sortMap);
+
+		if (comList.size() > 0) {
+			sub_map.put("state", 0);
+		} else {
+			sub_map.put("state", 1);
+		}
+
+		sub_map.put("list", comList);
+		String json = JSONArray.fromObject(sub_map).toString();
+
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
+	}
+
+
+	/**
+	 * 总账单导出
+	 * @throws Exception
+	 */
+	public void integeralllfromexp() throws Exception {
+
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
+		String  comid=Struts2Utils.getParameter("comid");
+		if(StringUtils.isNotEmpty(comid)){
+			BasicDBList dbList = new BasicDBList();
+			dbList.add(Long.parseLong(comid));
+			whereMap.put("comids",Long.parseLong(comid));
+		} 
+		String sel_state = Struts2Utils.getParameter("sel_state");
+		if (StringUtils.isNotEmpty(sel_state)&&(!sel_state.equals("2"))) {
+			whereMap.put("state", Integer.parseInt(sel_state));
+		}
+		
+		String sel_type = Struts2Utils.getParameter("sel_type");
+		if (StringUtils.isNotEmpty(sel_type)) {
+			whereMap.put("type", sel_type);
+		}
+		if(sel_type.equals("shouyi")) {//收益导出
+			BasicDBList dblist = new BasicDBList();
+			dblist.add(new BasicDBObject("type", "ps_recovery"));
+			dblist.add(new BasicDBObject("type", "shop_bmzt"));
+			dblist.add(new BasicDBObject("type", "shop_order"));
+			// or判断
+			whereMap.put("$or", dblist);
+		}
+		
+		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate)) {			
+			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+		}
+		if (StringUtils.isNotEmpty(sel_enddate)) {
+			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+		}
+		sortMap.put("createdate", -1);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO,
+				whereMap, 0, 3000, sortMap);
+		System.out.println("---list--->"+list);
+		for (DBObject dbObject : list) {
+			if (dbObject.get("fromUserid") != null) {			 
+			 DBObject  user=wwzService.getWxUser(dbObject.get("fromUserid").toString());
+			 dbObject.put("id", dbObject.get("_id"));
+			 
+			 switch (Integer.parseInt(dbObject.get("state").toString())) {
+				case 0:
+					dbObject.put("state", "收入");
+					break;
+				case 1:
+					dbObject.put("state", "支出");
+					break;
+				default:
+					break;
+			       	}
+			 
+			 dbObject.put("value", dbObject.get("value"));
+			 String type = dbObject.get("type").toString();
+			 if(type.equals("ps_account")) { 
+			 }else if(type.equals("tj_account")) { 
+			 }else if(type.equals("ps_recovery")) { 
+			 }else if(type.equals("shop_bmzt")) {
+				 dbObject.put("type", "利润提成");
+			 }else if(type.equals("shop_jfdh")) { 
+			 }else if(type.equals("jfcz")) { 
+			 }else if(type.equals("jf_withdraw")) { 
+			 }
+			 
+			 dbObject.put("insDate",DateFormat.getDate(DateFormat.getFormat(dbObject.get("createdate").toString())));
+			 		 
+			} 
+			
+		}
+		String[] header = { "id", "状态","金额", "类型", "时间" };
+		String[] body = { "id", "state", "value","type", "insDate"};
+		String newtime = "integeral" + ".xls";
+
+		HSSFWorkbook wb = ExportExcel
+				.exportByMongo(list, header, body, newtime);
+		Struts2Utils.getResponse().setHeader("Content-disposition",
+				"attachment;filename=" + URLEncoder.encode(newtime, "utf-8"));
+		OutputStream ouputStream = Struts2Utils.getResponse().getOutputStream();
+		wb.write(ouputStream);
+		ouputStream.flush();
+		ouputStream.close();
+	}
+	
+	public String digitalAsset() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
+		whereMap.put("fromUserid", fromUserid);
+		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		Struts2Utils.getRequest().setAttribute("jf", db);
+		return "digitalAsset";
+	}
 }
