@@ -569,7 +569,7 @@
             <!--<a href="javascript:moneypay()">-->
             
                 <div class=" hang40 ">
-                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay" onclick="moneypay()">确认付款</div>
+                    <div class="hang40 line-height40 btn-lu border-radius3"  onclick="moneypay()">确认付款</div>
                 </div>
             <!--</a>-->
         </div>
