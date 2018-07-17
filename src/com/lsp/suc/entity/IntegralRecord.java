@@ -11,9 +11,21 @@ public class IntegralRecord extends ReflectionDBObject {
 	private String  custid; 
 	private String  fromUserid;
 	private double   value;
+	/**
+	 * 消费记录PP币账户
+	 */
 	private double   prostore;
-	private double   uservalue; 
+	/**
+	 * 可用提成PP币账号
+	 */
+	private double   uservalue;
+	/**
+	 * 矿机产币账户
+	 */
 	private double   kjvalue; 
+	/**
+	 * 产币类型0为PP币1为比特币2为以太坊
+	 */
 	private int      kjlx;
 	private double   llzvalue; //乐乐总计
 	private double   llkyvalue; //乐乐可用
