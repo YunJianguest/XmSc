@@ -244,7 +244,7 @@
 				color: #fff;
 			}
 			
-			.modal {
+			/* .modal {
 				width: 100%;
 				height: 100%;
 				position: fixed;
@@ -256,7 +256,7 @@
 				z-index: 100;
 				display: none;
 			}
-			
+			 
 			.modal-cont {
 				width: 80%;
 				height: 200px;
@@ -343,7 +343,7 @@
 				
 				background: #007AFF;
 				border-bottom-right-radius: 5px;
-			}
+			}*/
     </style>
     <script>
     
@@ -402,8 +402,9 @@
 		    		  xszf+='<div class="pl-10 pr-10 pt-10 overflow-hidden">'
 		    		      +'<div class="bg-bai border-radius5">'
 		    		      +'<div class="hang30 line-bottom-98 zi-hui-tq weight500 overflow-hidden line-height30 pl-5 pr-5 zi-353535">'
-		    		      +'<font size="1"><div class="col-9 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>'
-		    		      +'<div class="col-3 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height40"></i></div>'
+		    		      +'<font size="1"><div class="col-8 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>'
+		    		      +'<span style="display:block;color:#e4393c;" class="col-3">PPB:'+(v[i].ppb_money+v[i].kdprice)+'</span>'
+		    		      +'<div class="col-1 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height30"></i></div>'
 							/* if(v[i].state==1){
 		    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
 		    		        }else if(v[i].state==2){
@@ -462,7 +463,9 @@
 		    			    		               +'</div>';
 		    			    		         }
 		    			    		         xszf+='<div class=" width-10 line-height20 zi-6">'  
-		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">单价:￥'+(list[j].pro.price*1+list[j].pro.kdprice*1).toFixed(2)+'元</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_money+'</span></div>';
+		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">单价:￥'+(list[j].pro.price*1).toFixed(2)+'元</i></span>'
+		    			    		         +'<span style="display:block;color:#e4393c;">快递费：'+list[j].pro.kdprice.toFixed(2)+'</span>'
+		    			    		         +'</div>';
 		    			    		         if(list[j].goodstate<4){
 		    				    		          if(list[j].state==1 || list[j].state==3){
 		    				    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')" style="color:#e4393c">退货查看</div>';
@@ -578,10 +581,13 @@ function del(id) {
 	  var txt="1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu";
    	 if(val == 0){ 
    		 if(shoptype==3){
+   			 txt="";
       		  txt="3AYHYGbC9uE5vBWfbQutyrEmyUd3cAwEdY";
       	  }else if(shoptype==5){
+      		 txt="";
       		  txt="3MKiB7ZX16zgwAwbXxM4LugGXm3Co1fFJe";
       	  }else if(shoptype==4){
+      		 txt="";
       		  txt="3CS2WvYFnrwL1G3e9jKg6o4guGh4boP4Pr";
       	  }
    		 $('#bt').css('display','block');
@@ -596,10 +602,13 @@ function del(id) {
    	 }
    	 if(val == 1){
    		 if(shoptype==3){
+   			  txt="";
       		  txt="0xefa03a9B480A9890C5541065A398F43f82F32832";
       	  }else if(shoptype==5){
+      		 txt="";
       		  txt="0xc3d8d8fBDb34dA5930d95869b692D80B668d4b98";
       	  }else if(shoptype==4){
+      		 txt="";
       		  txt="0x842B0afCaA759ea325A915D2a5e5963B618DcEf1";
       	  }
    		 $('#ytf').css('display','block');
@@ -709,7 +718,67 @@ function del(id) {
 </main>
 
 <!--底部三个按钮-->
-<%@include file="/webcom/shop-foot.jsp" %> 
+<%-- <%@include file="/webcom/shop-foot.jsp" %>  --%>
+<div class=" button_foot bg-bai shadow-wai cmp640">
+
+    <div class=" button_group1"> 
+            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/shop!index.action?lscode=${lscode}&comid=${comid}'">
+                <font size="4">
+                    <div class="fa fa-home"></div>
+                </font>
+
+                <div class=" pt-3">
+                    <font size="1">
+                        首页
+                    </font>
+                </div>
+            </div>
+         
+    </div>
+ <div class=" button_group1"> 
+            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/protype!classme.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+                <font size="4">
+                    <div class="fa fa-file"></div>
+                </font>
+                <div class=" pt-3">
+                    <font size="1">
+                      分类
+                    </font>
+                </div>
+            </div> 
+    </div>
+    <div class=" button_group1"> 
+            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5" onclick="window.location.href='${ctx}/shop/shop!shoppingcar.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
+                <font size="4" id="shopcartlogo">
+                <!-- <div class="fa fa-file"></div> -->
+                     
+                </font>
+                <div class=" pt-3">
+                    <font size="1" id="shopcar">
+                       购物车
+                    </font>
+                </div>
+            </div> 
+    </div>
+
+   
+    
+    <div class=" button_group1" onclick="window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=${agid}&lscode=${lscode}'"> 
+            <div class="bottom-bai zi-hui-wx txt-c weight500 line-right_bai pt-5 pb-5">
+                <font size="4">
+                    <div class="fa fa-user"></div>
+                </font>
+                <div class=" pt-3">
+                    <font size="1">
+                       个人中心
+                    </font>
+                </div>
+            </div>
+        
+    </div>
+
+    
+</div>
  <div class="fullscreen cmp640 bg-hei-5 lock" id="friedtx">
     <div class="overflow-hidden width-10">
         <a href="javascript:friedtx_hide()">
@@ -833,7 +902,16 @@ function  friedtx_show(){
 		 console.log($('.masks').hide("slow"))
 			$('.masks').hide("slow")
 		}) 
+//$('#shopcartlogo').addClass('fa fa-shopping-bag');
+ $('#shopcartlogo').html('<div class="fa fa-shopping-bag"></div>');
+$('#shopcar').html('购物车');		
+ function htmlEncodeJQ ( str ) {
+    return $('<span/>').text( str ).html();
+}
  
+function htmlDecodeJQ ( str ) {
+    return $('<span/>').html( str ).text();
+}
 </script>
 </body>
 <script>
