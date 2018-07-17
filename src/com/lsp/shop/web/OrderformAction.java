@@ -671,8 +671,8 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		String oid=Struts2Utils.getParameter("oid");
 		custid=SpringSecurityUtils.getCurrentUser().getId();
 		HashMap<String, Object>sub_map=new HashMap<>();
-		sub_map.put("state",1);
-		if(!custid.equals("hyq_account")&&!custid.equals("dzq_account")&&!custid.equals("tyq_account")){
+		sub_map.put("state",1); 
+		if(!custid.equals(SysConfig.getProperty("hyq_account"))&&!custid.equals(SysConfig.getProperty("dzq_account"))&&!custid.equals(SysConfig.getProperty("tyq_account"))){
 			//账号不存在
 			sub_map.put("state", 2);
 			String json = JSONArray.fromObject(sub_map).toString();
@@ -684,9 +684,19 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		if(dbObject!=null){
 			OrderForm  order=(OrderForm) UniObject.DBObjectToObject(dbObject, OrderForm.class);
 			order.set_id(oid);
-			if(order.getState()==1){
+			if(order.getState()==7){
 				order.setState(2);
 				baseDao.insert(PubConstants.WX_ORDERFORM, order);
+				HashMap<String, Object> whereMap = new HashMap<>();
+				whereMap.put("orderid", oid);
+				List<DBObject>list=baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, null);
+				
+				for (DBObject dbObject2 : list) {
+					OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
+					orderFormpro.set_id(Long.parseLong(dbObject2.get("_id").toString()));
+					orderFormpro.setGoodstate(2);
+					baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
+				}
 				sub_map.put("state",0);
 			}else{
 				sub_map.put("state",3);

@@ -100,7 +100,7 @@ public class OrderForm extends ReflectionDBObject{
 	private String remind;
 	/**
 	 * 状态
-	 *  1订单  2 确认 3 发货 4收货 5退货 6 取消 
+	 *  1订单  2 确认 3 发货 4收货 5退货 6 取消 7等待确认收款
 	 */	
 	private int state;
 	/**

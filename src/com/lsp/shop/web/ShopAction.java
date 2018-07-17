@@ -4308,7 +4308,7 @@ public class ShopAction extends GeneralAction {
 		entity.setFromUserid(fromUserid);
 		entity.setCustid(custid);
 		entity.setName(name);
-		entity.setTel(tel);
+		entity.setTel(tel); 
 		entity.setAddress(address);
 		if(StringUtils.isNotEmpty(zflx)){
 			entity.setZflx(Integer.parseInt(zflx));
@@ -4606,11 +4606,12 @@ public class ShopAction extends GeneralAction {
 							baseDao.insert(PubConstants.DATA_PRODUCT, obj);
 							
 							orderFormpro.set_id(Long.parseLong(dbObject2.get("_id").toString()));
-							orderFormpro.setGoodstate(2);
+							orderFormpro.setGoodstate(7);
 							baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
 						} 
 						entity.setZflx(Integer.parseInt(zflx));
-						//entity.setState(2);
+						entity.setState(7);
+						System.out.println("----------------------订单状态"+entity.getState());
 						baseDao.insert(PubConstants.WX_ORDERFORM, entity);
 						map.put("state", 0);
 						

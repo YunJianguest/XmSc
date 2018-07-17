@@ -435,6 +435,9 @@
 		    			    		       if(list[0].goodstate == 2){
 		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >待发货</div>'
 		    			    		       }
+		    			    		       if(list[0].goodstate == 7){
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >已付款待确认</div>'
+		    			    		       }
 		    			    		       if(list[0].goodstate == 3){
 		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')" style="color:#e4393c;float: right;margin-right: 5px;">确认收货</div>'
 		    			    		       }
