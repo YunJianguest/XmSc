@@ -689,10 +689,18 @@ function del(id) {
    						alert("支付成功！");
    						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
    					}else if(json.state == 1){
-   						alert("操作失败");
-   					}else{
-   						alert("支付失败！");
-   					}
+ 						alert("操作失败");
+ 					}else if(json.state == 2){
+ 						alert("PPB不足");
+ 					}else if(json.state == 3){
+ 						alert("库存不足");
+ 					}else if(json.state == 4){
+ 						alert("商品已下架");
+ 					}else if(json.state == 5){
+ 						alert("订单不存在");
+ 					}else if(json.state == 6){
+ 						alert("订单不存在");
+ 					}
            		},
            		"json");
        }
