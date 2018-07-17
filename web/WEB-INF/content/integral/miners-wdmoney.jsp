@@ -9,6 +9,7 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/mui.min.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<style type="text/css">
 			input:focus {
 				outline: none;
@@ -306,6 +307,40 @@
 				}
 			}
 			sixPwd() */
+			 wx.config({
+				    debug: false,
+				    appId: '${token.appid}', 
+				    timestamp: '${token.timestamp}', 
+				    nonceStr: '${token.noncestr}', 
+				    signature: '${token.signature}',
+				    jsApiList: [ 'checkJsApi',
+				                 'onMenuShareTimeline',
+				                 'onMenuShareAppMessage',
+				                 'onMenuShareQQ',
+				                 'onMenuShareWeibo',
+				                 'hideMenuItems',
+				                 'showMenuItems'
+				                 ] 
+				});
+				wx.ready(function(){ 
+					var share={
+						    title: '${share.fxtitle}', // 分享标题
+						    desc: '${share.fxsummary}', // 分享描述
+						    link: '${share.fxurl}', // 分享链接
+						    imgUrl: '${filehttp}${share.fximg}', // 分享图标
+						    success: function () { 
+						      
+						    },
+						    cancel: function () { 
+						    	
+						    }
+						};
+					wx.onMenuShareAppMessage(share);
+					wx.onMenuShareTimeline(share);
+					wx.onMenuShareAppMessage(share);
+					wx.onMenuShareQQ(share);
+					wx.onMenuShareWeibo(share);
+				});
 		</script>
 	</body>
 </html>
