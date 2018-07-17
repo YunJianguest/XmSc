@@ -66,6 +66,8 @@ import com.lsp.shop.entiy.ShopMb;
 import com.lsp.shop.entiy.Shoppingcart;
 import com.lsp.shop.entiy.Useraddress;
 import com.lsp.suc.entity.Comunit;
+import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxPayConfig;
@@ -4518,15 +4520,18 @@ public class ShopAction extends GeneralAction {
 						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
 						zfmoney=BaseDecimal.add(zfmoney, BaseDecimal.add(BaseDecimal.multiplication(obj.getPrice()+"",orderFormpro.getCount()+""), obj.getKdprice()+""));
 						qylx=obj.getGoodstype();
+						//obj.setNum(obj.getNum() - obj.getGmnum() - orderFormpro.getCount());
+						
 						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() <=0) {
 							//库存不足 
 						   map.put("state", 3);
 						   String json = JSONArray.fromObject(map).toString();
 						   Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 						   return;
-						} 
-						
-
+						} else{
+							obj.setGmnum(obj.getGmnum() + orderFormpro.getCount());//销售数量增加
+							baseDao.insert(PubConstants.DATA_PRODUCT, obj);
+						}
 					} else {
 						// 商品已下架
 						map.put("state", 4);
@@ -4621,6 +4626,41 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
 		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
 		return "productlist";
+	}
+	
+	public void recharge() throws Exception{
+		getLscode();
+		String value = Struts2Utils.getParameter("value");
+		HashMap<String, Object> sub_map = new HashMap<>();
+		sub_map.put("state", 1);
+		HashMap<String, Object> whereMap = new HashMap<>();
+		try {
+			whereMap.put("fromUserid", fromUserid);
+			DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+			System.out.println("dbObject---->"+dbObject);
+			IntegralRecord info = new IntegralRecord();
+			if(dbObject != null){
+				info = (IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
+			    info.setUservalue(Double.parseDouble(value));
+			    info.setValue(Double.parseDouble(value));
+			    
+			}else{
+				info.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
+				info.setCustid(custid);
+				info.setFromUserid(fromUserid);
+				info.setUservalue(Double.parseDouble(value));
+				info.setValue(Double.parseDouble(value));
+			}
+			System.out.println("---->"+info.getFromUserid());
+			info.setCustid(custid);
+			baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
+			sub_map.put("state", 0);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
 	/**

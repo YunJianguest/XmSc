@@ -875,6 +875,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				user.setId_card_front(up_picture_front);
 				user.setId_card_reverse(up_picture_reverse);
 				user.setIsfull(1);//已补全
+				System.out.println("--2--?"+user.getIsfull());
 				basedao.insert(PubConstants.USER_INFO, user);
 				sub_Map.put("state", 0);//修改成功
 			}else{
@@ -911,8 +912,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	public void  ajaxUserUpdate(){
 		getLscode();
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		sub_Map.put("state", 1);//操作失败
 		try {
-			
 			String name =  Struts2Utils.getParameter("name");//姓名
 			String tel =  Struts2Utils.getParameter("tel");//电话
 			String uskd =  Struts2Utils.getParameter("uskd");//uskd账号
@@ -924,20 +925,25 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
 			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
 			DBObject db = basedao.getMessage(PubConstants.USER_INFO, fromUserid);
-			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
-			user.setUserName(name);
-			user.setTel(tel);
-			user.setAccount(tel);
-			user.setUskd(uskd);
-			user.setPassword(password);
-			user.setPaypassword(paypassword);
-			user.setProvince(province);
-			user.setCity(city);
-			user.setCounty(county);
-			user.setId_card_front(up_picture_front);
-			user.setId_card_reverse(up_picture_reverse);
-			basedao.insert(PubConstants.USER_INFO, user);
-			sub_Map.put("state", 0);//修改成功
+			if(db != null){
+				UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+				user.setUserName(name);
+				user.setTel(tel);
+				user.setAccount(tel);
+				user.setUskd(uskd);
+				user.setPassword(password);
+				user.setPaypassword(paypassword);
+				user.setProvince(province);
+				user.setCity(city);
+				user.setCounty(county);
+				user.setId_card_front(up_picture_front);
+				user.setId_card_reverse(up_picture_reverse);
+				user.setIsfull(1);//用户信息已完善
+				System.out.println("--1--?"+user.getIsfull());
+				basedao.insert(PubConstants.USER_INFO, user);
+				sub_Map.put("state", 0);//修改成功
+			}
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			sub_Map.put("state", 1);
@@ -954,7 +960,6 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
-		
 		HashMap<String, Object> whereMap=new HashMap<>();
 		whereMap.put("_id", fromUserid);
 		DBObject db = basedao.getMessage(PubConstants.USER_INFO, whereMap);

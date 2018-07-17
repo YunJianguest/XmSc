@@ -15,6 +15,7 @@
 		<script src="${ctx}/app/js/iosOverlay.js"></script>
         <script src="${ctx}/app/js/spin.min.js"></script>
         <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+        <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<style type="text/css">
 			
 			.miner-txt{
@@ -142,6 +143,7 @@
 		  mui.confirm('你确定要购买矿机吗','提示',['取消','确认'],function (e) {
 				console.log(e.index)
 				if (e.index == 1) {
+					console.log('${isfull}');
 					if('${isfull}' != '1'){
 						alert('您还未补全信息，请先补全信息，即可购买矿机');
 						window.location.href = "${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";

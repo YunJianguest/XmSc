@@ -213,6 +213,7 @@ public class UserInfo extends ReflectionDBObject {
 	 * 代理时间
 	 */
 	private Date   agentedate; 
+	private  int isfull;//1-已补全  其余-未补全
 	public Date getAgentedate() {
 		return agentedate;
 	}
@@ -1091,6 +1092,14 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setPaypassword(String paypassword) {
 		this.paypassword = paypassword;
+	}
+
+	public int getIsfull() {
+		return isfull;
+	}
+
+	public void setIsfull(int isfull) {
+		this.isfull = isfull;
 	}
 	
 	
