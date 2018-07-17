@@ -458,13 +458,17 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
 		whereMap.put("fromUserid", fromUserid);
-		whereMap.put("custid", custid);
 		if (Struts2Utils.getParameter("fypage") != null) {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-
+		BasicDBList dblist = new BasicDBList();
+		dblist.add(new BasicDBObject("type", "ps_recovery"));
+		dblist.add(new BasicDBObject("type", "shop_bmzt"));
+		// or判断
+		whereMap.put("$ne", dblist);
 		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap);
-
+        System.out.println("list--->"+comList.size());
+        System.out.println("---->"+comList);
 		if (comList.size() > 0) {
 			sub_map.put("state", 0);
 		} else {
