@@ -38,6 +38,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxUser;
@@ -539,19 +540,19 @@ public class MinersAction extends GeneralAction<Miner> {
 				String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.INTEGRAL_WITHDRAWALORDER);
 		    	tx.set_id(orderno);
 		    	tx.setCreatedate(new Date());
-		    	tx.setCustid(custid);
+		    	tx.setCustid(SysConfig.getProperty("custid"));
 		    	tx.setFromid(fromUserid);
 		    	tx.setPrice(Double.parseDouble(price));
 		    	tx.setRemark(remark);
 		    	tx.setState(0);
 		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
 		    	//提现
-		    	if(wwzService.deljf(price, fromUserid, "shop_tx", custid, 0, 1, 0)) {
+		    	if(wwzService.deljf(price, fromUserid, "shop_tx", SysConfig.getProperty("custid"), 0, 1, 0)) {
 		    		parameters.put("eth", eth);
 			    	parameters.put("num",price);
-			    	parameters.put("username",wwzService.getUserName(fromUserid));
+			    	parameters.put("username",wwzService.getWxUser(fromUserid).get("nickname"));
 			    	parameters.put("orderid",orderno);
-			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getUserName(fromUserid)+orderno, SysConfig.getProperty("jyskey"));
+			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("nickname")+orderno, SysConfig.getProperty("jyskey"));
 			    	parameters.put("key", sign);
 			    	HashMap<String,Object>map=new HashMap<>();
 			    	map.put("data", parameters);
@@ -568,7 +569,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		            	tx.setState(2);
 		            	tx.setUpdatedate(new Date());
 				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-				    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
+				    	wwzService.addjf(price, fromUserid, "shop_tx", SysConfig.getProperty("custid"), 0, 1, 0);
 				    	sub_map.put("state", 3);
 		            }
 		    	}else {
@@ -806,6 +807,96 @@ public class MinersAction extends GeneralAction<Miner> {
 	    public String  transferweb() {
 	    	getLscode();
 			return "transferweb"; 
+	    }
+	    /**
+	     * 矿机提现
+	     * @throws Exception 
+	     */
+	    public void kjtx() throws Exception{
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+	    	String eth=Struts2Utils.getParameter("eth");
+	    	String price=Struts2Utils.getParameter("price");
+	    	String remark=Struts2Utils.getParameter("remark");
+	    	SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
+	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)&&StringUtils.isNotEmpty(remark)) {
+	    		WithdrawalOrder tx=new WithdrawalOrder();
+		    	// 四位随机数
+				String strRandom = TenpayUtil.buildRandom(4) + "";
+				// 10位序列号,可以自行调整。
+				String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.INTEGRAL_WITHDRAWALORDER);
+		    	tx.set_id(orderno);
+		    	tx.setCreatedate(new Date());
+		    	tx.setCustid(SysConfig.getProperty("custid"));
+		    	tx.setFromid(fromUserid);
+		    	tx.setPrice(Double.parseDouble(price));
+		    	tx.setRemark(remark);
+		    	tx.setState(0);
+		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+		    	//提现
+		    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"))) {
+		    		parameters.put("eth", eth);
+			    	parameters.put("num",price);
+			    	parameters.put("username",wwzService.getWxUser(fromUserid).get("nickname"));
+			    	parameters.put("orderid",orderno);
+			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("nickname")+orderno, SysConfig.getProperty("jyskey"));
+			    	parameters.put("key", sign);
+			    	HashMap<String,Object>map=new HashMap<>();
+			    	map.put("data", parameters);
+		            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
+		            JSONObject obj=JSONObject.fromObject(result);
+		            if(obj.getString("code").equals("1000")) {
+		            	//提现成功；
+		            	tx.setState(1);
+		            	tx.setUpdatedate(new Date());
+				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+				    	sub_map.put("state", 0);
+		            }else {
+		            	//提现失败开始返回
+		            	tx.setState(2);
+		            	tx.setUpdatedate(new Date());
+				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+				    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
+				    	sub_map.put("state", 3);
+		            }
+		    	}else {
+		    		//余额不足
+		    		sub_map.put("state", 2);
+		    	} 
+	    	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    }
+	    /**
+	     * 设置矿机产币类型
+	     */
+	    public void  stkj(){
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+	    	String type=Struts2Utils.getParameter("type");
+	    	sub_map.put("state", 1);
+	    	if(StringUtils.isNotEmpty(type)){
+	    		HashMap<String, Object>whereMap=new HashMap<>();
+	    		whereMap.put("csutid",SysConfig.getProperty("custid"));
+	    		whereMap.put("fromUserid", fromUserid);
+	    		IntegralRecord ir = null;
+				DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+				if(db!=null){
+					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+					if(ir.getKjlx()==0&&Integer.parseInt(type)>0){
+						ir.setKjlx(Integer.parseInt(type));
+						baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+						sub_map.put("state", 0);
+					}else{
+						//重复设置
+					}
+					
+				}
+	    	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    }
 	    
 }
