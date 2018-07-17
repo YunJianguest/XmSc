@@ -90,7 +90,7 @@
 				padding: 5px 0;
 			}
 			
-			.mui-icon img {
+			.mui-slider .mui-slider-group .mui-slider-item img{
 				width: 38px;
 				height: 38px;
 				border-radius: 50%;
@@ -421,32 +421,78 @@
 			</div>
 			</c:if>
 			<!-- 分类 -->
-			<div class="hero-gallery js-flickity pb-5" data-js-module="hero-gallery">
-				<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+			<div class="mui-slider" id="gallery">
+				<div class="mui-slider-group">
+					<div class="mui-slider-item">
+						<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+							<!--<div class="hero-gallery__cell hero-gallery__cell overflow-hidden">-->
+								<c:if test="${not empty typelist}">
+									<c:forEach items="${typelist}" var="bean"  begin="0" end="9">
+						               <c:if test="${not empty bean.url}">
+											<li class="mui-table-view-cell mui-media" style="width: 20%">
+												<a href="${bean.url}&custid=${custid}&agid=${agid}&lscode=${lscode}">
+													<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+													<div class="mui-media-body">${bean.name}</div>
+												</a>
+											</li>
+								   		</c:if>
+						            	
+						            	<c:if test="${empty bean.url}"> 
+											<li class="mui-table-view-cell mui-media" style="width: 20%">
+												<a href="javascript:fxsel('${bean.type}')">
+													<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+													<div class="mui-media-body">${bean.name}</div>
+												</a>
+											</li>
+									  	</c:if>
+						            </c:forEach>
+					             
+					            </c:if> 
+				            <!--</div>-->
+			            </ul>
+					</div>
+					<div class="mui-slider-item">
+						<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+				            <!--<div class="hero-gallery__cell hero-gallery__cell overflow-hidden">-->
+								<c:if test="${not empty typelist}">
+									<c:forEach items="${typelist}" var="bean"  begin="10" end="19">
+						                <c:if test="${not empty bean.url}">
+											<li class="mui-table-view-cell mui-media" style="width: 20%">
+												<a href="${bean.url}&custid=${custid}&agid=${agid}&lscode=${lscode}">
+													<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+													<div class="mui-media-body">${bean.name}</div>
+												</a>
+											</li>
+								   		</c:if>
+						            	<c:if test="${empty bean.url}"> 
+											<li class="mui-table-view-cell mui-media" style="width: 20%">
+												<a href="javascript:fxsel('${bean.type}')">
+													<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+													<div class="mui-media-body">${bean.name}</div>
+												</a>
+											</li>
+									  	</c:if>
+						           </c:forEach>
+					            </c:if> 
+				            <!--</div>-->
+						</ul> 
+					</div>
+				</div>
+			</div>
+			<!--<div class="hero-gallery js-flickity pb-5" data-js-module="hero-gallery">-->
+				<!--<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
 					<div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
 						<c:if test="${not empty typelist}">
 							<c:forEach items="${typelist}" var="bean"  begin="0" end="9">
-				                <c:if test="${not empty bean.url}">
-				                	<c:if test="${bean.name=='我要开店'}">
-				                		<li class="mui-table-view-cell mui-media" style="width: 20%">
-											<%-- <a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}"> --%>
-											<a href="${bean.url}">
-												<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-												<div class="mui-media-body">${bean.name}</div>
-											</a>
-										</li>
-				                	</c:if>
-				                	<c:if test="${bean.name!='我要开店'}">
-				                		<li class="mui-table-view-cell mui-media" style="width: 20%">
-											<%-- <a href="${ctx}/shop/shoppro!promain.action?custid=${custid}&agid=${agid}&lscode=${lscode}&goodstype=3&typeid=${bean._id}"> --%>
-											<a href="${bean.url}&custid=${custid}&agid=${agid}&lscode=${lscode}">
-												<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
-												<div class="mui-media-body">${bean.name}</div>
-											</a>
-										</li>
-				                	</c:if>
-									
+				               <c:if test="${not empty bean.url}">
+									<li class="mui-table-view-cell mui-media" style="width: 20%">
+										<a href="${bean.url}&custid=${custid}&agid=${agid}&lscode=${lscode}">
+											<span class="mui-icon"><img src="${filehttp}${bean.picurl}"/></span>
+											<div class="mui-media-body">${bean.name}</div>
+										</a>
+									</li>
 						   		</c:if>
+				            	
 				            	<c:if test="${empty bean.url}"> 
 									<li class="mui-table-view-cell mui-media" style="width: 20%">
 										<a href="javascript:fxsel('${bean.type}')">
@@ -459,8 +505,8 @@
 			             
 			            </c:if> 
 		            </div>
-	            </ul>
-	            <ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
+	            </ul>-->
+	            <!--<ul class="mui-table-view mui-grid-view mui-grid-9" style="padding:0 10px;">
 		            <div class="hero-gallery__cell hero-gallery__cell overflow-hidden">
 						<c:if test="${not empty typelist}">
 							<c:forEach items="${typelist}" var="bean"  begin="10" end="19">
@@ -483,8 +529,8 @@
 				           </c:forEach>
 			            </c:if> 
 		            </div>
-				</ul> 
-			</div>
+				</ul> -->
+			<!--</div>-->
 			<!-- 新闻 -->
 			<div class="mui-row" style="padding: 0 13px;background: #fff;">
 				<div class="news mui-col-xs-12 mui-row">
@@ -585,7 +631,17 @@
 		</div>
 		
 		<script src="${ctx}/xmMobile/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="${ctx}/xmMobile/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
+			
+			mui.init();
+			mui.ready(function(){
+				var slider = document.getElementById('gallery');
+				var group = slider.querySelector('.mui-slider-group');
+				var items = mui('.mui-slider-item', group);
+				//克隆第一个节点
+				var first = items[0].cloneNode(true);
+			})
 			var mySwiper = new Swiper('.swiper-container', {
 				autoplay: true, //可选选项，自动滑动
 				pagination: {
