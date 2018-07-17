@@ -142,20 +142,26 @@
 		  mui.confirm('你确定要购买矿机吗','提示',['取消','确认'],function (e) {
 				console.log(e.index)
 				if (e.index == 1) {
-					var submitData = { 
-					   		id:id	
-					    }; 
-					  $.post('${ctx}/integral/miners!saveMiner.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
-				        	function (json) {
-				            	if(json.state==0){
-				            		alert('兑换成功');
-				            		window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
-				            	}else if(json.state==2){
-				            		alert('PP币不足');
-				            	}else{
-				            		alert('操作失败');
-				            	}
-					  },"json")
+					if('${isfull}' != '1'){
+						alert('您还未补全信息，请先补全信息，即可购买矿机');
+						window.location.href = "${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+					}else{
+						var submitData = { 
+						   		id:id	
+						    }; 
+						  $.post('${ctx}/integral/miners!saveMiner.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+					        	function (json) {
+					            	if(json.state==0){
+					            		alert('兑换成功');
+					            		window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+					            	}else if(json.state==2){
+					            		alert('PP币不足');
+					            	}else{
+					            		alert('操作失败');
+					            	}
+						  },"json")
+					}
+					
 				}else{
 					mui.toast('你取消了购买')
 				}

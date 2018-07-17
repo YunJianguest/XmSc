@@ -163,6 +163,12 @@ public class MinersAction extends GeneralAction<Miner> {
 		whereMap.put("fromUserid", fromUserid);
 		DBObject dbObject =baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		Struts2Utils.getRequest().setAttribute("dbObject", dbObject);
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if(db!=null){
+			if(db.get("isfull") != null){
+				Struts2Utils.getRequest().setAttribute("isfull", db.get("isfull").toString());
+			}
+		}
 		return "list";
 	}
 	
@@ -316,6 +322,7 @@ public class MinersAction extends GeneralAction<Miner> {
 	   * @return
 	   */
 	  public String signin(){
+		  
 		  return "signin";
 	  }
 	  /***
@@ -747,7 +754,7 @@ public class MinersAction extends GeneralAction<Miner> {
         	getLscode();
 	    	Map<String,Object>sub_map = new HashMap<>();
 		  	sub_map.put("state", 1);
-		  	double  dou=wwzService.getBTCSprice();
+		  	double  dou=wwzService.getETHSprice();
 		  	if(dou>0) {
 		  		sub_map.put("state", 0);
 		  		sub_map.put("data", dou);

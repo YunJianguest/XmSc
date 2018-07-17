@@ -405,7 +405,7 @@
     <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="8">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
-               <div class="col-3   pt-10 " onclick="window.location.href='${bean.url}'">
+               <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
               
                    <div class="txt-c ${bean.color } maring-a border-radius5 zi-bai" style='width:24px;height:24px;'>
                      <i class="fa ${bean.ioc}  line-height30"></i>

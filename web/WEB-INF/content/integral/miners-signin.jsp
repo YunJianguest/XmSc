@@ -193,6 +193,7 @@
 		<script src="${ctx}/xmMobile/js/app.js"></script>
 		<script type="text/javascript" >
 		function login(){
+			
 			var  tel=$('#tel').val();
 			var  password=$('#password').val();
 			if(tel.length==0||password.length==0){

@@ -848,6 +848,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	public void  ajaxuserupdate(){
 		getLscode();
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		sub_Map.put("state", 1);//操作失败
 		try {
 			
 			String name =  Struts2Utils.getParameter("name");//姓名
@@ -859,23 +860,30 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			String county =  Struts2Utils.getParameter("county");//区
 			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
 			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
-			DBObject db = basedao.getMessage(PubConstants.USER_INFO, lscode);
-			UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
-			user.setUserName(name);
-			user.setTel(tel);
-			user.setAccount(tel);
-			user.setUskd(uskd);
-			user.setPassword(password);
-			user.setProvince(province);
-			user.setCity(city);
-			user.setCounty(county);
-			user.setId_card_front(up_picture_front);
-			user.setId_card_reverse(up_picture_reverse);
-			basedao.insert(PubConstants.USER_INFO, user);
-			sub_Map.put("state", 0);//修改成功
+			DBObject db = basedao.getMessage(PubConstants.USER_INFO, fromUserid);
+			if(db != null){
+				UserInfo user = (UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+				user.set_id(fromUserid);
+				user.setUserName(name);
+				user.setTel(tel);
+				user.setAccount(tel);
+				user.setUskd(uskd);
+				user.setPassword(password);
+				user.setProvince(province);
+				user.setCity(city);
+				user.setCounty(county);
+				user.setId_card_front(up_picture_front);
+				user.setId_card_reverse(up_picture_reverse);
+				user.setIsfull(1);//已补全
+				basedao.insert(PubConstants.USER_INFO, user);
+				sub_Map.put("state", 0);//修改成功
+			}else{
+				sub_Map.put("state", 2);//暂无用户信息
+			}
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
-			sub_Map.put("state", 1);
+			sub_Map.put("state", 1);//操作失败
 			e.printStackTrace();
 		}
 	  	String json = JSONArray.fromObject(sub_Map).toString();
