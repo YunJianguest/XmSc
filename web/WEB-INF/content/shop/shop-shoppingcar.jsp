@@ -259,35 +259,62 @@
 		    });
 			$("#ytfurl").text(txt); 
 	 }
-	 if(val == 2){
-		 zflx=3;
-		 var submitData = { 
-				 orid:$('#orderno').val(),
-				 zflx:zflx,
-     	}; 
-		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
-         		function(json) {
-				//alert(json.state);
- 					if(json.state == 0){
- 						alert("支付成功！");
- 						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
- 					}else if(json.state == 1){
- 						alert("操作失败");
- 					}else if(json.state == 2){
- 						alert("PPB不足");
- 					}else if(json.state == 3){
- 						alert("库存不足");
- 					}else if(json.state == 4){
- 						alert("商品已下架");
- 					}else if(json.state == 5){
- 						alert("订单不存在");
- 					}else if(json.state == 6){
- 						alert("订单不存在");
- 					}
-         		},
-         		"json");
-	 }
-       } 
+		 if(val == 2){
+			 zflx=3;
+			 $('.mask').css('display','none');
+			 $(".sps-input-pwd").show();
+			
+	     }
+     }
+	 function zhifu(){
+    	 var submitData = { 
+    			  password:$('#password').val()
+    	    }; 
+    		 $.post('${ctx}/integral/miners!wdpassword.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+			        	function (json) {
+			            	if(json.state==0){
+					        		 var submitData = { 
+					        				 orid:$('#orderno').val(),
+					        				 zflx:3
+					             	}; 
+					        		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
+					                 		function(json) {
+					    					//alert(json.state);
+					         					if(json.state == 0){
+					         						alert("支付成功！");
+					         						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+					         					}else if(json.state == 1){
+					         						alert("操作失败");
+					         						$(".sps-input-pwd").hide();
+					         					}else if(json.state == 2){
+					         						alert("PPB不足，请重新选择付款方式");
+					         						$(".sps-input-pwd").hide();
+					         					}else if(json.state == 3){
+					         						alert("库存不足");
+					         						$(".sps-input-pwd").hide();
+					         					}else if(json.state == 4){
+					         						alert("商品已下架");
+					         						$(".sps-input-pwd").hide();
+					         					}else if(json.state == 5){
+					         						alert("订单不存在");
+					         						$(".sps-input-pwd").hide();
+					         					}else if(json.state == 6){
+					         						alert("订单不存在");
+					         						$(".sps-input-pwd").hide();
+					         					}
+					                 		},"json");
+			            	}else if(json.state==1){
+			            		alert('操作失败,请重新输入');
+			            	}else if(json.state==2){
+			            		alert('账号不存在');
+			            	}else  if(json.state==3){
+			            		alert('未设置密码，请先设置支付密码');
+			            		window.location.href="${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+			            	}else  if(json.state==4){
+			            		alert('密码错误');
+			            	}
+			},"json")
+     }
  
     </script>
        <script>
@@ -525,6 +552,97 @@ function delcar(id){
 				border: none;
 				border-bottom: 1px solid #e3e3e3;
 			}
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+			
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			
+			body {
+				width: 100%;
+				height: 100%;
+				font-family: "微软雅黑";
+			}
+			
+			li {
+				list-style: none;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			.sps-pwd-word{
+				width: 30px;
+				height:30px;
+				text-align: center;
+				line-height: 20px;
+			}
+			.sps-input-pwd{
+				width:100%;
+				height:100%;
+				padding-top: 200px;
+				background: #f1eff1;
+				position:fixed;
+				left:0;
+				top:0;
+			}
+			.sps-pwd-body{
+				width: 240px;
+				height:auto;
+				overflow: hidden;
+				border-radius: 10px;
+				margin: 0 auto;
+				padding: 5px 5px 10px;
+				background: #fff;
+			}
+			.sps-pwd-title{
+				width:100%;
+				height:auto;
+				overflow: hidden;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				color:#000;
+				
+				border-bottom:1px solid #eee;
+			}
+			.sps-pwd-title>span{
+				display: inline-block;
+				width: 100%;
+			}
+			.sps-pwd-title>span:last-of-type{
+				font-size: 18px;
+				font-weight: bold;
+			}
+			.sps-pwd-title>i>img{
+				width: 20px;
+				height:20px;
+				border-radius:100%;
+				float:left;
+				margin-top: 5px;
+			}
+			.sps-pwd-cont>table{
+				width: 100%;
+				text-align: center;
+				margin-top: 5px;
+			}
+			.sps-pwd-confirm{
+				width: 120px;
+				height:30px;
+				border: none;
+				font-size:16px;
+				color:#fff;
+				font-weight: bold;
+				margin-left: 60px;
+				margin-top: 10px;
+				border-radius:5px;
+				background: #3AB2FF;
+			}
     </style>
 </head>
 <body>
@@ -659,6 +777,25 @@ function delcar(id){
 		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
+<div class="sps-input-pwd hide" style="display: none">
+			<div class="sps-pwd-body">
+				<p class="sps-pwd-title" style="font-weight: bold;">请输入密码</p>
+				<div class="sps-pwd-cont">
+					<table>
+						<tr> 
+							<td><input id="password" type="password" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="16" />
+								<!-- <input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
+								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
+								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
+								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
+								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />  -->
+							</td>
+						</tr>
+					</table>
+				</div>
+				   <button class="sps-pwd-confirm" type="button" onclick="zhifu()">确认支付</button>
+			</div>
+		</div>
 </body>
 <script>
 ajaxjz();

@@ -250,12 +250,12 @@
                                 <label class="control-label">模板：</label>
                                 <select id="mb" name="mb" class="select2 hang40"
                                         data-placeholder="请选择">
-                                    <option value="1">图标两行</option>
-                                   <!--  <option value="1">图标一行</option>
+                                   <!--  <option value="1">图标两行</option> -->
+                                     <option value="1">图标一行</option>
                                     <option value="2">图片两行</option>
                                     <option value="3">瀑布模板</option>
-                                    <option value="4">图片一行</option>
-                                    <option value="5">分销模板</option> -->
+                                   <!--  <option value="4">图片一行</option>
+                                    <option value="5">分销模板</option>  -->
                                 </select>
                                 <label class="error" for="color"></label>
                             </div>
