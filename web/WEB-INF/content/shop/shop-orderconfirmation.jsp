@@ -83,8 +83,10 @@
         	      if(kd!=''&&kd>0){ 
         	       totalPrice=parseFloat(totalPrice)+parseFloat(kd);  
         	       $("#totalPrice").html(totalPrice.toFixed(2)+'元  <i>快递:￥'+parseFloat(kd).toFixed(2)+'</i>');
+        	       
         	      }else{
         	      $("#totalPrice").html(totalPrice.toFixed(2));
+        	     
         	     } 
         	    }else{ 
         	   $("#totalPrice").html(totalPrice.toFixed(2));
@@ -96,7 +98,7 @@
         	   total='${entity.kdprice}'; 
         	 $("#totalPrice").parent().html('<i id="totalPrice" class="fa fa-cny pl-5 weight500">'+totalPrice.toFixed(2)+'</i>平台币 快递'+parseFloat('${entity.kdprice}').toFixed(2)+'元');
         	}
-
+        		$("#PPBprice").html('PPB:'+$("#totalPrice").html());
         	});
   
          function moneypay(){
@@ -532,7 +534,7 @@
                       <span class="zi-cheng">平台币<fmt:formatNumber value='${entity.jfdh}'  pattern="0.0#"/>
                       </c:if>
                        <i class="pl-10 zi-6">数量:${count}件</i></span>
-                       <span class="virtualcoin">PPB:${ppb_price}</span>
+                       <span class="virtualcoin" id="PPBprice"></span>
                     </div>
                 </font>
             </div>
