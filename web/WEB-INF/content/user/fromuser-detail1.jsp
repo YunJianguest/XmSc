@@ -228,6 +228,7 @@
           
         </div>
     </div>
+    <%@include file="/webcom/foot.jsp" %>
 </main>
 <script>
 jQuery(document).ready(function($) {
