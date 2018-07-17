@@ -17,8 +17,6 @@ import java.util.TreeMap;
 
 import java.util.regex.Pattern;
 
-import javax.swing.text.AbstractDocument.Content;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -4482,8 +4480,7 @@ public class ShopAction extends GeneralAction {
 		entity.setProfit(Double.parseDouble(BaseDecimal.subtract(zfmoney, cost)));
 		entity.setJffh(jffh);
 		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
-		String   content = "尊敬的用户，你已成功下单。订单编号为"+orderno+"，请及时付款，如已付款，可忽略此信息。";
-		boolean flag =  wwzService.sendSMS(tel, content);
+
 		params.put("state", 0);
 		params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
@@ -4499,6 +4496,7 @@ public class ShopAction extends GeneralAction {
 		map.put("state", 1);
 		String oid = Struts2Utils.getParameter("orid");
 		String zflx = Struts2Utils.getParameter("zflx");
+		System.out.println("===>"+oid);
 		int qylx=0;
 		if (StringUtils.isNotEmpty(oid)) {
 			DBObject db = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
@@ -4543,7 +4541,7 @@ public class ShopAction extends GeneralAction {
 						zfmoney=entity.getPpb_money()+"";
 					}
 				}
-				if (wwzService.deljf(zfmoney, fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0)) {
+				if (wwzService.deljfoid(zfmoney, fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0,oid)) {
 					 
 					/*
 					entity.set_id(oid);
@@ -4552,53 +4550,76 @@ public class ShopAction extends GeneralAction {
 					//支付成功并更新订单状态
 					// 更新库存状态
 					
-					for (DBObject dbObject2 : list) {
-						OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
-						DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
-								Long.parseLong(dbObject2.get("pid").toString()));
-						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
-						if(StringUtils.isNotEmpty(zflx)){
-							orderFormpro.setZflx(Integer.parseInt(zflx));
-						}
-						obj.setGmnum(obj.getGmnum() + entity.getCount());
-						obj.setNum(obj.getNum() - entity.getCount());
-						baseDao.insert(PubConstants.DATA_PRODUCT, obj);
-						
-						orderFormpro.set_id(Long.parseLong(dbObject2.get("_id").toString()));
-						orderFormpro.setGoodstate(2);
-						baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
-					} 
-					entity.setZflx(Integer.parseInt(zflx));
-					entity.setState(2);
-					baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+					
 					// 支付成功 
-				    String uskd=SysConfig.getProperty("uskd_dzq");
-					if(qylx==3){
-						uskd=SysConfig.getProperty("uskd_dzq");
-					}else if(qylx==4){
-						uskd=SysConfig.getProperty("uskd_tyq");
-					}else if(qylx==5){
-						uskd=SysConfig.getProperty("uskd_hyq");
+//				    String uskd=SysConfig.getProperty("uskd_dzq");
+//					if(qylx==3){
+//						uskd=SysConfig.getProperty("uskd_dzq");
+//					}else if(qylx==4){
+//						uskd=SysConfig.getProperty("uskd_tyq");
+//					}else if(qylx==5){
+//						uskd=SysConfig.getProperty("uskd_hyq");
+//					}
+//					
+					
+					
+//					//提币到交易所
+//					SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
+//					parameters.put("eth", uskd);
+//			    	parameters.put("num",zfmoney);
+//			    	parameters.put("username","admin");
+//			    	parameters.put("orderid",oid);
+//			    	String sign = PayCommonUtil.createKey("UTF-8",uskd+zfmoney+"admin"+oid, SysConfig.getProperty("jyskey"));
+//			    	parameters.put("key", sign); 
+//		            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
+//		            JSONObject obj=JSONObject.fromObject(result);
+//		            if(obj.getString("code").equals("1000")) {
+//		            	//提现成功； 
+//		            }else {
+//		            	//提现失败开始返回 
+//		            }
+					
+					
+					//结账到各个账号
+					String  account=SysConfig.getProperty("dzq_account"); 
+					if(qylx==3){ 
+						account=SysConfig.getProperty("dzq_account");
+				    }else if(qylx==4){ 
+				    	account=SysConfig.getProperty("tyq_account");
+				    }else if(qylx==5){ 
+				    	account=SysConfig.getProperty("hyq_account");
+				    }
+					
+					
+					if(wwzService.addjfoid(zfmoney, account, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0,oid)){
+						for (DBObject dbObject2 : list) {
+							OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
+							DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
+									Long.parseLong(dbObject2.get("pid").toString()));
+							ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
+							if(StringUtils.isNotEmpty(zflx)){
+								orderFormpro.setZflx(Integer.parseInt(zflx));
+							}
+							obj.setGmnum(obj.getGmnum() + entity.getCount());
+							obj.setNum(obj.getNum() - entity.getCount());
+							baseDao.insert(PubConstants.DATA_PRODUCT, obj);
+							
+							orderFormpro.set_id(Long.parseLong(dbObject2.get("_id").toString()));
+							orderFormpro.setGoodstate(2);
+							baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
+						} 
+						entity.setZflx(Integer.parseInt(zflx));
+						entity.setState(2);
+						baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+						map.put("state", 0);
+						
+					}else{
+						//支付失败返还积分
+						wwzService.addjfoid(zfmoney, fromUserid, "shop_jffh", SysConfig.getProperty("custid"), 0, 1, 0,oid);
+						//系统未开通支付功能，请联系客服
+						map.put("state", 8);
 					}
-					
-					
-					//提币到交易所
-					SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
-					parameters.put("eth", uskd);
-			    	parameters.put("num",zfmoney);
-			    	parameters.put("username","admin");
-			    	parameters.put("orderid",oid);
-			    	String sign = PayCommonUtil.createKey("UTF-8",uskd+zfmoney+"admin"+oid, SysConfig.getProperty("jyskey"));
-			    	parameters.put("key", sign); 
-		            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
-		            JSONObject obj=JSONObject.fromObject(result);
-		            if(obj.getString("code").equals("1000")) {
-		            	//提现成功； 
-		            }else {
-		            	//提现失败开始返回 
-		            }
-					
-					map.put("state", 0);
+					  
 				} else {
 					// 乐乐币不足
 					map.put("state", 2);
