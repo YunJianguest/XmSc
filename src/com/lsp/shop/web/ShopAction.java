@@ -17,6 +17,8 @@ import java.util.TreeMap;
 
 import java.util.regex.Pattern;
 
+import javax.swing.text.AbstractDocument.Content;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -4483,7 +4485,8 @@ public class ShopAction extends GeneralAction {
 		entity.setProfit(Double.parseDouble(BaseDecimal.subtract(zfmoney, cost)));
 		entity.setJffh(jffh);
 		baseDao.insert(PubConstants.WX_ORDERFORM, entity);
-
+		String   content = "尊敬的用户，你已成功下单。订单编号为"+orderno+"，请及时付款，如已付款，可忽略此信息。";
+		boolean flag =  wwzService.sendSMS(tel, content);
 		params.put("state", 0);
 		params.put("orderno", orderno);
 		String json = JSONArray.fromObject(params).toString();
@@ -4499,7 +4502,6 @@ public class ShopAction extends GeneralAction {
 		map.put("state", 1);
 		String oid = Struts2Utils.getParameter("orid");
 		String zflx = Struts2Utils.getParameter("zflx");
-		System.out.println("===>"+oid);
 		int qylx=0;
 		if (StringUtils.isNotEmpty(oid)) {
 			DBObject db = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
