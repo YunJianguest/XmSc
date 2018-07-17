@@ -679,7 +679,7 @@ function del(id) {
     
     function  ppbpay(){
       	 var submitData = { 
-  				 orid:$('#orderno').val(),
+  				 orid:$('#oid').val(),
   				 zflx:3,
        	};
   		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,

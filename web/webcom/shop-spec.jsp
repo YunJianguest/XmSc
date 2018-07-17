@@ -153,7 +153,7 @@
                 </div>
                 <div class="pl-10 pb-10 overflow-hidden weight500 yListr3">
                     <c:forEach items="${spelist}" var="bean"> 
-                    <li class="pt-10 pr-10 col-4">
+                    <li class="pt-10 pr-10 "><!--col-4-->
                         <div class="div3 txt-c zi-hui-wx line-lu border-radius3 hang25 line-height25" price="${bean.price}">
                            ${bean.title}
                         </div>

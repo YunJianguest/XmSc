@@ -470,6 +470,7 @@
 	    	</li>
     	</ul>
     </div>-->
+    <%@include file="/webcom/foot.jsp" %>
 </main>
 <div class="modal">
 	<div class="modal-cont">

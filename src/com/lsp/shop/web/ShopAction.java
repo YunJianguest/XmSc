@@ -4591,7 +4591,8 @@ public class ShopAction extends GeneralAction {
 				    }
 					
 					
-					if(wwzService.addjfoid(zfmoney, account, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0,oid)){
+					if(wwzService.addjfoid(zfmoney, account, "shop_jfsr", SysConfig.getProperty("custid"), 0, 1, 0,oid)){
+						System.out.println("支付一次----------");
 						for (DBObject dbObject2 : list) {
 							OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject2, OrderFormpro.class);
 							DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
@@ -4609,7 +4610,7 @@ public class ShopAction extends GeneralAction {
 							baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
 						} 
 						entity.setZflx(Integer.parseInt(zflx));
-						entity.setState(2);
+						//entity.setState(2);
 						baseDao.insert(PubConstants.WX_ORDERFORM, entity);
 						map.put("state", 0);
 						
