@@ -37,8 +37,21 @@ public class IntegralLlInfo extends ReflectionDBObject {
      * 2-冻结
      **/
     private int  jfstate;
-    private String fid;  
+    private String fid;
+    /**
+     * 订单ID
+     */
+    private String oid;
+    
  
+	public String getOid() {
+		return oid;
+	}
+
+	public void setOid(String oid) {
+		this.oid = oid;
+	}
+
 	public String getType() {
 		return type;
 	}

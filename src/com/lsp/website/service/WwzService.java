@@ -3032,6 +3032,115 @@ public class WwzService {
 	}
 	
 	/**
+	 * 增加积分
+	 * 
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param lx(0为正常交易，1为系统赠送)
+	 * @param jflx(0普通积分，1为PP，2为LL)
+	 * @param isfreeze(0-未冻结   1-已冻结)
+	 * @return
+	 */
+	public boolean addjfoid(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze,String oid) {
+		try {
+			if (Double.parseDouble(price) > 0) {
+				if (lx == 0) {
+					//默认积分
+					if (jflx == 1) {
+						IntegralInfo info = new IntegralInfo();
+						info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+						info.setCreatedate(new Date());
+						info.setFromUserid(fromUserid);
+						info.setValue(Double.parseDouble(price));
+						info.setType(type);
+						info.setState(0);
+						info.setOid(oid);
+						info.setCustid(custid);
+						info.setIsfreeze(isfreeze);
+						baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 0)) {
+							return true;
+						} else {
+							return false;
+						}
+					} else if (jflx == 2) {
+						IntegralLlInfo info = new IntegralLlInfo();
+						info.set_id(mongoSequence.currval(PubConstants.INTEGRALLL_INFO));
+						info.setCreatedate(new Date());
+						info.setFromUserid(fromUserid);
+						info.setValue(Double.parseDouble(price));
+						info.setType(type);
+						info.setOid(oid);
+						info.setState(0);
+						info.setCustid(custid);
+						baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
+						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+
+				} else if (lx == 1) {
+					// 系统发放（验证库存）
+					if (checkTotalIntegral(jflx, price)) {
+						//默认积分
+						if (jflx == 1) {
+							IntegralInfo info = new IntegralInfo();
+							info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+							info.setCreatedate(new Date());
+							info.setFromUserid(fromUserid);
+							info.setValue(Double.parseDouble(price));
+							info.setType(type);
+							info.setState(0);
+							info.setOid(oid);
+							info.setCustid(custid);
+							info.setIsfreeze(isfreeze);
+							baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 0)) {
+								if (updateTotalIntegral(jflx, price)) {
+									return true;
+								}
+							} else {
+								return false;
+							}
+						} else if (jflx == 2) {
+							IntegralLlInfo info = new IntegralLlInfo();
+							info.set_id(mongoSequence.currval(PubConstants.INTEGRALLL_INFO));
+							info.setCreatedate(new Date());
+							info.setFromUserid(fromUserid);
+							info.setValue(Double.parseDouble(price));
+							info.setType(type);
+							info.setOid(oid);
+							info.setState(0);
+							info.setCustid(custid);
+							baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
+							System.out.println("增加ll");
+							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
+								if (updateTotalIntegral(jflx, price)) {
+									return true;
+								}
+							} else {
+								return false;
+							}
+						}
+					}
+
+				}
+
+			}
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	/**
 	 * 减少积分
 	 * 
 	 * @param price
