@@ -97,7 +97,6 @@
             <div class="zi-hei weight500 pl-15" style="overflow: hidden;">
             <div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">${setting.names}总计：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.llzvalue}'  pattern="0.00"/></i></font></div>            	
 			<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可用${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.llkyvalue}'  pattern="0.00"/></i></font></div>
-            <div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">冻结${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.lldjvalue}'  pattern="0.00"/></i></font></div>
             </div>
         </a>
         <%-- <a href="${ctx}/suc/integral!blacklist.action?custid=${custid}&lscode=${lscode}">
