@@ -76,6 +76,7 @@
         }
      
         var shoptype=-1;
+        var not = 0;
         function check(v,id,price,type){
         if($(v).find('i').css('display')=="none"){
          $(v).find('i').show();
@@ -93,7 +94,11 @@
         	 shoptype=type;
          }else if(shoptype!=type){
         	 alert("请选择同一区的产品进行结算！");
+        	 not = 1;
+        	 shoptype=type;
         	 return;
+         }else if(shoptype==type){
+        	 not = 0; 
          }
         }else{
          $(v).find('i').hide();
@@ -115,6 +120,10 @@
          }    
         }
      function moneypay(){ 
+    	 if(not == 1){
+    		 alert("请选择同一区的产品进行结算");
+             return ;
+    	 }
      if('${address.tel}'==""){
          alert("请先设置收货地址");
           return ;
@@ -177,6 +186,14 @@
             				var orderno=json.orderno; 
             				$('#orderno').val(json.orderno);
             				if(confirm("是否支付?")){
+            					if(shoptype==4){
+            						$('#btbutton').hide();
+            				  		$('#ytfbutton').hide();
+            					}
+            					if(shoptype==3||shoptype==5){
+            						$('#btbutton').show();
+            						$('#ytfbutton').show();
+            					}
             					$('.mask').css('display','block'); 
             				}
             			}else if(json.state == 1) {
@@ -192,15 +209,20 @@
            } 
      function popcode(val){ 
    	  var txt="1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu";
-	  
 	 if(val == 0){
 		 zflx=1;
 		 if(shoptype==3){
    		  txt="3AYHYGbC9uE5vBWfbQutyrEmyUd3cAwEdY";
+   		  $('#btbutton').show();
+		  $('#ytfbutton').show();
    	  }else if(shoptype==5){
    		  txt="3MKiB7ZX16zgwAwbXxM4LugGXm3Co1fFJe";
+   		$('#btbutton').show();
+		  $('#ytfbutton').show();
    	  }else if(shoptype==4){
    		  txt="3CS2WvYFnrwL1G3e9jKg6o4guGh4boP4Pr";
+   		 $('#btbutton').hide();
+  		  $('#ytfbutton').hide();
    	  }
 		 $('#bt').css('display','block');
 			pay_bt();
@@ -216,10 +238,16 @@
 		 zflx=2;
 		 if(shoptype==3){
    		  txt="0xefa03a9B480A9890C5541065A398F43f82F32832";
+   		  $('#btbutton').show();
+ 		  $('#ytfbutton').show();
    	  }else if(shoptype==5){
    		  txt="0xc3d8d8fBDb34dA5930d95869b692D80B668d4b98";
+   		  $('#btbutton').show();
+ 		  $('#ytfbutton').show();
    	  }else if(shoptype==4){
    		  txt="0x842B0afCaA759ea325A915D2a5e5963B618DcEf1";
+   		  $('#btbutton').hide();
+   		  $('#ytfbutton').hide();
    	  }
 		 $('#ytf').css('display','block');
 			pay_ytf();
@@ -579,8 +607,8 @@ function delcar(id){
 			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
 		</div>
 		<div class="mask-cont-cont">
-			<button onclick="popcode(0)" class="currency">比特币</button>
-			<button onclick="popcode(1)" class="currency">以太坊</button>
+			<button onclick="popcode(0)" class="currency" id="btbutton">比特币</button>
+			<button onclick="popcode(1)" class="currency" id="ytfbutton">以太坊</button>
 			<button onclick="popcode(2)" class="currency">盼盼币</button>
 		</div>
 	</div>

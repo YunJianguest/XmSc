@@ -582,8 +582,10 @@
 			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
 		</div>
 		<div class="mask-cont-cont">
+		<c:if test="${entity.goodstype == 3 || entity.goodstype == 5}">
 			<button onclick="popcode(0)" class="currency">比特币</button>
 			<button onclick="popcode(1)" class="currency">以太坊</button>
+	    </c:if>
 			<button onclick="popcode(2)" class="currency">盼盼币</button>
 		</div>
 	</div>
