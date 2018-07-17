@@ -4358,7 +4358,7 @@ public class ShopAction extends GeneralAction {
 							backMap);
 				}
 
-				if (pro.get("gmcs") != null && Integer.parseInt(pro.get("gmcs").toString()) > 0) {
+				/*if (pro.get("gmcs") != null && Integer.parseInt(pro.get("gmcs").toString()) > 0) {
 					HashMap<String, Object> whereMap = new HashMap<>();
 					whereMap.put("pid", Integer.parseInt(pro.get("_id").toString()));
 					whereMap.put("fromUserid", fromUserid);
@@ -4378,7 +4378,7 @@ public class ShopAction extends GeneralAction {
 						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 						return;
 					}
-				}
+				}*/
                 String moneys="0";
 				if (pro.get("price") != null) {
 					String zfmoneys = zfmoney;
@@ -4501,7 +4501,7 @@ public class ShopAction extends GeneralAction {
 		int qylx=0;
 		if (StringUtils.isNotEmpty(oid)) {
 			DBObject db = baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
-			if (db != null && db.get("fromUserid").equals(fromUserid)) {
+			if (db != null && db.get("fromUserid").toString().equals(fromUserid)) {
 				OrderForm entity = (OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
 
 				HashMap<String, Object> whereMap = new HashMap<>();
