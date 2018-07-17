@@ -646,9 +646,6 @@ $(window).scroll(function () {
         }
 
 });
-$('#ConfirmPay').click(function(){
-		
-	})
 	$('#close').click(function(){
 		$('.mask').css('display','none')
 	})
