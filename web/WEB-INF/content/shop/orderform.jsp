@@ -143,6 +143,22 @@ function page_submit(num){
 				window.location.reload();
 		},"json")
   }
+  //确认收款
+  function resure(id){ 
+	  var submitData = {
+				orderid:id,
+				goodstate:2
+		};
+		$.post('${ctx}/shop/orderform!changestate.action', submitData,
+			function(json) {	
+				if(json.state == 0){
+					alert('操作成功');
+				}else{
+					alert('操作失败');
+				}	
+				window.location.reload();
+		},"json")
+  }
 
  </script>
 
@@ -270,7 +286,11 @@ function page_submit(num){
                                       <i class="fa fa-cog"></i>
                                   </a>
                                   <ul role="menu" class="dropdown-menu pull-right">
-                                      <c:if test="${bean.state<3}">
+                                      <c:if test="${bean.state<2}">
+                                      <li><a href="javascript:resure('${bean._id}');">
+                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;确认收款</a></li>
+                                     </c:if>
+                                      <c:if test="${bean.state<3&&bean.state>=2}">
                                       <li><a href="javascript:fh('${bean._id}');">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;发货</a></li>
                                      </c:if>
@@ -416,7 +436,7 @@ function page_submit(num){
                         <div class="col-sm-3">
                         	<select  id="state"  name="state" class="form-control "  data-placeholder="请选择">
             	 				<!-- <option value="1">订单</option> -->
-                    			<!-- <option value="2">已购买</option> -->
+                    			<!-- <option value="2">已购买</option>  -->
                     			<option value="3">已发货</option>
                     			<!-- <option value="4">已收货</option> -->
                     			<!-- <option value="5">退货</option> -->

@@ -272,19 +272,23 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 			pro.set_id(Long.parseLong(dbObject.get("_id").toString()));
 			if(StringUtils.isNotEmpty(goodstate)){
 				if(goodstate.equals("3")){
-					pro.setKdno(kdno);
-					pro.setKdcom(kdcom);
+					if(StringUtils.isNotEmpty(kdno)){
+						pro.setKdno(kdno);
+					}
+					if(StringUtils.isNotEmpty(kdcom)){
+						pro.setKdcom(kdcom);
+					}
 				}
 				pro.setGoodstate(Integer.parseInt(goodstate));
 				baseDao.insert(PubConstants.SHOP_ODERFORMPRO, pro);
 			}
 			sub_map.put("state", 0);
 		}
-		//检测全部发货情况
+		//检测全部发货情况或者已付款情况
 		if(StringUtils.isNotEmpty(orderid)){
 			whereMap.clear();
 			whereMap.put("orderid", orderid);
-			whereMap.put("goodstate",3); 
+			whereMap.put("goodstate",Integer.parseInt(goodstate)); 
 			Long count=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO,whereMap);
 			whereMap.clear();
 			whereMap.put("orderid", orderid);
@@ -294,7 +298,7 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 				DBObject db=baseDao.getMessage(PubConstants.WX_ORDERFORM, orderid);
 				if(db!=null){
 					OrderForm form=(OrderForm) UniObject.DBObjectToObject(db, OrderForm.class);
-					form.setState(3);
+					form.setState(Integer.parseInt(goodstate));
 					baseDao.insert(PubConstants.WX_ORDERFORM, form);
 				}
 			
