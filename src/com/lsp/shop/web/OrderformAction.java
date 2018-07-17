@@ -667,5 +667,39 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		
 		
 	}
+	public void qrsk(){
+		String oid=Struts2Utils.getParameter("oid");
+		custid=SpringSecurityUtils.getCurrentUser().getId();
+		HashMap<String, Object>sub_map=new HashMap<>();
+		sub_map.put("state",1);
+		if(!custid.equals("hyq_account")&&!custid.equals("dzq_account")&&!custid.equals("tyq_account")){
+			//账号不存在
+			sub_map.put("state", 2);
+			String json = JSONArray.fromObject(sub_map).toString();
+				
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+			return ;
+		}
+		DBObject  dbObject=baseDao.getMessage(PubConstants.WX_ORDERFORM, oid);
+		if(dbObject!=null){
+			OrderForm  order=(OrderForm) UniObject.DBObjectToObject(dbObject, OrderForm.class);
+			order.set_id(oid);
+			if(order.getState()==1){
+				order.setState(2);
+				baseDao.insert(PubConstants.WX_ORDERFORM, order);
+				sub_map.put("state",0);
+			}else{
+				sub_map.put("state",3);
+			}
+			
+			
+		}else{
+			sub_map.put("state",4);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		
+	}
 	
 }

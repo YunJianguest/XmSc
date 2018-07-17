@@ -33,67 +33,21 @@ function add(){
 			show : true
 		});
 }
-function upd(id){
+function qrsk(id){
    var submitData = {
-		id : id
+		oid : id
 	};
-	$.post('${ctx}/suc/integral!upd.action', submitData, function(json) {
-		$('#_id').val(json._id);
-		$('#title').val(json.title);
-		$('#summary').val(json.summary);
-		$('#url').val(json.url);
-		$('#sort').val(json.sort);
-		$('#type').val(json.type);
-		$('#uploadresultFour').val(json.picurl);
-		
+	$.post('${ctx}/shop/orderform!qrsk.action', submitData, function(json) {
+		 if(json.state==0){
+			 alert("操作成功！");
+		 }else{
+			 alert("操作失败！") 
+		 }
 
 	}, "json")
-	 
-
-	$('#insadd').modal({
-			show : true
-		});
+	  
 }
  
-function updfx(type) {
-	var submitData = {
-		fxtype : type
-	};
-	$.post('${ctx}/weixin/sharefx!upd.action', submitData, function(json) {
-		$('#fxtype').val(type);
-		$('#fxtitle').val(json.fxtitle);
-		$('#fxsummary').val(json.fxsummary);
-		$('#oldurl').val(json.oldurl);
-		$('#fxurl').val(json.fxurl);
-		$('#type').val(json.type);
-		$('#uploadresultFour').val(json.fximg);
-		
-
-	}, "json")
-	$('#insfx').modal({
-		show : true
-	});
-
-}
-function savefx() {
-	var submitData = {
-		fxtype : $('#fxtype').val(),
-		fxtitle : $('#fxtitle').val(),
-		fxsummary : $('#fxsummary').val(),
-		oldurl : $('#oldurl').val(),
-		fxurl : $('#fxurl').val(),
-		fximg : $('#uploadresultFour').val()
-	};
-	$.post('${ctx}/weixin/sharefx!ajaxsave.action', submitData, function(json) {
-		window.location.href='${ctx}/whd/wxmatrix.action'; 
-		
-
-	}, "json")
-	$('#inszc').modal({
-		show : true
-	});
-
-}
 function page_submit(num){
 	
 	if(num==-1){
@@ -193,16 +147,16 @@ function exp() {
                       	<th>状态</th>
                       	<th>类型</th>
                       	<th>时间</th>
-						<th>操作</th>
+                      	<th>订单编号</th> 
                       </tr>
                     </thead>
                     <tbody>
                       <c:forEach items="${integralList}" var="bean">
                       <tr>
                       	<td>${bean._id}</td>
-                      	<c:if test="${bean.value>0}"><td><span style="color: red;">+${bean.value}</span></td>
+                      	<c:if test="${bean.state==0}"><td><span style="color: red;">+${bean.value}</span></td>
                       	</c:if>
-                      	<c:if test="${bean.value<0}"><td><span style="color:green;">-${bean.value}</span></td>
+                      	<c:if test="${bean.state==1}"><td><span style="color:green;">-${bean.value}</span></td>
                       	</c:if>
                       	<td>
                       	<c:choose>
@@ -211,24 +165,14 @@ function exp() {
                       	  <c:when test="${bean.type == 'ps_recovery'}">回本后待返收益</c:when>
                       	  <c:when test="${bean.type == 'shop_bmzt'}">利润提成</c:when>
                       	  <c:when test="${bean.type == 'shop_jfdh'}">下单支出</c:when>
+                      	  <c:when test="${bean.type == 'shop_jfsr'}">订单收益</c:when>
                       	  <c:when test="${bean.type == 'jfcz'}">盼盼币充值</c:when>
                       	  <c:when test="${bean.type == 'jf_withdraw'}">盼盼币提现</c:when>
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
-                        <td class="table-action">
-                              
-                              <div class="btn-group1">
-                                  <a data-toggle="dropdown" class="dropdown-toggle">
-                                      <i class="fa fa-cog"></i>
-                                  </a>
-                                  <ul role="menu" class="dropdown-menu pull-right">
-                                      <li><a href="javascript:upd('${bean._id}');">
-                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;充值</a></li>
-                                       
-                                  </ul>
-                              </div>
-                          </td>
+                      	<td>${bean.oid}<a href="javascript:qrsk('${bean.oid}')"><c:if test="${bean.type == 'shop_jfsr'}"><span style="color: red;">确认收款</span></c:if></a></td>
+                      
                       </tr>
                       </c:forEach>
 
