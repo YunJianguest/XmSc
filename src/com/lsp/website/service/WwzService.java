@@ -3177,6 +3177,44 @@ public class WwzService {
 		return false;
 
 	}
+	/**
+	 * 减少积分
+	 * 
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param lx(0为正常交易，1为系统赠送)
+	 * @param jflx(0普通积分，1为PP，2为LL)
+	 * @param isfreeze(0-未冻结   1-已冻结)
+	 * @return
+	 */
+	public boolean deljfoid(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze,String oid) {
+		try {
+			//减少冻结积分
+			if(Double.parseDouble(price)>0) {
+				if(changeJf(custid, fromUserid, Double.parseDouble(price),1,isfreeze,0)) {
+					IntegralInfo info = new IntegralInfo();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+					info.setCreatedate(new Date());
+					info.setFromUserid(fromUserid);
+					info.setValue(Double.parseDouble(price));
+					info.setType(type);
+					info.setState(1);
+					info.setOid(oid);
+					info.setCustid(custid);
+					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					return true;
+				}
+			} 
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
+	}
 
 	/**
 	 * 获取当前LL赠送数量
