@@ -24,7 +24,7 @@ public class IntegralRecord extends ReflectionDBObject {
 	 */
 	private double   kjvalue; 
 	/**
-	 * 产币类型0为PP币1为比特币2为以太坊
+	 * 产币类型1为PP币2为比特币3为以太坊
 	 */
 	private int      kjlx;
 	private double   llzvalue; //乐乐总计

@@ -23,6 +23,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.ShopMb;
 import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.Ranking;
 import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBList;
@@ -89,28 +90,47 @@ public class TimerService {
                 	}
                 	
                 }
-				
-				
-				System.out.println("fromUserid---->"+dbObject.get("fromUserid"));
-				System.out.println("type---->"+dbObject.get("type"));
-				if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
-					if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
-						//挖矿到矿机账号
-						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
-						
-					}else{
-						wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
-					}
-					
-					
-					
-					/*//返回积分到直推用户
-					DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
-				    if(user.get("parentid")!=null) {
-				    	wwzservice.addjf(Double.parseDouble(price)*0.1+"", user.get("parentid").toString(),user.get("custid").toString(), dbObject.get("type").toString(),1,1,0);
-				    }*/
+				double kjlx=0;
+				HashMap<String, Object>where1Map=new HashMap<>();
+	    		whereMap.put("custid",SysConfig.getProperty("custid"));
+	    		whereMap.put("fromUserid", dbObject.get("fromUserid").toString());
+	    		IntegralRecord ir = null;
+				DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, where1Map);
+				if(db!=null){
+					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+					kjlx=ir.getKjlx(); 
 					
 				}
+				if(kjlx>0){
+					if(kjlx==1){
+						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",20);
+					}else if(kjlx==2){
+						price=BaseDecimal.division(price,wwzservice.getBTCSprice()+"",20);
+						
+					}else if(kjlx==3){
+						price=BaseDecimal.division(price,wwzservice.getETHSprice()+"",20);
+						
+					} 
+					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
+						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
+							//挖矿到矿机账号
+							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
+							
+						}else{
+							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
+						}
+						
+						
+						
+						/*//返回积分到直推用户
+						DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
+					    if(user.get("parentid")!=null) {
+					    	wwzservice.addjf(Double.parseDouble(price)*0.1+"", user.get("parentid").toString(),user.get("custid").toString(), dbObject.get("type").toString(),1,1,0);
+					    }*/
+						
+					}
+				}
+			
 			}
 		}
 	}

@@ -1244,8 +1244,8 @@ public class WwzService {
 					info.setCustid(custid);
 					info.setFid(fid);
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
-					if (jfstate == 2) {// 冻结积分
-						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 1)) {
+					if (jfstate == 2) {//
+						if (changeKjJf(custid, fromUserid, Double.parseDouble(price), 0)) {
 							if (updateTotalIntegral(1, price)) {
 								//判断是否已经返完
 								checkFh(fromUserid,custid,fid);
@@ -1253,12 +1253,50 @@ public class WwzService {
 							}
 						}
 					} else {// 可用积分
-						if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, 0)) {
+						if (changeKjJf(custid, fromUserid, Double.parseDouble(price), 0)) {
 							if (updateTotalIntegral(1, price)) {
+								//判断是否已经返完
+								checkFh(fromUserid,custid,fid);
 								return true;
 							}
 						}
 					}
+				}
+				
+
+			}
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	/**
+	 * 矿机提现
+	 * 
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param wxuser
+	 * @return
+	 * @throws Exception 
+	 */
+	public boolean delyfjf(String price, String fromUserid, String type, String custid) throws Exception {
+		try {
+			if (Double.parseDouble(price) > 0) {
+				if(changeKjJf(custid, fromUserid, Double.parseDouble(price), 1)) {
+					IntegralInfo info = new IntegralInfo();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+					info.setCreatedate(new Date());
+					info.setFromUserid(fromUserid);
+					info.setValue(Double.parseDouble(price));
+					info.setType(type);
+					info.setState(1);
+					info.setCustid(custid); 
+					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					 
 				}
 				
 
@@ -1806,9 +1844,9 @@ public class WwzService {
 	 * @param value
 	 * @param type
 	 * @param isfreeze
-	 *            0--冻结积分增加 1--可使用积分增加
+	 * 0--冻结积分增加 1--可使用积分增加
 	 */
-	public boolean changeKjJf(String custid, String fromUserid, double value, int type, int isfreeze) {
+	public boolean changeKjJf(String custid, String fromUserid, double value, int type) {
 		try {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("custid", custid);
@@ -1823,24 +1861,16 @@ public class WwzService {
 			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
-			if (type == 0) {
-				if (isfreeze == 1) {// 冻结积分增加
-					ir.setProstore(ir.getProstore() + value);
-					ir.setValue(ir.getValue() + value);
-				} else if (isfreeze == 0) {// 可使用积分增加
-					ir.setUservalue(ir.getUservalue() + value);
-					ir.setValue(ir.getValue() + value);
-				}
+			if (type == 0) { 
+				ir.setKjvalue(ir.getKjvalue()+value);
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
-			} else if (type == 1 && ir.getValue() > value) {
-				ir.setValue(ir.getValue() - value);
+			} else if (type == 1 && ir.getKjvalue() >=value) {
+				ir.setKjvalue(ir.getKjvalue()-value);
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
-			} else if (type == 2) {
-				ir.setValue(value);
-				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
-				return true;
+			} else if (type == 2) { 
+				return false;
 			} else {
 				return false;
 			}
