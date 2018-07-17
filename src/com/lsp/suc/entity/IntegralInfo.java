@@ -43,6 +43,9 @@ public class IntegralInfo extends ReflectionDBObject {
      * 2-冻结
      **/
     private int  jfstate;
+    /**
+     * 矿机ID
+     */
     private String fid;
     /**
      * 种类（0为普通1为PP币，2为LL币）
@@ -53,6 +56,10 @@ public class IntegralInfo extends ReflectionDBObject {
      * 1冻结
      */
     private int isfreeze;
+    /**
+     * 订单ID
+     */
+    private String oid;
 	public int getJflx() {
 		return jflx;
 	}
@@ -158,6 +165,14 @@ public class IntegralInfo extends ReflectionDBObject {
 
 	public void setIsfreeze(int isfreeze) {
 		this.isfreeze = isfreeze;
+	}
+
+	public String getOid() {
+		return oid;
+	}
+
+	public void setOid(String oid) {
+		this.oid = oid;
 	}
 	
 

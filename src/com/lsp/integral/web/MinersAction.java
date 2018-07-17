@@ -809,10 +809,10 @@ public class MinersAction extends GeneralAction<Miner> {
 			return "transferweb"; 
 	    }
 	    /**
-	     * 矿机提现
+	     * 矿机盼盼币提现
 	     * @throws Exception 
 	     */
-	    public void kjtx() throws Exception{
+	    public void kjPPtx() throws Exception{
 	    	getLscode();
 	    	Map<String,Object>sub_map = new HashMap<>();
 		  	sub_map.put("state", 1);
@@ -834,43 +834,58 @@ public class MinersAction extends GeneralAction<Miner> {
 		    	tx.setRemark(remark);
 		    	tx.setState(0);
 		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-		    	//提现
-		    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"))) {
-		    		parameters.put("eth", eth);
-			    	parameters.put("num",price);
-			    	parameters.put("username",wwzService.getWxUser(fromUserid).get("nickname"));
-			    	parameters.put("orderid",orderno);
-			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("nickname")+orderno, SysConfig.getProperty("jyskey"));
-			    	parameters.put("key", sign);
-			    	HashMap<String,Object>map=new HashMap<>();
-			    	map.put("data", parameters);
-		            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
-		            JSONObject obj=JSONObject.fromObject(result);
-		            if(obj.getString("code").equals("1000")) {
-		            	//提现成功；
-		            	tx.setState(1);
-		            	tx.setUpdatedate(new Date());
-				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-				    	sub_map.put("state", 0);
-		            }else {
-		            	//提现失败开始返回
-		            	tx.setState(2);
-		            	tx.setUpdatedate(new Date());
-				    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-				    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
-				    	sub_map.put("state", 3);
-		            }
-		    	}else {
-		    		//余额不足
-		    		sub_map.put("state", 2);
-		    	} 
+		    	HashMap<String, Object>whereMap=new HashMap<>();
+		    	DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		    	IntegralRecord ir = null;
+				if(db!=null){
+					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class); 
+					if(ir.getKjlx()==1){
+						//提现
+				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"))) {
+				    		parameters.put("eth", eth);
+					    	parameters.put("num",price);
+					    	parameters.put("username",wwzService.getWxUser(fromUserid).get("nickname"));
+					    	parameters.put("orderid",orderno);
+					    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("nickname")+orderno, SysConfig.getProperty("jyskey"));
+					    	parameters.put("key", sign);
+					    	HashMap<String,Object>map=new HashMap<>();
+					    	map.put("data", parameters);
+				            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
+				            JSONObject obj=JSONObject.fromObject(result);
+				            if(obj.getString("code").equals("1000")) {
+				            	//提现成功；
+				            	tx.setState(1);
+				            	tx.setUpdatedate(new Date());
+						    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+						    	sub_map.put("state", 0);
+				            }else {
+				            	//提现失败开始返回
+				            	tx.setState(2);
+				            	tx.setUpdatedate(new Date());
+						    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
+						    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
+						    	sub_map.put("state", 3);
+				            }
+				    	}else {
+				    		//余额不足
+				    		sub_map.put("state", 2);
+				    	} 
+					}else{
+						//矿机类型不匹配
+						sub_map.put("state", 4);
+					}
+				}else{
+					//没有矿机
+					sub_map.put("state", 5);
+				} 
+		    	
 	    	}
 	    	String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    			 
 	    }
 	    /**
-	     * 设置矿机产币类型
+	     * 设置个人矿机产币类型
 	     */
 	    public void  stkj(){
 	    	getLscode();
@@ -895,6 +910,28 @@ public class MinersAction extends GeneralAction<Miner> {
 					
 				}
 	    	}
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    }
+	    /**
+	     * 获取个人矿机产币类型
+	     */
+	    public void  getkjlx(){
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>(); 
+	    	sub_map.put("state", 1); 
+	    	HashMap<String, Object>whereMap=new HashMap<>();
+	    	whereMap.put("csutid",SysConfig.getProperty("custid"));
+	    	whereMap.put("fromUserid", fromUserid);
+	    	IntegralRecord ir = null;
+			DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+			if(db!=null){
+				ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class); 
+				sub_map.put("state", 0);
+				sub_map.put("data", ir.getKjlx()); 
+			}else{
+				sub_map.put("state", 2);
+		    } 
 	    	String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    }
