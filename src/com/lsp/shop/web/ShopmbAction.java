@@ -146,7 +146,6 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 				}
 			}
 			entity.set_id(_id);
-			
 			baseDao.insert(PubConstants.SHOP_SHOPMB, entity);
 			Struts2Utils.getRequest().setAttribute("parentid",
 					Struts2Utils.getParameter("parentid"));
