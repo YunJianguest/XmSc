@@ -472,7 +472,7 @@
 		    			    		         +'<div class="col-9"><span>共'+list[j].count+'件商品<i class="pl-10 zi-hong">单价:￥'+(list[j].pro.price*1).toFixed(2)+'元</i></span>'
 		    			    		         +'<span style="display:block;color:#e4393c;">快递费：'+list[j].pro.kdprice.toFixed(2)+'</span>'
 		    			    		         +'</div>';
-		    			    		         if(list[j].goodstate<4){
+		    			    		         if(list[j].goodstate<4&&list[j].goodstate>=2){
 		    				    		          if(list[j].state==1 || list[j].state==3){
 		    				    		        	  xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="find('+v[i]._id+','+list[j].sid+')" style="color:#e4393c">退货查看</div>';
 		    				    		          }else if(list[j].state==2 || list[j].state==4){
