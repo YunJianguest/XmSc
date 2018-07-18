@@ -1243,7 +1243,7 @@ public class ShopAction extends GeneralAction {
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		try {
 			getLscode();
-			//double  bl=wwzService.getPPBSprice();
+			double  bl=wwzService.getPPBSprice();
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			whereMap.put("fromUserid", fromUserid);
@@ -1260,7 +1260,7 @@ public class ShopAction extends GeneralAction {
 
 					if (db != null) {
 						dbObject.put("product", db);
-						//dbObject.put("ppb_price",BaseDecimal.division(db.get("price").toString(), bl+"",2));
+						dbObject.put("ppb_price",BaseDecimal.division(db.get("price").toString(), bl+"",2));
 					} else {
 						// 移除已经失效的订单
 						baseDao.delete(PubConstants.SUC_SHOPPINGCART, Long.parseLong(dbObject.get("_id").toString()));
@@ -1269,7 +1269,6 @@ public class ShopAction extends GeneralAction {
 				}
 				sub_map.put("state", 0);
 				sub_map.put("list", list);
-				System.out.println("list--->"+list);
 			} else {
 				sub_map.put("state", 1);
 			}
