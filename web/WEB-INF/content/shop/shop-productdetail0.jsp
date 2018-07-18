@@ -268,7 +268,7 @@
        	function applycollect(){
        		var submitData = {
                 "productId": ${entity._id},
-                "_id": ${entity._id},
+                "_id": ${entity._id}
             };
         	$.post('${ctx}/shop/productcollect!ajaxproductattenById.action?agid=${agid}&lscode=${lscode}', submitData,
 		        function (json) {
