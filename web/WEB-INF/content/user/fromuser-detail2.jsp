@@ -388,7 +388,7 @@
 	        </li>
 			
 			<li>
-				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=4">	
+				<a href="${ctx}/shop/shop!orderform.action?custid=${custid}&lscode=${lscode}&state=10">	
 					<div class="txt-c ${bean.color } maring-a border-radius5 img-wh30" style="position: relative;">
 		            	<i class="fa fa-commenting-o  line-height30" ></i>
 		            	 <span id="dpjcount"></span>
