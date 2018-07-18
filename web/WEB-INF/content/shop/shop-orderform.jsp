@@ -324,13 +324,15 @@
 			}
 			.bmadol-foot{
 				width: 100%;
-				display: flex;
+				/*display: flex;*/
 				height: 34px;
 				line-height: 34px;
+				overflow: hidden;
 			}
 			.bmadol-foot button{
-				width: 1%;
-				flex: 1;
+				width: 50%;
+				/*flex: 1;*/
+				float: left;
 				border: none;
 				color: #fff;				
 				border-radius:0 ;
