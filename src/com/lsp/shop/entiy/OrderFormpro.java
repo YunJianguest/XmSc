@@ -23,7 +23,7 @@ public class OrderFormpro extends ReflectionDBObject {
 	private Long pid;
 	private String fromUserid;
 
-	// 1订单 2 确认 3 发货 4收货 5退货 6 取消
+	// 1订单 2 确认 3 发货 4收货 5退货 6 取消7已支付等待平台确认
 	private int goodstate;
 
 	/**

@@ -271,7 +271,8 @@ function page_submit(num){
                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bean.insDate}" /></td>
                         <td>${bean.remark}</td>
                         <td><c:if test="${bean.goodstate=='1'||bean.goodstate=='0'}">已下单待支付</c:if>
-                        	<c:if test="${bean.goodstate=='2'}"><span style="color: red">已支付代发货</span></c:if>
+                        	<c:if test="${bean.goodstate=='2'}"><span style="color: red">确认收款等待发货</span></c:if>
+                        	<c:if test="${bean.goodstate=='7'}"><span style="color: red">已支付等待平台确认</span></c:if>
 							<c:if test="${bean.goodstate=='3'}"><span style="color:#F00">已发货</span></c:if>
 							<c:if test="${bean.goodstate=='4'}"><span style="color:#F00">订单已完成</span></c:if>
 							<c:if test="${bean.goodstate=='5'}"><span style="color:#F00">退货已完成</span></c:if>

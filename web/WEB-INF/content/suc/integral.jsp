@@ -41,7 +41,7 @@ function qrsk(id){
 		 if(json.state==0){
 			 alert("操作成功！");
 		 }else{
-			 alert("操作失败！") 
+			 alert("操作失败！")  
 		 }
 
 	}, "json")
