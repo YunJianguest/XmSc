@@ -339,6 +339,12 @@ public class ShopAction extends GeneralAction {
 		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		System.out.println(db);
 		Struts2Utils.getRequest().setAttribute("jf",db);
+		DBObject user = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if(user!=null){
+			if(user.get("isfull") != null){
+				Struts2Utils.getRequest().setAttribute("isfull", user.get("isfull").toString());
+			}
+		}
 		return "orderform";
 	}
 
@@ -1409,7 +1415,12 @@ public class ShopAction extends GeneralAction {
 		whereMap.put("lx", 1);
 		DBObject entity = baseDao.getMessage(PubConstants.SHOP_SHOPMB, whereMap);
 		Struts2Utils.getRequest().setAttribute("entity", entity);
-
+		DBObject user = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if(user!=null){
+			if(user.get("isfull") != null){
+				Struts2Utils.getRequest().setAttribute("isfull", user.get("isfull").toString());
+			}
+		}
 		return "shoppingcar";
 
 	}
@@ -1438,6 +1449,12 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("byprice", baseDao
 				.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(db.get("comid").toString())).get("byprice"));
 		Struts2Utils.getRequest().setAttribute("price", Struts2Utils.getParameter("price"));
+		DBObject user = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if(user!=null){
+			if(user.get("isfull") != null){
+				Struts2Utils.getRequest().setAttribute("isfull", user.get("isfull").toString());
+			}
+		}
 		return "orderconfirmation";
 
 	}

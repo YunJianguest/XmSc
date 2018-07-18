@@ -561,7 +561,6 @@ function del(id) {
 		    	
 		        	if(json.state==0){ 	
 		        	 alert("收货成功！");
-		        	 $('#resures').html('订单完成');
 		        	 $.post('${ctx}/shop/shop!getJf.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 		     		    	function (json) {
 		     		    	
@@ -569,10 +568,13 @@ function del(id) {
 		     		        	   if(json.data.prostore>=3000){
 		     		        		   $("#ppbjf").html("您有"+json.data.prostore+"盼盼币，可兑换一个矿机！");
 		     		        		  friedtx_show();
+		     		        	   }else{
+		     		        		   window.location.reload();
 		     		        	   }
 		     		        	  
 		     		        	}else{
 		     		        		alert('操作失败');
+		     		        		window.location.reload();
 		     		        	}
 		     		        },"json");
 		        	 //window.location.reload();
@@ -585,14 +587,20 @@ function del(id) {
 	  var txt="1GTapaVtP9JgS4GHtnxZbcoFTxdKXECuKu";
    	 if(val == 0){ 
    		 if(shoptype==3){
-   			 txt="";
+   			  txt="";
       		  txt="3AYHYGbC9uE5vBWfbQutyrEmyUd3cAwEdY";
+      		 $('#btbutton').show();
+    		 $('#ytfbutton').show();
       	  }else if(shoptype==5){
       		 txt="";
       		  txt="3MKiB7ZX16zgwAwbXxM4LugGXm3Co1fFJe";
+      		 $('#btbutton').show();
+    		 $('#ytfbutton').show();
       	  }else if(shoptype==4){
-      		 txt="";
+      		  txt="";
       		  txt="3CS2WvYFnrwL1G3e9jKg6o4guGh4boP4Pr";
+      		  $('#btbutton').hide();
+      		  $('#ytfbutton').hide();
       	  }
    		 $('#bt').css('display','block');
 				pay_bt();
@@ -608,12 +616,18 @@ function del(id) {
    		 if(shoptype==3){
    			  txt="";
       		  txt="0xefa03a9B480A9890C5541065A398F43f82F32832";
+      		  $('#btbutton').show();
+   		      $('#ytfbutton').show();
       	  }else if(shoptype==5){
-      		 txt="";
+      		  txt="";
       		  txt="0xc3d8d8fBDb34dA5930d95869b692D80B668d4b98";
+      		 $('#btbutton').show();
+   		     $('#ytfbutton').show();
       	  }else if(shoptype==4){
       		 txt="";
       		  txt="0x842B0afCaA759ea325A915D2a5e5963B618DcEf1";
+      		 $('#btbutton').hide();
+     		 $('#ytfbutton').hide();
       	  }
    		 $('#ytf').css('display','block');
 				pay_ytf();
@@ -626,7 +640,8 @@ function del(id) {
 				$("#ytfurl").text('0x842B0afCaA759ea325A915D2a5e5963B618DcEf1'); 
    	 }
    	 if(val == 2){
-   		ppbpay();
+   		 $('.bmodal').show();
+   		//ppbpay();
    	 }
       } 
   var shoptype;
@@ -846,8 +861,8 @@ function del(id) {
 			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="closes"></i>
 		</div>
 		<div class="mask-cont-cont">
-			<button onclick="popcode(0)" class="currency">比特币</button>
-			<button onclick="popcode(1)" class="currency">以太坊</button>
+			<button onclick="popcode(0)" class="currency" id="btbutton">比特币</button>
+			<button onclick="popcode(1)" class="currency" id="ytfbutton">以太坊</button>
 			<button onclick="popcode(2)" class="currency">盼盼币</button>
 		</div>
 	</div>
@@ -917,7 +932,7 @@ function del(id) {
 
 					</div>
 					<div class="bmadol-foot">
-						<button class="cancel">取消</button><button onclick="withdrawal()">确认</button>
+						<button class="cancel">取消</button><button onclick="ppbpay()">确认</button>
 					</div>
 				</div>
 			</div>
@@ -931,6 +946,9 @@ $("#friedtx").hide();
 function  friedtx_show(){
  $("#friedtx").show();
 }
+$('.cancel').click(function(){
+	$('.bmodal').hide();
+})
 
 //支付弹出
 //$('.bmodal').show();
@@ -965,7 +983,7 @@ $(window).scroll(function () {
 });
 
 $('.cancel').click(function(){
-	$('.modal').hide()
+	$('.modal').hide();
 })
  
 </script>

@@ -732,7 +732,7 @@ function delcar(id){
         <div class="col-4 zi-bai size14 weight500 txt-c pull-right">
             <!--<a href="javascript:moneypay()">-->
                 <div class=" hang40 ">
-                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay" onclick="moneypay()">确认付款</div>
+                    <div class="hang40 line-height40 btn-lu border-radius3" id="ConfirmPay" onclick="moneypay()">确认下单</div>
                 </div>
             <!--</a>-->
         </div>
@@ -838,7 +838,9 @@ $(window).scroll(function () {
 //		$('.modal').css('display','none')
 //	})
 //	
-	
+	$('.cancel').click(function(){
+	   $('.bmodal').hide();
+    })
 	
     
     function pay_bt(){

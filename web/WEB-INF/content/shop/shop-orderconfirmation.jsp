@@ -800,6 +800,10 @@
 //支付弹出
 //$('.bmodal').show();
 
+$('.cancel').click(function(){
+	$('.bmodal').hide();
+})
+
 
 function pay_bt(){
 	var totalPrice = $('#totalPrice').html();
