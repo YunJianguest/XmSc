@@ -697,31 +697,54 @@ function del(id) {
     
     
     function  ppbpay(){
-      	 var submitData = { 
-  				 orid:$('#oid').val(),
-  				 zflx:3,
-       	};
-  		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
-           		function(json) {
-  				//alert(json.state);
-   					if(json.state == 0){
-   						alert("支付成功！");
-   						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
-   					}else if(json.state == 1){
- 						alert("操作失败");
- 					}else if(json.state == 2){
- 						alert("PPB不足");
- 					}else if(json.state == 3){
- 						alert("库存不足");
- 					}else if(json.state == 4){
- 						alert("商品已下架");
- 					}else if(json.state == 5){
- 						alert("订单不存在");
- 					}else if(json.state == 6){
- 						alert("订单不存在");
- 					}
-           		},
-           		"json");
+    	if('${isfull}' != '1'){
+			alert('您还未补全信息，请先补全信息，即可支付订单');
+			window.location.href = "${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+	        return;
+	 }
+	 var submitData = { 
+			  password:$('#password').val()
+	    }; 
+		 $.post('${ctx}/integral/miners!wdpassword.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+		        	function (json) {
+		            	if(json.state==0){
+				        		
+					      	 var submitData1 = { 
+					  				 orid:$('#oid').val(),
+					  				 zflx:3,
+					       	};
+					  		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData1,
+					           		function(json) {
+					  				//alert(json.state);
+					   					if(json.state == 0){
+					   						alert("支付成功！");
+					   						window.location.href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}";
+					   					}else if(json.state == 1){
+					 						alert("操作失败");
+					 					}else if(json.state == 2){
+					 						alert("PPB不足");
+					 					}else if(json.state == 3){
+					 						alert("库存不足");
+					 					}else if(json.state == 4){
+					 						alert("商品已下架");
+					 					}else if(json.state == 5){
+					 						alert("订单不存在");
+					 					}else if(json.state == 6){
+					 						alert("订单不存在");
+					 					}
+					           		},
+					           		"json");
+		            	}else if(json.state==1){
+		            		alert('操作失败,请重新输入');
+		            	}else if(json.state==2){
+		            		alert('账号不存在');
+		            	}else  if(json.state==3){
+		            		alert('未设置密码，请先设置支付密码');
+		            		window.location.href="${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+		            	}else  if(json.state==4){
+		            		alert('密码错误');
+		            	}
+		},"json")
        }
   
 </script>

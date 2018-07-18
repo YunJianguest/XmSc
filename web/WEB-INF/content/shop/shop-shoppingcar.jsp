@@ -284,11 +284,11 @@
     		 $.post('${ctx}/integral/miners!wdpassword.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 			        	function (json) {
 			            	if(json.state==0){
-					        		 var submitData = { 
+					        		 var submitData1 = { 
 					        				 orid:$('#orderno').val(),
 					        				 zflx:3
 					             	}; 
-					        		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData,
+					        		 $.post('${ctx}/shop/shop!OrderPayJf.action?lscode=${lscode}', submitData1,
 					                 		function(json) {
 					    					//alert(json.state);
 					         					if(json.state == 0){
