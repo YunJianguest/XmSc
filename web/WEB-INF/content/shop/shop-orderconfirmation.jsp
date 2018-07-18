@@ -34,6 +34,7 @@
          var loading;
          var w= $(window).width()/2; 
          var zflx=0;
+         var isxd=true;
           function  loading(){
         var opts = {
 		lines: 13, // The number of lines to draw
@@ -115,8 +116,14 @@
         	   alert('请填写部门编号');
         	   return;
            } */
+           if(!isxd){
+        	   alert("正在下单，请等待....");
+        	   return;
+           }
+           isxd=false;
             var address='${address.province}'+"-"+'${address.city}'+"-"+'${address.county}'+" "+'${address.address}';
-        	var submitData = { 
+            
+            var submitData = { 
         			lx:0,
         			no:'0',
         			name:'${address.name}',
@@ -173,7 +180,8 @@
         		},
         		"json") */
         		$.post('${ctx}/shop/shop!COrderFromCar.action?custid=${custid}&agid=${agid}&lscode=${lscode}&isgwc=1', submitData,
-                		function(json) { 
+                		function(json) {
+        			      isxd=true;
                 		     //loading.hide();
                 		 	if (json.state == 0) {
                 		 		alert("下单成功！"); 

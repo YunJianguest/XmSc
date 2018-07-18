@@ -4466,7 +4466,7 @@ public class ShopAction extends GeneralAction {
 			}
 		}
 		entity.setMoney(Double.parseDouble(money));
-		entity.setKdprice(Double.parseDouble(kd_money));
+		entity.setKdprice(Double.parseDouble(BaseDecimal.division(kd_money,wwzService.getPPBSprice()+"", 20)));
 		
 				
 		entity.setEth_money(Double.parseDouble(BaseDecimal.division(zfmoney,ethp+"", 20)));	
@@ -4507,6 +4507,7 @@ public class ShopAction extends GeneralAction {
 				whereMap.put("orderid", oid);
 				List<DBObject> list = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, whereMap, null);
 				String  zfmoney="0";
+				String  kdprice="0";
 				for (DBObject dbObject : list) {
 					OrderFormpro orderFormpro = (OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
 					DBObject pro = baseDao.getMessage(PubConstants.DATA_PRODUCT,
@@ -4517,6 +4518,7 @@ public class ShopAction extends GeneralAction {
 						ProductInfo obj = (ProductInfo) UniObject.DBObjectToObject(pro, ProductInfo.class);
 						zfmoney=BaseDecimal.add(zfmoney, BaseDecimal.add(BaseDecimal.multiplication(obj.getPrice()+"",orderFormpro.getCount()+""), obj.getKdprice()+""));
 						qylx=obj.getGoodstype();
+						kdprice=BaseDecimal.add(kdprice, obj.getKdprice()+"");
 						//obj.setNum(obj.getNum() - obj.getGmnum() - orderFormpro.getCount());
 						
 						if (obj.getNum() - obj.getGmnum() - orderFormpro.getCount() <=0) {
@@ -4537,8 +4539,8 @@ public class ShopAction extends GeneralAction {
 				
 				// 开始支付 
 				if(StringUtils.isNotEmpty(zflx)){
-					if(zflx.equals("3")){
-						zfmoney=entity.getPpb_money()+"";
+					if(zflx.equals("3")){ 
+						zfmoney=BaseDecimal.add(entity.getPpb_money()+"",BaseDecimal.division(kdprice, wwzService.getPPBSprice()+"", 20));
 					}
 				}
 				if (wwzService.deljfoid(zfmoney, fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0,oid)) {

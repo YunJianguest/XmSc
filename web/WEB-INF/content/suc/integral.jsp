@@ -171,7 +171,7 @@ function exp() {
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
-                      	<td>${bean.oid}<a href="javascript:qrsk('${bean.oid}')"><c:if test="${bean.type == 'shop_jfsr'}"><span style="color: red;">确认收款</span></c:if></a></td>
+                      	<td>${bean.oid}<c:if test="${not empty bean.order}"><c:if test="${bean.order.state==7}"><a href="javascript:qrsk('${bean.oid}')"><c:if test="${bean.type == 'shop_jfsr'}"><span style="color: red;">确认收款</span></c:if></a></c:if><c:if test="${bean.order.state==2}"><c:if test="${bean.type == 'shop_jfsr'}"><span style="color:green;">已收款</span></c:if></c:if></c:if></td>
                       
                       </tr>
                       </c:forEach>

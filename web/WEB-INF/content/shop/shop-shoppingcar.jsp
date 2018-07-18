@@ -32,6 +32,7 @@
         var kd=0;
         var total=0;
         var loading;
+        var isxd=true;
         
            function  loading(){
         var opts = {
@@ -178,8 +179,14 @@
         			}
         		},
         		"json") */
+        	if(!isxd){
+         	   alert("正在下单，请等待....");
+         	   return;
+            }
+            isxd=false;
         	$.post('${ctx}/shop/shop!COrderFromCar.action?agid=${agid}&lscode=${lscode}&isgwc=0', submitData,
             		function(json) { 
+        		isxd=true;
             		     loading.hide();
             		 	if (json.state == 0) {
             				alert("下单成功！请尽快付款！！！");
