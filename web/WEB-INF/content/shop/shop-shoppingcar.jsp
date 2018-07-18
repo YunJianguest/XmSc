@@ -379,7 +379,11 @@ function ajaxjz(){//加载
 	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  } 
 	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
-	    		  +'</div></div></div>';
+	    		  +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec()">'
+	    		  +'<i class="fa fa-minus fa-1x line-height33"></i></div><div class="pull-left overflow-hidden img-wh30">'
+                  +'<input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong" id="quantity" name="" type="text" onchange="keyup()" value="1"/>'
+                  +'</div><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd()"><i class="fa fa-plus fa-1x line-height33"></i>'
+	    		  +'</div></div></div></div></div>';
 	    		   }
 	    	     
 	    		   	
@@ -397,6 +401,92 @@ function ajaxjz(){//加载
 	},"json")
 	
 }
+
+//加减
+	 var gmcs=-1;
+   if('${gmcs}'!=''){
+    gmcs='${gmcs}';
+   }
+      $(function () {
+            $("#a").Spinner({value: 1, min: 1, len: 3, max: 99});
+            $("#b").Spinner({value: 1, min: 1, len: 3, max: 99});
+        }); 
+        /*或者不用jquery*/
+        /*商品数量框输入*/
+        function keyup() {
+            var quantity = document.getElementById("quantity").value;
+            if (isNaN(quantity)) {
+                alert("请输入数字！");
+                document.getElementById("quantity").value =1;
+                return;
+            } 
+            if(quantity>gmcs&&gmcs>0){
+                alert("商品数量不能大于"+gmcs);
+                document.getElementById("quantity").value =gmcs;
+                return;
+            }
+            if (quantity>99) {
+                document.getElementById("quantity").value =99;
+                alert("商品数量不能大于99");
+            }
+            
+            if (quantity<1) {
+                document.getElementById("quantity").value =1;
+                alert("商品数量不能小于1");
+            }
+        } 
+        /*商品数量+1*/
+        function numAdd() {
+            var quantity = document.getElementById("quantity").value;
+            var num_add = parseInt(quantity) + 1;
+            var pp = document.getElementById("price").value;
+            if (quantity == "") {
+                num_add = 1;
+            }
+            if(price>0){
+            pp=price;
+            } 
+            if(num_add>gmcs&&gmcs>0){
+                alert("商品数量不能大于"+gmcs);
+                document.getElementById("quantity").value =gmcs;
+                 
+                return;
+            }
+            if (num_add >99) {
+                document.getElementById("quantity").value = num_add - 1;
+                alert("商品数量不能大于99");
+            } else {
+                document.getElementById("quantity").value = num_add; 
+                var Num = pp * num_add; 
+                $("#totalPrice").html("Y"+Num.toFixed(2)+"元"); 
+                
+                var ppb='${ppb_price}';  
+                $(".virtualcoin").html("PPB:"+ppb*num_add);
+            }
+            
+        }
+        /*商品数量-1*/
+        function numDec() {
+            var quantity = document.getElementById("quantity").value;
+            var pp = document.getElementById("price").value;
+            if(price){
+            pp=price;
+            }
+            var num_dec = parseInt(quantity) - 1;
+            if (num_dec>0) {
+                document.getElementById("quantity").value = num_dec; 
+                var Num = pp * num_dec;
+              
+                $("#totalPrice").html("Y"+Num.toFixed(2)+"元"); 
+                
+                var ppb='${ppb_price}'; 
+                $(".virtualcoin").html("PPB:"+ppb*num_dec);
+            }else{
+              document.getElementById("quantity").value = num_dec+ 1;
+              alert("商品数量不能小于1");
+            }
+        }
+//
 function delcar(id){
   	var submitData = {
 			id:id 
