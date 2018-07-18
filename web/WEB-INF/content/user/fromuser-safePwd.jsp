@@ -240,10 +240,15 @@
 	        			<input type="hidden" id="up_picture_reverse"/>
 					</p>
 				</div>
-
+				<!-- 提示信息 -->
+			<div class="" style="width: 100%;line-height: 20px;padding: 0 10px;font-size: 12px;">
+				提示：请确保所填信息真实有效，如出现问题责任自负！
+			</div>
 			<div class="mui-row" style="margin-top: 15px;">
 				<button class="mui-btn mui-btn-block baseBtn" onclick="update_submit()">提交</button>
 			</div>
+			
+			
 		</div>
 		<script>
 		//提交
