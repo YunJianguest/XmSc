@@ -69,7 +69,7 @@
 				left: 0;
 				right: 0;
 				background: rgba(0, 0, 0, .6);
-				z-index: 100;
+				z-index: 1999;
 				display: none;
 			}
 			
@@ -79,7 +79,7 @@
 				background: #fff;
 				border-radius: 10px;
 				margin: 0 auto;
-				margin-top: 150px;
+				margin-top: 50px;
 			}
 			
 			.modal-cont-tit {

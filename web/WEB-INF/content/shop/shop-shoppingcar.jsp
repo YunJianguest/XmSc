@@ -269,11 +269,15 @@
 		 if(val == 2){
 			 zflx=3;
 			 $('.mask').css('display','none');
-			 $(".sps-input-pwd").show();
-			
+			 $(".bmodal").show();
 	     }
      }
 	 function zhifu(){
+		 if('${isfull}' != '1'){
+				alert('您还未补全信息，请先补全信息，即可支付订单');
+				window.location.href = "${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+		        return;
+ 	     }
     	 var submitData = { 
     			  password:$('#password').val()
     	    }; 
@@ -559,96 +563,105 @@ function delcar(id){
 				border: none;
 				border-bottom: 1px solid #e3e3e3;
 			}
-			* {
-				margin: 0;
-				padding: 0;
-				box-sizing: border-box;
-			}
-			
-			html {
+			.bmodal {
 				width: 100%;
 				height: 100%;
+				position: fixed;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				background: rgba(0, 0, 0, .6);
+				z-index: 1999;
+				display: none;
 			}
 			
-			body {
-				width: 100%;
-				height: 100%;
-				font-family: "微软雅黑";
-			}
-			
-			li {
-				list-style: none;
-			}
-			
-			a {
-				text-decoration: none;
-			}
-			.sps-pwd-word{
-				width: 30px;
-				height:30px;
-				text-align: center;
-				line-height: 20px;
-			}
-			.sps-input-pwd{
-				width:100%;
-				height:100%;
-				padding-top: 200px;
-				background: #f1eff1;
-				position:fixed;
-				left:0;
-				top:0;
-			}
-			.sps-pwd-body{
-				width: 240px;
-				height:auto;
-				overflow: hidden;
+			.bmodal-cont {
+				width: 80%;
+				height: 200px;
+				background: #fff;
 				border-radius: 10px;
 				margin: 0 auto;
-				padding: 5px 5px 10px;
-				background: #fff;
+				margin-top: 50px;
 			}
-			.sps-pwd-title{
-				width:100%;
-				height:auto;
-				overflow: hidden;
-				line-height: 30px;
-				text-align: center;
-				font-size: 14px;
-				color:#000;
-				
-				border-bottom:1px solid #eee;
-			}
-			.sps-pwd-title>span{
-				display: inline-block;
+			
+			.bmodal-cont-tit {
 				width: 100%;
-			}
-			.sps-pwd-title>span:last-of-type{
-				font-size: 18px;
-				font-weight: bold;
-			}
-			.sps-pwd-title>i>img{
-				width: 20px;
-				height:20px;
-				border-radius:100%;
-				float:left;
-				margin-top: 5px;
-			}
-			.sps-pwd-cont>table{
-				width: 100%;
+				height: 34px;
+				line-height: 34px;
 				text-align: center;
-				margin-top: 5px;
+				position: relative;
 			}
-			.sps-pwd-confirm{
-				width: 120px;
-				height:30px;
+			
+			.bmodal-cont-tit::after {
+				content: '';
+				width: 100%;
+				height: 1px;
+				background: #e3e3e3;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+			
+			.bmodal-cont-cont {
+				width: 100%;
+				height: 132px;
+				line-height: 132px;
+				position: relative;
+			}
+			
+			.sixpwd {
+				width: 80%;
+				margin: 0 auto;
+				border: 1px solid #000;
+				position: absolute;
+				top: 50%;
+				left: 10%;
+				height: 34px;
+				line-height: 34px;
+				margin-top: -17px;
+				border-radius: 5px;
+				display: flex;
+				box-sizing: border-box;
+				z-index: 10;
+			}
+			
+			.sixpwd input {
+				flex: 1;
+				width: 1%;
+				margin: 0;
+				height: 32px;
+				line-height: 32px;
+				position: relative;
 				border: none;
-				font-size:16px;
-				color:#fff;
-				font-weight: bold;
-				margin-left: 60px;
-				margin-top: 10px;
-				border-radius:5px;
-				background: #3AB2FF;
+				border-right: 1px solid #000;
+				border-radius: 0;
+			}
+			
+			.sixpwd input:last-child {
+				border: none;
+			}
+			.bmadol-foot{
+				width: 100%;
+				display: flex;
+				height: 34px;
+				line-height: 34px;
+			}
+			.bmadol-foot button{
+				width: 1%;
+				flex: 1;
+				border: none;
+				color: #fff;				
+				border-radius:0 ;
+			}
+			.bmadol-foot button:first-child{
+				border-bottom-left-radius: 5px;
+				background: #E4393C;
+			}
+			.bmadol-foot button:last-child{
+				
+				background: #007AFF;
+				border-bottom-right-radius: 5px;
 			}
     </style>
 </head>
@@ -784,27 +797,27 @@ function delcar(id){
 		<a href="${ctx}/shop/shop!orderform.action?agid=${agid}&lscode=${lscode}" class="gopayBtn">去付款</a>
 	</div>
 </div>
-<div class="sps-input-pwd hide" style="display: none">
-			<div class="sps-pwd-body">
-				<p class="sps-pwd-title" style="font-weight: bold;">请输入密码</p>
-				<div class="sps-pwd-cont">
-					<table>
-						<tr> 
-							<td><input id="password" type="password" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="16" />
-								<!-- <input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
-								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
-								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
-								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
-								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />  -->
-							</td>
-						</tr>
-					</table>
+<div class="bmodal">
+				<div class="bmodal-cont">
+					<div class="bmodal-cont-tit">
+						请输入支付密码
+					</div>
+					<div class="bmodal-cont-cont">
+						<div class="sixpwd">
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="16" />
+						</div>
+
+					</div>
+					<div class="bmadol-foot">
+						<button class="cancel">取消</button><button onclick="zhifu()">确认</button>
+					</div>
 				</div>
-				   <button class="sps-pwd-confirm" type="button" onclick="zhifu()">确认支付</button>
 			</div>
-		</div>
 </body>
 <script>
+//支付弹出
+//$('.bmodal').show();
+
 ajaxjz();
 //获取屏幕宽度
 	var w= $(window).width()/2; 

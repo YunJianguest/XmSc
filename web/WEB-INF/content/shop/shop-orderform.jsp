@@ -244,7 +244,7 @@
 				color: #fff;
 			}
 			
-			/* .modal {
+			.bmodal {
 				width: 100%;
 				height: 100%;
 				position: fixed;
@@ -253,20 +253,20 @@
 				left: 0;
 				right: 0;
 				background: rgba(0, 0, 0, .6);
-				z-index: 100;
+				z-index: 1999;
 				display: none;
 			}
-			 
-			.modal-cont {
+			
+			.bmodal-cont {
 				width: 80%;
 				height: 200px;
 				background: #fff;
 				border-radius: 10px;
 				margin: 0 auto;
-				margin-top: 150px;
+				margin-top: 50px;
 			}
 			
-			.modal-cont-tit {
+			.bmodal-cont-tit {
 				width: 100%;
 				height: 34px;
 				line-height: 34px;
@@ -274,7 +274,7 @@
 				position: relative;
 			}
 			
-			.modal-cont-tit::after {
+			.bmodal-cont-tit::after {
 				content: '';
 				width: 100%;
 				height: 1px;
@@ -284,7 +284,7 @@
 				left: 0;
 			}
 			
-			.modal-cont-cont {
+			.bmodal-cont-cont {
 				width: 100%;
 				height: 132px;
 				line-height: 132px;
@@ -322,28 +322,28 @@
 			.sixpwd input:last-child {
 				border: none;
 			}
-			.madol-foot{
+			.bmadol-foot{
 				width: 100%;
 				display: flex;
 				height: 34px;
 				line-height: 34px;
 			}
-			.madol-foot button{
+			.bmadol-foot button{
 				width: 1%;
 				flex: 1;
 				border: none;
 				color: #fff;				
 				border-radius:0 ;
 			}
-			.madol-foot button:first-child{
+			.bmadol-foot button:first-child{
 				border-bottom-left-radius: 5px;
 				background: #E4393C;
 			}
-			.madol-foot button:last-child{
+			.bmadol-foot button:last-child{
 				
 				background: #007AFF;
 				border-bottom-right-radius: 5px;
-			}*/
+			}
     </style>
     <script>
     
@@ -899,7 +899,28 @@ function del(id) {
 	</div>
 </div>
 
- 
+ <div class="bmodal">
+				<div class="bmodal-cont">
+					<div class="bmodal-cont-tit">
+						请输入支付密码
+					</div>
+					<div class="bmodal-cont-cont">
+						<div class="sixpwd">
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="16" />
+							<!-- <input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" />
+							<input type="password" name="" class="pwd" id="password" value="" maxlength="1" /> -->
+							<!-- <input type="password" name="" class="pwd" id="password" value="" maxlength="1" /> -->
+						</div>
+
+					</div>
+					<div class="bmadol-foot">
+						<button class="cancel">取消</button><button onclick="withdrawal()">确认</button>
+					</div>
+				</div>
+			</div>
 
 <script>
 function  friedtx_hide(){
@@ -910,6 +931,10 @@ $("#friedtx").hide();
 function  friedtx_show(){
  $("#friedtx").show();
 }
+
+//支付弹出
+//$('.bmodal').show();
+
  $("#closes").on('click',function(){
 		 console.log($('.masks').hide("slow"))
 			$('.masks').hide("slow")
