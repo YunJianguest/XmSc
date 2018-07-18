@@ -336,16 +336,16 @@
 		    display: block;
 		    font-size: 12px;
 		}
-		.detail_cmt .cmt_list {
+		.detail_cmt #cmt_list {
 		    font-size: 12px;
 		    color: #333;
 		    margin-bottom: -1px;
 		}
-		.detail_cmt .cmt_list li {
+		.detail_cmt #cmt_list li {
 		    position: relative;
 		    padding: 10px 5px;
 		    margin-bottom: 10px;
-		    background: #efefef;
+		    background: #fefefe;
 		    border-radius: 5px;
 		}
 		
@@ -504,7 +504,7 @@
 		.reply{
 			width: 100%;
 			height: auto;
-			line-height: 16px;
+			line-height: 24px;
 			padding: 0 30px 0 10px;
 			overflow: hidden;
 			position: relative;
