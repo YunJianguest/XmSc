@@ -818,7 +818,7 @@ function del(id) {
                 <div class=" width-10 border-radius5 zi-hui-tq overflow-hidden">
                     <font size="2">
                         <div class="weight500">您好:</div>
-                        <div class="weight500 line-height25">&nbsp&nbsp&nbsp尊敬的：<i class="zi-green">${user.nickname}</i><i class="zi-green" id="ppbjf">您有${jf.prostore}可兑换</i></div>
+                        <div class="weight500 line-height25">&nbsp&nbsp&nbsp尊敬的：<i class="zi-green">${user.nickname}</i><i class="zi-green" id="ppbjf">您已消费${jf.prostore}盼盼币可兑换一个矿机 </i></div>
                     </font>
                 </div>
 

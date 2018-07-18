@@ -148,6 +148,10 @@
 					<input id="name" type="text" value="${user.userName }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
 				</div>
 				<div class="mui-input-row">
+					<label>身份证号码</label>
+					<input id="idCard" type="text" value="${user.idCard }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row">
 					<label>电话</label>
 					<input id="tel" type="tel" value="${user.tel }" class="mui-input-clear" maxlength="11" placeholder="请输入电话">
 				</div>
@@ -159,7 +163,7 @@
 			</form>
 			
 			<div class="line-bottom overflow-hidden">
-                <div class="col-3 hang50 line-height50 weight500 zi-6 txt-c" style="font-size:10px;">地区信息</div>
+                <div class="col-3 hang50 line-height50 weight500 zi-6 txt-c" style="font-size:10px;">身份证地址</div>
                 
                 <div class="col-7" id='showCityPicker3'>
                     <div class="col-4">
@@ -277,10 +281,18 @@
 			
 			var province = $("#province").val();
 			if(province==""){
-				mui.alert('地区不能为空')
+				mui.alert('身份证地址不能为空')
 				return;
 			}
 			
+			var idCard = $('#idCard').val();
+			if(idCard==""){
+				mui.alert('身份证不能为空');
+				return;
+			}else if(idCard.length != 18){
+				mui.alert('请输入正确的身份证号码');
+				return;
+			}
 			$.ajax({
 				type:"post",
 				url:"${ctx}/user/fromuser!ajaxUserUpdate.action",
@@ -290,6 +302,7 @@
 					name:$('#name').val(),
 					tel:$('#tel').val(),
 					uskd:$('#uskd').val(),
+					idCard:$('#idCard').val(),
 					password:$('#onepassword').val(),
 					paypassword:$('#paypassword').val(),
 					province:$('#province').val(),

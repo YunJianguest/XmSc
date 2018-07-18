@@ -863,6 +863,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			String province =  Struts2Utils.getParameter("province");//省
 			String city =  Struts2Utils.getParameter("city");//市
 			String county =  Struts2Utils.getParameter("county");//区
+			String idCard =  Struts2Utils.getParameter("idCard");//区
 			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
 			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
 			DBObject db = basedao.getMessage(PubConstants.USER_INFO, fromUserid);
@@ -880,6 +881,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				user.setId_card_front(up_picture_front);
 				user.setId_card_reverse(up_picture_reverse);
 				user.setIsfull(1);//已补全
+				user.setId_card(idCard);
 				System.out.println("--2--?"+user.getIsfull());
 				basedao.insert(PubConstants.USER_INFO, user);
 				sub_Map.put("state", 0);//修改成功
