@@ -79,49 +79,47 @@
         var shoptype=-1;
         var not = 0;
         function check(v,id,price,type){
-        if($(v).find('i').css('display')=="none"){
-         $(v).find('i').show();
-        var quantity =$('#'+id+'_lb').find('.quantity').val(); 
-           var price =Number($('#'+id+'_lb').find('.price').html()); 
-         zj+=quantity*price; 
-         document.getElementById("totalPrice").innerHTML =zj.toFixed(2); 
-         
-         ids+=id+",";
-         prices+=price+",";
-         /* counts+=$("#"+id+"_lb").find(".quantity").attr('quantity')+","; */
-         counts+=$('#'+id+'_lb').find('.quantity').val();
-         remarks+=$("#"+id+"_lb").find(".title").html()+",";
-         kd=kd+parseFloat($("#"+id+"_lb").find(".kd").attr('kd'));
-         if(shoptype==-1){
-        	 shoptype=type;
-         }else if(shoptype!=type){
-        	 alert("请选择同一区的产品进行结算！");
-        	 not = 1;
-        	 shoptype=type;
-        	 return;
-         }else if(shoptype==type){
-        	 not = 0; 
-         }
-        }else{
-         $(v).find('i').hide();
-         /*  var quantity =$('#'+id+'_lb').find('quantity').attr('quantity');  */
-		var quantity = $('#'+id+'_lb').find('.quantity').val();
-         var price =Number($('#'+id+'_lb').find('.price').html());
-         zj-=quantity*price;
-         document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
-         ids=ids.replace(id+",","");
-         prices=prices.replace(price+",", "");
-         counts=counts.replace($('#'+id+'_lb').find('.quantity').val());
-         remarks=remarks.replace($("#"+id+"_lb").find(".title").html()+" ","");
-         kd=kd-parseFloat($("#"+id+"_lb").find(".kd").attr('kd')); 
-        }
-        total=zj;
-        if('${byprice}'<=0||totalPrice<'${byprice}'){ 
-          var to=zj+kd;
-          total=to;
-         document.getElementById("totalPrice").innerHTML =to.toFixed(2);
-         }    
-        }
+            if($(v).find('i').css('display')=="none"){
+             $(v).find('i').show();
+              var quantity =$('#'+id+'_lb').find('.count').attr('count'); 
+              var price =Number($('#'+id+'_lb').find('.price').html());
+              zj+=quantity*price;
+             document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
+             
+             ids+=id+",";
+             prices+=price+",";
+             counts+=$("#"+id+"_lb").find(".count").attr('count')+",";
+             remarks+=$("#"+id+"_lb").find(".title").html()+",";
+             kd=kd+parseFloat($("#"+id+"_lb").find(".kd").attr('kd'));
+             if(shoptype==-1){
+            	 shoptype=type;
+             }else if(shoptype!=type){
+            	 alert("请选择同一区的产品进行结算！");
+            	 not = 1;
+            	 shoptype=type;
+            	 return;
+             }else if(shoptype==type){
+            	 not = 0; 
+             }
+            }else{
+             $(v).find('i').hide();
+             var quantity =$('#'+id+'_lb').find('.count').attr('count');
+             var price =Number($('#'+id+'_lb').find('.price').html());
+             zj-=quantity*price;
+             document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
+             ids=ids.replace(id+",","");
+             prices=prices.replace(price+",", "");
+             counts=counts.replace($("#"+id+"_lb").find(".count").attr('count')+",", "");
+             remarks=remarks.replace($("#"+id+"_lb").find(".title").html()+" ","");
+             kd=kd-parseFloat($("#"+id+"_lb").find(".kd").attr('kd')); 
+            }
+            total=zj;
+            if('${byprice}'<=0||totalPrice<'${byprice}'){ 
+              var to=zj+kd;
+              total=to;
+             document.getElementById("totalPrice").innerHTML =to.toFixed(2)+'元  <i>快递:￥'+kd.toFixed(2)+'</i>';
+             }    
+            }
      function moneypay(){ 
     	 if(not == 1){
     		 alert("请选择同一区的产品进行结算");
@@ -375,16 +373,17 @@ function ajaxjz(){//加载
 	    		  +'<span class="zi-hui  kd" kd='+v[i].product.kdprice+'>快递:<span>'+v[i].product.kdprice.toFixed(2)+'</span>元</span>&nbsp; 规格：'+v[i].spec+'</div>'
 	    		  +'<div class="sl" style="line-height:20px;">';
 	    		  if(v[i].price==0){
-	    		  xszf+='<span class="zi-cheng">￥<span class="price  moneys">'+v[i].product.price.toFixed(2)+'</span>元';
+	    		  xszf+='<span class="zi-cheng">￥<span class="price  moneys">'+v[i].product.price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  }else{
-	    		  xszf+='<span class="zi-cheng">￥<span class="price moneys">'+v[i].price.toFixed(2)+'</span>元';
+	    		  xszf+='<span class="zi-cheng">￥<span class="price moneys">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  } 
-	    		  xszf+='</span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
-	    		  +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec(this,'+v[i]._id+')">'
+	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
+	    		  /* +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec(this,'+v[i]._id+')">'
 	    		  +'<i class="fa fa-minus fa-1x line-height33"></i></div><div class="pull-left overflow-hidden img-wh30">'
                   +'<input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong quantity"  name="" type="text" onchange="keyup()" value="'+v[i].count+'" disabled="disabled"/>'
                   +'</div><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd(this,'+v[i]._id+')"><i class="fa fa-plus fa-1x line-height33"></i>'
-	    		  +'</div></div></div></div></div>';
+	    		  +'</div></div> */
+	    		  +'</div></div></div>';
 	    		   }
 	    	     
 	    		   	
