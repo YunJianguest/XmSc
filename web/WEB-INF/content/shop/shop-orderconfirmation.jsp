@@ -515,22 +515,24 @@
 				text-decoration: none;
 			}
 			.sps-pwd-word{
-				width: 30px;
+				/*width: 30px;*/
 				height:30px;
 				text-align: center;
-				line-height: 20px;
+				line-height: 30px;
+				border:1px solid #ddd ;
 			}
 			.sps-input-pwd{
 				width:100%;
 				height:100%;
-				padding-top: 200px;
-				background: #f1eff1;
+				padding-top: 100px;
+				background: rgba(0,0,0,.3);
 				position:fixed;
 				left:0;
 				top:0;
+				z-index: 1000;
 			}
 			.sps-pwd-body{
-				width: 240px;
+				width: 80%;
 				height:auto;
 				overflow: hidden;
 				border-radius: 10px;
@@ -564,11 +566,11 @@
 				float:left;
 				margin-top: 5px;
 			}
-			.sps-pwd-cont>table{
+			/*.sps-pwd-cont>table{
 				width: 100%;
 				text-align: center;
 				margin-top: 5px;
-			}
+			}*/
 			.sps-pwd-confirm{
 				width: 120px;
 				height:30px;
@@ -576,10 +578,10 @@
 				font-size:16px;
 				color:#fff;
 				font-weight: bold;
-				margin-left: 60px;
+				margin: 0 auto;
 				margin-top: 10px;
 				border-radius:5px;
-				background: #3AB2FF;
+				background: #e4393c;
 			}
     </style>
 </head>
@@ -770,16 +772,17 @@
 				<p class="sps-pwd-title" style="font-weight: bold;">请输入密码</p>
 				<div class="sps-pwd-cont">
 					<table>
-						<tr> 
-							<td><input id="password" type="password" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="16" />
+						<!--<tr> 
+							<td>-->
+								<input id="password" type="password" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="16" />
 								<!-- <input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
 								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
 								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
 								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />
 								<input  type="tel" style="-webkit-text-security:disc" class="sps-pwd-word" value="" maxlength="1" />  -->
-							</td>
+							<!--</td>
 						</tr>
-					</table>
+					</table>-->
 				</div>
 				   <button class="sps-pwd-confirm" type="button" onclick="zhifu()">确认支付</button>
 			</div>
