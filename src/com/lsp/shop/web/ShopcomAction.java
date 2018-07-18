@@ -380,8 +380,8 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 							whereMap.clear();
 							whereMap.put("parentid", Long.parseLong(obj.get("_id").toString()));
 							DBObject objs = baseDao.getMessage(PubConstants.SHOP_SHOPCOMREPLY,whereMap);
-							System.out.println(objs);
-							System.out.println(objs.get("content"));
+							//System.out.println(objs);
+							//System.out.println(objs.get("content"));
 							if(objs!=null) {
 								if(objs.get("content")!=null) {
 									dbObject.put("yhreply",objs.get("content"));
@@ -396,7 +396,7 @@ public class ShopcomAction extends GeneralAction<ShopComments> {
 			sub_map.put("list",list);
 		}
 		String json = JSONArray.fromObject(sub_map).toString();
-		System.out.println(json);
+		//System.out.println(json);
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
