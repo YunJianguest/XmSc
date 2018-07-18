@@ -1155,6 +1155,7 @@ public class ShopAction extends GeneralAction {
 		HashMap<String, Object>whereMap = new HashMap<>();
 		try {
 			getLscode();
+			String id = Struts2Utils.getParameter("id");
 			String pid = Struts2Utils.getParameter("pid");
 			String spec = Struts2Utils.getParameter("spec");
 			String counts = Struts2Utils.getParameter("count");
@@ -1162,6 +1163,9 @@ public class ShopAction extends GeneralAction {
 			String type = Struts2Utils.getParameter("type");//add-增加   desc-减少
 			Shoppingcart shop = new Shoppingcart();
 			whereMap.put("fromUserid", fromUserid);
+			if(StringUtils.isNotEmpty(id)){
+				whereMap.put("_id", Long.parseLong(id));
+			}
 			if(StringUtils.isNotEmpty(pid)){
 				whereMap.put("pid", Long.parseLong(pid));
 			}
