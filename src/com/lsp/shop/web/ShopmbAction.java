@@ -135,9 +135,9 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 		try {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.SHOP_SHOPMB);
+				entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
 			}
 			entity.set_id(_id);
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
 			baseDao.insert(PubConstants.SHOP_SHOPMB, entity);
 			Struts2Utils.getRequest().setAttribute("parentid",
 					Struts2Utils.getParameter("parentid"));

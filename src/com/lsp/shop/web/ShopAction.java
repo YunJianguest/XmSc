@@ -4224,6 +4224,12 @@ public class ShopAction extends GeneralAction {
 	public void COrderFromCar() throws Exception {
 		SortedMap<Object, Object> params = new TreeMap<Object, Object>();
 		getLscode();
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if(db!=null){
+			if(db.get("isfull") != null){
+				Struts2Utils.getRequest().setAttribute("isfull", db.get("isfull").toString());
+			}
+		}
 		DBObject wx = wwzService.getWxUser(fromUserid);
 		if (wx.get("_id").equals("notlogin")) {
 			params.put("state", 3);

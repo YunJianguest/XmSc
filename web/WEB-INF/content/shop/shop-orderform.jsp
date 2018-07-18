@@ -439,7 +439,7 @@
 		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" style="float: right;margin-right: 5px;" >已付款待确认</div>'
 		    			    		       }
 		    			    		       if(list[0].goodstate == 3){
-		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')" style="color:#e4393c;float: right;margin-right: 5px;">确认收货</div>'
+		    			    		    	   xszf+='<div class="col-3 txt-r zi-bbbbbb" onclick="resure('+v[i]._id+','+comlist[k].shop._id+')" style="color:#e4393c;float: right;margin-right: 5px;" id="resures">确认收货</div>'
 		    			    		       }
 		    			    		       
 		    			    		       if(list[0].goodstate == 4){
@@ -561,6 +561,7 @@ function del(id) {
 		    	
 		        	if(json.state==0){ 	
 		        	 alert("收货成功！");
+		        	 $('#resures').html('订单完成');
 		        	 $.post('${ctx}/shop/shop!getJf.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 		     		    	function (json) {
 		     		    	
