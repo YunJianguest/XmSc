@@ -1933,6 +1933,9 @@ public class WwzService {
 						System.out.println("llz");
 						ir.setLlkyvalue(ir.getLlkyvalue() + value); 
 					}
+					System.out.println(ir.getLlkyvalue());
+					System.out.println("---"+ir.getCustid());
+					System.out.println("---"+ir.getFromUserid());
 					ir.setLlzvalue(ir.getLlzvalue() + value);
 					baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 					return true;

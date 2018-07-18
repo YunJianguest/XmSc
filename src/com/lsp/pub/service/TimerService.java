@@ -74,22 +74,20 @@ public class TimerService {
 		BasicDBObject dateCondition = new BasicDBObject();
 		dateCondition.append("$gte",new Date());
 		whereMap.put("enddate", dateCondition);
-		//whereMap.put("state", 0);
+		whereMap.put("state", 0);
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
+		System.out.println(list);
 		for (DBObject dbObject : list) {
 			if(dbObject.get("money")!=null){
 				String price = "0";
-                if(dbObject.get("money").toString().equals("4500000.0")||dbObject.get("money").toString().equals("1500000.0")||dbObject.get("money").toString().equals("450000.0")||dbObject.get("money").toString().equals("90000.0")||dbObject.get("money").toString().equals("0.0")){
-                	price = BaseDecimal.division(dbObject.get("money").toString(),"365",6);
-					price = BaseDecimal.division(price,"3",6);
-                }else{
-                	if(dbObject.get("money")!=null&&dbObject.get("time")!=null&&Integer.parseInt(dbObject.get("time").toString())>0) { 
-                		price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
-                	}else {
-                		price = BaseDecimal.division("0","1",6);
-                	}
-                	
-                }
+				System.out.println("money"+dbObject.get("money"));
+				System.out.println("time"+dbObject.get("time"));
+				
+				if(dbObject.get("money")!=null&&dbObject.get("time")!=null&&Integer.parseInt(dbObject.get("time").toString())>0) { 
+            		price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
+            	}else {
+            		price = BaseDecimal.division("0","1",6);
+            	}
 				double kjlx=0;
 				HashMap<String, Object>where1Map=new HashMap<>();
 	    		whereMap.put("custid",SysConfig.getProperty("custid"));
@@ -101,6 +99,7 @@ public class TimerService {
 					kjlx=ir.getKjlx(); 
 					
 				}
+				System.out.println("--------------///////////--"+price);
 				if(kjlx>0){
 					if(kjlx==1){
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",20);
@@ -114,6 +113,7 @@ public class TimerService {
 					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
 							//挖矿到矿机账号
+							System.out.println("----------------"+price);
 							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
 							
 						}else{

@@ -295,8 +295,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				if(Integer.parseInt(agentLevel)==1) { 
 					wheresMap.put("province", province.trim());
 					wheresMap.put("agentLevel",1);
-					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
-					System.out.println(db);
+					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap); 
 					if(db!=null) {
 						//省代存在
 						sub_Map.put("state",2);
@@ -751,7 +750,7 @@ public class UserAction extends GeneralAction<UserInfo>
 		whereMap.put("number", number);
 		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
 		
-		System.out.println("user---->"+user.get("_id").toString());
+		System.out.println("user---->"+user);
 		
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
 		InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);

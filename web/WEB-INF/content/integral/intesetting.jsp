@@ -203,7 +203,7 @@
                             </div>
                         </div>
                          <div class="col-2 pl-10">
-                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">省级预返时间(年):</div>
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">省级预返时间(天):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.provinceTime}"
@@ -220,7 +220,7 @@
                             </div>
                         </div>
                         <div class="col-2 pl-10">
-                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">市级预返时间(年):</div>
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">市级预返时间(天):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.cityTime}"
@@ -237,7 +237,7 @@
                             </div>
                         </div>
                         <div class="col-2 pl-10">
-                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">县级预返时间(年):</div>
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">县级预返时间(天):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.countyTime}"
@@ -254,7 +254,7 @@
                             </div>
                         </div>
                         <div class="col-2 pl-10" id="app_secret">
-                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">部门预返时间(年):</div>
+                            <div class="size14 line-bottom weight500 pt-10 pb-10" style="padding-left: 2px;">部门预返时间(天):</div>
                             <div class="line-bottom line-right line-left1 hang40">
                                 <input class="width-10 size14 zi-hui hang30 pt-10 pl-10 pr-10 weight100" type="text"
                                        value="${entity.deptTime}"

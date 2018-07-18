@@ -42,6 +42,8 @@ import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.lsp.weixin.entity.WxUser;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import net.sf.json.JSONArray;
@@ -348,10 +350,65 @@ public class MinersAction extends GeneralAction<Miner> {
 	   * @return
 	   */
 	  public String ownperson(){
-		  getLscode();
-		  Struts2Utils.getRequest().setAttribute("custid", custid);
-		  Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		  getLscode(); 
+		  //积分 
+		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+			  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("kjvalue") );
+		  }
+		  //llb 
+		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+			  System.out.println(wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue"));
+			  Struts2Utils.getRequest().setAttribute("llb",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue") );
+		  }
 		  return "ownperson";
+	  }
+	  /***
+	   * PP币统计
+	   * @return
+	   */
+	  public String ppbtj(){
+		  getLscode(); 
+		  //积分 
+		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+			  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
+		  } 
+		  return "ppbtj";
+	  }
+	  /***
+	   * LL币统计
+	   * @return
+	   */
+	  public String llbtj(){
+		  getLscode(); 
+		  //积分 
+		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+			  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
+		  } 
+		  return "llbtj";
+	  }
+	  /***
+	   * 数字交易
+	   * @return
+	   */
+	  public String szjy(){
+		  getLscode(); 
+		  //积分 
+		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+			  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
+		  } 
+		  return "szjy";
+	  }
+	  /***
+	   * 矿机提现
+	   * @return
+	   */
+	  public String kjtx(){
+		  getLscode(); 
+		  //积分 
+		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+			  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
+		  } 
+		  return "kjtx";
 	  }
 	  
 	  /***
@@ -894,8 +951,8 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	sub_map.put("state", 1);
 	    	if(StringUtils.isNotEmpty(type)){
 	    		HashMap<String, Object>whereMap=new HashMap<>();
-	    		whereMap.put("csutid",SysConfig.getProperty("custid"));
-	    		whereMap.put("fromUserid", fromUserid);
+	    		whereMap.put("custid",SysConfig.getProperty("custid"));
+	    		whereMap.put("fromUserid", fromUserid); 
 	    		IntegralRecord ir = null;
 				DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 				if(db!=null){
@@ -906,8 +963,11 @@ public class MinersAction extends GeneralAction<Miner> {
 						sub_map.put("state", 0);
 					}else{
 						//重复设置
+						sub_map.put("state", 3);
 					}
 					
+				}else{
+					sub_map.put("state", 2);
 				}
 	    	}
 	    	String json = JSONArray.fromObject(sub_map).toString();
@@ -917,11 +977,11 @@ public class MinersAction extends GeneralAction<Miner> {
 	     * 获取个人矿机产币类型
 	     */
 	    public void  getkjlx(){
-	    	getLscode();
+	    	getLscode(); 
 	    	Map<String,Object>sub_map = new HashMap<>(); 
 	    	sub_map.put("state", 1); 
 	    	HashMap<String, Object>whereMap=new HashMap<>();
-	    	whereMap.put("csutid",SysConfig.getProperty("custid"));
+	    	whereMap.put("custid",SysConfig.getProperty("custid"));
 	    	whereMap.put("fromUserid", fromUserid);
 	    	IntegralRecord ir = null;
 			DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
@@ -930,10 +990,53 @@ public class MinersAction extends GeneralAction<Miner> {
 				sub_map.put("state", 0);
 				sub_map.put("data", ir.getKjlx()); 
 			}else{
+				ir=new IntegralRecord();
+				ir.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
+				ir.setCustid(SysConfig.getProperty("custid"));
+				ir.setFromUserid(fromUserid);
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				sub_map.put("state", 2);
 		    } 
 	    	String json = JSONArray.fromObject(sub_map).toString();
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    }
+	    /**
+		 * 获取矿机PPB
+		 * 
+		 * @return
+		 * @throws Exception
+		 */
+		public void ajaxweb() throws Exception {
+			getLscode();
+			Map<String, Object> sub_map = new HashMap<String, Object>();
+
+			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			HashMap<String, Object> sortMap = new HashMap<String, Object>();
+			sortMap.put("createdate", -1);
+			whereMap.put("fromUserid", fromUserid);
+			if (Struts2Utils.getParameter("fypage") != null) {
+				fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
+			}
+			BasicDBList dblist = new BasicDBList();
+			dblist.add(new BasicDBObject("type", "ps_account"));
+			dblist.add(new BasicDBObject("type", "ps_recovery"));
+			// or判断
+			whereMap.put("$or", dblist);
+			List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap);
+	        System.out.println("list--->"+comList.size());
+	        System.out.println("---->"+comList);
+			if (comList.size() > 0) {
+				sub_map.put("state", 0);
+			} else {
+				sub_map.put("state", 1);
+			}
+
+			sub_map.put("list", comList);
+			String json = JSONArray.fromObject(sub_map).toString();
+
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+
+		}
+
 	    
 }

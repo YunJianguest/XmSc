@@ -488,8 +488,15 @@
                         </div> 
                          <div class="col-sm-2">
                             <div class="form-group-20">
-                                <label class="control-label">区县:</label>
+                                <label class="control-label">市:</label>
                                 <input type="text" id="city" name="city"
+                                       class="form-control" placeholder="请输入"/>
+                       </div>
+                      </div> 
+                       <div class="col-sm-2">
+                            <div class="form-group-20">
+                                <label class="control-label">县:</label>
+                                <input type="text" id="county" name="county"
                                        class="form-control" placeholder="请输入"/>
                        </div>
                       </div>   

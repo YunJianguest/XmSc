@@ -274,52 +274,17 @@
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">0.00</i></span> 
                 </c:if>
                  
-            	<c:if test="${jf>0}">
+            	<c:if test="${jf>0||jf==0.0}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">${jf}</i></span> 
             	</c:if> 
-            	<c:if test="${jf==0}">
+            	<c:if test="${jf==null}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
                
             </div>
         </div>
     </div>
-
-    
-
-    <c:if test="${not empty isAgent}">
-    <div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
-     <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-20" onclick="window.location.href='${ctx}/shop/shop!agenttx.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
-        <div class="hang30 width-6 maring-a">
-            <div class="pull-left txt-c img-wh30 bj-cheng border-radius5 zi-bai"><i
-                    class="fa fa-dollar  line-height30"></i></div>
-            <div class="pull-left pl-10">
-                <font size="2">
-                    <div class="hang20 zi-hei">佣金管理</div>
-                </font>
-                <font size="1">
-                    <div class="hang20 zi-hui-wx">佣金:<fmt:formatNumber value='${agent.price}' pattern="0.0#"/></div>
-                </font>
-            </div>
-        </div>
-    </div>
-     
-    <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-20" onclick="window.location.href='${ctx}/shop/shop!agentweb.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
-        <div class="hang30 width-6 maring-a">
-            <div class="pull-left txt-c img-wh30 bj-lan1 border-radius5 zi-bai"><i
-                    class="fa fa-bar-chart  line-height30"></i></div>
-            <div class="pull-left pl-10">
-                <font size="2">
-                    <div class="hang20 zi-hei">佣金记录</div>
-                </font>
-                <font size="1">
-                    <div class="hang20 zi-hui-wx">佣金排行:0</div>
-                </font>
-            </div>
-        </div>
-    </div>
-    </c:if>
-   
+ 
     
       <!--<div class="clear hang10 bg-f5f5f9 line-bottom-dddddd"></div>
 				<div class="col-4 hang100 line-bottom-dddddd pt-20 line-right-dddddd" onclick="window.location.href='${ctx}/integral/miners!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}'">
@@ -404,19 +369,19 @@
     		</a>
     	</li>
 		<li class="my_cate_item">
-    		<a href="${ctx}/suc/integral!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+    		<a href="${ctx}/integral/miners!ppbtj.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
     			<span class="my_cate_item_logo  bg-cheng"><i class="fa fa-diamond"></i></span>
     			<p class="my_cate_item_name ">我的盼盼币收益</p>
     		</a>
     	</li>
     	<li class="my_cate_item">
-    		<a href="${ctx}${bean.url}?custid=${custid}&lscode=${lscode}">
+    		<a href="${ctx}/suc/integral!webll.action?custid=${custid}&lscode=${lscode}">
     			<span class="my_cate_item_logo bg-cheng"><i class="fa fa-diamond"></i></span>
     			<p class="my_cate_item_name ">我的乐乐币收益</p>
     		</a>
     	</li>
     	<li class="my_cate_item">
-    		<a href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
+    		<a href="${ctx}/integral/miners!szjy.action?custid=${custid}&agid=${agid}&lscode=${lscode}">
     			<span class="my_cate_item_logo bg-cheng"><i class="fa fa-diamond"></i></span>
     			<p class="my_cate_item_name ">数字交易</p>
     		</a>
@@ -446,24 +411,62 @@
 <div class="bmask">
 	<div class="bmask-cont">
 		<div class="bmask-cont-tit">
-			付款方式
-			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
+			请选择付产币方式
+			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" onclick="cllx()" id="close"></i>
 		</div>
-		<div class="bmask-cont-cont">
-			<button onclick="popcode(0)" class="currency" id="btbutton">比特币</button>
-			<button onclick="popcode(1)" class="currency" id="ytfbutton">以太坊</button>
-			<button onclick="popcode(2)" class="currency">盼盼币</button>
+		<div class="bmask-cont-tit">
+			只有选择产币方式后矿机才能正常产币
+		</div>
+		<div class="bmask-cont-cont"> 
+			<button onclick="popcode(1)" class="currency">盼盼币</button>
 		</div>
 	</div>
 </div>
 </main>
+
+
 <script>
-	$('#close').click(function(){
+function cllx(){
+	$(".bmask").hide(); 
+}
+function  popcode(v){
+	  var submitData = {
+			  type:v
+			};
+			$.post('${ctx}/integral/miners!stkj.action?custid=${custid}&lscode=${lscode}', submitData, function(json) {
+				  if(json.state==0){
+					  alert("设置成功！");
+					  window.location.href=window.location.href;
+				  }
+			}, "json");
+			  
+}
+
+function getcbLx(){
+	  var submitData = { 
+			};
+			$.post('${ctx}/integral/miners!getkjlx.action?custid=${custid}&lscode=${lscode}', submitData, function(json) {
+				if(json.state==0){
+					if(json.data==0){
+						$(".bmask").show();
+					}
+				}else if(json.state==2){
+					$(".bmask").show(); 
+				}else {
+					alert("获取产币类型失败！");
+				} 
+				
+				
+			}, "json");
+			  
+}
+getcbLx();
+$('#close').click(function(){
 		$('.mask').css('display','none')
-	})
-  $('.modal-cont-foot span').click(function(){
+})
+$('.modal-cont-foot span').click(function(){
  	$('.modal').css('display','none')
- })
+})
   wx.config({
     debug: false,
     appId: '${token.appid}', 
