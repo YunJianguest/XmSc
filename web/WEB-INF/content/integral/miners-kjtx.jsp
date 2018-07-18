@@ -188,7 +188,7 @@
 							    				price:$('#price').val(),
 							    				remark:$('#remark').val()
 							    	    }; 
-							    		 $.post('${ctx}/integral/miners!withdrawal.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData1,
+							    		 $.post('${ctx}/integral/miners!kjPPtx.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData1,
 										        	function (json) {
 										            	if(json.state==0){
 										            		alert('交易所申请成功，请等待审核');
