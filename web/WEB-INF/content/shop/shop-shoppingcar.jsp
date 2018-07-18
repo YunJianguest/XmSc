@@ -81,14 +81,15 @@
         function check(v,id,price,type){
         if($(v).find('i').css('display')=="none"){
          $(v).find('i').show();
-          var quantity =$('#'+id+'_lb').find('.count').attr('count'); 
+       	var quantity =$('#'+id+'_lb').find('.quantity').attr('quantity'); 
+//		var quantity = $('#quantity')
           var price =Number($('#'+id+'_lb').find('.price').html());
           zj+=quantity*price;
          document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
          
          ids+=id+",";
          prices+=price+",";
-         counts+=$("#"+id+"_lb").find(".count").attr('count')+",";
+         counts+=$("#"+id+"_lb").find(".quantity").attr('quantity')+",";
          remarks+=$("#"+id+"_lb").find(".title").html()+",";
          kd=kd+parseFloat($("#"+id+"_lb").find(".kd").attr('kd'));
          if(shoptype==-1){
@@ -103,13 +104,14 @@
          }
         }else{
          $(v).find('i').hide();
-         var quantity =$('#'+id+'_lb').find('.count').attr('count');
+         var quantity =$('#'+id+'_lb').find('.quantity').attr('quantity');
+//		var quantity = $('#quantity');
          var price =Number($('#'+id+'_lb').find('.price').html());
          zj-=quantity*price;
          document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
          ids=ids.replace(id+",","");
          prices=prices.replace(price+",", "");
-         counts=counts.replace($("#"+id+"_lb").find(".count").attr('count')+",", "");
+         counts=counts.replace($("#"+id+"_lb").find(".quantity").attr('quantity')+",", "");
          remarks=remarks.replace($("#"+id+"_lb").find(".title").html()+" ","");
          kd=kd-parseFloat($("#"+id+"_lb").find(".kd").attr('kd')); 
         }
