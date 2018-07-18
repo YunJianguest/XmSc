@@ -147,6 +147,65 @@
         .vipNumName{
         	color: #F02B2B;
         }
+    	.bmask{
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .1);
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				z-index: 1008;
+				display: none;
+			}
+			
+			.bmask-cont {
+				width: 100%;
+				height: auto;
+				background: #fff;
+				position: absolute;
+				bottom: 50px;
+				left: 0;
+				padding: 0 10px;
+				z-index: 101;
+			}
+			
+			.bmask-cont-tit {
+				width: 100%;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				position: relative;
+			}
+			
+			.bmask-cont-tit::after {
+				content: '';
+				width: 100%;
+				height: 0.5px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				background: #ddd;
+			}
+			
+			.bmask-cont-cont {
+				width: 100%;
+				height: auto;
+				padding-bottom: 10px;
+			}
+			
+			.bmask-cont-cont button {
+				width: 100%;
+				height: 34px;
+				line-height: 34px;
+				background: none;
+				border: 1px solid #000;
+				border-radius: 5px;
+				display: block;
+				margin-top: 10px;
+			}
+			
     </style>
      
 </head>
@@ -384,8 +443,24 @@
 		</div>
 	</div>
 </div>
+<div class="bmask">
+	<div class="bmask-cont">
+		<div class="bmask-cont-tit">
+			付款方式
+			<i class="fa fa-close pull-right" style="font-size: 16px;padding-right: 5px;padding-top: 5px;" id="close"></i>
+		</div>
+		<div class="bmask-cont-cont">
+			<button onclick="popcode(0)" class="currency" id="btbutton">比特币</button>
+			<button onclick="popcode(1)" class="currency" id="ytfbutton">以太坊</button>
+			<button onclick="popcode(2)" class="currency">盼盼币</button>
+		</div>
+	</div>
+</div>
 </main>
 <script>
+	$('#close').click(function(){
+		$('.mask').css('display','none')
+	})
   $('.modal-cont-foot span').click(function(){
  	$('.modal').css('display','none')
  })
