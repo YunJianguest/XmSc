@@ -4575,7 +4575,7 @@ public class ShopAction extends GeneralAction {
 				// 开始支付 
 				if(StringUtils.isNotEmpty(zflx)){
 					if(zflx.equals("3")){
-						zfmoney=entity.getPpb_money()+"";
+						zfmoney=BaseDecimal.add(entity.getPpb_money()+"",BaseDecimal.division(wwzService.getPPBSprice()+"", entity.getKdprice()+"",20));
 					}
 				}
 				if (wwzService.deljfoid(zfmoney, fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0,oid)) {
