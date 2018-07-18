@@ -136,8 +136,9 @@
                                     <th class="table-action">售后状态</th>
                                     <th class="table-action">售后原因</th>
                                     <th class="table-action">金额</th>
+                                    <th class="table-action">收付费</th>
                                     <th class="table-action">添加时间</th>
-                                    <th class="table-action">备注</th>
+                                   <!--  <th class="table-action">备注</th> -->
                                     <th class="table-action">操作</th>
                                 </tr>
                                 </thead>
@@ -159,10 +160,11 @@
                                         	<c:if test="${bean.state==2}">拒绝</c:if>
                                         	<c:if test="${bean.state==3}">取消</c:if>
                                         </td>
-                                        <td>${bean.resource}</td>
-                                        <td>${bean.price}</td>
-                                        <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
                                         <td>${bean.remark}</td>
+                                        <td>${bean.price}</td>
+                                        <td>${bean.charge}</td>
+                                        <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
+                                        <%-- <td>${bean.remark}</td> --%>
                                         <td class="table-action">
                                             <div class="btn-group1">
                                             <c:if test="${bean.state==0 }">

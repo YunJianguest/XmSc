@@ -346,8 +346,18 @@ public class ServiceAction extends GeneralAction<AfterService> {
 								if(dbObject2.get("goodstype").toString().equals("5")){//商品为会员区商品
 									order.setMembers_money(order.getMembers_money()-info.getPrice());
 								}
+								System.out.println("订单--退货手续费-1->"+order.getOther_money());
+								System.out.println("订单--退货手续费-2->"+info.getCharge());
+								
 								//订单退货手续费
-								order.setOther_money(order.getOther_money()+info.getCharge());
+								if(order.getOther_money() != null ){
+									order.setOther_money(order.getOther_money()+info.getCharge());
+								}else{
+									order.setOther_money(info.getCharge());
+								}
+								System.out.println("订单--退货手续费-1->"+order.getOther_money());
+								System.out.println("订单--退货手续费-2->"+info.getCharge());
+								
 								System.out.println("订单--退货手续费-->"+order.getOther_money());
 								if(order.getPublic_money()==0&&order.getContri_money()==0&&order.getMembers_money()==0){
 									order.setState(5);//退货完成

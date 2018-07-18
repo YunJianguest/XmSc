@@ -1152,27 +1152,51 @@ public class ShopAction extends GeneralAction {
 	 */
 	public void ajaxshopcarsave() {
 		Map<String, Object> sub_map = new HashMap<String, Object>();
+		HashMap<String, Object>whereMap = new HashMap<>();
 		try {
 			getLscode();
 			String pid = Struts2Utils.getParameter("pid");
 			String spec = Struts2Utils.getParameter("spec");
 			String counts = Struts2Utils.getParameter("count");
 			String price = Struts2Utils.getParameter("price");
+			String type = Struts2Utils.getParameter("type");//add-增加   desc-减少
 			Shoppingcart shop = new Shoppingcart();
-			shop.set_id(mongoSequence.currval(PubConstants.SUC_SHOPPINGCART));
-			shop.setCount(1);
-			shop.setFromUserid(fromUserid);
-			shop.setCreatedate(new Date());
-			shop.setCustid(custid);
-			shop.setPid(Long.parseLong(pid));
-			shop.setSpec(spec);
-			shop.setCount(Integer.parseInt(counts));
-			shop.setState(0);
-			if (StringUtils.isNotEmpty(price)) {
-				shop.setPrice(Double.parseDouble(price));
+			whereMap.put("fromUserid", fromUserid);
+			if(StringUtils.isNotEmpty(pid)){
+				whereMap.put("pid", Long.parseLong(pid));
+			}
+			if(StringUtils.isNotEmpty(spec)){
+				whereMap.put("spec", spec);
+			}
+			
+			DBObject dbObject = baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, whereMap);
+			if(dbObject != null){
+				Shoppingcart cart = (Shoppingcart) UniObject.DBObjectToObject(dbObject, Shoppingcart.class);
+				if(StringUtils.isNotEmpty(type)){
+					if(type.equals("add")){
+						cart.setCount(cart.getCount()+1);
+					}else{
+						cart.setCount(cart.getCount()-1);
+					}
+				}
+				System.out.println("cart--111-->"+cart.getCount());
+			}else{
+				shop.set_id(mongoSequence.currval(PubConstants.SUC_SHOPPINGCART));
+				shop.setCount(1);
+				shop.setFromUserid(fromUserid);
+				shop.setCreatedate(new Date());
+				shop.setCustid(custid);
+				shop.setPid(Long.parseLong(pid));
+				shop.setSpec(spec);
+				shop.setCount(Integer.parseInt(counts));
+				shop.setState(0);
+				if (StringUtils.isNotEmpty(price)) {
+					shop.setPrice(Double.parseDouble(price));
+				}
 			}
 			baseDao.insert(PubConstants.SUC_SHOPPINGCART, shop);
-			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			//HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			whereMap.clear();
 			whereMap.put("fromUserid", fromUserid);
 			whereMap.put("custid", custid);
 			Long count = baseDao.getCount(PubConstants.SUC_SHOPPINGCART, whereMap);
@@ -4373,7 +4397,7 @@ public class ShopAction extends GeneralAction {
 					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),
 							backMap);
 					
-					baseDao.delete(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
+				   baseDao.delete(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
 				}
 
 				/*if (pro.get("gmcs") != null && Integer.parseInt(pro.get("gmcs").toString()) > 0) {
