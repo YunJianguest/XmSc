@@ -331,6 +331,7 @@
 			}
 			.bmadol-foot button{
 				width: 50%;
+				height: 100%;
 				/*flex: 1;*/
 				float: left;
 				border: none;
