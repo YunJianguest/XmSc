@@ -188,7 +188,7 @@
 				$('#qrcode').qrcode({ 
 					  width : w,
 			          height : w,
-			          text	: '${ctxurl}/shop/shop!index.action?'
+			          text	: '${ctxurl}/shop/shop!index.action?agid=${user.no}'
 				     });
 			});
 			

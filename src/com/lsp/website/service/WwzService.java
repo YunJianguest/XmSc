@@ -403,6 +403,9 @@ public class WwzService {
 		whereMap.put("_id", fromUserid);
 		HashMap<String, Object>backMap=new HashMap<>();
 		backMap.put("no", 1);
+		backMap.put("reno", 1);
+		backMap.put("number", 1);
+		backMap.put("renumber", 1);
 		backMap.put("nickname", 1);
 		backMap.put("headimgurl", 1); 
 		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, whereMap,backMap);
