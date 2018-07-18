@@ -4833,5 +4833,17 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
 	}
+	
+	public void   changedf() {
+		String custid = Struts2Utils.getParameter("custid");
+		String shopid = Struts2Utils.getParameter("shopid");
+		DBObject db = baseDao.getMessage(PubConstants.SHOP_SHOPMB, Long.parseLong(shopid));
+		
+		if(db!=null) {
+			ShopMb info = (ShopMb) UniObject.DBObjectToObject(db, ShopMb.class);
+			info.setCustid(custid);
+			baseDao.insert(PubConstants.SHOP_SHOPMB, info);
+		}	
+	}
 
 }
