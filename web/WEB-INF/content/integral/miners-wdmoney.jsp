@@ -20,14 +20,19 @@
 			}
 			
 			.mui-input-row label {
-				width: 20%;
+				width: 40%;
 				font-size: 14px;
+				text-align: justify;
 			}
-			
+			.mui-input-row label::after{
+				display: inline-block ; 
+				content: ''; 
+				padding-left: 100%; 
+			}
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 80%;
+				width: 60%;
 			}
 			
 			.mui-input-row::after {

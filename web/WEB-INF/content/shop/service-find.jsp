@@ -86,8 +86,8 @@
 		    <div class="mui-row">
 		    	<div class="tip-msg">
 		    	    <c:if test="${service.state == 0}">
-		    			<p class="tip-txt">待您反馈</p>
-		    		    <p class="mui-ellipsis">服务受理中</p>
+		    			<p class="tip-txt"></p>
+		    		    <p class="mui-ellipsis">商家正在受理中！</p>
 		    		</c:if>
 		    		<c:if test="${service.state == 1||service.state == 2}">
 		    			<p class="tip-txt"></p>

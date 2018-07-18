@@ -474,7 +474,7 @@
                                     <option value="1">省</option>
                                     <option value="2">市</option>
                                     <option value="3">县</option>
-                                    <option value="4">部门</option>
+                                    <option value="4">报单中心</option>
                                 </select>
                                 <label class="error" for="agentLevel"></label>
                             </div>
