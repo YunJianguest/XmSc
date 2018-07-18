@@ -440,7 +440,7 @@ function ajaxjz(){//加载
         } 
         /*商品数量+1*/
         function numAdd() {
-           var quantity = $(this).prev().sibling('div').find('#quantity')
+           var quantity = $(this).prev().siblings('div').find('#quantity')
             var num_add = parseInt(quantity) + 1;
             var pp = document.getElementById("price").value;
             if (quantity == "") {
@@ -461,7 +461,7 @@ function ajaxjz(){//加载
             } else {
                 document.getElementById("quantity").value = num_add; 
                 var Num = pp * num_add; 
-                $("#totalPrice").html("Y"+Num.toFixed(2)+"元"); 
+                $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}';  
                 $(".virtualcoin").html("PPB:"+ppb*num_add);
@@ -471,7 +471,7 @@ function ajaxjz(){//加载
         /*商品数量-1*/
         function numDec() {
 //          var quantity = document.getElementById("quantity").value;
-			var quantity = $(this).next().sibling('div').find('#quantity')
+			var quantity = $(this).next().siblings('div').find('#quantity')
             var pp = document.getElementById("price").value;
             if(price){
             pp=price;
@@ -481,7 +481,7 @@ function ajaxjz(){//加载
                 document.getElementById("quantity").value = num_dec; 
                 var Num = pp * num_dec;
               
-                $("#totalPrice").html("Y"+Num.toFixed(2)+"元"); 
+                $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}'; 
                 $(".virtualcoin").html("PPB:"+ppb*num_dec);
