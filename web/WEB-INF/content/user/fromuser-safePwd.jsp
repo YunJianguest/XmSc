@@ -165,7 +165,7 @@
 			<div class="line-bottom overflow-hidden">
                 <div class="col-3 hang50 line-height50 weight500 zi-6 txt-c" style="font-size:10px;">身份证地址</div>
                 
-                <div class="col-7" id='showCityPicker3'>
+                <div class="col-9" id='showCityPicker3'>
                     <div class="col-4">
                     	<c:if test="${user.province!=''&&user.province!=null }">
                     		<input class="hang50 width-9 maring-a line-height50 size14 zi-hui-wx" type="text"
@@ -204,9 +204,9 @@
                    	</c:if>
                     </div>
                 </div>
-                <div class="col-2 hang50 line-height50 txt-c"><i
+               <!-- <div class="col-2 hang50 line-height50 txt-c"><i
                         class="fa fa-1dx fa-map-marker zi-green line-height50"></i></div>
-            	</div>
+            	</div>-->
 			
 			
 			<!-- 身份证上传 -->
