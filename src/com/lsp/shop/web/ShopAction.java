@@ -1171,16 +1171,17 @@ public class ShopAction extends GeneralAction {
 			
 			DBObject dbObject = baseDao.getMessage(PubConstants.SUC_SHOPPINGCART, whereMap);
 			if(dbObject != null){
-				Shoppingcart cart = (Shoppingcart) UniObject.DBObjectToObject(dbObject, Shoppingcart.class);
+				shop = (Shoppingcart) UniObject.DBObjectToObject(dbObject, Shoppingcart.class);
 				if(StringUtils.isNotEmpty(type)){
 					if(type.equals("add")){
-						cart.setCount(cart.getCount()+1);
+						shop.setCount(shop.getCount()+1);
 					}else{
-						cart.setCount(cart.getCount()-1);
+						shop.setCount(shop.getCount()-1);
 					}
 				}
-				System.out.println("cart--111-->"+cart.getCount());
+				System.out.println("cart--111-->"+shop.getCount());
 			}else{
+				System.out.println("cart--111-->进入这个方法");
 				shop.set_id(mongoSequence.currval(PubConstants.SUC_SHOPPINGCART));
 				shop.setCount(1);
 				shop.setFromUserid(fromUserid);
@@ -1238,7 +1239,7 @@ public class ShopAction extends GeneralAction {
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		try {
 			getLscode();
-			double  bl=wwzService.getPPBSprice();
+			//double  bl=wwzService.getPPBSprice();
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			whereMap.put("fromUserid", fromUserid);
@@ -1255,7 +1256,7 @@ public class ShopAction extends GeneralAction {
 
 					if (db != null) {
 						dbObject.put("product", db);
-						dbObject.put("ppb_price",BaseDecimal.division(db.get("price").toString(), bl+"",2));
+						//dbObject.put("ppb_price",BaseDecimal.division(db.get("price").toString(), bl+"",2));
 					} else {
 						// 移除已经失效的订单
 						baseDao.delete(PubConstants.SUC_SHOPPINGCART, Long.parseLong(dbObject.get("_id").toString()));
@@ -1264,6 +1265,7 @@ public class ShopAction extends GeneralAction {
 				}
 				sub_map.put("state", 0);
 				sub_map.put("list", list);
+				System.out.println("list--->"+list);
 			} else {
 				sub_map.put("state", 1);
 			}
@@ -1272,6 +1274,7 @@ public class ShopAction extends GeneralAction {
 			sub_map.put("state", 1);
 			e.printStackTrace();
 		}
+		
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 

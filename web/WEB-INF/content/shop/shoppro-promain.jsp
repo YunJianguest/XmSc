@@ -210,7 +210,8 @@
                pid: pid,
                spec:v,
                count:1,
-               price:price
+               price:price,
+               type:"add"
            };
            jQuery.post('${ctx}/shop/shop!ajaxshopcarsave.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
                    function (json) {

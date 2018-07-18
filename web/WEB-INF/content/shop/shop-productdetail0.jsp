@@ -75,7 +75,8 @@
                 pid: '${entity._id}',
                 spec:v,
                 count:count,
-                price:price
+                price:price,
+                type:"add"
             };
             jQuery.post('${ctx}/shop/shop!ajaxshopcarsave.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
                     function (json) {
