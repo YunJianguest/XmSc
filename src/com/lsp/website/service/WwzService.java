@@ -392,6 +392,28 @@ public class WwzService {
 
 		return db;
 	}
+
+	/**
+	 * 绑定推荐关系
+	 * 
+	 * @param toUser
+	 * @param type
+	 */
+	public boolean  addRenumber(String fromUserid,String agid) {
+		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
+		if(db!=null){
+			UserInfo info=(UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
+			info.set_id(fromUserid);
+			if(info.getRenumber()==0&&StringUtils.isNotEmpty(agid)&&Long.parseLong(agid)>1000){
+				info.setRenumber(Long.parseLong(agid));
+				baseDao.insert(PubConstants.USER_INFO, info);
+				return true;
+			}
+			 
+		}
+
+		return false;
+	}
 	/**
 	 * 获取用户
 	 * 

@@ -4,8 +4,10 @@ import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
+import com.lsp.pub.util.UniObject;
 import com.lsp.pub.util.WeiXinUtil; 
 import com.lsp.suc.entity.Comunit;
+import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -370,6 +372,14 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 				if(friedcount!=null&&friedcount>0){
 					Struts2Utils.getRequest().setAttribute("friedcount",friedcount);
 				}
+				//验证推荐
+				String agid=Struts2Utils.getParameter("agid");
+				if(StringUtils.isNotEmpty(agid)){
+					//添加推荐人
+				   wwzService.addRenumber(fromUserid, agid);
+					
+				} 
+				
 				return lscode;	
 			}else{
 				return "";
