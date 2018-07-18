@@ -1764,9 +1764,14 @@ public class ShopAction extends GeneralAction {
 			}
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			HashMap<String, Object> sortMap = new HashMap<String, Object>();
-			String state=Struts2Utils.getParameter("state").toString();
+			String state=Struts2Utils.getParameter("state");
 			if(StringUtils.isNotEmpty(state)) {
-				whereMap.put("state", Integer.parseInt(state));
+				if(state.equals("10")) {
+					whereMap.put("state", 4);
+				}else {
+					whereMap.put("state", Integer.parseInt(state));
+				}
+				
 			}
 			sortMap.put("insDate", -1);
 			//whereMap.put("custid", custid);
@@ -1794,7 +1799,12 @@ public class ShopAction extends GeneralAction {
 						wheresMap.put("pro.comid",Long.parseLong(lscomis.get(i)+""));
 						if(state!=null&&state!=""){
 							whereMap.put("goodstate", Integer.parseInt(state));
+							
+							if(state.equals("10")) {
+								whereMap.put("states", 0);
+							}
 						}
+						
 						List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO, wheresMap, sortsMap);
 					 
 
