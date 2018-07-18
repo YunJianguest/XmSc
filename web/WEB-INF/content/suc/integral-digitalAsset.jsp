@@ -41,7 +41,7 @@
 			
 			<c:if test="${jf == null }">0.00</c:if>
 			<c:if test="${jf != null }">${jf.uservalue}</c:if>
-			</span><span><img src="${ctx}/xmMobile/img/jiaoyi.png" alt="" onclick="javascript:window.location.href='${ctx}/integral/miners!wdmoney.action'"/></span></p>
+			</span><span><img src="${ctx}/xmMobile/img/jiaoyi.png" alt="" onclick="javascript:window.location.href='${ctx}/integral/miners!wdmoney.action?custid=${custid}&agid=${agid}&lscode=${lscode}'"/></span></p>
 			<p><span><img src="${ctx}/xmMobile/img/left2.png" alt="" />LLB</span><span>
 			
 			<c:if test="${jf == null }">0.00</c:if>
