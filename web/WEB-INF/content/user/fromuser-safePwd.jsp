@@ -135,7 +135,7 @@
 					<input id="number" type="text" value="${user.number }" class="mui-input-clear" maxlength="16" placeholder="编号" readonly="readonly" >
 				</div>
 				<div class="mui-input-row">
-					<label>登录密码</label>
+					<label>登陆密码</label>
 					<input id="onepassword" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
 				
