@@ -863,7 +863,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			String province =  Struts2Utils.getParameter("province");//省
 			String city =  Struts2Utils.getParameter("city");//市
 			String county =  Struts2Utils.getParameter("county");//区
-			String idCard =  Struts2Utils.getParameter("idCard");//区
+			String idCard =  Struts2Utils.getParameter("idCard");//身份证号码
 			String up_picture_front =  Struts2Utils.getParameter("up_picture_front");//身份证正面照
 			String up_picture_reverse =  Struts2Utils.getParameter("up_picture_reverse");//身份证反面照
 			DBObject db = basedao.getMessage(PubConstants.USER_INFO, fromUserid);
