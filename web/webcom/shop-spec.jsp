@@ -82,7 +82,7 @@
             } else {
                 document.getElementById("quantity").value = num_add; 
                 var Num = pp * num_add; 
-                $("#totalPrice").html("Y"+Num.toFixed(2)+"元"); 
+                $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}';  
                 $(".virtualcoin").html("PPB:"+ppb*num_add);
@@ -101,7 +101,7 @@
                 document.getElementById("quantity").value = num_dec; 
                 var Num = pp * num_dec;
               
-                $("#totalPrice").html("Y"+Num.toFixed(2)+"元"); 
+                $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}'; 
                 $(".virtualcoin").html("PPB:"+ppb*num_dec);
