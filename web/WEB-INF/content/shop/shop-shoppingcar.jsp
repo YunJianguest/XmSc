@@ -381,10 +381,10 @@ function ajaxjz(){//加载
 	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  } 
 	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
-	    		  +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec()">'
+	    		  +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec(this)">'
 	    		  +'<i class="fa fa-minus fa-1x line-height33"></i></div><div class="pull-left overflow-hidden img-wh30">'
                   +'<input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong" id="quantity" name="" type="text" onchange="keyup()" value="1" disabled="disabled"/>'
-                  +'</div><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd()"><i class="fa fa-plus fa-1x line-height33"></i>'
+                  +'</div><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd(this)"><i class="fa fa-plus fa-1x line-height33"></i>'
 	    		  +'</div></div></div></div></div>';
 	    		   }
 	    	     
@@ -439,8 +439,8 @@ function ajaxjz(){//加载
             }
         } 
         /*商品数量+1*/
-        function numAdd() {
-           var quantity = $(this).prev().siblings('div').find('#quantity')
+        function numAdd(v) {
+           var quantity = $(v).prev().siblings('div').find('#quantity')
             var num_add = parseInt(quantity) + 1;
             var pp = document.getElementById("price").value;
             if (quantity == "") {
@@ -469,9 +469,10 @@ function ajaxjz(){//加载
             
         }
         /*商品数量-1*/
-        function numDec() {
+        function numDec(v) {
 //          var quantity = document.getElementById("quantity").value;
-			var quantity = $(this).next().siblings('div').find('#quantity')
+			console.log(v)
+			var quantity = $(v).next().siblings('div').find('#quantity')
             var pp = document.getElementById("price").value;
             if(price){
             pp=price;

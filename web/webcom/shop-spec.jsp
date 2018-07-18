@@ -141,7 +141,7 @@
                                     <input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong"
                                            id="quantity"
                                            name=""
-                                           type="text" onchange="keyup()" value="1"/>
+                                           type="text" onchange="keyup()" value="1" />
                                 </div> 
                                 <div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd()">
                                         <i class="fa fa-plus fa-1x line-height33"></i>
