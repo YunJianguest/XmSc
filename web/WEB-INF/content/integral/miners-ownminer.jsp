@@ -105,17 +105,32 @@
 		    		var v = json.list; 
 		    		 for(var i=0;i<v.length;i++){ 
 		    			 if(v[i].enddate!=null){
-		    				  xszf+='<li class="mui-table-view-cell mui-media miner-media">'
-									+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].kj.logo+'">'
-								    +'<div class="mui-media-body miner-txt">'
-								    +'<div class="miner-txt-cont mui-col-xs-9">'
-									+'<p class="mui-ellipsis"><span>数量:</span><span>'+v[i].kj.price+'</span></p>'
-								    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
-									+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
-									+'</div>'	
-									+'<div class="miner-buyBtn mui-col-xs-3">'
-									+'<button type="button" class="mui-btn miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
-									+'</div></div></li>';
+		    				 if(v[i].kj!=null){
+		    					  xszf+='<li class="mui-table-view-cell mui-media miner-media">'
+										+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].kj.logo+'">'
+									    +'<div class="mui-media-body miner-txt">'
+									    +'<div class="miner-txt-cont mui-col-xs-9">'
+										+'<p class="mui-ellipsis"><span>数量:</span><span>'+v[i].kj.price+'</span></p>'
+									    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
+										+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
+										+'</div>'	
+										+'<div class="miner-buyBtn mui-col-xs-3">'
+										+'<button type="button" class="mui-btn miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
+										+'</div></div></li>';
+		    				 }else{
+		    					  xszf+='<li class="mui-table-view-cell mui-media miner-media">'
+										+'<img class="mui-media-object mui-pull-left" src="${ctx}/img/timg.jpg">'
+									    +'<div class="mui-media-body miner-txt">'
+									    +'<div class="miner-txt-cont mui-col-xs-9">'
+										+'<p class="mui-ellipsis"><span>数量:</span><span>'+v[i].money+'</span></p>'
+									    +'<p class="mui-ellipsis"><span>开始时间:</span><span>'+Date.prototype.format(v[i].createdate)+'</span></p>'
+										+'<p class="mui-ellipsis"><span>结束时间:</span><span>'+Date.prototype.format(v[i].enddate)+'</span></p>'	
+										+'</div>'	
+										+'<div class="miner-buyBtn mui-col-xs-3">'
+										+'<button type="button" class="mui-btn miner-btnbuy" onclick="find('+v[i]._id+')">查看</button>'
+										+'</div></div></li>';
+		    				 }
+		    				
 		    			 }
 		    		  
 					 }

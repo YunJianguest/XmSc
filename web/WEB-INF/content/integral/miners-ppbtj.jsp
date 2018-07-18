@@ -44,11 +44,8 @@
 	    		  
 	    		     if(v[i].type=='ps_account'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">开通账户</font></div>';
-	    		    } 
-	    		      if(v[i].type=='tj_account'){
-	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">推荐平台代理</font></div>';
-	    		    } 
-	    		      if(v[i].type=='ps_recovery'){
+	    		    }  
+	    		     if(v[i].type=='ps_recovery'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">回本后待返</font></div>';
 	    		    }    
 	    		    xszf+='</div><div class="col-7 pt-15 pb-10"><font size="2">'+Date.prototype.format(v[i].createdate)+'</font></div>';

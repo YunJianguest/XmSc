@@ -182,7 +182,7 @@
 		<div class="mui-content" style="overflow: scroll;height: 100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
 			<div class="mui-row">
 				<div class="coin">
-					<span>盼盼币:</span>
+					<span>消费累计:</span>
 					<c:if test="${dbObject == null}">
 					<span>0</span>
 					</c:if>

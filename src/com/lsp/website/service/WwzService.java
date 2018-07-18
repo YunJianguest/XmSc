@@ -1248,7 +1248,7 @@ public class WwzService {
 						if (changeKjJf(custid, fromUserid, Double.parseDouble(price), 0)) {
 							if (updateTotalIntegral(1, price)) {
 								//判断是否已经返完
-								checkFh(fromUserid,custid,fid);
+								checkFh(fromUserid,custid,fid,type);
 								return true;
 							}
 						}
@@ -1256,7 +1256,7 @@ public class WwzService {
 						if (changeKjJf(custid, fromUserid, Double.parseDouble(price), 0)) {
 							if (updateTotalIntegral(1, price)) {
 								//判断是否已经返完
-								checkFh(fromUserid,custid,fid);
+								checkFh(fromUserid,custid,fid,type);
 								return true;
 							}
 						}
@@ -1316,10 +1316,11 @@ public class WwzService {
 	 * @param fid（预返账户）
 	 * @throws Exception 
 	 */
-	public void  checkFh(String fromid,String custid,String fid) throws Exception {
+	public void  checkFh(String fromid,String custid,String fid,String type) throws Exception {
 		//查询冻结积分
 		HashMap<String, Object> whereMap = new HashMap<String, Object>(); 
 		whereMap.put("fromUserid", fromid);
+		whereMap.put("custid", custid);
 		IntegralRecord ir = null;
 		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		DBObject yf=baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, Long.parseLong(fid));
@@ -1359,7 +1360,19 @@ public class WwzService {
 				}
 			}
 			
-			if(ir.getProstore()+userprice+orderprice>=Double.parseDouble(yf.get("money").toString())) { 
+			//获取矿机利润
+			whereMap.clear();
+			whereMap.put("fromUserid",fromid);
+			whereMap.put("type",type);
+			List<DBObject>kjlist=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			double kjprice=0;
+			for (DBObject dbObject : kjlist) {
+				if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
+					kjprice+=Double.parseDouble(dbObject.get("value").toString());
+				}
+			}
+			
+			if(kjprice+userprice+orderprice>=Double.parseDouble(yf.get("money").toString())) { 
 				//已经返完，开始解冻
 				InteProstore dd=(InteProstore) UniObject.DBObjectToObject(yf, InteProstore.class);
 				dd.setState(1);
@@ -1381,7 +1394,7 @@ public class WwzService {
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
 								inteProstore.setCreatedate(new Date());
 								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnProvince()/3*0.1);
+								inteProstore.setMoney(sett.getReturnProvince()*0.1);
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
@@ -1400,7 +1413,7 @@ public class WwzService {
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
 								inteProstore.setCreatedate(new Date());
 								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnCity()/3*0.1);
+								inteProstore.setMoney(sett.getReturnCity()*0.1);
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
@@ -1418,7 +1431,7 @@ public class WwzService {
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
 								inteProstore.setCreatedate(new Date());
 								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnCounty()/3*0.1);
+								inteProstore.setMoney(sett.getReturnCounty()*0.1);
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
@@ -1436,7 +1449,7 @@ public class WwzService {
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
 								inteProstore.setCreatedate(new Date());
 								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnDept()/3*0.1);
+								inteProstore.setMoney(sett.getReturnDept()*0.1);
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
