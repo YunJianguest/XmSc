@@ -218,11 +218,16 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		  getLscode();  
 		  Struts2Utils.getRequest().setAttribute("custid",custid );
 		  System.out.println(custid);
-		  WxToken token=GetAllFunc.wxtoken.get(custid);
-		  System.out.println(token);
-			 if(token.getSqlx()>0){
-				 token=GetAllFunc.wxtoken.get(wwzservice.getparentcustid(custid)); 
-			 } 
+		  //WxToken token=GetAllFunc.wxtoken.get(custid);
+		  WxToken token = null;
+			if (StringUtils.isNotEmpty(custid)) {
+				token = GetAllFunc.wxtoken.get(custid);
+			} else {
+				token = GetAllFunc.wxtoken.get(SysConfig.getProperty("custid"));
+			}
+			if (token.getSqlx() > 0) {
+				token = GetAllFunc.wxtoken.get(wwzservice.getparentcustid(custid));
+			}
 			Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
 			token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
 			String  url=SysConfig.getProperty("ip")+"/user/fromuser!UserDetail.action?custid="+custid;  
