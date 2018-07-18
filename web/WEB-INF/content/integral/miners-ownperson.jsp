@@ -144,7 +144,9 @@
         	line-height: 24px;
         	border: 1px solid #fff;
         }
-        
+        .vipNumName{
+        	color: #F02B2B;
+        }
     </style>
      
 </head>
@@ -169,6 +171,15 @@
             <div class=" hang70">
                 <font size="2">
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
+                    <font size="1">
+                    	<c:if test="${not empty daili}">
+	                    	<div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
+	                            <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
+	                                    class="fa fa-user line-height20"></i><i class="pl-2">${daili }</i></div>
+	                           
+	                        </div>
+                    	</c:if>
+                    </font>
                     <!--<font size="1">
                         <div class="clear txt-c pt-5" style='display:flex;justify-content: center;'>
                             <div class="pull-left hang20 line-height22 bg-green zi-bai border-radius3 pl-5 pr-5 mr-5">LV<i
@@ -189,7 +200,28 @@
                         <div class="txt-c"><i class="pr-10 zi-cheng">积分<i class="pl-2 zi-cheng">${entity.jf}</i></i><c:if test="${not empty  entity.email}">${entity.email}</c:if><c:if test="${empty entity.email}">这家伙很懒，没有邮箱！</c:if></div>-->
                         <%-- <div class="pull-right" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'"><i class="zi-lan-tq">修改</i></div> --%>
                     <!--</div>-->
+                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">
+                   		<span class="vipNumName">会员编号：</span><span>${user.no}</span>
+                   </div>
                 </font>
+                
+            </div>
+            <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
+             
+                <c:if test="${llb>0||llb==0.0}">
+                <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">${llb}</i></span> 
+                </c:if>
+                <c:if test="${llb==null}">
+                <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">0.00</i></span> 
+                </c:if>
+                 
+            	<c:if test="${jf>0}">
+            	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">${jf}</i></span> 
+            	</c:if> 
+            	<c:if test="${jf==0}">
+            	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
+            	</c:if>   
+               
             </div>
         </div>
     </div>
