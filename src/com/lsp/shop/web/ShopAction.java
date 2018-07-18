@@ -103,8 +103,7 @@ public class ShopAction extends GeneralAction {
 	public String index() throws Exception {
 		String comid = Struts2Utils.getParameter("comid"); 
 		getLscode();
-		Struts2Utils.getRequest().setAttribute("custid", custid);
-		String comnums = Struts2Utils.getParameter("comnums");
+		Struts2Utils.getRequest().setAttribute("custid", custid); 
 		WxToken token = null;
 		if (StringUtils.isNotEmpty(custid)) {
 			token = GetAllFunc.wxtoken.get(custid);
@@ -152,9 +151,7 @@ public class ShopAction extends GeneralAction {
 		} else {
 			// whereMap.put("lx",1);
 		} 
-		if (StringUtils.isEmpty(agid) || agid.equals("")) {
-			// agid=wwzService.getAgid(shopmb.get("_id").toString(),
-			// wwzService.getVipNo(fromUserid));
+		if (StringUtils.isEmpty(agid) || agid.equals("")) { 
 
 			if (StringUtils.isNotEmpty(agid)) {
 				if (StringUtils.isNotEmpty(comid)) {
@@ -249,16 +246,7 @@ public class ShopAction extends GeneralAction {
 				Struts2Utils.getRequest().setAttribute("isAgentcom", "ok");
 			}
 		}
-		if (StringUtils.isNotEmpty(comnums)&&Integer.parseInt(comnums)>1000) {
-			DBObject dbObject = baseDao.getMessage(PubConstants.USER_INFO, fromUserid); 
-			if (dbObject != null) {
-				UserInfo user = (UserInfo) UniObject.DBObjectToObject(dbObject, UserInfo.class);
-				user.set_id(fromUserid);
-			    user.setReno(comnums);
-			    user.setRenumber(Long.parseLong(comnums));
-			    baseDao.insert(PubConstants.USER_INFO, user);
-			}
-		}
+		 
 		if(shopmb!=null){
 			System.out.println(shopmb.get("mb"));	
 		}
@@ -4597,7 +4585,7 @@ public class ShopAction extends GeneralAction {
 				// 开始支付 
 				if(StringUtils.isNotEmpty(zflx)){
 					if(zflx.equals("3")){
-						zfmoney=entity.getPpb_money()+"";
+						zfmoney=BaseDecimal.add(entity.getPpb_money()+"",BaseDecimal.division(wwzService.getPPBSprice()+"", entity.getKdprice()+"",20));
 					}
 				}
 				if (wwzService.deljfoid(zfmoney, fromUserid, "shop_jfdh", SysConfig.getProperty("custid"), 0, 1, 0,oid)) {

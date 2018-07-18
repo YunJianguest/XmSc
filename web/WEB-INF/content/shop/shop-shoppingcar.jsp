@@ -81,15 +81,15 @@
         function check(v,id,price,type){
         if($(v).find('i').css('display')=="none"){
          $(v).find('i').show();
-       	var quantity =$('#'+id+'_lb').find('.quantity').attr('quantity'); 
-//		var quantity = $('#quantity')
-          var price =Number($('#'+id+'_lb').find('.price').html());
-          zj+=quantity*price;
-         document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
+        var quantity =$('#'+id+'_lb').find('.quantity').val(); 
+           var price =Number($('#'+id+'_lb').find('.price').html()); 
+         zj+=quantity*price; 
+         document.getElementById("totalPrice").innerHTML =zj.toFixed(2); 
          
          ids+=id+",";
          prices+=price+",";
-         counts+=$("#"+id+"_lb").find(".quantity").attr('quantity')+",";
+         /* counts+=$("#"+id+"_lb").find(".quantity").attr('quantity')+","; */
+         counts+=$('#'+id+'_lb').find('.quantity').val();
          remarks+=$("#"+id+"_lb").find(".title").html()+",";
          kd=kd+parseFloat($("#"+id+"_lb").find(".kd").attr('kd'));
          if(shoptype==-1){
@@ -104,14 +104,14 @@
          }
         }else{
          $(v).find('i').hide();
-         var quantity =$('#'+id+'_lb').find('quantity').attr('quantity');
-//		var quantity = $('#quantity');
+         /*  var quantity =$('#'+id+'_lb').find('quantity').attr('quantity');  */
+		var quantity = $('#'+id+'_lb').find('.quantity').val();
          var price =Number($('#'+id+'_lb').find('.price').html());
          zj-=quantity*price;
          document.getElementById("totalPrice").innerHTML =zj.toFixed(2);
          ids=ids.replace(id+",","");
          prices=prices.replace(price+",", "");
-         counts=counts.replace($("#"+id+"_lb").find(".quantity").attr('quantity')+",", "");
+         counts=counts.replace($('#'+id+'_lb').find('.quantity').val());
          remarks=remarks.replace($("#"+id+"_lb").find(".title").html()+" ","");
          kd=kd-parseFloat($("#"+id+"_lb").find(".kd").attr('kd')); 
         }
@@ -119,7 +119,7 @@
         if('${byprice}'<=0||totalPrice<'${byprice}'){ 
           var to=zj+kd;
           total=to;
-         document.getElementById("totalPrice").innerHTML =to.toFixed(2)+'元  <i>快递:￥'+kd.toFixed(2)+'</i>';
+         document.getElementById("totalPrice").innerHTML =to.toFixed(2);
          }    
         }
      function moneypay(){ 
@@ -328,7 +328,6 @@
 			            	}
 			},"json")
      }
- 
     </script>
        <script>
     
@@ -355,7 +354,7 @@ function ajaxjz(){//加载
        	function(json) { 
        		loading.hide();
     		var xszf=$('#ajaxdiv').html(); 
-	    	if(json.state=='0'){
+    		if(json.state=='0'){
 	    		var v = json.list;  
 	    		 for(var i=0;i<v.length;i++){ 
 	    		  if(v[i].product!=null){
@@ -373,18 +372,18 @@ function ajaxjz(){//加载
 	    		  +'<i class="fa fa-trash-o zi-hong"></i></div></a></font></div>'
 	    		  +'<div class=" pull-left weight500"><font size="2">'
 	    		  +'<div class="clear sl hang30" style="line-height:35px;">'
-	    		  +'<span class="zi-hui  kd" kd='+v[i].product.kdprice+'>快递:'+v[i].product.kdprice.toFixed(2)+'元</span>&nbsp; 规格：'+v[i].spec+'</div>'
+	    		  +'<span class="zi-hui  kd" kd='+v[i].product.kdprice+'>快递:<span>'+v[i].product.kdprice.toFixed(2)+'</span>元</span>&nbsp; 规格：'+v[i].spec+'</div>'
 	    		  +'<div class="sl" style="line-height:20px;">';
 	    		  if(v[i].price==0){
-	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].product.price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
+	    		  xszf+='<span class="zi-cheng">￥<span class="price  moneys">'+v[i].product.price.toFixed(2)+'</span>元';
 	    		  }else{
-	    		  xszf+='<span class="zi-cheng">￥<span class="price">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
+	    		  xszf+='<span class="zi-cheng">￥<span class="price moneys">'+v[i].price.toFixed(2)+'</span>元';
 	    		  } 
-	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
-	    		  +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec(this)">'
+	    		  xszf+='</span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
+	    		  +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec(this,'+v[i]._id+')">'
 	    		  +'<i class="fa fa-minus fa-1x line-height33"></i></div><div class="pull-left overflow-hidden img-wh30">'
-                  +'<input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong quantity"  name="" type="text" onchange="keyup()" value="1" disabled="disabled"/>'
-                  +'</div><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd(this)"><i class="fa fa-plus fa-1x line-height33"></i>'
+                  +'<input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong quantity"  name="" type="text" onchange="keyup()" value="'+v[i].count+'" disabled="disabled"/>'
+                  +'</div><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numAdd(this,'+v[i]._id+')"><i class="fa fa-plus fa-1x line-height33"></i>'
 	    		  +'</div></div></div></div></div>';
 	    		   }
 	    	     
@@ -396,7 +395,6 @@ function ajaxjz(){//加载
 	    	}else{
 	    		
 	    	}
-	    	
 	    	issend=true;
 			$('#ajaxdiv').html(xszf);
 			 
@@ -413,81 +411,63 @@ function ajaxjz(){//加载
             $("#a").Spinner({value: 1, min: 1, len: 3, max: 99});
             $("#b").Spinner({value: 1, min: 1, len: 3, max: 99});
         }); 
-        /*或者不用jquery*/
-        /*商品数量框输入*/
-        function keyup() {
-//          var quantity = document.getElementById("quantity").value;
-			var quantity = $(this).val()
-//          if (isNaN(quantity)) {
-//              alert("请输入数字！");
-//              document.getElementById("quantity").value =1;
-//              return;
-//          } 
-            if(quantity>gmcs&&gmcs>0){
-                alert("商品数量不能大于"+gmcs);
-                document.getElementById("quantity").value =gmcs;
-                return;
-            }
-            if (quantity>99) {
-                document.getElementById("quantity").value =99;
-                alert("商品数量不能大于99");
-            }
-            
-            if (quantity<1) {
-                document.getElementById("quantity").value =1;
-                alert("商品数量不能小于1");
-            }
-        } 
+
         /*商品数量+1*/
-        function numAdd(v) {
-           var quantity = $(v).prev().siblings('div').find('.quantity')
+        function numAdd(v,id) {
+        	gwc(id,"add");
+           	var quantity = $(v).siblings('div').find('.quantity').val();
             var num_add = parseInt(quantity) + 1;
-            var pp = document.getElementById("price").value;
+            var pp = $(v).parents('#'+id+'_lb').find('.price').html();
+            kd =$(v).parents('#'+id+'_lb').find('.kd').children('span').html();
             if (quantity == "") {
                 num_add = 1;
             }
             if(price>0){
             pp=price;
             } 
-            if(num_add>gmcs&&gmcs>0){
+            
+            /*  if(num_add>gmcs&&gmcs>0){
                 alert("商品数量不能大于"+gmcs);
                 document.getElementById("quantity").value =gmcs;
                  
                 return;
-            }
-            if (num_add >99) {
+            }  */ 
+            /* if (num_add >99) {
                 document.getElementById("quantity").value = num_add - 1;
                 alert("商品数量不能大于99");
-            } else {
-                document.getElementById("quantity").value = num_add; 
+            } else {*/
+            	$(v).siblings('div').find('.quantity').val(num_add) ; 
                 var Num = pp * num_add; 
-                $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
+                /* $("#totalPrice").html(Num.toFixed(2)+"元<i>快递:￥"+kd+"</i>"); */ 
                 
                 var ppb='${ppb_price}';  
                 $(".virtualcoin").html("PPB:"+ppb*num_add);
-            }
+            /* }  */
             
         }
         /*商品数量-1*/
-        function numDec(v) {
+        function numDec(v,id) {
+        	gwc(id,"desc");
 //          var quantity = document.getElementById("quantity").value;
-			console.log(v)
-			var quantity = $(v).next().siblings('div').find('.quantity')
-            var pp = document.getElementById("price").value;
+			var quantity = $(v).siblings('div').find('.quantity').val()
+            /* var pp = $('#'+id+'_lb').find('.moneys').html(); */
+			kd =$('#'+id+'_lb').find('.kd').children('span').html();
+			
             if(price){
-            pp=price;
+            	pp=price;
             }
             var num_dec = parseInt(quantity) - 1;
             if (num_dec>0) {
-                document.getElementById("quantity").value = num_dec; 
-                var Num = pp * num_dec;
-              
-                $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
+            	$(v).siblings('div').find('.quantity').val(num_dec) ; 
+            	
+                var Num = $('#'+id+'_lb').find('.moneys').html() * num_dec;
+                /* $("#totalPrice").html(+Num.toFixed(2)+"元<i>快递:￥"+kd+"</i>"); */ 
                 
                 var ppb='${ppb_price}'; 
                 $(".virtualcoin").html("PPB:"+ppb*num_dec);
             }else{
-              document.getElementById("quantity").value = num_dec+ 1;
+              /* document.getElementById("quantity").value = num_dec+ 1; */
+              $(v).siblings('div').find('.quantity').val(num_dec+1);
               alert("商品数量不能小于1");
             }
         }
@@ -505,7 +485,21 @@ function delcar(id){
 				
 	},"json")
 }
- 
+function gwc(v,type) {
+
+    var submitData = {
+        id:v,
+        type:type
+    };
+    jQuery.post('${ctx}/shop/shop!ajaxshopcarsave.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
+            function (json) {
+                if (json.state == 0) {
+
+                } else {
+                    alert("添加失败！");
+                }
+            }, "json");
+}
     </script>
     <style>
         .bk {

@@ -251,6 +251,7 @@ function page_submit(num){
                        
                         <th class="th6">状态</th>
 						<th class="th2">详情</th>
+
 						<th class="th5">操作</th>
                       </tr>
                     </thead>
@@ -280,6 +281,7 @@ function page_submit(num){
 							 
 						
 					<td><a href="javascript:orderinfo('${bean._id}')" >查看</a></td>
+					
                         <td class="table-action">
                               
                               <div class="btn-group1">
@@ -470,6 +472,10 @@ function page_submit(num){
 if('${state}'!=0){ 
 $('#sel_state').val('${state}'); 
 }
+$(function(){
+	var totals = 
+});
+$('#totals').html();
 </script>
 
 </body>
