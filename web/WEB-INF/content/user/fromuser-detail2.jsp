@@ -55,13 +55,21 @@
     		line-height: 24px !important;
 		}
 		.tab-nav{
-			width:100%;height:80px;display:-webkit-box;display:-ms-flexbox;display:flex;padding-top:20px;
+			width:100%;
+			height:80px;
+			/*display:-webkit-box;
+			display:-ms-flexbox;
+			display:flex;
+			padding-top:20px;*/
+			overflow: hidden;
 		}
 		.tab-nav li{
-			-webkit-box-flex:1;
+			/*-webkit-box-flex:1;
 			    -ms-flex:1;
 			        flex:1;
-			width:1%;
+			width:1%;*/
+			width: 25%;
+			float: left;
 			text-align: center;
 			font-size: 12px;
 		}
