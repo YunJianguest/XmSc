@@ -89,9 +89,13 @@
 		    			<p class="tip-txt"></p>
 		    		    <p class="mui-ellipsis">商家正在受理中！</p>
 		    		</c:if>
-		    		<c:if test="${service.state == 1||service.state == 2}">
+		    		<c:if test="${service.state == 1}">
 		    			<p class="tip-txt"></p>
-		    		    <p class="mui-ellipsis">服务已受理</p>
+		    		    <p class="mui-ellipsis">商家已同意！</p>
+		    		</c:if>
+		    		<c:if test="${service.state == 2}">
+		    			<p class="tip-txt"></p>
+		    		    <p class="mui-ellipsis">商家已拒绝！</p>
 		    		</c:if>
 		    		<c:if test="${service.state == 3}">
 		    			<p class="tip-txt"></p>

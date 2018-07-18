@@ -165,7 +165,7 @@
                              var list=json.list;
                              var html='';
                              for(var i=0;i<list.length;i++){
-                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+list[i].createdate+'</span></div>'
+                            	 html+='<li><div class="cmt_user"><span class="user">'+list[i].nickname+'</span><span class="date">'+Date.prototype.format(list[i].createdate)+'</span></div>'
                             	 +'<div class="cmt_cnt">'+list[i].content+'</div>';
                             	 if(list[i].sjreply!=null && list[i].sjreply!=""){
                             		 html+='<div class="reply">'+list[i].sjreply+'<span class="replybtn fa fa-commenting-o" onclick="replyBtn('+list[i]._id+','+list[i].reply_id+')"></span></div>';
