@@ -149,7 +149,7 @@
 				</div>
 				<div class="mui-input-row">
 					<label>身份证号码</label>
-					<input id="idCard" type="text" value="${user.id_card }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
+					<input id="idCard" type="text" value="${user.id_card }" class="mui-input-clear" maxlength="16" placeholder="请输入身份证号">
 				</div>
 				<div class="mui-input-row">
 					<label>电话</label>
