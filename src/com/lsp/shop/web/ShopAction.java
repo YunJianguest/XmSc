@@ -4372,6 +4372,8 @@ public class ShopAction extends GeneralAction {
 					System.out.println(shop.get("pid"));
 					pro = baseDao.getMessage(PubConstants.DATA_PRODUCT, Long.parseLong(shop.get("pid").toString()),
 							backMap);
+					
+					baseDao.delete(PubConstants.SUC_SHOPPINGCART, Long.parseLong(ids[i]));
 				}
 
 				/*if (pro.get("gmcs") != null && Integer.parseInt(pro.get("gmcs").toString()) > 0) {
