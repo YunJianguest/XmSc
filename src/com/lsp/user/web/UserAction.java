@@ -340,6 +340,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			
 			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
+				//新开用户
 				id=UUID.randomUUID().toString();
 				user.set_id(id);
 				if(StringUtils.isNotEmpty(agentLevel)){
@@ -349,8 +350,19 @@ public class UserAction extends GeneralAction<UserInfo>
 						this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), null);
 					}
 				}
+			}else{
+				user.set_id(id);
+				//升级代理
+				if(StringUtils.isNotEmpty(agentLevel)){
+					if(StringUtils.isNotEmpty(renumber)){
+						this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), Long.parseLong(renumber));
+					}else{
+						this.commend(Integer.parseInt(agentLevel), user.get_id().toString(), null);
+					}
+				}
+				
 			}
-			user.set_id(id);
+		
 			user.setAccount(account);
 			user.setPassword(password);
 			user.setToUser(toUser);

@@ -1022,9 +1022,7 @@ public class MinersAction extends GeneralAction<Miner> {
 			dblist.add(new BasicDBObject("type", "ps_recovery"));
 			// or判断
 			whereMap.put("$or", dblist);
-			List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap);
-	        System.out.println("list--->"+comList.size());
-	        System.out.println("---->"+comList);
+			List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap); 
 			if (comList.size() > 0) {
 				sub_map.put("state", 0);
 			} else {
