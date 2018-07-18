@@ -87,7 +87,7 @@ function exp() {
 	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral.action" >
     
     <div class="pageheader">
-      <h2><i class="fa fa-user"></i>系统管理 <span>盼盼币管理</span></h2>
+      <h2><i class="fa fa-user"></i>系统管理 <span>盼盼币管理</span>  账户总额 (<c:if test="${isskzh==1}">矿机：${obj.kjvalue}</c:if>商城：${obj.uservalue})</h2>
       
       <div class="breadcrumb-wrapper1">
           <div class="input-group ">

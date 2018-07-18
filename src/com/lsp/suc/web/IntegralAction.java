@@ -138,6 +138,14 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 			}
 		}
 		Struts2Utils.getRequest().setAttribute("integralList", list);
+		
+		Struts2Utils.getRequest().setAttribute("obj",wwzService.getJfOBJ(SysConfig.getProperty("custid"),SpringSecurityUtils.getCurrentUser().getId()));
+		custid=SpringSecurityUtils.getCurrentUser().getId();
+		if(!custid.equals(SysConfig.getProperty("hyq_account"))&&!custid.equals(SysConfig.getProperty("dzq_account"))&&!custid.equals(SysConfig.getProperty("tyq_account"))){
+			Struts2Utils.getRequest().setAttribute("isskzh", 1);
+		}else{
+			
+		}
 		return SUCCESS;
 	}
 
