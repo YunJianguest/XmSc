@@ -43,6 +43,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.pub.util.WeiXinUtil;
 import com.lsp.pub.util.XMLUtil;
 import com.lsp.pub.web.GeneralAction;
+import com.lsp.shop.entiy.Bargainingyd;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.suc.entity.IntegralInfo;
@@ -1300,5 +1301,12 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		Struts2Utils.getRequest().setAttribute("jf", db);
 		return "digitalAsset";
+	}
+	
+	public String platform() throws Exception{
+		
+		DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
+		Struts2Utils.getRequest().setAttribute("db", dbObject);
+		return "platform";
 	}
 }

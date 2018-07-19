@@ -60,6 +60,8 @@ public class IntegralInfo extends ReflectionDBObject {
      * 订单ID
      */
     private String oid;
+    
+    private String vipno;//会员编号
 	public int getJflx() {
 		return jflx;
 	}
@@ -173,6 +175,14 @@ public class IntegralInfo extends ReflectionDBObject {
 
 	public void setOid(String oid) {
 		this.oid = oid;
+	}
+
+	public String getVipno() {
+		return vipno;
+	}
+
+	public void setVipno(String vipno) {
+		this.vipno = vipno;
 	}
 	
 

@@ -50,6 +50,7 @@ import com.lsp.suc.entity.IntegralLlInfo;
 import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.Tourism;
 import com.lsp.suc.entity.Comunit;
+import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.website.entity.CommentInfo;
 import com.lsp.website.service.WebsiteService;
 import com.lsp.website.service.WwzService;
@@ -98,9 +99,6 @@ public class IntegrallAction extends GeneralAction<IntegralLlInfo> {
         }
 		String state = Struts2Utils.getParameter("state");
 		if (StringUtils.isNotEmpty(state)) {
-			if (!state.equals("2")) {
-				whereMap.put("state", Integer.parseInt(state));
-			}
 			Struts2Utils.getRequest().setAttribute("state", state);
 		}
 		String type = Struts2Utils.getParameter("type");
@@ -128,219 +126,10 @@ public class IntegrallAction extends GeneralAction<IntegralLlInfo> {
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", fycount);
-		Struts2Utils.getRequest().setAttribute("integralList", list);
+		Struts2Utils.getRequest().setAttribute("list", list);
 		return SUCCESS;
 	}
-
-	/**
-	 * 收入
-	 * 
-	 */
-	public String profit() throws Exception {
-		HashMap<String, Object> sortMap = new HashMap<String, Object>();
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
-		String type = Struts2Utils.getParameter("type");
-		if (StringUtils.isNotEmpty(type)) {
-			whereMap.put("type", type);
-			Struts2Utils.getRequest().setAttribute("type", type);
-		}
-		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
-		BasicDBObject dateCondition = new BasicDBObject();
-		if (StringUtils.isNotEmpty(sel_insdate)) {
-			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-		}
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
-		}
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
-			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
-		}
-		BasicDBList dblist = new BasicDBList();
-		dblist.add(new BasicDBObject("type", "ps_account"));
-		dblist.add(new BasicDBObject("type", "ps_recovery"));
-		dblist.add(new BasicDBObject("type", "shop_bmzt"));
-		dblist.add(new BasicDBObject("type", "tj_account"));
-		// or判断
-		whereMap.put("$or", dblist);
-		whereMap.put("state", 0);// 收益
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
-		Struts2Utils.getRequest().setAttribute("fycount", fycount);
-		Struts2Utils.getRequest().setAttribute("integralList", list);
-		return "profit";
-	}
-
-	/**
-	 * 支出
-	 * 
-	 */
-	public String pay() throws Exception {
-		HashMap<String, Object> sortMap = new HashMap<String, Object>();
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
-		String title = Struts2Utils.getParameter("title");
-		if (StringUtils.isNotEmpty(title)) {
-			Pattern pattern = Pattern.compile("^.*" + title + ".*$", Pattern.CASE_INSENSITIVE);
-			whereMap.put("fromUser", pattern);
-			Struts2Utils.getRequest().setAttribute("title", title);
-		}
-		String state = Struts2Utils.getParameter("state");
-		if (StringUtils.isNotEmpty(state)) {
-			whereMap.put("state", Integer.parseInt(state));
-			Struts2Utils.getRequest().setAttribute("state", state);
-		}
-		String type = Struts2Utils.getParameter("type");
-		if (StringUtils.isNotEmpty(type)) {
-			whereMap.put("type", type);
-			Struts2Utils.getRequest().setAttribute("type", type);
-		}
-		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
-		BasicDBObject dateCondition = new BasicDBObject();
-		if (StringUtils.isNotEmpty(sel_insdate)) {
-			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-		}
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
-		}
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
-			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
-		}
-		whereMap.put("state", 1);// 支出
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
-		Struts2Utils.getRequest().setAttribute("fycount", fycount);
-		Struts2Utils.getRequest().setAttribute("integralList", list);
-		return "pay";
-	}
-
-	/**
-	 * 充值记录
-	 * 
-	 */
-	public String recharge() throws Exception {
-		HashMap<String, Object> sortMap = new HashMap<String, Object>();
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
-		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
-		BasicDBObject dateCondition = new BasicDBObject();
-		if (StringUtils.isNotEmpty(sel_insdate)) {
-			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-		}
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
-		}
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
-			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
-		}
-		whereMap.put("type", "jfcz");// 充值记录
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
-		Struts2Utils.getRequest().setAttribute("fycount", fycount);
-		Struts2Utils.getRequest().setAttribute("integralList", list);
-		return "recharge";
-	}
-
-	/**
-	 * 提现记录
-	 * 
-	 */
-	public String withdraw() throws Exception {
-		HashMap<String, Object> sortMap = new HashMap<String, Object>();
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
-		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
-		BasicDBObject dateCondition = new BasicDBObject();
-		if (StringUtils.isNotEmpty(sel_insdate)) {
-			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-		}
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
-		}
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
-			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
-		}
-		whereMap.put("type", "jf_withdraw");// 提现记录
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
-		Struts2Utils.getRequest().setAttribute("fycount", fycount);
-		Struts2Utils.getRequest().setAttribute("integralList", list);
-		return "withdraw";
-	}
-
-	/**
-	 * 每日收益
-	 * 
-	 */
-	public String day() throws Exception {
-		HashMap<String, Object> sortMap = new HashMap<String, Object>();
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
-		String type = Struts2Utils.getParameter("type");
-		if (StringUtils.isNotEmpty(type)) {
-			whereMap.put("type", type);
-			Struts2Utils.getRequest().setAttribute("type", type);
-		}
-		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
-		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
-		BasicDBObject dateCondition = new BasicDBObject();
-		if (StringUtils.isNotEmpty(sel_insdate)) {
-			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
-		}
-		if (StringUtils.isNotEmpty(sel_enddate)) {
-			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
-			whereMap.put("createdate", dateCondition);
-			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
-		}
-		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
-			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
-		}
-		BasicDBList dblist = new BasicDBList();
-		dblist.add(new BasicDBObject("type", "ps_account"));
-		dblist.add(new BasicDBObject("type", "ps_recovery"));
-		dblist.add(new BasicDBObject("type", "shop_bmzt"));
-		// or判断
-		whereMap.put("$or", dblist);
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
-		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO);
-		Struts2Utils.getRequest().setAttribute("fycount", fycount);
-		Struts2Utils.getRequest().setAttribute("integralList", list);
-		Struts2Utils.getRequest().setAttribute("toUser", toUser);
-		return "day";
-	}
-
+	
 	@Override
 	public IntegralLlInfo getModel() {
 		// TODO Auto-generated method stub

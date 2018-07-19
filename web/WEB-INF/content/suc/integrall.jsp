@@ -130,12 +130,12 @@ function exp() {
   <div class="mainpanel">
 	<%@include file="/webcom/header-headerbar.jsp"%>
     
-	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral.action" >
+	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integrall.action" >
     
     <div class="pageheader">
-      <h2><i class="fa fa-user"></i>系统管理 <span>盼盼币管理</span></h2>
+      <h2><i class="fa fa-user"></i>系统管理 <span>乐乐币管理</span></h2>
       
-      <div class="breadcrumb-wrapper1">
+     <!--  <div class="breadcrumb-wrapper1">
           <div class="input-group ">
               <div style="border-radius:3px; height:40px;padding-left:10px;" class="btn-primary">
                   <a href="javascript:exp();"style="color: #ffffff;line-height:25px;">
@@ -143,32 +143,13 @@ function exp() {
                   </a>
               </div>
           </div>
-      </div>
+      </div> -->
       
     </div>
     
    <div class="panelss ">
                 <div class="panel-body fu10">
                     <div class="row-pad-5">
-                       <div class="form-group col-sm-2">
-			            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择收入\支出 ">
-			            	                <option value="2">收入\支出</option>
-			            	 				<option value="0">收入</option>
-			                    			<option value="1">支出</option>
-			                 </select>
-			            </div>
-			            <div class="form-group col-sm-2">
-			            	<select  id="sel_type"  name="type" class="form-control "  data-placeholder="请选择盼盼币类型 ">
-			            	                <option value="">请选择盼盼币类型</option>
-			            	 				<option value="ps_account">开通账户收益</option>
-			                    			<option value="tj_account">推荐收益</option>
-			                    			<option value="ps_recovery">回本后待返收益</option>
-			                    			<option value="shop_bmzt">利润提成</option>
-			                    			<option value="shop_jfdh">下单支出</option>
-			                    			<option value="jfcz">交易所转入</option>
-			                    			<option value="jf_withdraw">平台转出</option>
-			                 </select>
-			            </div>
 			            <div class="form-group col-sm-2">
 			                 <input type="text" id="sel_insdate" name="sel_insdate" value="${sel_insdate}" placeholder="开始日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control" />
 			            </div>
@@ -193,11 +174,10 @@ function exp() {
                       	<th>状态</th>
                       	<th>类型</th>
                       	<th>时间</th>
-						<th>操作</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <c:forEach items="${integralList}" var="bean">
+                      <c:forEach items="${list}" var="bean">
                       <tr>
                       	<td>${bean._id}</td>
                       	<c:if test="${bean.value>0}"><td><span style="color: red;">+${bean.value}</span></td>
@@ -206,7 +186,7 @@ function exp() {
                       	</c:if>
                       	<td>
                       	<c:choose> 
-                      	  <c:when test="${bean.type == 'shop_djzj'}">商城收益</c:when>
+                      	  <c:when test="${bean.type == 'shop_bmzt'}">下单返还</c:when>
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>

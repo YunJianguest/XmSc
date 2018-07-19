@@ -46,6 +46,8 @@ public class IntegralLlInfo extends ReflectionDBObject {
      */
     private String oid;
     
+    private String vipno;//会员编号
+    
  
 	public String getOid() {
 		return oid;
@@ -128,6 +130,14 @@ public class IntegralLlInfo extends ReflectionDBObject {
 
 	public void setFid(String fid) {
 		this.fid = fid;
+	}
+
+	public String getVipno() {
+		return vipno;
+	}
+
+	public void setVipno(String vipno) {
+		this.vipno = vipno;
 	}
 	
 
