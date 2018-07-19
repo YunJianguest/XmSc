@@ -2972,7 +2972,11 @@ public class WwzService {
 				baseDao.insert(PubConstants.INTEGRAL_INTESETTING, inteSetting);
 				return true;
 			} else if (type == 2) {
-				inteSetting.setNownums(BaseDecimal.add(inteSetting.getNownums(), value));
+				if(inteSetting.getNownums() == null){
+					inteSetting.setNownums(BaseDecimal.add("0", value));
+				}else{
+					inteSetting.setNownums(BaseDecimal.add(inteSetting.getNownums(), value));
+				} 
 				baseDao.insert(PubConstants.INTEGRAL_INTESETTING, inteSetting);
 				return true;
 			}
