@@ -121,11 +121,11 @@ public class TimerService {
 						
 						
 						
-						/*//返回积分到直推用户
+						
 						DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
-					    if(user.get("parentid")!=null) {
-					    	wwzservice.addjf(Double.parseDouble(price)*0.1+"", user.get("parentid").toString(),user.get("custid").toString(), dbObject.get("type").toString(),1,1,0);
-					    }*/
+					    if(user!=null&&user.get("renumber")!=null&&Double.parseDouble(dbObject.get("money").toString())<90000&&StringUtils.isNotEmpty(wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()))) {
+					    	wwzservice.addyfjf(BaseDecimal.multiplication(price, "0.1"),wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
+					    }
 						
 					}
 				}
