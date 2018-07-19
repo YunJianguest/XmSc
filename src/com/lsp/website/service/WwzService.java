@@ -438,15 +438,15 @@ public class WwzService {
 			db.put("no", "未注册");
 			db.put("humor", "暂无心情");
 			db.put("_id", "notlogin");
-			db.put("idcards", "游客");
+			
 		}
 		if(db !=null){
 			if(db.get("_id").toString().equals(SysConfig.getProperty("custid"))){
-				db.put("idcards", "游客");
+				db.put("_id", "notlogin");
 			}
 			if(db.get("roleid") != null){
 				if(db.get("roleid").toString().equals(SysConfig.getProperty("sjRoleid"))){
-					db.put("idcards", "游客");
+					db.put("_id", "notlogin");
 				}
 			}
 		}

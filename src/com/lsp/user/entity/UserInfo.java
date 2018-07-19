@@ -214,6 +214,16 @@ public class UserInfo extends ReflectionDBObject {
 	 */
 	private Date   agentedate; 
 	private  int isfull;//1-已补全  其余-未补全
+	/*private String    idcards; 
+	
+	public String getIdcards() {
+		return idcards;
+	}
+
+	public void setIdcards(String idcards) {
+		this.idcards = idcards;
+	}*/
+
 	public Date getAgentedate() {
 		return agentedate;
 	}
