@@ -15,12 +15,13 @@
     <title>${title}</title>
     <!-- Resource style -->
     
-    <link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
-    <link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
-    <link href="${ctx }/app/css/style_0.css" rel="stylesheet"/> 
+    <link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="${ctx}/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
+    <link href="${ctx}/app/css/style_0.css" rel="stylesheet"/> 
+    <link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
+	<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
     <!-- Resource style -->
-    <script src="${ctx }/app/js/jquery-1.8.3.js"></script>
+    <script src="${ctx}/app/js/jquery-1.8.3.js"></script>
     <script src="${ctx}/app/js/iosOverlay.js"></script>
     <script src="${ctx}/app/js/spin.min.js"></script>
     <script type="text/javascript" src="${ctx }/app/js/jquery.Spinner.js"></script>
@@ -388,7 +389,7 @@
 	    if(!issend){
 	    	return;
 	    }
-	   loading()
+	   //loading()
 	   	var submitData = {
 	   		state:'${state}'
 	    }; 
@@ -396,7 +397,7 @@
 	    issend=false; 
 	    $.post('${ctx}/shop/shop!ajaxorders1.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage='+fypage, submitData,
 	       	function(json) { 
-	       		loading.hide()
+	       		//loading.hide()
 	    		var xszf=$('#ajaxdiv').html();  
 	    		
 		    	if(json.state=='0'){
