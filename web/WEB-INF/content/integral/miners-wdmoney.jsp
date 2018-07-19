@@ -229,7 +229,7 @@
 		<div class="mui-content" style="background: #fff;padding-left:10px ;padding-right: 10px;">
 			<div class="mui-row">
 				<div class="mui-input-row">
-					<label for="">账号</label>
+					<label for="">USKD钱包地址</label>
 					<input type="text" id="eth" class="mui-input-clear" value="" />
 				</div>
 				<div class="mui-input-row">
