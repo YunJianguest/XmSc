@@ -217,7 +217,7 @@
 <main style='padding-bottom: 50px;z-index: -10;'>
    	<div class="overflow-hidden width-10 position-r line-bottom-dddddd mine-headbox pd-20">
    	<div style="width: 100%;height: 45px;">
-   		<div class="pull-left" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}'" style='margin-top: 15px;margin-left:15px;'>
+   		<div class="pull-left" onclick="window.location.href='${ctx}/user/fromuser!detail.action?custid=${custid}&lscode=${lscode}&backurl=/integral/miners!ownperson.action'" style='margin-top: 15px;margin-left:15px;'>
    			<i class="zi-lan-tq fa fa-gear" style='font-size:16px;color:#000;'></i>
    		</div>
    		<!-- <div class="pull-right" style="margin-top: 15px;margin-right: 15px;">
@@ -238,13 +238,26 @@
                 <font size="2">
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
                     <font size="1">
-                    	<c:if test="${not empty daili}">
-	                    	<div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
+                    	<div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
 	                            <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
-	                                    class="fa fa-user line-height20"></i><i class="pl-2">${daili }</i></div>
+	                                    class="fa fa-user line-height20"></i><i class="pl-2">
+	                                    <c:if test="${user.agentLevel==1}">省级代理</c:if>
+	                                    <c:if test="${user.agentLevel==2}">市级代理</c:if>
+	                                    <c:if test="${user.agentLevel==3}">县级代理</c:if>
+	                                    <c:if test="${user.agentLevel==4}">保单中心</c:if>
+	                                    <c:if test="${user.agentLevel== '' || user.agentLevel == null}">
+	                                        <c:choose>
+	                                            <c:when test="${user.idcards != '游客'}">
+	                                                                                                                                          普通会员
+	                                            </c:when>
+	                                            <c:otherwise>
+                                                                                                                                                        游客
+                                                </c:otherwise>
+	                                        </c:choose>
+	                                    </c:if>
+	                                    </i></div>
 	                           
 	                        </div>
-                    	</c:if>
                     </font>
                     <!-- 会员编号 -->
                    <div class="hang25 txt-c line-height25 zi-hei-tq weight500">
@@ -336,7 +349,7 @@
 		</div>
 	</div>
 </div>
-	<div class="bmask">
+	<!-- <div class="bmask">
 		<div class="bmask-cont">
 			<div class="bmask-cont-tit">
 				请选择付产币方式
@@ -349,7 +362,7 @@
 				<button onclick="popcode(1)" class="currency">盼盼币</button>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	  
 	<div class="modal">
 		<div class="modal-cont">

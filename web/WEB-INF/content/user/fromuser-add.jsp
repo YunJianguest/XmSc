@@ -52,7 +52,12 @@ function CheckMail(mail) {
         	function (json) {
             	if(json.state==0){
             		 alert("修改成功");
-            		 window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&lscode=${lscode}';
+            		 if('${backurl}' != ''){
+            			 window.location.href='${ctx}${backurl}?custid=${custid}&lscode=${lscode}';
+            		 }else{
+            			 window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&lscode=${lscode}'; 
+            		 }
+            		 
             	}
             },"json")
         }

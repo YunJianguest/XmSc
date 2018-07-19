@@ -491,6 +491,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		 DBObject  user=wwzservice.getWxUser(fromUserid);
 		 Struts2Utils.getRequest().setAttribute("user",user);
 		 Struts2Utils.getRequest().setAttribute("custid",custid); 
+		 String backurl = Struts2Utils.getParameter("backurl");
+		 Struts2Utils.getRequest().setAttribute("backurl", backurl);
 		return "add";
 		
 	}

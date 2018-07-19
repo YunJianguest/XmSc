@@ -258,6 +258,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		
 		return "ownminer";
 	}
 	
@@ -437,6 +438,9 @@ public class MinersAction extends GeneralAction<Miner> {
 		  if(wwzService.checkAgent(custid,fromUserid)){
 			 Struts2Utils.getRequest().setAttribute("isAgent","ok");
 		  }
+		  
+		  /*String backurl = Struts2Utils.getParameter("backurl");
+		  Struts2Utils.getRequest().setAttribute("backurl", backurl);*/
 		  
 		  return "ownperson";
 	  }

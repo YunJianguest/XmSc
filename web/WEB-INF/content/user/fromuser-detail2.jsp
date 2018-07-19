@@ -248,7 +248,7 @@
 	                                    <c:if test="${user.agentLevel==4}">保单中心</c:if>
 	                                    <c:if test="${user.agentLevel== '' || user.agentLevel == null}">
 	                                        <c:choose>
-	                                            <c:when test="${user.number != '' || user.renumber != '' }">
+	                                            <c:when test="${user.idcards != '游客'}">
 	                                                                                                                                          普通会员
 	                                            </c:when>
 	                                            <c:otherwise>
