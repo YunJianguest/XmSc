@@ -724,15 +724,18 @@ public class WwzService {
 		}
 		sortMap.put("sort", -1);
 		
-		DBObject db = getWxUser(whereMap); 
-		if (db.get("fromUser").equals("notlogin") && StringUtils.isNotEmpty(fromUser)
-				&& StringUtils.isNotEmpty(custid)) {
-			// 注册新用户
+		DBObject db = getWxUser(whereMap);
+		if(db !=null){
+			if (db.get("fromUser").equals("notlogin") && StringUtils.isNotEmpty(fromUser)
+					&& StringUtils.isNotEmpty(custid)) {
+				// 注册新用户
 
-			WxUserToken token = GetAllFunc.usertoken.get(fromUser);
-			return register(fromUser, token, custid);
+				WxUserToken token = GetAllFunc.usertoken.get(fromUser);
+				return register(fromUser, token, custid);
 
+			}
 		}
+		
 
 		if (db != null && StringUtils.isNotEmpty(fromUser)) {
 			if (db.get("headimgurl") == null || db.get("nickname") == null || db.get("nickname").equals("游客")) {
