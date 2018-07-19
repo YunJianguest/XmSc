@@ -1,4 +1,5 @@
 package com.lsp.integral.web;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import com.lsp.pub.entity.Code;
 import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.HttpClient;
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
@@ -35,6 +37,7 @@ import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.TenpayUtil;
 import com.lsp.pub.util.UniObject;
+import com.lsp.pub.util.WeiXinUtil;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderFormpro;
 import com.lsp.suc.entity.IntegralInfo;
@@ -350,16 +353,91 @@ public class MinersAction extends GeneralAction<Miner> {
 	   * @return
 	   */
 	  public String ownperson(){
-		  getLscode(); 
-		  //积分 
-		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
-			  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("kjvalue") );
+		  
+		  getLscode();  
+		  Struts2Utils.getRequest().setAttribute("custid",custid );
+		  //WxToken token=GetAllFunc.wxtoken.get(custid);
+		  WxToken token = null;
+			if (StringUtils.isNotEmpty(custid)) {
+				token = GetAllFunc.wxtoken.get(custid);
+			} else {
+				token = GetAllFunc.wxtoken.get(SysConfig.getProperty("custid"));
+			}
+			if (token.getSqlx() > 0) {
+				token = GetAllFunc.wxtoken.get(wwzService.getparentcustid(custid));
+			}
+			Struts2Utils.getRequest().setAttribute("token",WeiXinUtil.getSignature(token,Struts2Utils.getRequest()));
+			token=WeiXinUtil.getSignature(token,Struts2Utils.getRequest()); 
+			String  url=SysConfig.getProperty("ip")+"/integral/miners!ownperson.action?custid="+custid;  
+			if(StringUtils.isEmpty(fromUserid)){ 
+				String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_base&state=c1c2j3h4#wechat_redirect";
+				Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+				return "refresh";
+			}else if(fromUserid.equals("register")){ 
+				String inspection="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+token.getAppid()+"&redirect_uri="+URLEncoder.encode(url)+"&response_type=code&scope=snsapi_userinfo&state=register#wechat_redirect";
+				Struts2Utils.getRequest().setAttribute("inspection",inspection);  
+				return "refresh";
+			}  
+		  //优先使用用户ID查询
+		  DBObject wxUser=new BasicDBObject();
+		  if(StringUtils.isNotEmpty(fromUserid)){
+			  HashMap<String, Object>whereMap=new HashMap<String, Object>();
+			  whereMap.put("_id", fromUserid);
+			  wxUser=wwzService.getWxUser(whereMap);
+			  whereMap.clear();
+			  if(wxUser.get("getExperience")!=null&&wxUser.get("needExperience")!=null) {
+				  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
+				  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100)); 
+			  } 
+			  //积分 
+			  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+				  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("uservalue") );
+			  }
+			  //llb 
+			  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
+				  System.out.println(wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue"));
+				  Struts2Utils.getRequest().setAttribute("llb",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue") );
+			  }
+			
+			  Struts2Utils.getRequest().setAttribute("entity", wxUser);
+		  }else{
+			 
+			  if(StringUtils.isEmpty(qqfromUser)){
+				  //未登录
+				  return "fromlogin";  
+			  }else{
+				  //根据QQ登录信息查询  
+				  HashMap<String, Object>whereMap=new HashMap<String, Object>();
+				  whereMap.put("qqfromUser", qqfromUser);
+				  wxUser=wwzService.getWxUser(whereMap);
+				  whereMap.put("custid", custid);
+				  Long count=baseDao.getCount(PubConstants.BBS_INFO, whereMap);
+				  wxUser.put("bbscount",count);
+				  Struts2Utils.getRequest().setAttribute("entity", wxUser);
+				  
+				  
+			  }
+			  
 		  }
-		  //llb 
-		  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
-			  System.out.println(wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue"));
-			  Struts2Utils.getRequest().setAttribute("llb",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue") );
+		 
+		  DBObject share=wwzService.getShareFx(custid,"fromuser_share"); 
+		  if(share==null){
+			  share=new BasicDBObject();
 		  }
+		  if(GetAllFunc.wxTouser.get(custid)!=null){
+			  share.put("fximg",GetAllFunc.wxTouser.get(custid).getLogo());
+		  }
+		  
+		  share.put("fxurl",url);  
+		  Struts2Utils.getRequest().setAttribute("share", share);
+		  //加载佣金
+		  DBObject  agent=wwzService.getAgentPrice(custid, fromUserid);
+		  Struts2Utils.getRequest().setAttribute("agent",agent);
+		  //检测代理 
+		  if(wwzService.checkAgent(custid,fromUserid)){
+			 Struts2Utils.getRequest().setAttribute("isAgent","ok");
+		  }
+		  
 		  return "ownperson";
 	  }
 	  /***

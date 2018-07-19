@@ -65,7 +65,7 @@ import com.mongodb.DBObject;
  *
  */
 @Namespace("/suc")
-@Results({ @Result(name = "reload", location = "integralll.action", type = "redirect") })
+@Results({ @Result(name = "reload", location = "integrall.action", type = "redirect") })
 public class IntegrallAction extends GeneralAction<IntegralInfo> {
 
 	private static final long serialVersionUID = -6784469775589971579L;
@@ -92,7 +92,6 @@ public class IntegrallAction extends GeneralAction<IntegralInfo> {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
-		System.out.println("--1-->"+ SpringSecurityUtils.getCurrentUser().getId());
         if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
         	whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
         }

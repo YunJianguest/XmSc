@@ -745,7 +745,8 @@ function del(id) {
 		            		alert('未设置密码，请先设置支付密码');
 		            		window.location.href="${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 		            	}else  if(json.state==4){
-		            		alert('密码错误');
+		            		//alert('密码错误,请重新输入');
+		            		alert('密码错误,请重新输入');
 		            	}
 		},"json")
        }

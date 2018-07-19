@@ -238,13 +238,28 @@
                 <font size="2">
                     <div class="hang25 txt-c line-height25 zi-hei-tq weight500">${entity.nickname}</div>
                     <font size="1">
-                    	<c:if test="${not empty daili}">
+                    	<%-- <c:if test="${not empty daili}"> --%>
 	                    	<div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
 	                            <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
-	                                    class="fa fa-user line-height20"></i><i class="pl-2">${daili }</i></div>
+	                                    class="fa fa-user line-height20"></i><i class="pl-2">
+	                                    <c:if test="${user.agentLevel==1}">省级代理</c:if>
+	                                    <c:if test="${user.agentLevel==2}">市级代理</c:if>
+	                                    <c:if test="${user.agentLevel==3}">县级代理</c:if>
+	                                    <c:if test="${user.agentLevel==4}">保单中心</c:if>
+	                                    <c:if test="${user.agentLevel== '' || user.agentLevel == null}">
+	                                        <c:choose>
+	                                            <c:when test="${user.number != '' || user.renumber != '' }">
+	                                                                                                                                          普通会员
+	                                            </c:when>
+	                                            <c:otherwise>
+                                                                                                                                                        游客
+                                                </c:otherwise>
+	                                        </c:choose>
+	                                    </c:if>
+	                                    </i></div>
 	                           
 	                        </div>
-                    	</c:if>
+                    	<%-- </c:if> --%>
                     </font>
                     <!-- 会员编号 -->
                    <div class="hang25 txt-c line-height25 zi-hei-tq weight500">

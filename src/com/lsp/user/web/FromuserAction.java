@@ -718,6 +718,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 						user.setId_card_front(id_card_front);
 						user.setId_card_reverse(id_card_reverse);
 						user.setNumber(Long.parseLong(getVipNo()));
+						//user.setAgentLevel(agentLevel);
 						basedao.insert(PubConstants.USER_INFO, user);
 						String lscode=wwzservice.createcode(user.get_id().toString());
 						sub_map.put("lscode", lscode);//注册成功
