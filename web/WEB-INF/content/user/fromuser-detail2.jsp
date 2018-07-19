@@ -245,7 +245,7 @@
 	                                    <c:if test="${user.agentLevel==1}">省级代理</c:if>
 	                                    <c:if test="${user.agentLevel==2}">市级代理</c:if>
 	                                    <c:if test="${user.agentLevel==3}">县级代理</c:if>
-	                                    <c:if test="${user.agentLevel==4}">保单中心</c:if>
+	                                    <c:if test="${user.agentLevel==4}">报单中心</c:if>
 	                                    <c:if test="${user.agentLevel== '' || user.agentLevel == null}">
 	                                        <c:choose>
 	                                            <c:when test="${user._id != 'notlogin'}">

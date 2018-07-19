@@ -1302,11 +1302,5 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		Struts2Utils.getRequest().setAttribute("jf", db);
 		return "digitalAsset";
 	}
-	
-	public String platform() throws Exception{
-		
-		DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
-		Struts2Utils.getRequest().setAttribute("db", dbObject);
-		return "platform";
-	}
+
 }
