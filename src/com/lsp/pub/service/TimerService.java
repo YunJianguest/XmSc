@@ -70,6 +70,7 @@ public class TimerService {
 		System.out.println("进入这个方法1");
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
+		
 		sortMap.put("createdate", -1);
 		BasicDBObject dateCondition = new BasicDBObject();
 		dateCondition.append("$gte",new Date());
@@ -78,9 +79,7 @@ public class TimerService {
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap); 
 		for (DBObject dbObject : list) {
 			if(dbObject.get("money")!=null){
-				String price = "0";
-				System.out.println("money"+dbObject.get("money"));
-				System.out.println("time"+dbObject.get("time"));
+				String price = "0"; 
 				
 				if(dbObject.get("money")!=null&&dbObject.get("time")!=null&&Integer.parseInt(dbObject.get("time").toString())>0) { 
             		price = BaseDecimal.division(dbObject.get("money").toString(),dbObject.get("time").toString(),6);
@@ -97,8 +96,7 @@ public class TimerService {
 					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
 					kjlx=ir.getKjlx(); 
 					
-				}
-				System.out.println("--------------///////////--"+price);
+				} 
 				if(kjlx>0){
 					if(kjlx==1){
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",20);
@@ -111,8 +109,7 @@ public class TimerService {
 					} 
 					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
-							//挖矿到矿机账号
-							System.out.println("----------------"+price);
+							//挖矿到矿机账号 
 							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
 							
 						}else{
@@ -134,30 +131,5 @@ public class TimerService {
 		}
 	}
 	
-	/**
-	 * 更新返还账户
-	 */
-	public synchronized void delProstore() throws Exception{
-		System.out.println("进入这个方法2");
-		HashMap<String, Object>sortMap=new HashMap<String, Object>();
-		HashMap<String, Object>whereMap=new HashMap<String, Object>();
-		sortMap.put("createdate", -1);
-		BasicDBObject dateCondition = new BasicDBObject();
-		dateCondition.append("$lt",DateUtil.getTimesnight());
-		whereMap.put("createdate", dateCondition);
-		whereMap.put("state", 0);
-		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap);
-		System.out.println("--list-->"+list);
-		for (DBObject dbObject : list) {
-			InteProstore prostore = (InteProstore)UniObject.DBObjectToObject(dbObject,InteProstore.class);
-			prostore.setState(1);//1-已返完
-			baseDao.insert(PubConstants.INTEGRAL_PROSTORE, prostore);
-			if(prostore.getType().equals("ps_account")){//如果预存类型为开户积分，所以状态为冻结，
-				if(dbObject.get("fromUserid")!=null){
-					wwzservice.changeFreezeJf(null, dbObject.get("fromUserid").toString());
-				}
-			}
-			
-		}
-	}
+	 
 }
