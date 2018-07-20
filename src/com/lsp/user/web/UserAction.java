@@ -1068,8 +1068,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	  	String json = JSONArray.fromObject(userInfoList).toString();
-	  	System.out.println(json);
+	  	String json = JSONArray.fromObject(userInfoList).toString(); 
 	  	Struts2Utils.getRequest().setAttribute("obj", userInfoList);
 		//Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		return "nexus";
@@ -1088,6 +1087,31 @@ public class UserAction extends GeneralAction<UserInfo>
 	public String basemsg()throws Exception{
 		return "basemsg";
 	}
+	/**
+	 * 获取商城的消费总计
+	 */
+	public void  getScxf(){
+		getLscode();
+		HashMap<String,Object>whereMap=new HashMap<>();
+		HashMap<String,Object>sub_Map=new HashMap<>();
+		sub_Map.put("state",1);
+		whereMap.put("type","shop_djzj");
+		whereMap.put("fromUserid",fromUserid);
+		whereMap.put("custid",SysConfig.getProperty("custid"));
+		List<DBObject>list=basedao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+		double count=0;
+		for (DBObject dbObject : list) {
+			if(Double.parseDouble(dbObject.get("value").toString())>0){
+				count+=Double.parseDouble(dbObject.get("value").toString());
+			}
+		}
+		if(count>=3000){
+			sub_Map.put("state",0);
+		}
+		String json = JSONArray.fromObject(sub_Map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
 	
 	/*public String link() throws Exception{
         String custid = SpringSecurityUtils.getCurrentUser().getId();
