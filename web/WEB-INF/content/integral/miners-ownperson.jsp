@@ -240,7 +240,7 @@
                     <font size="1">
                     	<div class="clear txt-c pt-10" style='display:flex;justify-content: center;'>
 	                            <div class="pull-left hang20 line-height22 bg-cheng zi-bai border-radius3 pl-5 pr-5"><i
-	                                    class="fa fa-user line-height20"></i><i class="pl-2">
+	                                    class="fa fa-user line-height20"></i><i class="pl-2" id="sfxs">
 	                                    <c:if test="${user.agentLevel==1}">省级代理</c:if>
 	                                    <c:if test="${user.agentLevel==2}">市级代理</c:if>
 	                                    <c:if test="${user.agentLevel==3}">县级代理</c:if>
@@ -453,6 +453,21 @@
 			wx.onMenuShareQQ(share);
 			wx.onMenuShareWeibo(share);
 		});
+		
+		function checksf(){
+			 if($.trim($("#sfxs").html())=="普通会员"){
+				  $.post('${ctx}/user/user!getScxf.action?lscode=${lscode}', submitData,
+		                  function (json) {
+					      if(json.state==0){
+					    	  $("#sfxs").html("超级会员"); 
+					      } 
+		                  }, "json")
+			 }
+			 
+			
+		}
+		checksf();
+
 </script>
 <%@ include file="/webcom/toast.jsp" %>
 <c:if test="${com.zsjf>0}">
