@@ -249,10 +249,10 @@
 	                                    <c:if test="${user.agentLevel== '' || user.agentLevel == null}">
 	                                        <c:choose>
 	                                            <c:when test="${user._id != 'notlogin'}">
-	                                                                                                                                          普通会员
+	                                                                                                                                           游客
 	                                            </c:when>
 	                                            <c:otherwise>
-                                                                                                                                                        游客
+                                                                                                                                                       未登录
                                                 </c:otherwise>
 	                                        </c:choose>
 	                                    </c:if>
@@ -575,11 +575,11 @@ wx.ready(function(){
 });
 
 function checksf(){
-	 if($.trim($("#sfxs").html())=="普通会员"){
+	 if($.trim($("#sfxs").html())=="游客"){
 		  $.post('${ctx}/user/user!getScxf.action?lscode=${lscode}', submitData,
                   function (json) {
 			      if(json.state==0){
-			    	  $("#sfxs").html("超级会员"); 
+			    	  $("#sfxs").html("会员"); 
 			      } 
                   }, "json")
 	 }
