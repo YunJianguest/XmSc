@@ -78,20 +78,40 @@ public class UserInfo extends ReflectionDBObject {
 	 */
 	private String county;
 	/**
-	 * 代理的县
+	 * 代理的省
 	 */
-	private String agentcounty;
+	private Long agentprovinceid;
 	/**
 	 * 代理的市
 	 */
-	private String agentcity;
+	private Long agentcityid;
+	/**
+	 * 代理的县id
+	 */
+	private Long agentcountyid;
+	/**
+	 * 部门的县id
+	 */
+	private Long deptcountyid;
 	/**
 	 * 代理的省
 	 */
 	private String agentprovince;
 	/**
+	 * 代理的市
+	 */
+	private String agentcity;
+	/**
+	 * 代理的县
+	 */
+	private String agentcounty;
+	/**
+	 * 部门的县
+	 */
+	private String deptcounty;
+	/**
 	 * 代理商   类型
-	 * 1-省  2-市  3-县   4-部门  5-会员  6-会员的下级会员
+	 * 1-省  2-市  3-县   4-部门 
 	 * 2018/6/20
 	 */
 	private int agentLevel;
@@ -214,15 +234,7 @@ public class UserInfo extends ReflectionDBObject {
 	 */
 	private Date   agentedate; 
 	private  int isfull;//1-已补全  其余-未补全
-	/*private String    idcards; 
 	
-	public String getIdcards() {
-		return idcards;
-	}
-
-	public void setIdcards(String idcards) {
-		this.idcards = idcards;
-	}*/
 
 	public Date getAgentedate() {
 		return agentedate;
@@ -590,6 +602,46 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setOrgid(Long orgid) {
 		this.orgid = orgid;
+	}
+
+	public Long getAgentprovinceid() {
+		return agentprovinceid;
+	}
+
+	public void setAgentprovinceid(Long agentprovinceid) {
+		this.agentprovinceid = agentprovinceid;
+	}
+
+	public Long getAgentcityid() {
+		return agentcityid;
+	}
+
+	public void setAgentcityid(Long agentcityid) {
+		this.agentcityid = agentcityid;
+	}
+
+	public Long getAgentcountyid() {
+		return agentcountyid;
+	}
+
+	public void setAgentcountyid(Long agentcountyid) {
+		this.agentcountyid = agentcountyid;
+	}
+
+	public Long getDeptcountyid() {
+		return deptcountyid;
+	}
+
+	public void setDeptcountyid(Long deptcountyid) {
+		this.deptcountyid = deptcountyid;
+	}
+
+	public String getDeptcounty() {
+		return deptcounty;
+	}
+
+	public void setDeptcounty(String deptcounty) {
+		this.deptcounty = deptcounty;
 	}
 
 	public String getParentId() {

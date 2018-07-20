@@ -11,8 +11,15 @@ import com.mongodb.ReflectionDBObject;
  */
 public class AgentArea extends ReflectionDBObject{ 
 	private String area;//地区
+	private String custid;
 	private Long parentId;//父id
-	private Long agentId;//代理商id
+	private String agentId;//代理商id
+	/**
+	 * 代理商   类型
+	 * 1-省  2-市  3-县   4-部门 
+	 * 2018/6/20
+	 */
+	private int agentLevel;
 	private int  sort;
 	private Date createdate; 
 	public int getSort() {
@@ -34,10 +41,10 @@ public class AgentArea extends ReflectionDBObject{
 		this.area = area;
 	}
 	 
-	public Long getAgentId() {
+	public String getAgentId() {
 		return agentId;
 	}
-	public void setAgentId(Long agentId) {
+	public void setAgentId(String agentId) {
 		this.agentId = agentId;
 	}
 	public Long getParentId() {
@@ -45,6 +52,18 @@ public class AgentArea extends ReflectionDBObject{
 	}
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
+	}
+	public String getCustid() {
+		return custid;
+	}
+	public void setCustid(String custid) {
+		this.custid = custid;
+	}
+	public int getAgentLevel() {
+		return agentLevel;
+	}
+	public void setAgentLevel(int agentLevel) {
+		this.agentLevel = agentLevel;
 	} 
 	
 	

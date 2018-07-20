@@ -6,6 +6,7 @@ import com.lsp.integral.entity.InteSetting;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Fromusermb;
+import com.lsp.pub.entity.FuncInfo;
 import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.RoleInfo;
@@ -19,12 +20,14 @@ import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.util.UserUtil;
-import com.lsp.pub.web.GeneralAction; 
+import com.lsp.pub.web.GeneralAction;
+import com.lsp.user.entity.AgentArea;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject; 
+import com.mongodb.DBObject;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -146,6 +149,12 @@ public class UserAction extends GeneralAction<UserInfo>
     sortMap.clear();
     sortMap.put("sort", -1);  
     Struts2Utils.getRequest().setAttribute("fromfunc", basedao.getList(PubConstants.PUB_FROMUSERFUNC, null, sortMap));
+    whereMap.clear();
+    sortMap.put("sort", -1); 
+    whereMap.put("custid",SysConfig.getProperty("custid"));
+    whereMap.put("parentId",0L);
+	List<DBObject> arealist = basedao.getList(PubConstants.USER_AGENTAREA, whereMap, sortMap);
+	Struts2Utils.getRequest().setAttribute("arealist", arealist);
     return SUCCESS;
   }
 
@@ -210,16 +219,15 @@ public class UserAction extends GeneralAction<UserInfo>
     try
     {   HashMap<String, Object>whereMap=new HashMap<String, Object>();
         whereMap.put("_id", _id);
-        whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
+        //whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
     	
-        this.basedao.delete(PubConstants.USER_INFO,whereMap);
-        addActionMessage("删除失败");
+        this.basedao.delete(PubConstants.USER_INFO,"5b49d69c881eafed58f29bcb");
+       
+        addActionMessage("删除成功");
       
-    }
-    catch (Exception e)
-    {
+    }catch (Exception e){
       e.printStackTrace();
-      addActionMessage("删除成功");
+      addActionMessage("删除失败");
     }
     return RELOAD;
   }
@@ -248,6 +256,8 @@ public class UserAction extends GeneralAction<UserInfo>
 		if(wwzservice.getfromusermbs(_id)!=null){
 			db.put("mb",wwzservice.getfromusermbs(_id).get("mb"));
 		} 
+		
+		System.out.println("------1---->"+db);
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
   } 
@@ -278,66 +288,111 @@ public class UserAction extends GeneralAction<UserInfo>
 			String  funcs=Struts2Utils.getParameter("funcs");
 			String  fxmb=Struts2Utils.getParameter("mb");
 			String  area=Struts2Utils.getParameter("area");
-			String  province=Struts2Utils.getParameter("province");
-			String  city=Struts2Utils.getParameter("city");
-			String  county=Struts2Utils.getParameter("county"); 
+			
 			String  agentLevel=Struts2Utils.getParameter("agentLevel");
 			String  number=Struts2Utils.getParameter("number");
 			String  renumber=Struts2Utils.getParameter("renumber");
 			String  headimgurl=Struts2Utils.getParameter("headimgurl");
 			String  fromUser=Struts2Utils.getParameter("fromUser");
 			
+			String  agentprovinceid=Struts2Utils.getParameter("agentprovinceid");
+			String  agentcityid=Struts2Utils.getParameter("agentcityid");
+			String  agentcountyid=Struts2Utils.getParameter("agentcountyid");
+			
+			String  province=Struts2Utils.getParameter("agentprovince");
+			String  city=Struts2Utils.getParameter("agentcity");
+			String  county=Struts2Utils.getParameter("agentcounty"); 
 
 			//验证省市县是否已经售卖
 			
 			if(StringUtils.isNotEmpty(agentLevel)) {
 				HashMap<String, Object>wheresMap=new HashMap<>();
-				if(Integer.parseInt(agentLevel)==1) { 
-					wheresMap.put("province", province.trim());
+				if(Integer.parseInt(agentLevel)==1) {
+					if(StringUtils.isNotEmpty(agentprovinceid)){
+						wheresMap.put("agentprovinceid", Long.parseLong(agentprovinceid));
+					}
+					
 					wheresMap.put("agentLevel",1);
 					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap); 
 					if(db!=null) {
-						//省代存在
-						sub_Map.put("state",2);
-						String json = JSONArray.fromObject(sub_Map).toString();
-						 
-						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-					    return;
+						if(StringUtils.isNotEmpty(id)){
+							if(!db.get("_id").toString().equals(id)){
+								//省代存在
+								sub_Map.put("state",2);
+								String json = JSONArray.fromObject(sub_Map).toString();
+								 
+								Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+							    return;
+							}
+						}else{
+							//省代存在
+							sub_Map.put("state",2);
+							String json = JSONArray.fromObject(sub_Map).toString();
+							 
+							Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+						    return;
+						}
+						
 					}
 				}else if(Integer.parseInt(agentLevel)==2) { 
-					wheresMap.put("city", city.trim());
+					if(StringUtils.isNotEmpty(agentcityid)){
+						wheresMap.put("agentcityid", Long.parseLong(agentcityid));
+					}
+					
 					wheresMap.put("agentLevel",2);
 					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
 					System.out.println(db);
 					if(db!=null) {
-						//省代存在
-						sub_Map.put("state",2);
-						String json = JSONArray.fromObject(sub_Map).toString();
-						 
-						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-					    return;
+						if(StringUtils.isNotEmpty(id)){
+							if(!db.get("_id").toString().equals(id)){
+								//省代存在
+								sub_Map.put("state",2);
+								String json = JSONArray.fromObject(sub_Map).toString();
+								 
+								Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+							    return;
+							}
+						}else{
+							//省代存在
+							sub_Map.put("state",2);
+							String json = JSONArray.fromObject(sub_Map).toString();
+							 
+							Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+						    return;
+						}
+						
 					}
 					
 				}else if(Integer.parseInt(agentLevel)==3) { 
-					wheresMap.put("county", county.trim());
+					if(StringUtils.isNotEmpty(agentcountyid)){
+						wheresMap.put("agentcountyid", Long.parseLong(agentcountyid));
+					}
 					wheresMap.put("agentLevel",3);
 					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
 					System.out.println(db);
 					if(db!=null) {
-						//省代存在
-						sub_Map.put("state",2);
-						String json = JSONArray.fromObject(sub_Map).toString(); 
-						Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-					    return;
+						if(StringUtils.isNotEmpty(id)){
+							if(!db.get("_id").toString().equals(id)){
+								//省代存在
+								sub_Map.put("state",2);
+								String json = JSONArray.fromObject(sub_Map).toString();
+								 
+								Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+							    return;
+							}
+						}else{
+							//省代存在
+							sub_Map.put("state",2);
+							String json = JSONArray.fromObject(sub_Map).toString();
+							 
+							Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+						    return;
+						}
+						
 					}
 					
 				}
-				
-				
-				
 			}
-			
-			
 			UserInfo  user=new UserInfo();
 			if(StringUtils.isEmpty(id)){
 				//新开用户
@@ -362,7 +417,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 				
 			}
-		
+			System.out.println("id---->"+user.get_id().toString());
 			user.setAccount(account);
 			user.setPassword(password);
 			user.setToUser(toUser);
@@ -380,6 +435,16 @@ public class UserAction extends GeneralAction<UserInfo>
 			}
 			if(StringUtils.isNotEmpty(county)) {
 				user.setAgentcounty(county);
+			}
+			if(StringUtils.isNotEmpty(agentprovinceid)) {
+				user.setAgentprovinceid(Long.parseLong(agentprovinceid));
+			}
+			if(StringUtils.isNotEmpty(agentcityid)) {
+				user.setAgentcityid(Long.parseLong(agentcityid));
+			}
+			if(StringUtils.isNotEmpty(agentcountyid)) {
+				user.setAgentcountyid(Long.parseLong(agentcountyid));
+				
 			}
 			if(StringUtils.isNotEmpty(roleid)){
 				user.setRoleid(Long.parseLong(roleid));	
@@ -400,6 +465,64 @@ public class UserAction extends GeneralAction<UserInfo>
 			}
 			if(StringUtils.isNotEmpty(agentLevel)){
 				user.setAgentLevel(Integer.parseInt(agentLevel));
+				whereMap.clear();
+				whereMap.put("agentId", id);
+				DBObject dbObjects = basedao.getMessage(PubConstants.USER_AGENTAREA, whereMap);
+				if(dbObjects != null){
+					 AgentArea entitys = (AgentArea)UniObject.DBObjectToObject(dbObjects, AgentArea.class);
+					 entitys.setAgentId("");
+					 entitys.setAgentLevel(0);
+					 basedao.insert(PubConstants.USER_AGENTAREA, entitys);
+				}
+				//省级代理
+				if(agentLevel.equals("1")){
+					DBObject dbObject = basedao.getMessage(PubConstants.USER_AGENTAREA, Long.parseLong(agentprovinceid));
+					if( dbObject!=null ){
+						 AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
+						 entity.setAgentId(user.get_id().toString());
+						 entity.setAgentLevel(1);
+						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
+					}
+				}
+				//市级代理
+				if(agentLevel.equals("2")){
+					DBObject dbObject = basedao.getMessage(PubConstants.USER_AGENTAREA, Long.parseLong(agentcityid));
+					if( dbObject!=null ){
+						 AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
+						 entity.setAgentId(user.get_id().toString());
+						 entity.setAgentLevel(2);
+						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
+					}
+				}
+				//县级代理
+				if(agentLevel.equals("3")){
+					DBObject dbObject = basedao.getMessage(PubConstants.USER_AGENTAREA, Long.parseLong(agentcountyid));
+					if( dbObject!=null ){
+						 AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
+						 entity.setAgentId(user.get_id().toString());
+						 entity.setAgentLevel(3);
+						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
+					}
+				}
+				//部门
+				if(agentLevel.equals("4")){
+
+					DBObject dbObject = basedao.getMessage(PubConstants.USER_AGENTAREA, Long.parseLong(agentcountyid));
+								
+					if( dbObject!=null ){
+						AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
+							entity.setAgentId(user.get_id().toString());
+							entity.setAgentLevel(4);
+						}
+					}
+						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
+
+			      if(StringUtils.isNotEmpty(agentcountyid)){
+			    	  user.setDeptcountyid(Long.parseLong(agentcountyid));
+			      }
+			      if(StringUtils.isNotEmpty(county)){
+			    	  user.setDeptcounty(county);
+			      }
 			}
 			if(org.apache.commons.lang3.StringUtils.isNotEmpty(type)){
 				user.setType(Integer.parseInt(type));	
@@ -419,7 +542,6 @@ public class UserAction extends GeneralAction<UserInfo>
 			List<DBObject>list=new ArrayList<DBObject>();
 			  if(StringUtils.isNotEmpty(funcs)){
 				  String[]lsfunc=funcs.split(",");
-				  System.out.println("funcs--->"+funcs);
 				  for (String string : lsfunc) {
 					if(StringUtils.isNotEmpty(string)){
 						DBObject  db=basedao.getMessage(PubConstants.PUB_FROMUSERFUNC, Long.parseLong(string));
@@ -966,5 +1088,21 @@ public class UserAction extends GeneralAction<UserInfo>
 	public String basemsg()throws Exception{
 		return "basemsg";
 	}
+	
+	/*public String link() throws Exception{
+        String custid = SpringSecurityUtils.getCurrentUser().getId();
+        List<DBObject> list = new ArrayList<>();
+        HashMap<String, Object>whereMap = new HashMap<>();
+        if(custid.equals(SysConfig.getProperty("custid"))){
+        	
+        }else{
+        	whereMap.put("custid", custid);
+        	
+        	list = 
+        }
+		return "link";
+	}*/
+	
+	
 	
 }

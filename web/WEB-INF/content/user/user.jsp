@@ -103,8 +103,6 @@
                         $('#nickname').val(json.nickname);
                         $('#roleid').val(json.roleid);
                         $('#type').val(json.type); 
-                        $('#province').val(json.province);
-                        $('#city').val(json.city); 
                         $('#agentLevel').val(json.agentLevel).trigger("change");
                         $('#number').val(json.no);
                         $('#headimgurl').val(json.headimgurl);
@@ -129,7 +127,47 @@
                         	$("#agentLevel_show").hide();
                     		$("#agentLevel_show").val("").trigger("change");
                         }
-                    }, "json")
+                        $("#agentprovinceid").val(json.agentprovinceid).trigger("change");
+                        
+                        var submitData = {
+                          		 id: json.agentprovinceid
+                           };
+                           $.post('${ctx}/user/area!getchild.action', submitData,
+                                   function (json1) {
+                                      if(json1.state==0){ 
+                                      	var list=json1.list;
+                                      	var options="<option  value=''>请选择</option>"; 
+                                      	for (var i = 0; i < list.length; i++) {	
+                                      		options+="<option  value="+list[i]._id+" >"+list[i].area+"</option>";	
+                  						}
+                                         $("#agentcityid").html(options); 
+                                         $("#agentcityid").val(json.agentcityid).trigger("change");
+                                      }else{
+				                    	   $("#agentcityid").val("").trigger("change"); 
+				                    	   $("#agentcityid").html("<option  value=''>暂无数据</option>"); 
+				                       }
+                                   }, "json")
+                        
+                            var submitData = {
+				           		 id: json.agentcityid
+				            };
+				            $.post('${ctx}/user/area!getchild.action', submitData,
+				                    function (json2) {
+				                       if(json2.state==0){ 
+				                       	var list=json2.list;
+				                       	var options="<option  value=''>请选择</option>"; 
+				                       	for (var i = 0; i < list.length; i++) {	
+				                       		options+="<option  value="+list[i]._id+" >"+list[i].area+"</option>";	
+				   						}
+				                          $("#agentcountyid").html(options); 
+				                          $("#agentcountyid").val(json.agentcountyid).trigger("change"); 
+				                       }else{
+				                    	   $("#agentcountyid").val("").trigger("change"); 
+				                    	   $("#agentcountyid").html("<option  value=''>暂无数据</option>"); 
+				                       }
+				                    }, "json")
+                        
+                    }, "json") 
             $('#inszc').modal({
                 show: true
             });
@@ -177,7 +215,16 @@
                 renumber: $('#renumber').val(),
                 upIds: $('#upIds').val(),
                 headimgurl: $('#headimgurl').val(),
-                fromUser: $('#fromUser').val()
+                fromUser: $('#fromUser').val(),
+                
+                agentprovinceid:$("#agentprovinceid").val(),
+                agentcityid:$("#agentcityid").val(),
+                agentcountyid:$("#agentcountyid").val(),
+                
+                agentprovince:$("#agentprovinceid").find("option:selected").text(),
+                agentcity:$("#agentprovinceid").find("option:selected").text(),
+                agentcounty:$("#agentcountyid").find("option:selected").text()
+                
             };
             $.post('${ctx}/user/user!ajaxsave.action', submitData,
                     function (json) {
@@ -228,6 +275,51 @@
         		$("#agentLevel_show").hide();
         		$("#agentLevel_show").val("").trigger("change");
         	}
+        }
+        
+        
+        var mintypeid;
+        function getchild(id) {
+            var submitData = {
+           		 id: id
+            };
+            $.post('${ctx}/user/area!getchild.action', submitData,
+                    function (json) {
+                       if(json.state==0){ 
+                       	var list=json.list;
+                       	var options="<option  value=''>请选择</option>"; 
+                       	for (var i = 0; i < list.length; i++) {	
+                       		options+="<option  value="+list[i]._id+" >"+list[i].area+"</option>";	
+   						}
+                          $("#agentcityid").html(options); 
+                          $("#agentcountyid").html("<option  value=''>请选择</option>"); 
+                       }else{
+                    	   $("#agentcityid").val("").trigger("change"); 
+                    	   $("#agentcityid").html("<option  value=''>暂无数据</option>"); 
+                       }
+                    }, "json")
+                    
+        }
+     function getminchild(id) {
+        	
+            var submitData = {
+           		 id: id
+            };
+            $.post('${ctx}/user/area!getchild.action', submitData,
+                    function (json) {
+                       if(json.state==0){ 
+                       	var list=json.list;
+                       	var options="<option  value=''>请选择</option>"; 
+                       	for (var i = 0; i < list.length; i++) {	
+                       		options+="<option  value="+list[i]._id+" >"+list[i].area+"</option>";	
+   						}
+                          $("#agentcountyid").html(options); 
+                       }else{
+                    	   $("#agentcountyid").val("").trigger("change"); 
+                    	   $("#agentcountyid").html("<option  value=''>暂无数据</option>"); 
+                       }
+                    }, "json")
+                    
         }
     </script>
     <style>
@@ -478,26 +570,41 @@
                                 </select>
                                 <label class="error" for="agentLevel"></label>
                             </div>
-                        </div>
+                        </div>  
                         <div class="col-sm-2">
                             <div class="form-group-20">
-                                <label class="control-label">省份:</label>
-                                <input type="text" id="province" name="province"
-                                       class="form-control" placeholder="请输入"/>
+                                <label class="control-label">代理省份:</label>
+                               <!--  <input type="text" id="province" name="province"
+                                       class="form-control" placeholder="请输入"/> -->
+                                <select id="agentprovinceid" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="请选择" >
+                                    <option value="">请选择</option> 
+                                    <c:forEach items="${arealist}" var="bean">
+                                        <option value="${bean._id}" ops="${bean.area}">${bean.area}</option>
+                                    </c:forEach>
+                                </select>
                        </div>
                         </div> 
                          <div class="col-sm-2">
                             <div class="form-group-20">
-                                <label class="control-label">市:</label>
-                                <input type="text" id="city" name="city"
-                                       class="form-control" placeholder="请输入"/>
+                                <label class="control-label">代理市:</label>
+                                <!-- <input type="text" id="city" name="city"
+                                       class="form-control" placeholder="请输入"/> -->
+                             <select id="agentcityid" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="请选择" >
+                                    
+                                </select>
                        </div>
                       </div> 
                        <div class="col-sm-2">
                             <div class="form-group-20">
-                                <label class="control-label">县:</label>
-                                <input type="text" id="county" name="county"
-                                       class="form-control" placeholder="请输入"/>
+                                <label class="control-label">代理县:</label>
+                               <!--  <input type="text" id="county" name="county"
+                                       class="form-control" placeholder="请输入"/> -->
+                                <select id="agentcountyid" class="select2 form-control" style="line-height: 28px!important;"
+                                        required data-placeholder="请选择" >
+                                    
+                                </select>
                        </div>
                       </div>   
                     <div class="row"> 
@@ -744,5 +851,33 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+		$('#agentprovinceid').change(function(){ 
+			var id=$("#agentprovinceid").val();
+			//alert(id);
+			var ops=$("#agentprovinceid").attr("ops");
+			 
+			/* alert(); */
+			if(isNaN(id)||id==null||id==''){
+				$("#agentcityid").html("<option  value=''>请选择</option>"); 
+				$("#agentcountyid").html("<option  value=''>请选择</option>"); 
+			}else{ 
+				getchild(id); 	
+			}
+			
+			
+		});
+		$('#agentcityid').change(function(){ 
+			var id=$("#agentcityid").val();
+			if(isNaN(id)||id==null||id==''){
+				$("#agentcountyid").html("<option  value=''>请选择</option>"); 
+			}else{ 
+				getminchild(id); 	
+			}
+			
+			
+		});
+
+</script>
 </body>
 </html>

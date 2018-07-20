@@ -93,17 +93,19 @@
 										    <th class="table-action">ID</th> 
 											<th class="table-action">地区</th> 
 											<th class="table-action">父id</th>
-											<th class="table-action">代理商id</th> 
+											<th class="table-action">代理商账户</th> 
+											<th class="table-action">代理商等级</th> 
 											<th class="table-action">操作</th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${funcList}" var="bean">
+										<c:forEach items="${list}" var="bean">
 											<tr>
 											    <td>${bean._id}</td> 
 												<td>${bean.area}</td> 
 												<td>${bean.parentId}</td> 
 												<td>${bean.agentId}</td> 
+												<td>${bean.agentLevel}</td> 
 												<td class="table-action">
 													<div class="btn-group1">
 														<a data-toggle="dropdown" class="dropdown-toggle"> <i

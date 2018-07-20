@@ -35,7 +35,7 @@ import net.sf.json.JSONObject;
  *
  */
 @Namespace("/user")
-@Results({@org.apache.struts2.convention.annotation.Result(name="reload", params = {"parentId", "%{parentId}" },location="area.action", type="redirect")})
+@Results({@org.apache.struts2.convention.annotation.Result(name="reload", params = {"parentId", "%{parentId}" ,"fypage", "%{fypage}"},location="area.action", type="redirect")})
 public class AreaAction extends GeneralAction<AgentArea>{
 	 private static final long serialVersionUID = -6784469775589971579L;
 
@@ -58,19 +58,35 @@ public class AreaAction extends GeneralAction<AgentArea>{
 	  }
 	  @Override
 	  public String execute() throws Exception {
-		  	HashMap<String, Object> sortMap = new HashMap<String, Object>();
-			HashMap<String, Object> whereMap = new HashMap<String, Object>();
-			sortMap.put("sort", 1);
-			String  parentid ="";
-			if (!StringUtils.isEmpty(Struts2Utils.getParameter("parentId"))) {
-				parentid =Struts2Utils.getParameter("parentId");
-				whereMap.put("parentId", Long.parseLong(parentid));
-			}else {
-				whereMap.put("parentId", null); 
-			}  
-			List<DBObject> list = basedao.getList(PubConstants.USER_AGENTAREA,whereMap, sortMap);
-			fycount=basedao.getCount(PubConstants.USER_AGENTAREA,whereMap);
-			Struts2Utils.getRequest().setAttribute("funcList", list); 
+	  	HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		sortMap.put("sort", 1);
+		String  parentid =Struts2Utils.getParameter("parentId");
+		if (StringUtils.isNotEmpty(parentid)) {
+			parentid =Struts2Utils.getParameter("parentId");
+			whereMap.put("parentId", Long.parseLong(parentid));
+		}else {
+			whereMap.put("parentId", 0L); 
+		} 
+        Struts2Utils.getRequest().setAttribute("parentId", parentid);
+		sortMap.put("createdate", Integer.valueOf(-1));
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		} 
+		List<DBObject> list = basedao.getList(PubConstants.USER_AGENTAREA, whereMap,fypage,10,sortMap);
+		for (DBObject dbObject : list) {
+			if(dbObject.get("agentId") != null){
+				DBObject dbObject2 = basedao.getMessage(PubConstants.USER_INFO, dbObject.get("agentId").toString());
+				if(dbObject2 != null){
+					if(dbObject2.get("account") != null){
+						dbObject.put("agentId", dbObject2.get("account").toString());
+					}
+				}
+			}
+		}
+		fycount=basedao.getCount(PubConstants.USER_AGENTAREA,whereMap);
+		Struts2Utils.getRequest().setAttribute("list", list); 
+		Struts2Utils.getRequest().setAttribute("fycount", fycount); 
 	  	 return SUCCESS;
 	  }
 	@Override
@@ -93,7 +109,11 @@ public class AreaAction extends GeneralAction<AgentArea>{
 				_id=mongoSequence.currval(PubConstants.USER_AGENTAREA);
 			}
 			entity.set_id(_id);
+			if (StringUtils.isEmpty(Struts2Utils.getParameter("parentId"))) {
+				entity.setParentId(0L);
+			}
 			entity.setCreatedate(new Date());   
+			entity.setCustid(SysConfig.getProperty("custid"));
 			basedao.insert(PubConstants.USER_AGENTAREA, entity);
 			addActionMessage("添加成功!");
 		} catch (Exception e) {
@@ -138,6 +158,32 @@ public class AreaAction extends GeneralAction<AgentArea>{
 		DBObject db = basedao.getMessage(PubConstants.USER_AGENTAREA, _id); 
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
+	}
+	/**
+	 * 获取下一级地址
+	 * @throws Exception
+	 */
+	public void getchild() throws Exception{
+		HashMap<String, Object>whereMap=new HashMap<>();
+		HashMap<String, Object>sortMap=new HashMap<>();
+		Map<String,Object>sub_map=new HashMap<>();
+		sub_map.put("state", 1);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		String parentId = Struts2Utils.getParameter("id");
+		
+		if(StringUtils.isNotEmpty(parentId)){
+			whereMap.put("parentId", Long.parseLong(parentId));
+		}else{
+			whereMap.put("parentId", 0L);
+		}
+		sortMap.put("sort", Long.valueOf(-1));
+		List<DBObject>list=basedao.getList(PubConstants.USER_AGENTAREA, whereMap,  sortMap);
+		if(list.size()>0){
+			sub_map.put("state", 0);
+			sub_map.put("list", list);			
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 
 	 
