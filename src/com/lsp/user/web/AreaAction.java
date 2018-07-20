@@ -114,6 +114,9 @@ public class AreaAction extends GeneralAction<AgentArea>{
 			}
 			entity.setCreatedate(new Date());   
 			entity.setCustid(SysConfig.getProperty("custid"));
+			if(StringUtils.isEmpty(entity.getAgentId())){
+				entity.setAgentId("");
+			}
 			basedao.insert(PubConstants.USER_AGENTAREA, entity);
 			addActionMessage("添加成功!");
 		} catch (Exception e) {

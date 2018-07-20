@@ -24,6 +24,7 @@ import com.lsp.pub.web.GeneralAction;
 import com.lsp.user.entity.AgentArea;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -1113,19 +1114,60 @@ public class UserAction extends GeneralAction<UserInfo>
 	}
 	
 	
-	/*public String link() throws Exception{
+	public String link() throws Exception{
         String custid = SpringSecurityUtils.getCurrentUser().getId();
+        HashMap<String, Object> sortMap = new HashMap<String, Object>();
+        HashMap<String, Object> whereMap = new HashMap<String, Object>();
         List<DBObject> list = new ArrayList<>();
-        HashMap<String, Object>whereMap = new HashMap<>();
-        if(custid.equals(SysConfig.getProperty("custid"))){
-        	
+        String id = Struts2Utils.getParameter("parentId");
+        if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
+			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+        sortMap.put("sort", -1);
+        BasicDBObject dateCondition = new BasicDBObject();
+        if(StringUtils.isNotEmpty(id) && !id.equals("0")){
+        	dateCondition.append("$ne", "");
+			whereMap.put("agentId", dateCondition);
+        	whereMap.put("parentId", Long.parseLong(id));
         }else{
-        	whereMap.put("custid", custid);
-        	
-        	list = 
+        	if(custid.equals(SysConfig.getProperty("custid"))){
+        		dateCondition.append("$ne", "");
+    			whereMap.put("agentId", dateCondition);
+        		whereMap.put("parentId", 0L);
+            }else{
+            	whereMap.put("agentId", custid);
+            	DBObject dbs = basedao.getMessage(PubConstants.USER_AGENTAREA, whereMap);
+            	
+            	if( dbs != null){
+            		whereMap.clear();
+            		if(dbs.get("parentId") != null){
+            			whereMap.put("parentId", Long.parseLong(dbs.get("parentId").toString()));
+            		}
+            	}
+            	
+            }
         }
+        Struts2Utils.getRequest().setAttribute("parentId", id);
+        list = basedao.getList(PubConstants.USER_AGENTAREA, whereMap,fypage,10, sortMap);
+        if(list.size() > 0){
+        	 for (DBObject dbObject : list) {
+        		 if(dbObject.get("agentId") != null){
+     				DBObject dbObject2 = basedao.getMessage(PubConstants.USER_INFO, dbObject.get("agentId").toString());
+     				if(dbObject2 != null){
+     					if(dbObject2.get("account") != null){
+     						dbObject.put("agentId", dbObject2.get("account").toString());
+     					}
+     				}
+     			}
+     		}
+        }
+       
+        Struts2Utils.getRequest().setAttribute("list", list);
+        this.fycount = this.basedao.getCount(PubConstants.USER_AGENTAREA,whereMap);
+        Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
 		return "link";
-	}*/
+	}
+	
 	
 	
 	
