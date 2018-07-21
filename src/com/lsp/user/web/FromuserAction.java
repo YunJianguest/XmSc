@@ -1063,4 +1063,63 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	  	Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		//Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
+	
+	/**
+	 * 用户关系n层
+	 */
+	public void ajaxnexus1()throws Exception{
+		getLscode();
+		Map<String, Object>sub_Map=new HashMap<String, Object>();
+		HashMap<String, Object>sortMap = new HashMap<>();
+		sortMap.put("createdate", -1);
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		Map<String, Object>sub_Map1=new HashMap<String, Object>();
+		List<Object> userInfoList = new ArrayList<Object>();
+		try {
+			    DBObject   user=wwzservice.getWxUser(fromUserid);
+			    HashMap<String, Object>whereMap=new HashMap<>(); 
+				
+				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
+				Long number = info.getNumber();//用户的编号
+				
+				sub_Map1.put("user", info);
+				whereMap=new HashMap<>();
+				whereMap.put("renumber", number);
+				List<DBObject>list1=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+				
+				
+				
+					List<Object> userInfoList1 = new ArrayList<Object>();
+					for(int j=0;j<list1.size();j++) {
+						Map<String, Object>sub_Map2=new HashMap<String, Object>();
+						UserInfo  info1=(UserInfo) UniObject.DBObjectToObject(list1.get(j), UserInfo.class);
+						Long number1 = info1.getNumber();//用户的编号
+						sub_Map2.put("user", info1);
+						whereMap=new HashMap<>();
+						whereMap.put("renumber", number1);
+						while(true){ 
+						List<DBObject>list2=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+						
+						sub_Map2.put("son", list2);
+						userInfoList1.add(sub_Map2);
+						}
+					}
+					sub_Map1.put("son", userInfoList1);
+					
+					
+			
+				
+				//sub_Map.put("userinfo", sub_Map1);
+		 
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		userInfoList.add(sub_Map1);
+	  	String json = JSONArray.fromObject(userInfoList).toString();
+	  	Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		//Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
 }
