@@ -60,6 +60,18 @@
 		}, "json")
 		ps_show('inszc');
 	} 
+    function page_submit(num){
+     	
+     	if(num==-1){
+     		$("#fypage").val(0);	
+     	}else if(num==-2){
+     		$("#fypage").val($("#fypage").val()-1);	
+     	}else{
+     		$("#fypage").val(num);	
+     	}
+
+     	$("#custinfoForm").submit();
+     }
 </script>
 </head>
 <body>
@@ -68,7 +80,7 @@
 		<div class="mainpanel">
 			<%@include file="/webcom/header-headerbar.jsp"%>
 			<form id="custinfoForm" name="custinfoForm" method="post"
-				action="${contextPath}/user/user!minlink.action">
+				action="${contextPath}/user/user!minlink.action?id=${id}">
 				<div class="pageheader">
 					<h2>
 						<i class="fa fa-user"></i> 微官网 <span>代理关系</span>
@@ -83,6 +95,16 @@
 						</div>
 					</div>
 				</div>
+					<div class="panelss ">
+				   	  <div class="panel-body fu10">
+				        <div class="row-pad-5">
+				            <div class="form-group col-sm-1d">
+				            <input type="text" name="title"  value="${title}" placeholder="账户检索"  class="form-control" />
+				            </div> 
+				            <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+				      </div>
+			    </div><!-- panel-body -->
+				</div><!-- panel -->
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-12">
@@ -90,22 +112,16 @@
 								<table class="table table-striped table-action table-primary mb30">
 									<thead>
 										<tr>
-										    <!-- <th class="table-action">ID</th>  -->
 										    <th class="table-action">部门账户</th> 
 											<th class="table-action">地区</th> 
-											<!-- <th class="table-action">父id</th> -->
-											<!-- <th class="table-action">代理商等级</th>  -->
 											<th class="table-action">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${list}" var="bean">
 											<tr>
-											   <%--  <td>${bean._id}</td>  --%>
 											    <td>${bean.account}</td> 
 												<td>${bean.deptcounty}</td> 
-												<%-- <td>${bean.parentId}</td>  --%>
-												<%-- <td>${bean.agentLevel}</td>  --%>
 												<td class="table-action">
 													<div class="btn-group1">
 														<a data-toggle="dropdown" class="dropdown-toggle"> <i
@@ -114,7 +130,9 @@
 															<%-- <li><a href="${contextPath}/user/user!link.action?parentId=${bean._id}"> <i
 																	class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;查看下级</a>
 															</li> --%>
-															
+															<li><a href="${contextPath}/suc/integral!profit.action?custid=${bean.agentId}&state=1"> <i
+																	class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;查看积分详情</a>
+														    </li>
 														</ul>
 													</div></td>
 											</tr>

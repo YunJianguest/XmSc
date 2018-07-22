@@ -1099,6 +1099,8 @@ public class UserAction extends GeneralAction<UserInfo>
         HashMap<String, Object> whereMap = new HashMap<String, Object>();
         List<DBObject> list = new ArrayList<>();
         String id = Struts2Utils.getParameter("parentId");
+        String title = Struts2Utils.getParameter("title");
+        String sel_state = Struts2Utils.getParameter("sel_state");
         if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
@@ -1121,6 +1123,25 @@ public class UserAction extends GeneralAction<UserInfo>
             }
         }
         Struts2Utils.getRequest().setAttribute("parentId", id);
+        if(StringUtils.isNotEmpty(title)){
+        	 Pattern pattern = Pattern.compile("^.*" + title + ".*$", 
+        			 Pattern.CASE_INSENSITIVE);
+		      whereMap.put("area", pattern);
+        }
+        Struts2Utils.getRequest().setAttribute("title", title);
+        if(StringUtils.isNotEmpty(sel_state)){
+        	if(sel_state.equals("1")){//未出售
+        		whereMap.put("agentId", "");
+        	}
+            if(sel_state.equals("2")){//已出售
+            	BasicDBObject dateCondition = new BasicDBObject();
+    			// 去除不显示的数据
+    			dateCondition.append("$ne", "");
+    			whereMap.put("agentId", dateCondition);
+        	}
+        }
+        
+        Struts2Utils.getRequest().setAttribute("sel_state", sel_state);
         list = basedao.getList(PubConstants.USER_AGENTAREA, whereMap,fypage,10, sortMap);
         if(list.size() > 0){
         	 for (DBObject dbObject : list) {
@@ -1128,7 +1149,7 @@ public class UserAction extends GeneralAction<UserInfo>
      				DBObject dbObject2 = basedao.getMessage(PubConstants.USER_INFO, dbObject.get("agentId").toString());
      				if(dbObject2 != null){
      					if(dbObject2.get("account") != null){
-     						dbObject.put("agentId", dbObject2.get("account").toString());
+     						dbObject.put("account", dbObject2.get("account").toString());
      					}
      				}
      			}
@@ -1148,13 +1169,23 @@ public class UserAction extends GeneralAction<UserInfo>
 		if (StringUtils.isNotEmpty(id)) {
 			whereMap.put("deptcountyid", Long.parseLong(id));
 		}
+		Struts2Utils.getRequest().setAttribute("id", id);
 		sortMap.put("createdate", -1);
+		String title = Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title)){
+       	 Pattern pattern = Pattern.compile("^.*" + title + ".*$", 
+       			 Pattern.CASE_INSENSITIVE);
+		      whereMap.put("account", pattern);
+       }
+       Struts2Utils.getRequest().setAttribute("title", title);
 		List<DBObject> list = basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
         Struts2Utils.getRequest().setAttribute("list", list);
         this.fycount = this.basedao.getCount(PubConstants.USER_INFO,whereMap);
         Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
 		return "minlink";
 	}
+	
+	
 	
 	
 	

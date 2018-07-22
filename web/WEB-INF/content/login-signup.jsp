@@ -740,7 +740,7 @@
 										mui.alert('注册成功！')
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
 									}else if(json.state == 2){
-										mui.alert('该用户已存在！')
+										mui.alert('该用户已存在或者该手机号已被绑定！')
 										mui($(this)).button('reset');
 									}else if(json.state == 3){
 										mui.alert('验证码错误！')
@@ -774,10 +774,15 @@
 							},
 							success:function(json){
 								if(json){
-									console.log("++++++++++++++++"+json.state);
 									if(json.state == 0){
 										mui.alert('注册成功，请等待审核！')
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
+									}else if(json.state == 2){
+										mui.alert('该用户已存在或者该手机号已被绑定！')
+										mui($(this)).button('reset');
+									}else if(json.state == 3){
+										mui.alert('验证码错误！')
+										mui($(this)).button('reset');
 									}
 								}else{
 									mui($(this)).button('reset');
