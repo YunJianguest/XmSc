@@ -218,10 +218,8 @@ public class UserAction extends GeneralAction<UserInfo>
   {
     try
     {   HashMap<String, Object>whereMap=new HashMap<String, Object>();
-        whereMap.put("_id", _id);
-        //whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-    	
-        this.basedao.delete(PubConstants.USER_INFO,"5b49d69c881eafed58f29bcb");
+        whereMap.put("_id", _id);  
+        this.basedao.delete(PubConstants.USER_INFO,whereMap);
        
         addActionMessage("删除成功");
       
