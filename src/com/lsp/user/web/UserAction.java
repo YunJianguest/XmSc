@@ -52,7 +52,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 @Namespace("/user")
-@Results({@org.apache.struts2.convention.annotation.Result(name="reload", location="user.action", type="redirect")})
+@Results({@org.apache.struts2.convention.annotation.Result(name="reload", location="user.action",params={"fypage", "%{fypage}"}, type="redirect")})
 public class UserAction extends GeneralAction<UserInfo>
 {
   private static final long serialVersionUID = -6784469775589971579L;
@@ -112,7 +112,6 @@ public class UserAction extends GeneralAction<UserInfo>
     		if(wwzservice.getCustName(dbObject.get("custid").toString())!=null){
     			dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
     		}
-    		
     	}*/
 		
 		if(dbObject.get("roleid") != null){
@@ -250,7 +249,7 @@ public class UserAction extends GeneralAction<UserInfo>
     return this.entity;
   }
   public void upd() throws Exception {
-	    
+	  
 		DBObject db = basedao.getMessage(PubConstants.USER_INFO, _id);
 		List<DBObject>list=wwzservice.getfromusermb(_id);
 		db.put("funclist", list);
@@ -258,7 +257,6 @@ public class UserAction extends GeneralAction<UserInfo>
 			db.put("mb",wwzservice.getfromusermbs(_id).get("mb"));
 		} 
 		
-		System.out.println("------1---->"+db);
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
   } 
@@ -333,16 +331,13 @@ public class UserAction extends GeneralAction<UserInfo>
 							Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 						    return;
 						}
-						
 					}
 				}else if(Integer.parseInt(agentLevel)==2) { 
 					if(StringUtils.isNotEmpty(agentcityid)){
 						wheresMap.put("agentcityid", Long.parseLong(agentcityid));
 					}
-					
 					wheresMap.put("agentLevel",2);
 					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
-					System.out.println(db);
 					if(db!=null) {
 						if(StringUtils.isNotEmpty(id)){
 							if(!db.get("_id").toString().equals(id)){
@@ -370,7 +365,6 @@ public class UserAction extends GeneralAction<UserInfo>
 					}
 					wheresMap.put("agentLevel",3);
 					DBObject db=basedao.getMessage(PubConstants.USER_INFO, wheresMap);
-					System.out.println(db);
 					if(db!=null) {
 						if(StringUtils.isNotEmpty(id)){
 							if(!db.get("_id").toString().equals(id)){
@@ -418,7 +412,6 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 				
 			}
-			System.out.println("id---->"+user.get_id().toString());
 			user.setAccount(account);
 			user.setPassword(password);
 			user.setToUser(toUser);
@@ -505,25 +498,15 @@ public class UserAction extends GeneralAction<UserInfo>
 						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
 					}
 				}
-				//部门
+				//县级代理
 				if(agentLevel.equals("4")){
-
-					DBObject dbObject = basedao.getMessage(PubConstants.USER_AGENTAREA, Long.parseLong(agentcountyid));
-								
-					if( dbObject!=null ){
-						AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
-							entity.setAgentId(user.get_id().toString());
-							entity.setAgentLevel(4);
-						}
-					}
-						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
-
-			      if(StringUtils.isNotEmpty(agentcountyid)){
-			    	  user.setDeptcountyid(Long.parseLong(agentcountyid));
-			      }
-			      if(StringUtils.isNotEmpty(county)){
-			    	  user.setDeptcounty(county);
-			      }
+			         if(StringUtils.isNotEmpty(agentcountyid)){
+			    	     user.setDeptcountyid(Long.parseLong(agentcountyid));
+			         }
+			         if(StringUtils.isNotEmpty(county)){
+			    	     user.setDeptcounty(county);
+			         }
+				}
 			}
 			if(org.apache.commons.lang3.StringUtils.isNotEmpty(type)){
 				user.setType(Integer.parseInt(type));	
@@ -885,8 +868,6 @@ public class UserAction extends GeneralAction<UserInfo>
 		whereMap.put("number", number);
 		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
 		
-		System.out.println("user---->"+user);
-		
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
 		InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 		if(db!=null){
@@ -1124,25 +1105,19 @@ public class UserAction extends GeneralAction<UserInfo>
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
         sortMap.put("sort", -1);
-        BasicDBObject dateCondition = new BasicDBObject();
         if(StringUtils.isNotEmpty(id) && !id.equals("0")){
-        	dateCondition.append("$ne", "");
-			whereMap.put("agentId", dateCondition);
         	whereMap.put("parentId", Long.parseLong(id));
         }else{
-        	if(custid.equals(SysConfig.getProperty("custid"))){
-        		dateCondition.append("$ne", "");
-    			whereMap.put("agentId", dateCondition);
+        	if(custid.equals(SysConfig.getProperty("custid"))){    
         		whereMap.put("parentId", 0L);
             }else{
             	whereMap.put("agentId", custid);
             	DBObject dbs = basedao.getMessage(PubConstants.USER_AGENTAREA, whereMap);
-            	
+            	Struts2Utils.getRequest().setAttribute("dbs", dbs);
+            	//System.out.println("-00-->"+dbs);
             	if( dbs != null){
             		whereMap.clear();
-            		if(dbs.get("parentId") != null){
-            			whereMap.put("parentId", Long.parseLong(dbs.get("parentId").toString()));
-            		}
+            		whereMap.put("parentId", Long.parseLong(dbs.get("_id").toString()));
             	}
             	
             }
@@ -1166,6 +1141,21 @@ public class UserAction extends GeneralAction<UserInfo>
         this.fycount = this.basedao.getCount(PubConstants.USER_AGENTAREA,whereMap);
         Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
 		return "link";
+	}
+	
+	public String minlink() throws Exception{
+		String id = Struts2Utils.getParameter("id");
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+        HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		if (StringUtils.isNotEmpty(id)) {
+			whereMap.put("deptcountyid", Long.parseLong(id));
+		}
+		sortMap.put("createdate", -1);
+		List<DBObject> list = basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
+        Struts2Utils.getRequest().setAttribute("list", list);
+        this.fycount = this.basedao.getCount(PubConstants.USER_INFO,whereMap);
+        Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
+		return "minlink";
 	}
 	
 	
