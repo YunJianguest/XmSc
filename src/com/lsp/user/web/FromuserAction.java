@@ -497,8 +497,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		
 	}
 	public void  savedetatil(){
-		Map<String, Object> submap = new HashMap<String, Object>();
+		 Map<String, Object> submap = new HashMap<String, Object>();
+		 HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		 getLscode();
+		 BasicDBObject dateCondition = new BasicDBObject();
 		 String  headimgurl=Struts2Utils.getParameter("headimgurl");
 		 String  email=Struts2Utils.getParameter("email");
 		 String  nickname=Struts2Utils.getParameter("nickname");
@@ -520,15 +522,67 @@ public class FromuserAction extends GeneralAction<WxUser>{
 			 }
 			 if(StringUtils.isNotEmpty(email)){
 				 user.setEmail(email); 
+				 whereMap.put("email", email);
+	    		 dateCondition.append("$ne", fromUserid);
+	    		 whereMap.put("_id", dateCondition);
+	    		 DBObject users = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+	    		 if( users != null){
+	    			 
+	    			 submap.put("state", 2);//邮箱已绑定，请重新绑定
+	    			 String json = JSONArray.fromObject(submap).toString(); 
+	    			 Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    			 return ;
+	    		 }
 			 }
 			 if(StringUtils.isNotEmpty(qq)){
+				 
 				 user.setQq(qq);
+				 
+				 whereMap.put("qq", qq);
+	    		 dateCondition.append("$ne", fromUserid);
+	    		 whereMap.put("_id", dateCondition);
+	    		 DBObject users = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+	    		 if( users != null){
+	    			 
+	    			 submap.put("state", 3);//QQ已绑定，请重新绑定
+	    			 String json = JSONArray.fromObject(submap).toString(); 
+	    			 Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    			 return ;
+	    		 }
 			 }
 			 if(StringUtils.isNotEmpty(wxid)){
 				 user.setWxid(wxid); 
+				 
+				 whereMap.put("wxid", wxid);
+	    		 dateCondition.append("$ne", fromUserid);
+	    		 whereMap.put("_id", dateCondition);
+	    		 DBObject users = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+	    		 if( users != null){
+	    			 
+	    			 submap.put("state", 4);//微信已绑定，请重新绑定
+	    			 String json = JSONArray.fromObject(submap).toString(); 
+	    			 Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    			 return ;
+	    		 }
 			 }
 			 if(StringUtils.isNotEmpty(tel)){
-				 user.setTel(tel);	 
+				 user.setTel(tel);	
+				 
+				 whereMap.put("tel", tel);
+	    		 dateCondition.append("$ne", fromUserid);
+	    		 whereMap.put("_id", dateCondition);
+	    		 DBObject users = basedao.getMessage(PubConstants.DATA_WXUSER, whereMap);
+	    		 if( users != null){
+	    			 
+	    			 submap.put("state", 5);//手机号已绑定，请重新绑定
+	    			 String json = JSONArray.fromObject(submap).toString(); 
+	    			 Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    			 
+	    			 return ;
+	    		 }
 			 }
 			 if(StringUtils.isNotEmpty(password)){
 				 user.setPassword(password);
@@ -696,6 +750,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String city = Struts2Utils.getParameter("city");//市
 		String county = Struts2Utils.getParameter("county");//区
 		
+		whereMap.put("account", tel);
 		whereMap.put("tel", tel);
 		Long count =basedao.getCount(PubConstants.USER_INFO, whereMap);
 		
@@ -708,14 +763,14 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					if(status.equals("1")) {//个人注册
 						UserInfo user = new UserInfo();
 						user.set_id(UUID.randomUUID().toString());
-						user.setAccount(tel);
-						user.setTel(tel);
-						user.setPassword(password);
+						user.setAccount(tel.trim());
+						user.setTel(tel.trim());
+						user.setPassword(password.trim());
 						user.setCustid(SysConfig.getProperty("custid"));
 						user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
-						user.setProvince(province);
-						user.setCity(city);
-						user.setCounty(county);
+						user.setProvince(province.trim());
+						user.setCity(city.trim());
+						user.setCounty(county.trim());
 						user.setUserName(userName);
 						user.setId_card_front(id_card_front);
 						user.setId_card_reverse(id_card_reverse);
@@ -728,21 +783,21 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					}else if(status.equals("2")) {//商家注册
 						UserInfo user = new UserInfo();
 						user.set_id(UUID.randomUUID().toString());
-						user.setAccount(tel);
-						user.setTel(tel);
-						user.setPassword(password);
+						user.setAccount(tel.trim());
+						user.setTel(tel.trim());
+						user.setPassword(password.trim());
 						user.setCustid(SysConfig.getProperty("custid"));
 						user.setRoleid(Long.parseLong(SysConfig.getProperty("sjRoleid")));
-						user.setUserName(userName);
-						user.setId_card(id_card);
+						user.setUserName(userName.trim());
+						user.setId_card(id_card.trim());
 						user.setId_card_front(id_card_front);
 						user.setId_card_reverse(id_card_reverse);
-						user.setCompany_name(company_name);
-						user.setLisense_number(lisense_number);
+						user.setCompany_name(company_name.trim());
+						user.setLisense_number(lisense_number.trim());
 						user.setLisense_photo(lisense_photo);
-						user.setProvince(province);
-						user.setCity(city);
-						user.setCounty(county);
+						user.setProvince(province.trim());
+						user.setCity(city.trim());
+						user.setCounty(county.trim());
 						user.setNumber(Long.parseLong(getVipNo()));
 						basedao.insert(PubConstants.USER_INFO, user);
 						String lscode=wwzservice.createcode(user.get_id().toString());
@@ -773,7 +828,6 @@ public class FromuserAction extends GeneralAction<WxUser>{
    	     sub_map.put("state", 1);//操作失败
    	     String tel =Struts2Utils.getParameter("tel"); 
    	     String password =Struts2Utils.getParameter("password");
-   	     System.err.println("--->"+tel);
    	     whereMap.put("account", tel);
   	     if (StringUtils.isNotEmpty(tel)&&StringUtils.isNotEmpty(password)) {
   		     DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);

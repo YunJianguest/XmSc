@@ -58,6 +58,16 @@ function CheckMail(mail) {
             			 window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&lscode=${lscode}'; 
             		 }
             		 
+            	}else if(json.state==1){
+            		alert('操作失败');
+            	}else if(json.state==2){
+            		alert('邮箱已绑定，请重新绑定');
+            	}else if(json.state==3){
+            		alert('QQ已绑定，请重新绑定');
+            	}else if(json.state==4){
+            		alert('微信已绑定，请重新绑定');
+            	}else if(json.state==5){
+            		alert('手机号已绑定，请重新绑定');
             	}
             },"json")
         }

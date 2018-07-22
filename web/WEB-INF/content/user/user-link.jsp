@@ -67,6 +67,18 @@
 			}
 		}
 	});
+   function page_submit(num){
+     	
+     	if(num==-1){
+     		$("#fypage").val(0);	
+     	}else if(num==-2){
+     		$("#fypage").val($("#fypage").val()-1);	
+     	}else{
+     		$("#fypage").val(num);	
+     	}
+
+     	$("#custinfoForm").submit();
+     }
 </script>
 </head>
 <body>
@@ -90,6 +102,24 @@
 						</div>
 					</div> -->
 				</div>
+				<div class="panelss ">
+			   <div class="panel-body fu10">
+			        <div class="row-pad-5">
+			            <div class="form-group col-sm-1d">
+			            <input type="text" name="title"  value="${title}" placeholder="地区名称"  class="form-control" />
+			            </div> 
+			            <div class="form-group col-sm-1d">
+			            	<select  id="sel_state"  name="sel_state" class="form-control "  data-placeholder="请选择">
+	            	                <option value="">请选择</option>
+	            	 				<option value="1">未出售</option>
+	                    			<option value="2">已出售</option>		
+			                 </select>
+			            </div>
+			            <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+			
+			        </div>
+			    </div><!-- panel-body -->
+				</div><!-- panel -->
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-12">
@@ -99,7 +129,7 @@
 										<tr>
 										    <th class="table-action">ID</th> 
 											<th class="table-action">地区</th> 
-											<th class="table-action">父id</th>
+											<!-- <th class="table-action">父id</th> -->
 											<th class="table-action">代理商账户</th> 
 											<th class="table-action">代理商等级</th> 
 											<th class="table-action">操作</th>
@@ -110,9 +140,29 @@
 											<tr>
 											    <td>${bean._id}</td> 
 												<td>${bean.area}</td> 
-												<td>${bean.parentId}</td> 
-												<td>${bean.agentId}</td> 
-												<td>${bean.agentLevel}</td> 
+												<%-- <td>${bean.parentId}</td>  --%>
+												<c:if test="${bean.agentId != ''}">
+												<td>${bean.account}</td> 
+												</c:if>
+												<c:if test="${bean.agentId =='' || bean.agentId == null}">
+												<td><span style="color: red">未出售</span></td> 
+												</c:if>
+												<td>
+												<c:choose>
+												    <c:when test="${bean.agentLevel == 1}">
+												        省级代理商
+												    </c:when>
+												    <c:when test="${bean.agentLevel == 2}">
+												        市级代理商
+												    </c:when>
+												     <c:when test="${bean.agentLevel == 3}">
+												        县区级代理商
+												    </c:when>
+												    <c:otherwise>
+												       <span style="color: red">未售出</span>
+												    </c:otherwise>
+												</c:choose>
+												</td> 
 												<td class="table-action">
 													<div class="btn-group1">
 														<a data-toggle="dropdown" class="dropdown-toggle"> <i
@@ -127,7 +177,10 @@
 															<li><a href="${contextPath}/user/user!minlink.action?id=${bean._id}"> <i
 																	class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;查看下级</a>
 															</li>
-														</c:if>	
+														</c:if>
+														<li><a href="${contextPath}/suc/integral!profit.action?custid=${bean.agentId}&state=1"> <i
+																	class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;查看积分详情</a>
+														</li>	
 														</ul>
 													</div></td>
 											</tr>
@@ -143,5 +196,8 @@
 	</section>	 
 	<%@ include file="/webcom/preview.jsp"%>
 	<%@include file="/webcom/cut-img.jsp" %> 
+	<script type="text/javascript">
+	    $("#sel_state").val('${sel_state}').trigger("change");
+	</script>
 </body>
 </html>

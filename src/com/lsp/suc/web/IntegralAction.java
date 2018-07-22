@@ -24,6 +24,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.baidu.ueditor.define.State;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.GetAllFunc;
@@ -66,7 +67,7 @@ import com.mongodb.DBObject;
  *
  */
 @Namespace("/suc")
-@Results({ @Result(name = "reload", location = "integral.action", type = "redirect") })
+@Results({ @Result(name = "reload",params={"fypage", "%{fypage}"}, location = "integral.action", type = "redirect") })
 public class IntegralAction extends GeneralAction<IntegralInfo> {
 
 	private static final long serialVersionUID = -6784469775589971579L;
@@ -157,8 +158,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
-
+		String state = Struts2Utils.getParameter("state");
+		String custid = Struts2Utils.getParameter("custid");
 		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		if(StringUtils.isNotEmpty(state)){
+			if(state.equals("1")){
+				whereMap.put("fromUserid", custid);
+			}
+		}
+		Struts2Utils.getRequest().setAttribute("state", state);
+		Struts2Utils.getRequest().setAttribute("custid", custid);
 		String type = Struts2Utils.getParameter("type");
 		if (StringUtils.isNotEmpty(type)) {
 			whereMap.put("type", type);

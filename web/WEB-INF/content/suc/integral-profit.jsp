@@ -129,7 +129,7 @@ function exp() {
   <div class="mainpanel">
 	<%@include file="/webcom/header-headerbar.jsp"%>
     
-	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral!profit.action" >
+	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/suc/integral!profit.action?state=${state}&custid=${custid}" >
     
     <div class="pageheader">
       <h2><i class="fa fa-user"></i>系统管理 <span>盼盼币管理</span></h2>
