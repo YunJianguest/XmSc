@@ -28,6 +28,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.JmsService;
+import com.lsp.pub.util.PBKDF2Util;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
@@ -969,7 +970,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	/**
 	 * ajax用户信息完善
 	 */
-	public void  ajaxUserUpdate(){
+	public void  ajaxUserUpdate() throws Exception{
 		getLscode();
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
 		sub_Map.put("state", 1);//操作失败
@@ -992,7 +993,14 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				user.setAccount(tel);
 				user.setUskd(uskd);
 				user.setPassword(password);
-				user.setPaypassword(paypassword);
+				if(StringUtils.isNotEmpty(paypassword) && !paypassword.equals("")){
+					//支付密码进行加密
+					String salt = PBKDF2Util.generateSalt();
+					String ciphertext = PBKDF2Util.getEncryptedPassword(paypassword, salt);
+					System.out.println("加密的密码---->"+ciphertext);
+					user.setPaypassword(ciphertext);
+				}
+				
 				user.setProvince(province);
 				user.setCity(city);
 				user.setCounty(county);

@@ -138,11 +138,12 @@
 					<label>登陆密码</label>
 					<input id="onepassword" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
-				
+				<c:if test="${user.isfull != 1 }">
 				<div class="mui-input-row">
 					<label>支付密码</label>
-					<input id="paypassword" type="password" value="${user.paypassword }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
+					<input id="paypassword" type="password" value="" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
+				</c:if>
 				<div class="mui-input-row">
 					<label>姓名</label>
 					<input id="name" type="text" value="${user.userName }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">

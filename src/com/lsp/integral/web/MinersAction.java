@@ -31,6 +31,7 @@ import com.lsp.pub.entity.WxToken;
 import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
+import com.lsp.pub.util.PBKDF2Util;
 import com.lsp.pub.util.PayCommonUtil;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
@@ -721,9 +722,9 @@ public class MinersAction extends GeneralAction<Miner> {
 	    			 
 	    }
 	    /**
-	     * 提现
+	     * 密码验证
 	     */
-	    public void   wdpassword() {
+	    public void   wdpassword() throws Exception{
 	    	getLscode();
 	    	Map<String,Object>sub_map = new HashMap<>();
 		  	sub_map.put("state", 1);
@@ -731,11 +732,16 @@ public class MinersAction extends GeneralAction<Miner> {
 		  	DBObject dbObject =baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
 		  	if(dbObject !=null){
 		  		if(dbObject.get("paypassword")!=null){
-		  			if(dbObject.get("paypassword").toString().equals(password)){
-		  				sub_map.put("state", 0);//操作成功
-		  			}else{
-		  				sub_map.put("state", 4);//密码错误，重新输入
-		  			}
+					String salt = PBKDF2Util.generateSalt();
+					boolean result = PBKDF2Util.authenticate(password, dbObject.get("paypassword").toString(), salt);
+					System.out.println("支付密码加密后的值---->"+dbObject.get("paypassword").toString());
+					System.out.println("验证是否成功---->"+result);
+					if(result){
+						sub_map.put("state", 0);//操作成功
+					}else{
+						sub_map.put("state", 4);//密码错误，重新输入
+					}
+		  			
 		  		}else{
 		  			sub_map.put("state", 3);//未设置支付密码，请先完善资料
 		  		}

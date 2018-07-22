@@ -334,7 +334,7 @@
                 "sel": sel
             };
             issend = false;
-            $.post('${ctx}/shop/shop!ajaxweb.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
+            $.post('${ctx}/shop/shop!ajaxweb.action?custid=${custid}&agid=${agid}&lscode=${lscode}&fypage=' + fypage, submitData,
                     function (json) {
                         var xszfleft = $('.recomend').html();
                         
