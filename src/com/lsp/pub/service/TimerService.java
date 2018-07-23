@@ -72,7 +72,8 @@ public class TimerService {
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		BasicDBObject dateCondition1 = new BasicDBObject();
-		dateCondition1.append("$gte", DateUtil.addDay(new Date(), -1));
+		dateCondition1.append("$lte", DateUtil.addDay(new Date(), -1));
+		whereMap.put("createdate", dateCondition1);
 		sortMap.put("createdate", -1);
 		BasicDBObject dateCondition = new BasicDBObject();
 		dateCondition.append("$gte",new Date());
@@ -111,6 +112,7 @@ public class TimerService {
 					}else{
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",10);
 					} 
+					System.out.println(price);
 					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
 							//挖矿到矿机账号 

@@ -393,6 +393,7 @@ public class MinersAction extends GeneralAction<Miner> {
 				  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
 				  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100)); 
 			  } 
+			  System.out.println(wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
 			  //积分 
 			  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
 				  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("kjvalue") );

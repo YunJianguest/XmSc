@@ -1857,6 +1857,36 @@ public class WwzService {
 			} else {
 				ir = (IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
 			}
+			if(StringUtils.isEmpty(ir.getKjvalue())){
+				ir.setKjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjtxvalue())){
+				ir.setKjtxvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getProstore())){
+				ir.setProstore("0");
+			}
+			if(StringUtils.isEmpty(ir.getValue())){
+				ir.setValue("0");
+			}
+			if(StringUtils.isEmpty(ir.getUservalue())){
+				ir.setUservalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLldjvalue())){
+				ir.setLldjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlkyvalue())){
+				ir.setLlkyvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlzvalue())){
+				ir.setLlzvalue("0");
+			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
 			if (type == 0) {
@@ -1911,6 +1941,36 @@ public class WwzService {
 			} else {
 				ir = (IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
 			}
+			if(StringUtils.isEmpty(ir.getKjvalue())){
+				ir.setKjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjtxvalue())){
+				ir.setKjtxvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getProstore())){
+				ir.setProstore("0");
+			}
+			if(StringUtils.isEmpty(ir.getValue())){
+				ir.setValue("0");
+			}
+			if(StringUtils.isEmpty(ir.getUservalue())){
+				ir.setUservalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLldjvalue())){
+				ir.setLldjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlkyvalue())){
+				ir.setLlkyvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlzvalue())){
+				ir.setLlzvalue("0");
+			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
 			if (type == 0) { 
@@ -1958,6 +2018,36 @@ public class WwzService {
 				ir.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
 			} else {
 				ir = (IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+			}
+			if(StringUtils.isEmpty(ir.getKjvalue())){
+				ir.setKjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjtxvalue())){
+				ir.setKjtxvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getProstore())){
+				ir.setProstore("0");
+			}
+			if(StringUtils.isEmpty(ir.getValue())){
+				ir.setValue("0");
+			}
+			if(StringUtils.isEmpty(ir.getUservalue())){
+				ir.setUservalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLldjvalue())){
+				ir.setLldjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlkyvalue())){
+				ir.setLlkyvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlzvalue())){
+				ir.setLlzvalue("0");
 			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);

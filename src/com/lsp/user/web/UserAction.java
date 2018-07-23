@@ -469,6 +469,7 @@ public class UserAction extends GeneralAction<UserInfo>
 				if(dbObjects != null){
 					 AgentArea entitys = (AgentArea)UniObject.DBObjectToObject(dbObjects, AgentArea.class);
 					 entitys.setAgentId("");
+					 entitys.set_id(Long.parseLong(dbObjects.get("_id").toString()));
 					 entitys.setAgentLevel(0);
 					 basedao.insert(PubConstants.USER_AGENTAREA, entitys);
 				}
@@ -479,6 +480,7 @@ public class UserAction extends GeneralAction<UserInfo>
 						 AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
 						 entity.setAgentId(user.get_id().toString());
 						 entity.setAgentLevel(1);
+						 entity.set_id(Long.parseLong(dbObject.get("_id").toString()));
 						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
 					}
 				}
@@ -488,16 +490,19 @@ public class UserAction extends GeneralAction<UserInfo>
 					if( dbObject!=null ){
 						 AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
 						 entity.setAgentId(user.get_id().toString());
+						 entity.set_id(Long.parseLong(dbObject.get("_id").toString()));
 						 entity.setAgentLevel(2);
 						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
 					}
 				}
 				//县级代理
 				if(agentLevel.equals("3")){
+					System.out.println("县级333");
 					DBObject dbObject = basedao.getMessage(PubConstants.USER_AGENTAREA, Long.parseLong(agentcountyid));
 					if( dbObject!=null ){
 						 AgentArea entity = (AgentArea)UniObject.DBObjectToObject(dbObject, AgentArea.class);
 						 entity.setAgentId(user.get_id().toString());
+						 entity.set_id(Long.parseLong(dbObject.get("_id").toString()));
 						 entity.setAgentLevel(3);
 						 basedao.insert(PubConstants.USER_AGENTAREA, entity);
 					}
