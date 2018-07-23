@@ -92,8 +92,7 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 					}
 				}
 			}
-		}
-		System.out.println(list);
+		} 
 		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
 		DBObject dbs = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
@@ -134,10 +133,12 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 					if(db.get("account")!=null){
 						dbObject.put("account", db.get("account").toString());
 					}
+					if(db.get("no")!=null){
+						dbObject.put("vip_no", db.get("no").toString());
+					}
 				}
 			}
-		}
-		System.out.println(list);
+		} 
 		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
 		DBObject dbs = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
