@@ -196,7 +196,8 @@
 							    		 $.post('${ctx}/integral/miners!withdrawal.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData1,
 										        	function (json) {
 										            	if(json.state==0){
-										            		alert('交易所申请成功，请等待审核');
+										            		alert('交易成功');
+										            		
 										            		//window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 										            	}else if(json.state==1){
 										            		alert('交易所失败，请重新提交');
@@ -205,6 +206,7 @@
 										            	}else {
 										            		alert('交易所失败');
 										            	}
+										            	window.location.reload();
 										},"json")
 					            	}else if(json.state==1){
 					            		alert('操作失败');

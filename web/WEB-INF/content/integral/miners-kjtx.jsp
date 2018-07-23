@@ -20,8 +20,9 @@
 			}
 			
 			.mui-input-row label {
-				width: 20%;
+				width: 40%;
 				font-size: 14px;
+				text-align: justify;
 			}
 			
 			.mui-input-row label~input,
@@ -191,7 +192,7 @@
 							    		 $.post('${ctx}/integral/miners!kjPPtx.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData1,
 										        	function (json) {
 										            	if(json.state==0){
-										            		alert('交易所申请成功，请等待审核');
+										            		alert('交易所成功');
 										            		//window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 										            	}else if(json.state==1){
 										            		alert('交易所失败，请重新提交');
@@ -200,6 +201,7 @@
 										            	}else {
 										            		alert('交易所失败');
 										            	}
+										            	window.location.reload();
 										},"json")
 					            	}else if(json.state==1){
 					            		alert('操作失败');
@@ -224,7 +226,7 @@
 		<div class="mui-content" style="background: #fff;padding-left:10px ;padding-right: 10px;">
 			<div class="mui-row">
 				<div class="mui-input-row">
-					<label for="">账号</label>
+					<label for="">USKD钱包地址</label>
 					<input type="text" id="eth" class="mui-input-clear" value="" />
 				</div>
 				<div class="mui-input-row">
