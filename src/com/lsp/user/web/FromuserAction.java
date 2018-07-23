@@ -994,8 +994,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				user.setUskd(uskd);
 				user.setPassword(password);
 				if(StringUtils.isNotEmpty(paypassword) && !paypassword.equals("")){
+					System.out.println("paypassword--->"+paypassword);
 					//支付密码进行加密
 					String salt = PBKDF2Util.generateSalt();
+					user.setSalt(salt);
 					String ciphertext = PBKDF2Util.getEncryptedPassword(paypassword, salt);
 					System.out.println("加密的密码---->"+ciphertext);
 					user.setPaypassword(ciphertext);
@@ -1028,6 +1030,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		getLscode();
 		Struts2Utils.getRequest().setAttribute("custid", custid);
 		Struts2Utils.getRequest().setAttribute("lscode", lscode);
+		Struts2Utils.getRequest().setAttribute("url", Struts2Utils.getParameter("url"));
 		HashMap<String, Object> whereMap=new HashMap<>();
 		whereMap.put("_id", fromUserid);
 		DBObject db = basedao.getMessage(PubConstants.USER_INFO, whereMap);

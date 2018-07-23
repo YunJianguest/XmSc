@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -70,6 +71,13 @@ public class AreaAction extends GeneralAction<AgentArea>{
 		} 
         Struts2Utils.getRequest().setAttribute("parentId", parentid);
 		sortMap.put("createdate", Integer.valueOf(-1));
+		String title = Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title)){
+       	 Pattern pattern = Pattern.compile("^.*" + title + ".*$", 
+       			 Pattern.CASE_INSENSITIVE);
+		      whereMap.put("area", pattern);
+       }
+       Struts2Utils.getRequest().setAttribute("title", title);
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		} 

@@ -235,6 +235,7 @@ public class UserInfo extends ReflectionDBObject {
 	private Date   agentedate; 
 	private  int isfull;//1-已补全  其余-未补全
 	
+	private String salt;
 
 	public Date getAgentedate() {
 		return agentedate;
@@ -1162,6 +1163,14 @@ public class UserInfo extends ReflectionDBObject {
 
 	public void setIsfull(int isfull) {
 		this.isfull = isfull;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 	
 	

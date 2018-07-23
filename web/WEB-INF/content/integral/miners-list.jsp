@@ -146,7 +146,7 @@
 					console.log('${isfull}');
 					if('${isfull}' != '1'){
 						alert('您还未补全信息，请先补全信息，即可购买矿机');
-						window.location.href = "${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
+						window.location.href = "${ctx}/user/fromuser!safePwd.action?custid=${custid}&agid=${agid}&lscode=${lscode}&url=/integral/miners!list.action";
 					}else{
 						var submitData = { 
 						   		id:id	

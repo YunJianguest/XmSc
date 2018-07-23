@@ -138,12 +138,12 @@
 					<label>登陆密码</label>
 					<input id="onepassword" type="password" value="${user.password }" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
-				<c:if test="${user.isfull != 1 }">
+				<%-- <c:if test="${user.isfull != 1 }"> --%>
 				<div class="mui-input-row">
 					<label>支付密码</label>
 					<input id="paypassword" type="password" value="" class="mui-input mui-input-password" maxlength="16" placeholder="请输入密码">
 				</div>
-				</c:if>
+				<%-- </c:if> --%>
 				<div class="mui-input-row">
 					<label>姓名</label>
 					<input id="name" type="text" value="${user.userName }" class="mui-input-clear" maxlength="16" placeholder="请输入姓名">
@@ -254,7 +254,6 @@
 		<script>
 		//提交
 		function update_submit(){
-			console.log('${lscode}');
 			var tel = $("#tel").val();
 			if(tel==""){//手机
 				mui.alert('手机号不能为空')
@@ -320,21 +319,22 @@
 				success:function(json){
 					if(json.state==0){
 						mui.alert('信息完善成功！');
-						window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=&lscode=${lscode}';
+						if('${url}' != ''){
+							window.location.href='${ctx}${url}?custid=${custid}&agid=&lscode=${lscode}'
+						}else{
+							window.location.href='${ctx}/user/fromuser!UserDetail.action?custid=${custid}&agid=&lscode=${lscode}';
+						}
+						
 					}
 				}
 			});
 		}
 		</script>
-		
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
-<!--<script src="../js/mui.picker.min.js"></script>-->
-<script src="${ctx}/mvccol/mui-js/mui.picker.js"></script>
-<script src="${ctx}/mvccol/mui-js/mui.poppicker.js"></script>
-
-<script src="${ctx}/mvccol/mui-js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="${ctx}/mvccol/mui-js/mui.picker.js"></script>
+		<script src="${ctx}/mvccol/mui-js/mui.poppicker.js"></script>
+		<script src="${ctx}/mvccol/mui-js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			(function($, doc) {
 				$.init();
@@ -368,10 +368,9 @@
 		</script>
 		
 		<script src="${ctx}/mvccol/lrz/exif.js" type="text/javascript" charset="utf-8"></script>
- 	
- 	<script src="${ctx}/mvccol/lrz/lrz.js" type="text/javascript" charset="utf-8"></script>
- 	<script src="${ctx}/mvccol/lrz/mobileFix.mini.js" type="text/javascript" charset="utf-8"></script>
- 	<script src="${ctx}/mvccol/lrz/index2.js" type="text/javascript" charset="utf-8"></script>
+	 	<script src="${ctx}/mvccol/lrz/lrz.js" type="text/javascript" charset="utf-8"></script>
+	 	<script src="${ctx}/mvccol/lrz/mobileFix.mini.js" type="text/javascript" charset="utf-8"></script>
+	 	<script src="${ctx}/mvccol/lrz/index2.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 		
 		function upload_id_card_front(){

@@ -731,11 +731,8 @@ public class MinersAction extends GeneralAction<Miner> {
 		  	String password = Struts2Utils.getParameter("password");
 		  	DBObject dbObject =baseDao.getMessage(PubConstants.USER_INFO, fromUserid);
 		  	if(dbObject !=null){
-		  		if(dbObject.get("paypassword")!=null){
-					String salt = PBKDF2Util.generateSalt();
-					boolean result = PBKDF2Util.authenticate(password, dbObject.get("paypassword").toString(), salt);
-					System.out.println("支付密码加密后的值---->"+dbObject.get("paypassword").toString());
-					System.out.println("验证是否成功---->"+result);
+		  		if(dbObject.get("paypassword")!=null && dbObject.get("salt") != null){
+					boolean result = PBKDF2Util.authenticate(password, dbObject.get("paypassword").toString(), dbObject.get("salt").toString());
 					if(result){
 						sub_map.put("state", 0);//操作成功
 					}else{

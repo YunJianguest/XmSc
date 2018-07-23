@@ -60,6 +60,18 @@
 		}, "json")
 		ps_show('inszc');
 	} 
+	 function page_submit(num){
+	     	
+	     	if(num==-1){
+	     		$("#fypage").val(0);	
+	     	}else if(num==-2){
+	     		$("#fypage").val($("#fypage").val()-1);	
+	     	}else{
+	     		$("#fypage").val(num);	
+	     	}
+
+	     	$("#custinfoForm").submit();
+	     }
 </script>
 </head>
 <body>
@@ -68,7 +80,7 @@
 		<div class="mainpanel">
 			<%@include file="/webcom/header-headerbar.jsp"%>
 			<form id="custinfoForm" name="custinfoForm" method="post"
-				action="${contextPath}/user/area.action?parentId=${parentid}">
+				action="${contextPath}/user/area.action?parentId=${parentId}">
 				<div class="pageheader">
 					<h2>
 						<i class="fa fa-user"></i> 微官网 <span>行业分类</span>
@@ -83,6 +95,17 @@
 						</div>
 					</div>
 				</div>
+				<div class="panelss ">
+			   <div class="panel-body fu10">
+			        <div class="row-pad-5">
+			            <div class="form-group col-sm-1d">
+			            <input type="text" name="title"  value="${title}" placeholder="地区名称"  class="form-control" />
+			            </div> 
+			            <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+			
+			        </div>
+			    </div><!-- panel-body -->
+				</div><!-- panel -->
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-12">
@@ -90,22 +113,22 @@
 								<table class="table table-striped table-action table-primary mb30">
 									<thead>
 										<tr>
-										    <th class="table-action">ID</th> 
+										    <th class="table-action">序号</th> 
 											<th class="table-action">地区</th> 
-											<th class="table-action">父id</th>
+											<!-- <th class="table-action">父id</th>
 											<th class="table-action">代理商账户</th> 
-											<th class="table-action">代理商等级</th> 
+											<th class="table-action">代理商等级</th>  -->
 											<th class="table-action">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${list}" var="bean">
 											<tr>
-											    <td>${bean._id}</td> 
+											    <td>${bean.sort}</td> 
 												<td>${bean.area}</td> 
-												<td>${bean.parentId}</td> 
+												<%-- <td>${bean.parentId}</td> 
 												<td>${bean.agentId}</td> 
-												<td>${bean.agentLevel}</td> 
+												<td>${bean.agentLevel}</td>  --%>
 												<td class="table-action">
 													<div class="btn-group1">
 														<a data-toggle="dropdown" class="dropdown-toggle"> <i
@@ -150,7 +173,7 @@
                         </div>
                     </a>
                 </div>
-                <form id="inscxForm" action="${ctx}/user/area!save.action?"
+                <form id="inscxForm" action="${ctx}/user/area!save.action?fypage=${fypage}"
                       class="form-horizontal" method="post">
                     <input type="hidden" id="_id" name="_id"/>
                     <input type="hidden" id="parentId" name="parentId" value="${parentId}"/> 
