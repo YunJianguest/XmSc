@@ -87,6 +87,9 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 					if(db.get("account")!=null){
 						dbObject.put("account", db.get("account").toString());
 					}
+					if(db.get("no")!=null){
+						dbObject.put("vip_no", db.get("no").toString());
+					}
 				}
 			}
 		}

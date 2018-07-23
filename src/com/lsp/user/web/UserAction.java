@@ -929,7 +929,10 @@ public class UserAction extends GeneralAction<UserInfo>
 					}
 				}
 			}
-			basedao.insert(PubConstants.INTEGRAL_PROSTORE, info);
+			if(info.getMoney()>0){
+				basedao.insert(PubConstants.INTEGRAL_PROSTORE, info);
+			}
+			
 		}
 		
 	}
