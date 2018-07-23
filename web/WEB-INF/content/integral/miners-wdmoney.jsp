@@ -200,11 +200,11 @@
 										            		window.location.reload();
 										            		//window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 										            	}else if(json.state==1){
-										            		alert('交易所失败，请重新提交');
+										            		alert('交易失败，请重新提交');
 										            	}else if(json.state==2){
 										            		alert('余额不足');
 										            	}else {
-										            		alert('交易所失败');
+										            		alert('交易失败');
 										            	}
 										            	//;
 										},"json")

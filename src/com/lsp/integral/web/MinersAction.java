@@ -395,7 +395,7 @@ public class MinersAction extends GeneralAction<Miner> {
 			  } 
 			  //积分 
 			  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
-				  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("uservalue") );
+				  Struts2Utils.getRequest().setAttribute("jf",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("kjvalue") );
 			  }
 			  //llb 
 			  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
@@ -964,7 +964,7 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	String price=Struts2Utils.getParameter("price");
 	    	String remark=Struts2Utils.getParameter("remark");
 	    	SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
-	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)&&StringUtils.isNotEmpty(remark)) {
+	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)) {
 	    		
 	    		WithdrawalOrder tx=new WithdrawalOrder();
 		    	// 四位随机数
@@ -990,9 +990,9 @@ public class MinersAction extends GeneralAction<Miner> {
 				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"))) {
 				    		parameters.put("eth", eth);
 					    	parameters.put("num",price);
-					    	parameters.put("username",wwzService.getWxUser(fromUserid).get("nickname"));
+					    	parameters.put("username",wwzService.getWxUser(fromUserid).get("tel"));
 					    	parameters.put("orderid",orderno);
-					    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("nickname")+orderno, SysConfig.getProperty("jyskey"));
+					    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("tel")+orderno, SysConfig.getProperty("jyskey"));
 					    	parameters.put("key", sign);
 					    	HashMap<String,Object>map=new HashMap<>();
 					    	map.put("data", parameters);

@@ -24,6 +24,14 @@ public class IntegralRecord extends ReflectionDBObject {
 	 */
 	private double   kjvalue; 
 	/**
+	 * 矿机提现账户
+	 */
+	private double   kjtxvalue;
+	/**
+	 * 矿机价值账户
+	 */
+	private double   kjjzvalue;
+	/**
 	 * 产币类型1为PP币2为比特币3为以太坊
 	 */
 	private int      kjlx;
@@ -90,6 +98,18 @@ public class IntegralRecord extends ReflectionDBObject {
 	}
 	public void setLldjvalue(double lldjvalue) {
 		this.lldjvalue = lldjvalue;
+	}
+	public double getKjtxvalue() {
+		return kjtxvalue;
+	}
+	public void setKjtxvalue(double kjtxvalue) {
+		this.kjtxvalue = kjtxvalue;
+	}
+	public double getKjjzvalue() {
+		return kjjzvalue;
+	}
+	public void setKjjzvalue(double kjjzvalue) {
+		this.kjjzvalue = kjjzvalue;
 	}
 	 
      
