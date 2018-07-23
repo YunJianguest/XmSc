@@ -692,7 +692,7 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	String price=Struts2Utils.getParameter("price");
 	    	String remark=Struts2Utils.getParameter("remark");
 	    	SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
-	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)&&StringUtils.isNotEmpty(remark)) {
+	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)) {
 	    		WithdrawalOrder tx=new WithdrawalOrder();
 		    	// 四位随机数
 				String strRandom = TenpayUtil.buildRandom(4) + "";
@@ -710,9 +710,9 @@ public class MinersAction extends GeneralAction<Miner> {
 		    	if(wwzService.deljf(price, fromUserid, "shop_tx", SysConfig.getProperty("custid"), 0, 1, 0)) {
 		    		parameters.put("eth", eth);
 			    	parameters.put("num",price);
-			    	parameters.put("username",wwzService.getWxUser(fromUserid).get("nickname"));
+			    	parameters.put("username",wwzService.getWxUser(fromUserid).get("tel"));
 			    	parameters.put("orderid",orderno);
-			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("nickname")+orderno, SysConfig.getProperty("jyskey"));
+			    	String sign = PayCommonUtil.createKey("UTF-8",eth+price+wwzService.getWxUser(fromUserid).get("tel")+orderno, SysConfig.getProperty("jyskey"));
 			    	parameters.put("key", sign);
 			    	HashMap<String,Object>map=new HashMap<>();
 			    	map.put("data", parameters);

@@ -197,7 +197,7 @@
 										        	function (json) {
 										            	if(json.state==0){
 										            		alert('交易成功');
-										            		
+										            		window.location.reload();
 										            		//window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 										            	}else if(json.state==1){
 										            		alert('交易所失败，请重新提交');
@@ -206,7 +206,7 @@
 										            	}else {
 										            		alert('交易所失败');
 										            	}
-										            	window.location.reload();
+										            	//;
 										},"json")
 					            	}else if(json.state==1){
 					            		alert('操作失败');
