@@ -16,6 +16,7 @@ import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.BaseDecimal;
+import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
@@ -70,13 +71,15 @@ public class TimerService {
 		System.out.println("进入这个方法1");
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
-		
+		BasicDBObject dateCondition1 = new BasicDBObject();
+		dateCondition1.append("$gte", DateUtil.addDay(new Date(), -1));
 		sortMap.put("createdate", -1);
 		BasicDBObject dateCondition = new BasicDBObject();
 		dateCondition.append("$gte",new Date());
 		whereMap.put("enddate", dateCondition);
 		whereMap.put("state", 0);
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap); 
+		System.out.println(list.size());
 		for (DBObject dbObject : list) {
 			if(dbObject.get("money")!=null){
 				String price = "0"; 

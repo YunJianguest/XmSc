@@ -984,7 +984,17 @@ public class MinersAction extends GeneralAction<Miner> {
 		    	DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		    	IntegralRecord ir = null;
 				if(db!=null){
-					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class); 
+					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+					//根据可提现价值换算可提现PP币
+					String txPrice=BaseDecimal.division(ir.getKjjzvalue()+"", wwzService.getPPBSprice()+"", 20);
+					if(Double.parseDouble(txPrice)<Double.parseDouble(price)){
+						//提现余额不足
+			    		sub_map.put("state", 6);
+			    		String json = JSONArray.fromObject(sub_map).toString();
+				  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+				  		return;
+					}
+					
 					if(ir.getKjlx()==1){
 						//提现
 				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"))) {

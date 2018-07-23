@@ -128,7 +128,7 @@
                                 <tbody>
                                 <c:forEach items="${list}" var="bean">
                                     <tr>
-                                        <td>${bean.account}</td>
+                                        <td>${bean.vip_no}</td>
                                         <td>${bean.money}</td>
                                         <td>
 				                      	<c:choose>
