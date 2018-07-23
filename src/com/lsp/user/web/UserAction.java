@@ -294,7 +294,7 @@ public class UserAction extends GeneralAction<UserInfo>
 			
 			String  agentprovinceid=Struts2Utils.getParameter("agentprovinceid");
 			String  agentcityid=Struts2Utils.getParameter("agentcityid");
-			String  agentcountyid=Struts2Utils.getParameter("agentcountyid");
+			String  agentcountyid=Struts2Utils.getParameter("agentcityid");
 			
 			String  province=Struts2Utils.getParameter("agentprovince");
 			String  city=Struts2Utils.getParameter("agentcity");
@@ -303,6 +303,10 @@ public class UserAction extends GeneralAction<UserInfo>
 			//验证省市县是否已经售卖
 			
 			if(StringUtils.isNotEmpty(agentLevel)) {
+				System.out.println("------"+agentLevel);
+				System.out.println("****"+agentprovinceid);
+				System.out.println("****"+agentcityid);
+				System.out.println("****"+agentcityid);
 				HashMap<String, Object>wheresMap=new HashMap<>();
 				if(Integer.parseInt(agentLevel)==1) {
 					if(StringUtils.isNotEmpty(agentprovinceid)){
@@ -456,6 +460,8 @@ public class UserAction extends GeneralAction<UserInfo>
 				}
 			}
 			if(StringUtils.isNotEmpty(agentLevel)){
+				System.out.println(agentLevel);
+				
 				user.setAgentLevel(Integer.parseInt(agentLevel));
 				whereMap.clear();
 				whereMap.put("agentId", id);

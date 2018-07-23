@@ -356,8 +356,8 @@ public class LoginAction extends ActionSupport {
 		
 		HashMap<String,Object>whereMap=new HashMap<>();
 		BasicDBObject dateCondition = new BasicDBObject(); 
-		whereMap.put("money", 0);
-		basedao.delete(PubConstants.INTEGRAL_PROSTORE,whereMap);
+		//whereMap.put("money", 0);
+		basedao.delete(PubConstants.INTEGRAL_PROSTORE);
 		String json = JSONArray.fromObject(map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}

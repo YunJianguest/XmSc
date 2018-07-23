@@ -26,7 +26,7 @@ public class IntegralLlInfo extends ReflectionDBObject {
 	 * shop_tx 提现
 	 */
 	private String type;
-	private double value;
+	private String value;
 	 
     private Date createdate;
     private String summary;
@@ -64,19 +64,15 @@ public class IntegralLlInfo extends ReflectionDBObject {
 	public void setType(String type) {
 		this.type = type;
 	}
- 
-	public double getValue() {
+  
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(double value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
-	public void setValue(float value) {
-		this.value = value;
-	}
- 
 	public Date getCreatedate() {
 		return createdate;
 	}

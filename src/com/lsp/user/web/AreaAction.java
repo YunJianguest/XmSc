@@ -89,6 +89,9 @@ public class AreaAction extends GeneralAction<AgentArea>{
 					if(dbObject2.get("account") != null){
 						dbObject.put("agentId", dbObject2.get("account").toString());
 					}
+					if(dbObject2.get("no") != null){
+						dbObject.put("vip_no", dbObject2.get("no").toString());
+					}
 				}
 			}
 		}

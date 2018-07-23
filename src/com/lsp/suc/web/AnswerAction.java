@@ -216,7 +216,7 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		jf.setFromUser(fromUser);
 		jf.setToUser(Struts2Utils.getParameter("toUser"));
 		jf.setType("answer");
-		jf.setValue(Integer.parseInt(answerrecord.get("fen").toString())*Integer.parseInt(jflm.get("value").toString()));
+		jf.setValue(Integer.parseInt(answerrecord.get("fen").toString())*Integer.parseInt(jflm.get("value").toString())+"");
 		baseDao.insert(PubConstants.INTEGRAL_INFO, jf);
 		
 		long l=(enddate.getTime()-startdate.getTime())/(60000);
@@ -422,7 +422,7 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		if(dbObject != null){
 			IntegralRecord info=(IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
             info.setCustid(SysConfig.getProperty("custid"));
-			info.setKjvalue(Double.parseDouble(kjvalue));
+			info.setKjvalue(kjvalue);
             info.setKjlx(1);
             baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
 		}

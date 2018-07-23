@@ -232,7 +232,7 @@ public class MemoriallmAction extends GeneralAction<Memoriallm> {
 		jf.setFromUser(fromUser);
 		jf.setToUser(Struts2Utils.getParameter("toUser"));
 		jf.setType("answer");
-		jf.setValue(Integer.parseInt(answerrecord.get("fen").toString())*Integer.parseInt(jflm.get("value").toString()));
+		jf.setValue(""+Integer.parseInt(answerrecord.get("fen").toString())*Integer.parseInt(jflm.get("value").toString()));
 		baseDao.insert(PubConstants.INTEGRAL_INFO, jf);
 		
 		long l=(enddate.getTime()-startdate.getTime())/(60000);

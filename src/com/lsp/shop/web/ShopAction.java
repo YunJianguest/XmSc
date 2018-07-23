@@ -4699,41 +4699,7 @@ public class ShopAction extends GeneralAction {
 		Struts2Utils.getRequest().setAttribute("goodstype", goodstype);
 		return "productlist";
 	}
-	
-	public void recharge() throws Exception{
-		getLscode();
-		String value = Struts2Utils.getParameter("value");
-		HashMap<String, Object> sub_map = new HashMap<>();
-		sub_map.put("state", 1);
-		HashMap<String, Object> whereMap = new HashMap<>();
-		try {
-			whereMap.put("fromUserid", fromUserid);
-			DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
-			System.out.println("dbObject---->"+dbObject);
-			IntegralRecord info = new IntegralRecord();
-			if(dbObject != null){
-				info = (IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
-			    info.setUservalue(Double.parseDouble(value));
-			    info.setValue(Double.parseDouble(value));
-			    
-			}else{
-				info.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
-				info.setCustid(custid);
-				info.setFromUserid(fromUserid);
-				info.setUservalue(Double.parseDouble(value));
-				info.setValue(Double.parseDouble(value));
-			}
-			System.out.println("---->"+info.getFromUserid());
-			info.setCustid(custid);
-			baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
-			sub_map.put("state", 0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String json = JSONArray.fromObject(sub_map).toString();
-		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-	}
+	 
 
 	/**
 	 * 交易测试 笑我一世沉沦: 传入参数的格式 {"data":

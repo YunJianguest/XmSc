@@ -521,7 +521,7 @@ public class IntegrallAction extends GeneralAction<IntegralLlInfo> {
 
 				}
 				if (value > 0) {
-					wwzService.changeJf(custid, fromUserid, value, 2, 0);
+					wwzService.changeJf(custid, fromUserid, value+"", 2, 0);
 					submap.put("state", 0);
 				} else {
 				}
