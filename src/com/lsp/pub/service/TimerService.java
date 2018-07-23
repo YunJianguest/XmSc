@@ -97,15 +97,16 @@ public class TimerService {
 					kjlx=ir.getKjlx(); 
 					
 				} 
-				if(kjlx>0){
+				if(kjlx>=0){
 					if(kjlx==1){
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",20);
 					}else if(kjlx==2){
 						price=BaseDecimal.division(price,wwzservice.getBTCSprice()+"",20);
 						
 					}else if(kjlx==3){
-						price=BaseDecimal.division(price,wwzservice.getETHSprice()+"",20);
-						
+						price=BaseDecimal.division(price,wwzservice.getETHSprice()+"",20); 
+					}else{
+						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",20);
 					} 
 					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
