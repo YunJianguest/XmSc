@@ -24,11 +24,15 @@
 				font-size: 14px;
 				text-align: justify;
 			}
-			
+			.mui-input-row label::after{
+				display: inline-block ; 
+				content: ''; 
+				padding-left: 100%; 
+			}
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 80%;
+				width: 60%;
 			}
 			
 			.mui-input-row::after {
@@ -184,6 +188,7 @@
 		    		 $.post('${ctx}/integral/miners!wdpassword.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 					        	function (json) {
 					            	if(json.state==0){
+					            		alert($('#price').val());
 					            		var submitData1 = { 
 							    				eth:$('#eth').val(),
 							    				price:$('#price').val(),

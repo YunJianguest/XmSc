@@ -248,6 +248,27 @@ public class MinersAction extends GeneralAction<Miner> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
+	public void saves() throws Exception{
+		getLscode();
+		Struts2Utils.getRequest().setAttribute("custid", custid);
+		Struts2Utils.getRequest().setAttribute("lscode", lscode); 
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("fromUserid", fromUserid);
+		DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+        String kjvalue = Struts2Utils.getParameter("kjvalue");
+		if(dbObject != null){
+			IntegralRecord info=(IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
+            info.setCustid(SysConfig.getProperty("custid"));
+			info.setKjvalue(Double.parseDouble(kjvalue));
+            info.setKjlx(1);
+            baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
+	
 	/*public void prostore(String custid,String fromUserid,String type,String price){
 		
 	}*/
@@ -397,7 +418,6 @@ public class MinersAction extends GeneralAction<Miner> {
 			  }
 			  //llb 
 			  if (wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
-				  System.out.println(wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue"));
 				  Struts2Utils.getRequest().setAttribute("llb",wwzService.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue") );
 			  }
 			
@@ -696,6 +716,7 @@ public class MinersAction extends GeneralAction<Miner> {
 			    	parameters.put("key", sign);
 			    	HashMap<String,Object>map=new HashMap<>();
 			    	map.put("data", parameters);
+			    	System.out.println("parameters----"+JSONObject.fromObject(parameters).toString());
 		            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
 		            JSONObject obj=JSONObject.fromObject(result);
 		            if(obj.getString("code").equals("1000")) {
@@ -963,6 +984,7 @@ public class MinersAction extends GeneralAction<Miner> {
 	    	String remark=Struts2Utils.getParameter("remark");
 	    	SortedMap<Object, Object> parameters = new TreeMap<Object, Object>(); 
 	    	if(StringUtils.isNotEmpty(eth)&&StringUtils.isNotEmpty(price)&&StringUtils.isNotEmpty(remark)) {
+	    		
 	    		WithdrawalOrder tx=new WithdrawalOrder();
 		    	// 四位随机数
 				String strRandom = TenpayUtil.buildRandom(4) + "";
@@ -977,6 +999,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		    	tx.setState(0);
 		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
 		    	HashMap<String, Object>whereMap=new HashMap<>();
+		    	whereMap.put("fromUserid", fromUserid);
 		    	DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		    	IntegralRecord ir = null;
 				if(db!=null){

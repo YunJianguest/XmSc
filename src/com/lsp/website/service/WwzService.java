@@ -1335,7 +1335,7 @@ public class WwzService {
 					info.setState(1);
 					info.setCustid(custid); 
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
-					 
+					return true;
 				}
 				
 
@@ -1977,7 +1977,6 @@ public class WwzService {
 					return true;
 				} else if (lx == 1) {
 					//乐乐币种计算
-					System.out.println("llz..");
 					if (isfreeze == 1) {// 冻结增加
 						ir.setLldjvalue(ir.getLldjvalue() + value);
 						
@@ -1985,9 +1984,6 @@ public class WwzService {
 						System.out.println("llz");
 						ir.setLlkyvalue(ir.getLlkyvalue() + value); 
 					}
-					System.out.println(ir.getLlkyvalue());
-					System.out.println("---"+ir.getCustid());
-					System.out.println("---"+ir.getFromUserid());
 					ir.setLlzvalue(ir.getLlzvalue() + value);
 					baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 					return true;
@@ -2920,10 +2916,7 @@ public class WwzService {
 	public boolean checkTotalIntegral(int type, String value) {
 		HashMap<String, Object> whereMap = new HashMap<>();
 		whereMap.put("_id",SysConfig.getProperty("custid"));
-		System.out.println("chongzi0--->"+SysConfig.getProperty("custid"));
-		System.out.println("--->"+baseDao.getList(PubConstants.INTEGRAL_INTESETTING, null, null));
 		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING,SysConfig.getProperty("custid"));
-		System.out.println("=====>>>"+db);
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 			 
@@ -3067,7 +3060,6 @@ public class WwzService {
 							info.setState(0);
 							info.setCustid(custid);
 							baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
-							System.out.println("增加ll");
 							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
 								if (updateTotalIntegral(jflx, price)) {
 									return true;
@@ -3176,7 +3168,6 @@ public class WwzService {
 							info.setState(0);
 							info.setCustid(custid);
 							baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
-							System.out.println("增加ll");
 							if (changeJf(custid, fromUserid, Double.parseDouble(price), 0, isfreeze, 1)) {
 								if (updateTotalIntegral(jflx, price)) {
 									return true;
@@ -3290,12 +3281,10 @@ public class WwzService {
 				// 获取当前赠送数量
 				double now =0;
 				if(inteSetting.getNownums()!=null){
-					System.out.println("***********"+inteSetting.getNownums());
 					
 					now=Double.parseDouble(inteSetting.getNownums());
 				}
 				
-				System.out.println("----------------"+now);
 				if (now >= 0 && now < 50000000) {
 					// 1倍
 					return BaseDecimal.multiplication(price + "", "1");
