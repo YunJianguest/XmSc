@@ -37,6 +37,7 @@ import com.lsp.suc.entity.AnswerInfo;
 import com.lsp.suc.entity.AnswerRecord;
 import com.lsp.suc.entity.AnswerRecordDetail;
 import com.lsp.suc.entity.IntegralInfo;
+import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.Integrallm;
 import com.lsp.website.service.WwzService;
 import com.lsp.suc.entity.Comunit; 
@@ -408,6 +409,25 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		
+	}
+	public void kjcz() throws Exception{
+		getLscode(); 
+		Map<String, Object> sub_map = new HashMap<String, Object>();
+		String id=Struts2Utils.getParameter("id");
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		whereMap.put("custid",SysConfig.getProperty("custid"));
+		whereMap.put("fromUserid", wwzService.getfromUseridVipNo(id));
+		DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+        String kjvalue = Struts2Utils.getParameter("kjvalue");
+		if(dbObject != null){
+			IntegralRecord info=(IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
+            info.setCustid(SysConfig.getProperty("custid"));
+			info.setKjvalue(Double.parseDouble(kjvalue));
+            info.setKjlx(1);
+            baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
 }

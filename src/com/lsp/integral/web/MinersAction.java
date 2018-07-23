@@ -248,26 +248,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
-	public void saves() throws Exception{
-		getLscode();
-		Struts2Utils.getRequest().setAttribute("custid", custid);
-		Struts2Utils.getRequest().setAttribute("lscode", lscode); 
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		whereMap.put("fromUserid", fromUserid);
-		DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
-        String kjvalue = Struts2Utils.getParameter("kjvalue");
-		if(dbObject != null){
-			IntegralRecord info=(IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
-            info.setCustid(SysConfig.getProperty("custid"));
-			info.setKjvalue(Double.parseDouble(kjvalue));
-            info.setKjlx(1);
-            baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
-		}
-		String json = JSONArray.fromObject(sub_map).toString();
-		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-	}
+	
 	
 	/*public void prostore(String custid,String fromUserid,String type,String price){
 		
