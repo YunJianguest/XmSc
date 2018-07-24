@@ -14,6 +14,7 @@ import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.shop.entiy.OrderFormpro;
+import com.lsp.user.entity.AgentArea;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.user.service.LoginService;
 import com.lsp.website.service.WwzService;
@@ -25,6 +26,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import net.sf.json.JSONArray;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -336,31 +338,70 @@ public class LoginAction extends ActionSupport {
 	}
 
 	public void delAll() {
-		HashMap<String, Object> map = new HashMap<>();
-		
-		basedao.delete(PubConstants.WX_ORDERFORM);
-		basedao.delete(PubConstants.SHOP_ODERFORMPRO);
-		basedao.delete(PubConstants.SUC_SHOPPINGCART);
-		basedao.delete(PubConstants.SHOP_SHOPCOMMENTS);
-	    basedao.delete(PubConstants.SHOP_SHOPCOMREPLY);
-		basedao.delete(PubConstants.SHOP_AFTERSERVICE);
-		basedao.delete(PubConstants.INTEGRAL_INFO);
-		basedao.delete(PubConstants.INTEGRALLL_INFO);
-		basedao.delete(PubConstants.SUC_INTEGRALRECORD);
-		basedao.delete(PubConstants.INTEGRALM);
-		basedao.delete(PubConstants.JF_TOTAL);
-		basedao.delete(PubConstants.INTEGRAL_TOPUPORDER);
-		
-		basedao.delete(PubConstants.INTEGRAL_TRANSFERORDER);
-		basedao.delete(PubConstants.INTEGRAL_WITHDRAWALORDER);
-		
-		HashMap<String,Object>whereMap=new HashMap<>();
-		BasicDBObject dateCondition = new BasicDBObject(); 
-		//whereMap.put("money", 0);
-		basedao.delete(PubConstants.INTEGRAL_PROSTORE);
-		String json = JSONArray.fromObject(map).toString();
-		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		if(SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
+			HashMap<String, Object> map = new HashMap<>();
+			
+			basedao.delete(PubConstants.WX_ORDERFORM);
+			basedao.delete(PubConstants.SHOP_ODERFORMPRO);
+			basedao.delete(PubConstants.SUC_SHOPPINGCART);
+			basedao.delete(PubConstants.SHOP_SHOPCOMMENTS);
+		    basedao.delete(PubConstants.SHOP_SHOPCOMREPLY);
+			basedao.delete(PubConstants.SHOP_AFTERSERVICE);
+			basedao.delete(PubConstants.INTEGRAL_INFO);
+			basedao.delete(PubConstants.INTEGRALLL_INFO);
+			basedao.delete(PubConstants.SUC_INTEGRALRECORD);
+			basedao.delete(PubConstants.INTEGRALM);
+			basedao.delete(PubConstants.JF_TOTAL);
+			basedao.delete(PubConstants.INTEGRAL_TOPUPORDER);
+			
+			basedao.delete(PubConstants.INTEGRAL_TRANSFERORDER);
+			basedao.delete(PubConstants.INTEGRAL_WITHDRAWALORDER);
+			
+			HashMap<String,Object>whereMap=new HashMap<>();
+			BasicDBObject dateCondition = new BasicDBObject(); 
+			//whereMap.put("money", 0);
+			basedao.delete(PubConstants.INTEGRAL_PROSTORE);
+			
+			
+			String json = JSONArray.fromObject(map).toString();
+			Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+		}
+	
 	}
+	public void clearare(){
+		if(SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
+		HashMap<String, Object> sortMap = new HashMap<String, Object>();
+		HashMap<String, Object> whereMap = new HashMap<String, Object>();
+		List<DBObject> list = basedao.getList(PubConstants.USER_AGENTAREA,whereMap,sortMap);
+		for (DBObject dbObject : list) {
+			if(dbObject.get("_id").toString().length()>5){
+				basedao.delete(PubConstants.USER_AGENTAREA, dbObject.get("_id").toString());
+			}
+			AgentArea s=(AgentArea) UniObject.DBObjectToObject(dbObject, AgentArea.class);
+			s.set_id(Long.parseLong(dbObject.get("_id").toString()));
+			s.setAgentId("");
+			s.setAgentLevel(0);
+			basedao.insert(PubConstants.USER_AGENTAREA, s);
+		 }
+		}
+		
+		
+	}
+	public void  chekUser(){
+		if(SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
+		List<DBObject>list=basedao.getList(PubConstants.USER_INFO,null, null);
+		for (DBObject dbObject : list) {
+			 UserInfo us=(UserInfo) UniObject.DBObjectToObject(dbObject, UserInfo.class);
+			 us.set_id(dbObject.get("_id").toString());
+			 us.setAgentcityid(0L);
+			 us.setAgentcountyid(0L);
+			 us.setAgentLevel(0);
+			 us.setAgentprovinceid(0L); 
+			 basedao.insert(PubConstants.USER_INFO, us);
+		 }
+		}
+	}
+	
 
 	/**
 	 * ajax微信登录

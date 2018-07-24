@@ -24,7 +24,7 @@
                             $('#type1').val(json.type); 
                             $('#province1').val(json.province);
                             $('#city1').val(json.city);
-                            $('#agentLevel1').val(json.agentLevel).trigger("change");
+                            $('#agentLevel').val(json.agentLevel).trigger("change");
                             $('#number1').val(json.number);
                             //$('#number').val(json.number);
                             $('#upIds1').val(json.upIds);

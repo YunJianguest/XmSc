@@ -272,17 +272,17 @@
             </div>
             <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
              
-                <c:if test="${llb>0||llb==0.0}">
+                <c:if test="${not empty llb}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">${llb}</i></span> 
                 </c:if>
-                <c:if test="${llb==null}">
+                <c:if test="${empty llb}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">0.00</i></span> 
                 </c:if>
                  
-            	<c:if test="${jf>0}">
+            	<c:if test="${not empty jf}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">${jf}</i></span> 
             	</c:if> 
-            	<c:if test="${jf==0}">
+            	<c:if test="${empty jf}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
                
