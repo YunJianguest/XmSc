@@ -243,7 +243,8 @@
 						$("#price").html($("#zprice").val());
 						
 					}
-					$("#cost").html(Number($("#price").html())*Number("0.1").toFixed(2));
+					var cost = Number($("#price").html())*Number("0.1");
+					$("#cost").html(cost.toFixed(2));
 					$(".Submission_box").css({"display":"block"})
 				})
 				//取消确认按钮
@@ -254,7 +255,7 @@
 				})
 				
 				function resure(){
-				if($('#password').val() == ''){
+				 if($('#password').val() == ''){
 					alert('请输入密码');
 					return;
 				} 
@@ -263,7 +264,7 @@
 		    	    }; 
 		    		 $.post('${ctx}/integral/miners!wdpassword.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 					        	function (json) {
-					            	if(json.state==0){ 
+					            	if(json.state==0){  
 								        var submitData = "";
 									    if($("#mui_title").val()==1){
 									    	submitData = {
@@ -286,17 +287,21 @@
 					                        	function (json) {
 					                            	if(json.state == 0){
 					                            		alert('提现申请成功，请等待审核');
+					                            		alert('id--->'+json.id);
+					                            		window.location.href = '${ctx}/integral/commission!detail.action?custid=${custid}&agid=${agid}&lscode=${lscode}&id='+json.id;
 					                            	}   
 					                            	if(json.state == 1){
 					                            		alert('操作失败，请重新提交');
+					                            		window.location.reload();
 					                            	}
 					                            	if(json.state == 2){
 					                            		alert('信息不足，请重新填写');
+					                            		window.location.reload();
 					                            	}
 					                            	if(json.state == 3){
 					                            		alert('请重新登录');
+					                            		window.location.reload();
 					                            	}
-					                            	window.location.reload();
 					                            }, "json")
 		            	}else if(json.state==1){
 		            		alert('操作失败');
@@ -308,7 +313,7 @@
 		            	}else  if(json.state==4){
 		            		alert('密码错误');
 		            	}
-		},"json")
+		                },"json") 
 			    }
 		</script>
 	</body>
