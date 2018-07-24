@@ -224,7 +224,7 @@
    			<i class="zi-lan-tq fa fa-commenting-o" style='font-size:16px;color:#000;'></i>
    		</div> -->
    	</div>
-        <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 0;margin-left:20px;margin-top:-35px;">
+        <div class="img-wh70 position-a border-radius50" style="top: 33%;left: 0;margin-left:20px;">
           <c:if test="${empty entity.headimgurl}">
             <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius50"/>
           </c:if>
@@ -272,7 +272,7 @@
                     </div> --%>
                 </font>
             </div>
-            <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 25px;">
+            <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 20px;">
              
                 <c:if test="${llb>0||llb==0.0}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">${llb}</i></span> 
@@ -289,7 +289,7 @@
             	</c:if>   
                
             </div>
-             <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 25px;">
+             <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 0;">
              
                 <c:if test="${llb>0||llb==0.0}">
                 <span style="color: #FF0000;float:left">佣金账户:<i style="color: #000;">${llb}</i></span> 
