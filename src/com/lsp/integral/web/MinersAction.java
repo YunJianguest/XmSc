@@ -998,7 +998,7 @@ public class MinersAction extends GeneralAction<Miner> {
 					
 					if(ir.getKjlx()==1){
 						//提现
-				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"))) {
+				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"),BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""))) {
 				    		parameters.put("eth", eth);
 					    	parameters.put("num",price);
 					    	parameters.put("username",wwzService.getWxUser(fromUserid).get("tel"));

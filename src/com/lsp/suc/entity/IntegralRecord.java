@@ -20,6 +20,10 @@ public class IntegralRecord extends ReflectionDBObject {
 	 */
 	private String   uservalue;
 	/**
+	 * 佣金账户
+	 */
+	private String   yjvalue;
+	/**
 	 * 矿机产币账户
 	 */
 	private String   kjvalue; 
@@ -111,8 +115,12 @@ public class IntegralRecord extends ReflectionDBObject {
 	public void setLldjvalue(String lldjvalue) {
 		this.lldjvalue = lldjvalue;
 	}
-	 
-	 
-     
+	public String getYjvalue() {
+		return yjvalue;
+	}
+	public void setYjvalue(String yjvalue) {
+		this.yjvalue = yjvalue;
+	}
+	   
 
 }
