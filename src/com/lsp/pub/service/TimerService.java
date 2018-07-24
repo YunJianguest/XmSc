@@ -101,6 +101,7 @@ public class TimerService {
 					kjlx=ir.getKjlx(); 
 					
 				} 
+				String jzprice=price;
 				if(kjlx>=0){
 					if(kjlx==1){
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",10);
@@ -116,10 +117,10 @@ public class TimerService {
 					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
 						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
 							//挖矿到矿机账号 
-							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
+							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), jzprice);
 							
 						}else{
-							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
+							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), jzprice);
 						}
 						
 						
@@ -127,7 +128,7 @@ public class TimerService {
 						
 						DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
 					    if(user!=null&&user.get("renumber")!=null&&Double.parseDouble(dbObject.get("money").toString())<90000&&StringUtils.isNotEmpty(wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()))) {
-					    	wwzservice.addyfjf(BaseDecimal.multiplication(price, "0.1"),wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), null);
+					    	wwzservice.addyfjf(BaseDecimal.multiplication(price, "0.1"),wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), BaseDecimal.multiplication(jzprice, "0.1"));
 					    }
 						
 					}

@@ -224,7 +224,7 @@
    			<i class="zi-lan-tq fa fa-commenting-o" style='font-size:16px;color:#000;'></i>
    		</div> -->
    	</div>
-        <div class="img-wh70 position-a border-radius50" style="top: 50%;left: 0;margin-left:20px;margin-top:-35px;">
+        <div class="img-wh70 position-a border-radius50" style="top: 33%;left: 0;margin-left:20px;">
           <c:if test="${empty entity.headimgurl}">
             <img src="${ctx}/mvccol/img/user/weizhuce.jpg" class="width-10 border-radius50"/>
           </c:if>
@@ -272,20 +272,37 @@
                     </div> --%>
                 </font>
             </div>
-            <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
+            <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 20px;">
              
-                <c:if test="${llb>0||llb==0.0}">
+                <c:if test="${not empty llb}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">${llb}</i></span> 
                 </c:if>
-                <c:if test="${llb==null}">
+                <c:if test="${empty llb}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">0.00</i></span> 
                 </c:if>
                  
-            	<c:if test="${jf>0}">
+            	<c:if test="${not empty jf}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">${jf}</i></span> 
             	</c:if> 
-            	<c:if test="${jf==0}">
+            	<c:if test="${empty jf}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
+            	</c:if>   
+               
+            </div>
+             <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 0;">
+             
+                <c:if test="${not empty yj}">
+                <span style="color: #FF0000;float:left">佣金账户:<i style="color: #000;">${yj}</i></span> 
+                </c:if>
+                <c:if test="${empty yj}">
+                <span style="color: #FF0000;float:left">佣金账户:<i style="color: #000;">0.00</i></span> 
+                </c:if>
+                 
+            	<c:if test="${not empty xfjl}">
+            	<span style="color: #FF0000;float:right">消费记录:<i style="color: #000;">${xfjl}</i></span> 
+            	</c:if> 
+            	<c:if test="${empty xfjl}">
+            	<span style="color: #FF0000;float:right">消费记录:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
                
             </div>

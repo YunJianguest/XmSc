@@ -1269,7 +1269,7 @@ public class WwzService {
 	 * @throws Exception 
 	 */
 	public boolean addyfjf(String price, String fromUserid, String type, String custid, int jfstate, String fid,
-			DBObject wxuser) throws Exception {
+			String jzprice) throws Exception {
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if(checkTotalIntegral(1, price)) {
@@ -1284,7 +1284,7 @@ public class WwzService {
 					info.setFid(fid);
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 					if (jfstate == 2) {//
-						if (changeKjJf(custid, fromUserid, price, 0)) {
+						if (changeKjJf(custid, fromUserid, price, 0,jzprice)) {
 							if (updateTotalIntegral(1, price)) {
 								//判断是否已经返完
 								checkFh(fromUserid,custid,fid,type);
@@ -1292,7 +1292,7 @@ public class WwzService {
 							}
 						}
 					} else {// 可用积分
-						if (changeKjJf(custid, fromUserid, price, 0)) {
+						if (changeKjJf(custid, fromUserid, price, 0,jzprice)) {
 							if (updateTotalIntegral(1, price)) {
 								//判断是否已经返完
 								checkFh(fromUserid,custid,fid,type);
@@ -1322,10 +1322,10 @@ public class WwzService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public boolean delyfjf(String price, String fromUserid, String type, String custid) throws Exception {
+	public boolean delyfjf(String price, String fromUserid, String type, String custid,String jzprice) throws Exception {
 		try {
 			if (Double.parseDouble(price) > 0) {
-				if(changeKjJf(custid, fromUserid, price, 1)) {
+				if(changeKjJf(custid, fromUserid, price, 1,jzprice)) {
 					IntegralInfo info = new IntegralInfo();
 					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
 					info.setCreatedate(new Date());
@@ -1887,6 +1887,9 @@ public class WwzService {
 			if(StringUtils.isEmpty(ir.getLlzvalue())){
 				ir.setLlzvalue("0");
 			}
+			if(StringUtils.isEmpty(ir.getYjvalue())){
+				ir.setYjvalue("0");
+			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
 			if (type == 0) {
@@ -1919,16 +1922,17 @@ public class WwzService {
 	}
 	
 	/**
-	 * 积分更新
+	 * 积分更新（矿机）
 	 * 
 	 * @param custid
 	 * @param fromUserid
 	 * @param value
 	 * @param type
 	 * @param isfreeze
+	 * jzprice(价值)
 	 * 0--冻结积分增加 1--可使用积分增加
 	 */
-	public boolean changeKjJf(String custid, String fromUserid, String value, int type) {
+	public boolean changeKjJf(String custid, String fromUserid, String value, int type,String jzprice) {
 		try {
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("custid", custid);
@@ -1971,14 +1975,19 @@ public class WwzService {
 			if(StringUtils.isEmpty(ir.getLlzvalue())){
 				ir.setLlzvalue("0");
 			}
+			if(StringUtils.isEmpty(ir.getYjvalue())){
+				ir.setYjvalue("0");
+			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
 			if (type == 0) { 
 				ir.setKjvalue(BaseDecimal.add(ir.getKjvalue(), value));
+				ir.setKjjzvalue(BaseDecimal.add(ir.getKjjzvalue(),jzprice));
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
-			} else if (type == 1 &&Double.parseDouble(ir.getKjvalue())>=Double.parseDouble(value)) {
+			} else if (type == 1 &&Double.parseDouble(ir.getKjvalue())>=Double.parseDouble(value)&&Double.parseDouble(ir.getKjjzvalue())>=Double.parseDouble(jzprice)) {
 				ir.setKjvalue(BaseDecimal.subtract(ir.getKjvalue(), value));
+				ir.setKjjzvalue(BaseDecimal.subtract(ir.getKjjzvalue(), jzprice));
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
 			} else if (type == 2) { 
@@ -2048,6 +2057,9 @@ public class WwzService {
 			}
 			if(StringUtils.isEmpty(ir.getLlzvalue())){
 				ir.setLlzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getYjvalue())){
+				ir.setYjvalue("0");
 			}
 			ir.setCustid(custid);
 			ir.setFromUserid(fromUserid);
@@ -2144,6 +2156,93 @@ public class WwzService {
 		}
 		return false;
 	}
+
+	/**
+	 * 积分更新(佣金)
+	 * 
+	 * @param custid
+	 * @param fromUserid
+	 * @param value
+	 * @param type  0增加1减少
+	 * @param isfreeze
+	 *            0--未冻结 1--已冻结
+	 * @param lx
+	 *            0--PP 1--LL
+	 */
+	public boolean changeYjJf(String custid, String fromUserid, String value, int type, int lx) {
+		try {
+			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			whereMap.put("custid", custid);
+			whereMap.put("fromUserid", fromUserid);
+			IntegralRecord ir = null;
+			DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+			if (db == null) {
+				ir = new IntegralRecord();
+				ir.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
+			} else {
+				ir = (IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
+			}
+			if(StringUtils.isEmpty(ir.getKjvalue())){
+				ir.setKjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjjzvalue())){
+				ir.setKjjzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getKjtxvalue())){
+				ir.setKjtxvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getProstore())){
+				ir.setProstore("0");
+			}
+			if(StringUtils.isEmpty(ir.getValue())){
+				ir.setValue("0");
+			}
+			if(StringUtils.isEmpty(ir.getUservalue())){
+				ir.setUservalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLldjvalue())){
+				ir.setLldjvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlkyvalue())){
+				ir.setLlkyvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getLlzvalue())){
+				ir.setLlzvalue("0");
+			}
+			if(StringUtils.isEmpty(ir.getYjvalue())){
+				ir.setYjvalue("0");
+			}
+			ir.setCustid(custid);
+			ir.setFromUserid(fromUserid);
+			if(type == 0) { 
+				ir.setYjvalue(BaseDecimal.add(ir.getYjvalue(), value)); 
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				return true;
+				 
+			}else if (type == 1) { 
+				if(Double.parseDouble(ir.getYjvalue())>Double.parseDouble(value)) {
+				   ir.setYjvalue(BaseDecimal.subtract(ir.getYjvalue(), value));
+				} 
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				return true;
+			} else if (type == 2) {
+				ir.setValue(value);
+				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} 
+	}
+	
 
 	/**
 	 * 将冻结积分变成可用积分
@@ -3224,6 +3323,112 @@ public class WwzService {
 						}
 					}
 
+				} else if (lx == 1) { 
+						//默认积分
+						if (jflx == 1) {
+							IntegralInfo info = new IntegralInfo();
+							info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+							info.setCreatedate(new Date());
+							info.setFromUserid(fromUserid);
+							info.setValue(price);
+							info.setType(type);
+							info.setState(0);
+							info.setOid(oid);
+							info.setCustid(custid);
+							info.setIsfreeze(isfreeze);
+							baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+							if (changeYjJf(custid, fromUserid, price, 0,0)) { 
+								return true; 
+							} else {
+								return false;
+							}
+						} else if (jflx == 2) {
+							// 系统发放（验证库存）
+							if (checkTotalIntegral(jflx, price)) {
+							IntegralLlInfo info = new IntegralLlInfo();
+							info.set_id(mongoSequence.currval(PubConstants.INTEGRALLL_INFO));
+							info.setCreatedate(new Date());
+							info.setFromUserid(fromUserid);
+							info.setValue(price);
+							info.setType(type);
+							info.setOid(oid);
+							info.setState(0);
+							info.setCustid(custid);
+							baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
+							if (changeJf(custid, fromUserid, price, 0, isfreeze, 1)) {
+								if (updateTotalIntegral(jflx, price)) {
+									return true;
+								}
+							} else {
+								return false;
+							}
+						  }
+						}
+					}
+ 
+
+			}
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	
+	/**
+	 * 增加积分(佣金)
+	 * 
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param lx(0为正常交易，1为系统赠送)
+	 * @param jflx(0普通积分，1为PP，2为LL)
+	 * @param isfreeze(0-未冻结   1-已冻结)
+	 * @return
+	 */
+	public boolean addYjjfoid(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze,String oid) {
+		try {
+			if (Double.parseDouble(price) > 0) {
+				if (lx == 0) {
+					//默认积分
+					if (jflx == 1) {
+						IntegralInfo info = new IntegralInfo();
+						info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+						info.setCreatedate(new Date());
+						info.setFromUserid(fromUserid);
+						info.setValue(price);
+						info.setType(type);
+						info.setState(0);
+						info.setOid(oid);
+						info.setCustid(custid);
+						info.setIsfreeze(isfreeze);
+						baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+						if (changeJf(custid, fromUserid, price, 0, isfreeze, 0)) {
+							return true;
+						} else {
+							return false;
+						}
+					} else if (jflx == 2) {
+						IntegralLlInfo info = new IntegralLlInfo();
+						info.set_id(mongoSequence.currval(PubConstants.INTEGRALLL_INFO));
+						info.setCreatedate(new Date());
+						info.setFromUserid(fromUserid);
+						info.setValue(price);
+						info.setType(type);
+						info.setOid(oid);
+						info.setState(0);
+						info.setCustid(custid);
+						baseDao.insert(PubConstants.INTEGRALLL_INFO, info);
+						if (changeJf(custid, fromUserid,price, 0, isfreeze, 1)) {
+							return true;
+						} else {
+							return false;
+						}
+					}
+
 				} else if (lx == 1) {
 					// 系统发放（验证库存）
 					if (checkTotalIntegral(jflx, price)) {
@@ -3279,6 +3484,8 @@ public class WwzService {
 		return false;
 
 	}
+	
+	
 	
 	/**
 	 * 减少积分
@@ -3342,6 +3549,43 @@ public class WwzService {
 					info.setType(type);
 					info.setState(1);
 					info.setOid(oid);
+					info.setCustid(custid);
+					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					return true;
+				}
+			} 
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+	/**
+	 * 减少积分(佣金)
+	 * 
+	 * @param price
+	 * @param fromUserid
+	 * @param type
+	 * @param custid
+	 * @param lx(0为正常交易，1为系统赠送)
+	 * @param jflx(0普通积分，1为PP，2为LL)
+	 * @param isfreeze(0-未冻结   1-已冻结)
+	 * @return
+	 */
+	public boolean delYjjf(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze) {
+		try {
+			//减少冻结积分
+			if(Double.parseDouble(price)>0) {
+				if(changeYjJf(custid, fromUserid, price,1,0)) {
+					IntegralInfo info = new IntegralInfo();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+					info.setCreatedate(new Date());
+					info.setFromUserid(fromUserid);
+					info.setValue(price);
+					info.setType(type);
+					info.setState(1);
 					info.setCustid(custid);
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 					return true;
@@ -3488,7 +3732,7 @@ public class WwzService {
         	};
     	}
     	
-		return 1; 
+		return 0.5; 
     }
 
 }

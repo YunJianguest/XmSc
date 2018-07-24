@@ -47,7 +47,7 @@
 			}
 			
 			.mui-content-padded {
-				padding: 0 20px;
+				padding: 0 28px;
 				margin: 0;
 			}
 			
