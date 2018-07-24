@@ -7,6 +7,9 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>账单详情</title>
+		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
+		 <link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
+         <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
 		<style>
 			*{
 				margin:0;
@@ -60,17 +63,37 @@
 	<body>
 		<div class="details">
 			<img src="http://pic29.photophoto.cn/20131229/0020033084153379_b.jpg" alt="" />
-			<p><span>熊猫商城提现</span>-到<span>建设银行（7766）</span></p>
-			<h4>100.10</h4>
+			<p><span>熊猫商城提现</span>-到<span>
+			<c:if test="${dbObject.type == 1}">
+			${dbObject.yname}(${dbObject.account})
+			</c:if>
+			<c:if test="${dbObject.type == 2}">
+			支付宝(${dbObject.account})
+			</c:if>
+			</span></p>
+			<h4><fmt:formatNumber value='${dbObject.price}' pattern="0.00"/></h4>
 		</div>
 		<div class="details_list">
-			<p>当前状态<span>待处理</span></p>
-			<p>提现金额<span>100.10</span></p>
-			<p>手&nbsp;&nbsp;续&nbsp;&nbsp;费<span>10.01</span></p>
-			<p>申请时间<span>2018-07-2317：31:21</span></p>
-			<p>到账时间<span>2018-07-2317：56:21</span></p>
-			<p>提现银行<span>建设银行</span></p>
-			<p>提现单号<span>778852166554892123232</span></p>
+			<p>当前状态
+			<c:if test="${dbObject.state == 0}"><span>待审批</span></c:if>
+            <c:if test="${dbObject.state == 1}"><span>审批通过，等待打款</span></c:if>
+            <c:if test="${dbObject.state==2}"><span>审批通过</span></c:if>
+			<c:if test="${dbObject.state==3}"><span style="color:#F00">已打款</span></c:if>
+			</p>
+			<p>提现金额<span><fmt:formatNumber value='${dbObject.price}' pattern="0.00"/></span></p>
+			<p>手&nbsp;&nbsp;续&nbsp;&nbsp;费<span><fmt:formatNumber value='${dbObject.cost}' pattern="0.00"/></span></p>
+			<p>申请时间<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dbObject.createdate}" /></span></p>
+			<c:if test="${dbObject.state == 1||dbObject.state == 2}">
+			<p>审核时间<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dbObject.updatedate}" /></span></p>
+			</c:if>
+			<c:if test="${dbObject.state == 3}">
+			<p>打款时间<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dbObject.confirmdate}" /></span></p>
+			</c:if>
+			<c:if test="${dbObject.type == 1}">
+			<p>提现银行<span>${dbObject.yname}</span></p>
+			</c:if>
+			<p>提现单号<span>${dbObject._id}</span></p>
 		</div>
+		<%@include file="/webcom/shop-foot.jsp" %>
 	</body>
 </html>

@@ -283,6 +283,10 @@ public class CommissionAction extends GeneralAction<Commission> {
 	    	getLscode(); 
 	    	Struts2Utils.getRequest().setAttribute("custid", custid);
 			Struts2Utils.getRequest().setAttribute("lscode", lscode);
+			String id = Struts2Utils.getParameter("id");
+			System.out.println("id0000"+id);
+			DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_COMMISSION, id);
+			Struts2Utils.getRequest().setAttribute("dbObject", dbObject);
 			return "detail"; 
 	    }
 	    
@@ -347,6 +351,7 @@ public class CommissionAction extends GeneralAction<Commission> {
 	    	commission.setCustid(SysConfig.getProperty("custid"));
 	    	try {
 				baseDao.insert(PubConstants.INTEGRAL_COMMISSION, commission);
+				sub_map.put("id", commission.get_id().toString());
 				sub_map.put("state", 0);//操作成功
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -358,5 +363,29 @@ public class CommissionAction extends GeneralAction<Commission> {
 	    	
 	    }
 	  
+	    /**
+	     * 
+	     * @throws Exception
+	     */
+	    public void ajaxlist() throws Exception{
+	    	getLscode();
+	    	HashMap<String, Object> sortMap = new HashMap<String, Object>();
+			HashMap<String, Object> whereMap = new HashMap<String, Object>();
+			Map<String, Object> sub_map = new HashMap<String, Object>();
+			sub_map.put("state", 0);
+			sortMap.put("createdate", -1);   
+			whereMap.put("fromid", fromUserid);
+			//分页
+			if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+				fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+			}
+			List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_COMMISSION,whereMap,fypage,20,sortMap);
+			if(list.size() > 0){
+				sub_map.put("state", 0);
+				sub_map.put("list",list);
+			}
+			String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    }
 	  
 }
