@@ -13,13 +13,13 @@
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/common.css" />
 		<link rel="stylesheet" type="text/css" href="${ctx}/xmMobile/css/swiper.css" />
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
-		 <link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
-         <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
+		<link href="${ctx}/app/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="${ctx}/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-		 <script src="${ctx }/mvccol/js/mtlb.js"></script>
-    <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
-    <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
+		<script src="${ctx}/mvccol/js/mtlb.js"></script>
+	    <script type="text/javascript" src="${ctx }/app/js/bbsSwipe.js"></script>
+	    <script type="text/javascript" src="${ctx }/app/js/swipe.js"></script>
 		<style type="text/css">
 			.mui-bar-nav {
 				box-shadow: none;

@@ -14,6 +14,7 @@ public class PubConstants
   public static String INTEGRAL_TOPUPORDER = "integral_topuporder";//充值订单
   public static String INTEGRAL_TRANSFERORDER = "integral_transferorder";//转账订单
   public static String INTEGRAL_WITHDRAWALORDER = "integral_withdrawalorder";//提现订单
+  public static String INTEGRAL_COMMISSION = "integral_commission";//佣金提现
 	
   public static String EMAIL_EMALIINFO = "email_emailinfo";
   public static String EMAIL_EMALIOUTINFO = "email_emaioutlinfo";

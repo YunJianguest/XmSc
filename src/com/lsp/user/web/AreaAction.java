@@ -128,6 +128,7 @@ public class AreaAction extends GeneralAction<AgentArea>{
 			if(StringUtils.isEmpty(entity.getAgentId())){
 				entity.setAgentId("");
 			}
+			entity.setArea(entity.getArea().trim());
 			basedao.insert(PubConstants.USER_AGENTAREA, entity);
 			addActionMessage("添加成功!");
 		} catch (Exception e) {
