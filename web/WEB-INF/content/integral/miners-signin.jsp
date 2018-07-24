@@ -48,7 +48,7 @@
 			.mui-content-padded {
 				margin-top: 30px;
 				padding: 0 30px;
-				margin-right: 0;
+				margin: 0;
 			}
 			
 			.mui-btn {
@@ -63,7 +63,7 @@
 			
 			.link-area {
 				display: flex;
-				margin-top: 22px;
+				margin-top:0;
 				justify-content: space-between;
 				font-size: 12px;
 			}
@@ -147,6 +147,20 @@
 			.wx-icon{
 				background: url('${ctx}/xmMobile/images/weixin.png') no-repeat; 
 				/*border: none;*/
+			}
+			.mui-input-group .mui-input-row:after {
+			    position: absolute;
+			    right: 0;
+			    bottom: 0;
+			    left: 0px;
+			    height: 1px;
+			    content: '';
+			    -webkit-transform: scaleY(.5);
+			    transform: scaleY(.5);
+			    background-color: #c8c7cc;
+			}
+			.mui-btn-block {
+			    margin-bottom: 0px !important;
 			}
 		</style>
 	</head>
