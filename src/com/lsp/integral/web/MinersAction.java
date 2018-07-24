@@ -982,7 +982,9 @@ public class MinersAction extends GeneralAction<Miner> {
 		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
 		    	HashMap<String, Object>whereMap=new HashMap<>();
 		    	whereMap.put("fromUserid", fromUserid);
+		    	whereMap.put("custid", SysConfig.getProperty("custid"));
 		    	DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		    	System.out.println(db);
 		    	IntegralRecord ir = null;
 				if(db!=null){
 					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
@@ -996,7 +998,7 @@ public class MinersAction extends GeneralAction<Miner> {
 				  		return;
 					}
 					
-					if(ir.getKjlx()==1){
+					if(ir.getKjlx()>=0){
 						//提现
 				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"),BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""))) {
 				    		parameters.put("eth", eth);
@@ -1008,6 +1010,13 @@ public class MinersAction extends GeneralAction<Miner> {
 					    	HashMap<String,Object>map=new HashMap<>();
 					    	map.put("data", parameters);
 				            String result =HttpClient.doHttpPost(SysConfig.getProperty("jysurl"),JSONObject.fromObject(parameters).toString());
+				            if(result.equals("0")){
+				            	//请求失败
+					    		sub_map.put("state", 7);
+					    		String json = JSONArray.fromObject(sub_map).toString();
+						  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+						  		return;
+				            }
 				            JSONObject obj=JSONObject.fromObject(result);
 				            if(obj.getString("code").equals("1000")) {
 				            	//提现成功；

@@ -72,7 +72,7 @@ public class TimerService {
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		BasicDBObject dateCondition1 = new BasicDBObject();
-		dateCondition1.append("$lte", DateUtil.addDay(new Date(), -1));
+		dateCondition1.append("$lte", DateUtil.addHour(new Date(), -22));
 		whereMap.put("createdate", dateCondition1);
 		sortMap.put("createdate", -1);
 		BasicDBObject dateCondition = new BasicDBObject();
