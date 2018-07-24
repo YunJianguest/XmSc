@@ -181,7 +181,7 @@
 	  }
 		
 		</script>
-	</head>
+	</head> 
 
 	<body>
 		 <header class="mui-bar mui-bar-nav">
@@ -192,12 +192,12 @@
 			<div class="mui-row">
 				<div class="coin">
 					<span>消费累计：</span>
-					<c:if test="${dbObject == null}">
-					<span>0</span>
+					<c:if test="${empty dbObject.prostore}">
+					<span>0.00</span>
 					</c:if>
-					<c:if test="${dbObject != null}">
+					<c:if test="${not empty dbObject.prostore}">
 					<span>${dbObject.prostore}</span>
-					</c:if>
+					</c:if> 
 				</div>
 			</div>
 			<div class="mui-row">
