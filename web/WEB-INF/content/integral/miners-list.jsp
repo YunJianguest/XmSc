@@ -56,7 +56,7 @@
 				font-size:12px;
 			}
 			.mui-table-view-cell.mui-media p.mui-ellipsis{
-				color:#ddd;
+				color:#333;
 				font-size:12px;
 			}
 			.mui-content>.mui-table-view{
