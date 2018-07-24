@@ -48,6 +48,7 @@
 			
 			.mui-content-padded {
 				padding: 0 20px;
+				margin: 0;
 			}
 			
 			.mui-btn {
