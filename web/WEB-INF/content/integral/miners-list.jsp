@@ -33,7 +33,8 @@
 			}
 			.mui-btn.miner-btnbuy{
 				border:1px solid #D63333;
-				color:#D63333
+				color:#D63333;
+				padding: 2px 6px;
 				
 				/*background-color:linear-gradient(to bottom top, #e2a60b,#facd04);
 				background: linear-gradient(to bottom right, #e2a60b , #facd04);
@@ -131,7 +132,7 @@
 						    +'<p class="mui-ellipsis"><span>运行周期：</span><span>'+v[i].time+'天</span></p>'
 							+'<p class="mui-ellipsis"><span>提成百分比：</span><span>'+v[i].percent+'%</span></p>'	
 							+'</div>'	
-							+'<div class="miner-buyBtn mui-col-xs-2">'
+							+'<div class="miner-buyBtn mui-col-xs-4">'
 							+'<button type="button" class="mui-btn miner-btnbuy" onclick="rechange('+v[i]._id+')">立即购买</button>'
 							+'</div></div></li>';
 					 }
