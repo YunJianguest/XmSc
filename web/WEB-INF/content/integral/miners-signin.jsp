@@ -191,7 +191,7 @@
 					<a id='forgetPassword' href="${ctx}/integral/miners!forgetpw.action">忘记密码</a>
 				</div>
 			</div>
-			<div class="mui-content-padded">
+			<!--<div class="mui-content-padded">
 				<div class="title-txt">
 					<span class="title-layout">
 						<span class="title-txt-txt">其他方式登录</span>
@@ -200,8 +200,7 @@
 			</div>
 			<div class="mui-content-padded oauth-area" style="margin-top: 50px;">
 				<button class="oauth-btn wx-icon"></button>
-				
-			</div>
+			</div>-->
 		</div>
 		<script src="${ctx}/xmMobile/js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="${ctx}/xmMobile/js/mui.min.js"></script>
