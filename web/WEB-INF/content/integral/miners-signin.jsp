@@ -25,7 +25,8 @@
 			
 			.mui-input-group {
 				padding: 0 30px;
-				margin-bottom: 25px;
+				margin-bottom: 30px;
+				margin-top: 20px;
 			}
 			
 			.mui-input-group::after,
@@ -48,7 +49,7 @@
 			
 			.mui-content-padded {
 				padding: 0 28px;
-				margin: 0;
+				margin:50px 0 0;
 			}
 			
 			.mui-btn {
@@ -62,6 +63,7 @@
 			}
 			
 			.link-area {
+				text-align: center;
 				display: flex;
 				margin-top:0;
 				justify-content: space-between;
@@ -70,6 +72,8 @@
 			
 			.link-area a {
 				color: #000;
+				width: 100%;
+				margin-top: 18px;
 			}
 			
 			.oauth-area {
@@ -161,6 +165,9 @@
 			}
 			.mui-btn-block {
 			    margin-bottom: 0px !important;
+			}
+			.mui-input-group .mui-input-row {
+ 			    margin: 25px 0 !important;
 			}
 		</style>
 	</head>
