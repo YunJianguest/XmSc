@@ -25,6 +25,7 @@
 			
 			.mui-input-group {
 				padding: 0 30px;
+				margin-bottom: 25px;
 			}
 			
 			.mui-input-group::after,
@@ -46,9 +47,7 @@
 			}
 			
 			.mui-content-padded {
-				margin-top: 30px;
-				padding: 0 30px;
-				margin: 0;
+				padding: 0 20px;
 			}
 			
 			.mui-btn {
