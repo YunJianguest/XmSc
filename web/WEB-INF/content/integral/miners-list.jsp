@@ -32,23 +32,27 @@
 				
 			}
 			.mui-btn.miner-btnbuy{
-				/*background-color:linear-gradient(to bottom top, #e2a60b,#facd04);*/
+				border:1px solid #D63333;
+				color:#D63333
+				
+				/*background-color:linear-gradient(to bottom top, #e2a60b,#facd04);
 				background: linear-gradient(to bottom right, #e2a60b , #facd04);
-				color: #fff;
+				color: #fff;*/
 			}
 			.mui-table-view .mui-media-object{
-				margin-top: 15px;
-				max-width: 60px;
-				height: 60px;
+				/*margin-top: 15px;*/
+				max-width: 66px;
+				height: 66px;
 				vertical-align: middle;
+				border-radius: 5px;
 			}
 			.mui-table-view-cell.mui-media{
 				margin-bottom: 2px;
-				color:#fff;
+				color:#333;
 				background:none;
 			}
 			.mui-table-view-cell.mui-media .miner-txt-cont{
-				font-size:16px;
+				font-size:12px;
 			}
 			.mui-table-view-cell.mui-media p.mui-ellipsis{
 				color:#ddd;
@@ -63,7 +67,10 @@
 				display: flex;
 				justify-content: space-between;
 				padding: 0 15px;
-				color: #fff;
+				color: #333;
+			}
+			.mui-media::after{
+				right:15px !important;
 			}
 		</style>
 		<script type="text/javascript">
@@ -116,15 +123,16 @@
 		    		var v = json.list; 
 		    		 for(var i=0;i<v.length;i++){  
 		    		    xszf+='<li class="mui-table-view-cell mui-media miner-media">'
+		    		    	+'<p style="font-size:  14px;color: #333;margin-bottom: 10px;">矿机型号<span style="float: right;color: #d63333;">'+v[i].price+'</span></p>'
 							+'<img class="mui-media-object mui-pull-left" src="${filehttp}/'+v[i].logo+'">'
 						    +'<div class="mui-media-body miner-txt">'
 							+'<div class="miner-txt-cont mui-col-xs-9">'+v[i].ptitle+''
-							+'<p class="mui-ellipsis"><span>数量:</span><span>'+v[i].price+'</span></p>'
-						    +'<p class="mui-ellipsis"><span>运行周期:</span><span>'+v[i].time+'天</span></p>'
-							+'<p class="mui-ellipsis"><span>提成百分比:</span><span>'+v[i].percent+'</span></p>'	
+							+'<p class="mui-ellipsis"><span>数量：</span><span>'+v[i].price+'</span></p>'
+						    +'<p class="mui-ellipsis"><span>运行周期：</span><span>'+v[i].time+'天</span></p>'
+							+'<p class="mui-ellipsis"><span>提成百分比：</span><span>'+v[i].percent+'%</span></p>'	
 							+'</div>'	
-							+'<div class="miner-buyBtn mui-col-xs-3">'
-							+'<button type="button" class="mui-btn miner-btnbuy" onclick="rechange('+v[i]._id+')">兑换</button>'
+							+'<div class="miner-buyBtn mui-col-xs-2">'
+							+'<button type="button" class="mui-btn miner-btnbuy" onclick="rechange('+v[i]._id+')">立即购买</button>'
 							+'</div></div></li>';
 					 }
 		    		fypage++;
@@ -179,10 +187,10 @@
 			<a class="mui-action-back mui-icon mui-icon-undo mui-pull-left"></a>
 			<h1 class="mui-title">矿机列表</h1>
 		</header> 
-		<div class="mui-content" style="overflow: scroll;height: 100%;background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;">
+		<div class="mui-content" style="overflow: scroll;height: 100%;background: #fff;"><!--background: url('${ctx}/xmMobile/img/minerback.jpg') no-repeat;background-size: 100% 100%;-->
 			<div class="mui-row">
 				<div class="coin">
-					<span>消费累计:</span>
+					<span>消费累计：</span>
 					<c:if test="${dbObject == null}">
 					<span>0</span>
 					</c:if>
