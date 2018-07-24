@@ -298,7 +298,6 @@
 					                            	}
 					                            	window.location.reload();
 					                            }, "json")
-					            	},"json")
 		            	}else if(json.state==1){
 		            		alert('操作失败');
 		            	}else if(json.state==2){
