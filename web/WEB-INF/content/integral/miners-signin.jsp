@@ -36,6 +36,7 @@
 				width: 25%;
 				font-size: 14px;
 				color: #020202;
+				padding:11px 0 !important;
 			}
 			
 			.mui-input-row label~input,
