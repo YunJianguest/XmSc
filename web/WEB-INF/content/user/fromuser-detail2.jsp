@@ -272,7 +272,7 @@
                     </div> --%>
                 </font>
             </div>
-            <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
+            <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 25px;">
              
                 <c:if test="${llb>0||llb==0.0}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">${llb}</i></span> 
@@ -286,6 +286,23 @@
             	</c:if> 
             	<c:if test="${jf==0}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
+            	</c:if>   
+               
+            </div>
+             <div style="width:100%;height:auto;overflow:hidden;padding:0 15px;font-size: 12px;margin-top: 25px;">
+             
+                <c:if test="${llb>0||llb==0.0}">
+                <span style="color: #FF0000;float:left">佣金账户:<i style="color: #000;">${llb}</i></span> 
+                </c:if>
+                <c:if test="${llb==null}">
+                <span style="color: #FF0000;float:left">佣金账户:<i style="color: #000;">0.00</i></span> 
+                </c:if>
+                 
+            	<c:if test="${jf>0}">
+            	<span style="color: #FF0000;float:right">消费记录:<i style="color: #000;">${jf}</i></span> 
+            	</c:if> 
+            	<c:if test="${jf==0}">
+            	<span style="color: #FF0000;float:right">消费记录:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
                
             </div>
