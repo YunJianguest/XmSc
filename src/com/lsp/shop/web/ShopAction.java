@@ -1355,7 +1355,7 @@ public class ShopAction extends GeneralAction {
 			Struts2Utils.getRequest().setAttribute("spelist", spelist);
 		}
 
-		Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(custid, fromUserid));
+		//Struts2Utils.getRequest().setAttribute("jf", wwzService.getJf(SysConfig.getProperty("custid"), fromUserid));
 		DBObject share = new BasicDBObject();
 		share.put("fxtitle", db.get("ptitle"));
 		share.put("fximg", db.get("logo"));
