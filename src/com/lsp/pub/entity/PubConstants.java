@@ -360,4 +360,6 @@ public class PubConstants
   
   public static String USER_AGENTAREA ="user_agentarea"; //代理地区
   
+  public static String PUB_EXCHANGERATE="pub_exchangerate";//汇率
+  
 }
