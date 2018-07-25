@@ -3743,9 +3743,10 @@ public class WwzService {
     	HashMap<String, Object>whereMap=new HashMap<>();
     	whereMap.put("type","USD_CNY");
     	DBObject  db=baseDao.getMessage(PubConstants.PUB_EXCHANGERATE, whereMap);  
-    	if(db!=null&&DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))<=1800000){ 
+    	if(db!=null&&DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))<=1800000){
+    		System.out.println(111);
     		return db.get("value").toString();
-    	} else if(DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))>1800000){
+    	} else if(db!=null&&DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))>1800000){
     		//更新汇率 
     		String str=HttpClient.sendGet(SysConfig.getProperty("cny_price_api")); 
     		if(StringUtils.isNotEmpty(str)){
@@ -3760,7 +3761,7 @@ public class WwzService {
             			if(boc.get("middle")!=null){ 
             				Exchangerate  exchangerate=(Exchangerate) UniObject.DBObjectToObject(db, Exchangerate.class);
             	    		exchangerate.set_id(Long.parseLong(db.get("_id").toString())); 
-            	    		exchangerate.setValue(BaseDecimal.division(boc.get("middle").toString(), "100", 6));
+            	    		exchangerate.setValue(BaseDecimal.division(boc.get("se_buy").toString(), "100", 6));
             	    		exchangerate.setUpddate(new Date());
             	    		baseDao.insert(PubConstants.PUB_EXCHANGERATE, exchangerate);
             	    		return BaseDecimal.division(boc.get("middle").toString(), "100", 6);
@@ -3769,9 +3770,34 @@ public class WwzService {
             	};
         	}
     		
-    	}
+    	}else{
+    		//更新汇率 
+    		String str=HttpClient.sendGet(SysConfig.getProperty("cny_price_api")); 
+    		if(StringUtils.isNotEmpty(str)){
+        		JSONObject json=JSONObject.parseObject(str);
+        		if(json.get("result")!=null){
+        			json=JSONObject.parseObject(json.get("result").toString());
+        		} 
+            	if(json.get("USD")!=null) { 
+            		JSONObject usd=JSONObject.parseObject(json.get("USD").toString());
+            		if(usd.get("BOC")!=null){ 
+            			JSONObject boc=JSONObject.parseObject(usd.get("BOC").toString());
+            			if(boc.get("middle")!=null){ 
+            				Exchangerate  exchangerate=new Exchangerate();
+            				exchangerate.set_id(mongoSequence.currval(PubConstants.PUB_EXCHANGERATE)); 
+            				exchangerate.setType("USD_CNY");
+            	    		exchangerate.setValue(BaseDecimal.division(boc.get("se_buy").toString(), "100", 6));
+            	    		exchangerate.setUpddate(new Date());
+            	    		baseDao.insert(PubConstants.PUB_EXCHANGERATE, exchangerate);
+            	    		return BaseDecimal.division(boc.get("middle").toString(), "100", 6);
+            			}
+            		}
+            	};
+        	}
+    		
+    	} 
     	
-		return "6.8"; 
+		return "6.5"; 
     }
 
 }
