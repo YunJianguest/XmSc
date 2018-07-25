@@ -51,14 +51,8 @@ public class ColorAction extends GeneralAction<Color> {
 
 	@Override
 	public String execute() throws Exception {
-		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
-		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
-			whereMap.put("custid", SysConfig.getProperty("custid"));
-		}else{
-			whereMap.put("custid", custid);
-		}
 		String  title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title))
 		{
@@ -67,8 +61,14 @@ public class ColorAction extends GeneralAction<Color> {
 			whereMap.put("ptitle", pattern);
 			Struts2Utils.getRequest().setAttribute("title",  title);
 		}
-		List<DBObject> list = baseDao.getList(PubConstants.PUB_COLOR,whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("colorList", list); 
+		//分页
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.PUB_COLOR,whereMap,fypage,10,sortMap);
+		Struts2Utils.getRequest().setAttribute("colorList", list);
+		fycount=baseDao.getCount(PubConstants.PUB_COLOR, whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		return SUCCESS;
 	}
 
@@ -123,6 +123,11 @@ public class ColorAction extends GeneralAction<Color> {
 				_id = mongoSequence.currval(PubConstants.PUB_COLOR);
 			}
 			entity.set_id(_id); 
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				
+			}else{
+				return RELOAD;
+			}
 			baseDao.insert(PubConstants.PUB_COLOR, entity); 
 			addActionMessage("成功添加!");
 		} catch (Exception e) {

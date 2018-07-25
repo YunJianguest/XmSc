@@ -73,7 +73,7 @@
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
 
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/suc/slide.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/suc/slide.action?type=${type}&height=0&width=0">
 
             <div class="pageheader">
 

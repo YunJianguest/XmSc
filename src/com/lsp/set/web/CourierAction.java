@@ -81,6 +81,7 @@ public class CourierAction extends GeneralAction<Courier>{
 			}
 		Struts2Utils.getRequest().setAttribute("list", list);
 		fycount=baseDao.getCount(PubConstants.SET_COURIER, whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		return SUCCESS;
 	}
 

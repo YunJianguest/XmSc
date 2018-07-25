@@ -21,6 +21,7 @@ import com.lsp.pub.entity.Ioc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.ShopType;
 import com.mongodb.DBObject;
@@ -52,8 +53,22 @@ public class IocAction extends GeneralAction<Ioc> {
 	public String execute() throws Exception {
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>(); 
-		List<DBObject> list = baseDao.getList(PubConstants.PUB_IOC,whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("iocList", list); 
+		String  title=Struts2Utils.getParameter("titles");
+		if(StringUtils.isNotEmpty(title))
+		{
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("title", pattern);
+			Struts2Utils.getRequest().setAttribute("titles",  title);
+		}
+		//分页
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.PUB_IOC,whereMap,fypage,10,sortMap);
+		Struts2Utils.getRequest().setAttribute("iocList", list);
+		fycount=baseDao.getCount(PubConstants.PUB_COLOR, whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		return SUCCESS;
 	}
 
@@ -108,7 +123,12 @@ public class IocAction extends GeneralAction<Ioc> {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.PUB_IOC);
 			}
-			entity.set_id(_id);  
+			entity.set_id(_id);
+            if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				
+			}else{
+				return RELOAD;
+			}
 			baseDao.insert(PubConstants.PUB_IOC, entity); 
 			addActionMessage("成功添加!");
 		} catch (Exception e) {

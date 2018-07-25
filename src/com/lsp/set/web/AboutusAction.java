@@ -20,6 +20,7 @@ import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.set.entity.Aboutus;
@@ -56,7 +57,7 @@ public class AboutusAction extends GeneralAction<Aboutus>{
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
+		whereMap.put("custid", SysConfig.getProperty("custid"));
 		List<DBObject> list = baseDao.getList(PubConstants.SET_ABOUTUS,whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("priceList", list);
 		
@@ -87,7 +88,7 @@ public class AboutusAction extends GeneralAction<Aboutus>{
 	@Override
 	public String update() throws Exception {
 	     
-		DBObject db=baseDao.getMessage(PubConstants.SET_ABOUTUS, SpringSecurityUtils.getCurrentUser().getId());
+		DBObject db=baseDao.getMessage(PubConstants.SET_ABOUTUS, SysConfig.getProperty("custid"));
 			
 		Struts2Utils.getRequest().setAttribute("entity",db); 
 		 
@@ -114,11 +115,16 @@ public class AboutusAction extends GeneralAction<Aboutus>{
 
 	@Override
 	public String save() throws Exception {
+		gsCustid();
 		// 注册业务逻辑
 		try {
 			 
-			entity.set_id(SpringSecurityUtils.getCurrentUser().getId());
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			entity.set_id(SysConfig.getProperty("custid"));
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				return update();
+			}
 			entity.setCreatedate(new Date()); 
 			baseDao.insert(PubConstants.SET_ABOUTUS, entity); 
 			addActionMessage("成功添加!");

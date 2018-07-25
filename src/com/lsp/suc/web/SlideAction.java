@@ -21,6 +21,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.suc.entity.Bbstypeinfo;
@@ -57,14 +58,13 @@ public class SlideAction extends GeneralAction<Slide>{
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap =new HashMap<String, Object>();
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
-		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-	    String type=Struts2Utils.getParameter("type");
 		sortMap.put("sort", -1); 
-		whereMap.put("custid", custid);
+	
+		String type=Struts2Utils.getParameter("type");
 		if(StringUtils.isNotEmpty(type)){
 			whereMap.put("type", type);	
 		}
@@ -81,22 +81,30 @@ public class SlideAction extends GeneralAction<Slide>{
 		List<DBObject> list=baseDao.getList(PubConstants.SUC_SLIDE,whereMap,fypage,10,sortMap,backMap);
 		fycount=baseDao.getCount(PubConstants.SUC_SLIDE,whereMap);
 		Struts2Utils.getRequest().setAttribute("list", list);
-		Struts2Utils.getRequest().setAttribute("custid", custid);
+
+		fycount=baseDao.getCount(PubConstants.SUC_SLIDE,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		
+		Struts2Utils.getRequest().setAttribute("custid", SpringSecurityUtils.getCurrentUser().getId());
 		return SUCCESS;
 	}
     public  String slidehouse(){
     	HashMap<String, Object> sortMap =new HashMap<String, Object>();
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
-		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-	    String type=Struts2Utils.getParameter("type");
+		gsCustid();
 		sortMap.put("sort", -1); 
-		whereMap.put("custid", custid);
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		}else{
+			whereMap.put("custid", custid);
+		}
+	    String type=Struts2Utils.getParameter("type");
+		
 		if(StringUtils.isNotEmpty(type)){
 			whereMap.put("type", type);	
 		}
+		Struts2Utils.getRequest().setAttribute("type",  type);
 		String title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title)){
 			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
@@ -166,8 +174,8 @@ public class SlideAction extends GeneralAction<Slide>{
 			if(_id==null){
 				_id=mongoSequence.currval(PubConstants.SUC_SLIDE); 
 			} 
-			String custid=SpringSecurityUtils.getCurrentUser().getId();  
 			entity.set_id(_id);
+			String custid=SpringSecurityUtils.getCurrentUser().getId();  
 			entity.setCustid(custid);
 			String  mp4url=entity.getMp4url(); 
 			if(mp4url.startsWith("https://v.qq.com")||mp4url.startsWith("http://v.qq.com")){

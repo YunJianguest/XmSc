@@ -18,6 +18,7 @@ import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.ShopType;
 import com.mongodb.DBObject;
@@ -47,10 +48,10 @@ public class ShoptypeAction extends GeneralAction<ShopType> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("sort", 1);
-		
 		String title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title)){
 			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
@@ -66,7 +67,6 @@ public class ShoptypeAction extends GeneralAction<ShopType> {
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
 	    
 		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPTYPE,whereMap,fypage,10,sortMap);
 		fycount=baseDao.getCount(PubConstants.SHOP_SHOPTYPE,whereMap);
@@ -135,7 +135,8 @@ public class ShoptypeAction extends GeneralAction<ShopType> {
 				_id = mongoSequence.currval(PubConstants.SHOP_SHOPTYPE);
 			}
 			entity.set_id(_id);
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			String custid=SpringSecurityUtils.getCurrentUser().getId();  
+			entity.setCustid(custid);
 			entity.setType(entity.get_id()+"");
 			baseDao.insert(PubConstants.SHOP_SHOPTYPE, entity);
 			Struts2Utils.getRequest().setAttribute("parentid",

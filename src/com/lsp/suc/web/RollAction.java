@@ -51,24 +51,24 @@ public class RollAction extends GeneralAction<RollInfo>{
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap =new HashMap<String, Object>();
 		HashMap<String, Object> whereMap =new HashMap<String, Object>();
 		HashMap<String, Object> backMap =new HashMap<String, Object>();
-		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
+
 		sortMap.put("sort", -1); 
-		whereMap.put("custid", custid);
-		String title=Struts2Utils.getParameter("title");
+
+		String title=Struts2Utils.getParameter("titles");
 		String type=Struts2Utils.getParameter("type");
 		if(StringUtils.isNotEmpty(type)){
 			whereMap.put("type", type);
-			Struts2Utils.getRequest().setAttribute("type",whereMap.get("type"));
+			Struts2Utils.getRequest().setAttribute("type",type);
 		}
 		if(StringUtils.isNotEmpty(title)){
 			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
 					Pattern.CASE_INSENSITIVE);
 			whereMap.put("title", pattern);
-			Struts2Utils.getRequest().setAttribute("title",  title);
+			Struts2Utils.getRequest().setAttribute("titles",  title);
 		}
 	 
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
@@ -78,8 +78,8 @@ public class RollAction extends GeneralAction<RollInfo>{
 		List<DBObject> list=baseDao.getList(PubConstants.SUC_ROLL,whereMap,fypage,10,sortMap,backMap);
 		fycount=baseDao.getCount(PubConstants.SUC_ROLL,whereMap);
 		Struts2Utils.getRequest().setAttribute("rollList", list);
-		Struts2Utils.getRequest().setAttribute("custid", custid);
-		
+		Struts2Utils.getRequest().setAttribute("custid", SpringSecurityUtils.getCurrentUser().getId());
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		return SUCCESS;
 	}
 	/***
@@ -99,7 +99,7 @@ public class RollAction extends GeneralAction<RollInfo>{
 		if(StringUtils.isNotEmpty(comid)) {
 			whereMap.put("comid",Long.parseLong(comid));
 		}else {
-			whereMap.put("custid", SysConfig.getProperty("custid"));
+			whereMap.put("type", "shopmb-");
 		}
 		
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){

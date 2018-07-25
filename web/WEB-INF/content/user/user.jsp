@@ -128,10 +128,10 @@
                     		$("#agentLevel_show").val("").trigger("change");
                         }
                         $("#agentprovinceid").val(json.agentprovinceid).trigger("change");
-                        var submitData = {
+                        var submitData1 = {
                           		 id: json.agentprovinceid
                            };
-                           $.post('${ctx}/user/area!getchild.action', submitData,
+                           $.post('${ctx}/user/area!getchild.action', submitData1,
                                    function (json1) {
                                       if(json1.state==0){ 
                                       	var list=json1.list;
@@ -141,32 +141,36 @@
                   						}
                                          $("#agentcityid").html(options); 
                                          $("#agentcityid").val(json.agentcityid).trigger("change");
-                                        var submitData = {
-                				           		 id: json.agentcityid
-                				            };
-                				            $.post('${ctx}/user/area!getchild.action', submitData,
-                				                    function (json2) {
-                				                       if(json2.state==0){ 
-                				                       	var list=json2.list;
-                				                       	var options="<option  value=''>请选择</option>"; 
-                				                       	for (var i = 0; i < list.length; i++) {	
-                				                       		options+="<option  value="+list[i]._id+" >"+list[i].area+"</option>";	
-                				   						}
-                				                          $("#agentcountyid").html(options); 
-                				                          $("#agentcountyid").val(json.agentcountyid).trigger("change"); 
-                				                       }else{
-                				                    	   $("#agentcountyid").val("").trigger("change"); 
-                				                    	   $("#agentcountyid").html("<option  value=''>暂无数据</option>"); 
-                				                       }
-                				                    }, "json")
+                                         
+                				                   
                                       }else{
 				                    	   $("#agentcityid").val("").trigger("change"); 
 				                    	   $("#agentcityid").html("<option  value=''>暂无数据</option>"); 
 				                       }
-                                   }, "json")
+                             }, "json")
+                                   
+                           var submitData2 = {
+                				     id: json.agentcityid
+       				       };
+       				            $.post('${ctx}/user/area!getchild.action', submitData2,
+       				                    function (json2) {
+       				                       if(json2.state==0){ 
+       				                       	var list=json2.list;
+       				                       	var options="<option  value=''>请选择</option>"; 
+       				                       	for (var i = 0; i < list.length; i++) {	
+       				                       		options+="<option  value="+list[i]._id+" >"+list[i].area+"</option>";	
+       				   						}
+       				                          $("#agentcountyid").html(options);
+       				                          $("#agentcountyid").val(json.agentcountyid).trigger("change");
+       				                       }else{
+       				                    	   $("#agentcountyid").val("").trigger("change"); 
+       				                    	   $("#agentcountyid").html("<option  value=''>暂无数据</option>"); 
+       				                       }
+       				                    }, "json")
                             
-                        
+                                   
                     }, "json") 
+                   
             $('#inszc').modal({
                 show: true
             });
@@ -498,7 +502,7 @@
                     <input type="hidden" id="number" name="number"/>
                     <input type="hidden" id="headimgurl" name="headimgurl"/>
                     <input type="hidden" id="fromUser" name="fromUser"/>
-                    
+                    <input id="agentcountyids" type="hidden"/>
                     <input type="hidden" id="upIds" name="upIds"/>
                     <div class="row">
                         <div class="col-sm-2">

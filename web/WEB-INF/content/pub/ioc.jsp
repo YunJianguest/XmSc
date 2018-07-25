@@ -70,7 +70,7 @@
                 <div class="panel-body fu10">
                     <div class="row-pad-5">
                         <div class="form-group col-sm-1d">
-                            <input type="text" name="title" value="${title}" placeholder="名称" class="form-control"/>
+                            <input type="text" name="titles" value="${titles}" placeholder="名称" class="form-control"/>
                         </div>
                         <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
                     </div>
