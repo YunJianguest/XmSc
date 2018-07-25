@@ -19,6 +19,7 @@
 			}
 			
 			.mui-content {
+				padding-top: 45px;
 				height: 100%;
 				background: #fff;
 			}
@@ -35,6 +36,7 @@
 			}
 			
 			.mui-input-group label {
+				line-height:1.4 !important;
 				width: 25%;
 				font-size: 14px;
 				color: #020202;
@@ -71,7 +73,7 @@
 			}
 			
 			.link-area a {
-				color: #000;
+				color: #A4A4A4 !important;
 				width: 100%;
 				margin-top: 18px;
 			}
@@ -219,7 +221,7 @@
 				<button id='login' class="mui-btn mui-btn-block" onclick="login()">登录</button>
 				<div class="link-area">
 					<!--<a id='reg' href="${ctx}/integral/miners!signup.action">注册</a>-->
-					<a style="color:#A4A4A4" id='forgetPassword' href="${ctx}/integral/miners!forgetpw.action">忘记密码</a>
+					<a id='forgetPassword' href="${ctx}/integral/miners!forgetpw.action">忘记密码</a>
 				</div>
 			</div>
 			<!--<div class="mui-content-padded">
