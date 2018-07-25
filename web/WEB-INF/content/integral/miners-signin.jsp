@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>登录</title>
+		<title style="text-align: center;">登录</title>
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/common.css" rel="stylesheet" />
 		<style>
@@ -173,25 +173,25 @@
 			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
 			   color:#ccc;
 			    opacity:0.8;
-			    font-size:12px;
+			    font-size:14px;
 			}
 			
 			::-moz-placeholder { /* Mozilla Firefox 19+ */
 			   color: #ccc;
 			    opacity:0.8;
-			    font-size:12px;
+			    font-size:14px;
 			}
 			
 			input:-ms-input-placeholder{
 			   color: #ccc;
 			    opacity:0.8;
-			    font-size:12px;
+			    font-size:14px;
 			}
 			
 			input::-webkit-input-placeholder{
 			   color: #ccc;
 			    opacity:0.8;
-			    font-size:12px;
+			    font-size:14px;
 			}
 		</style>
 	</head>
@@ -219,7 +219,7 @@
 				<button id='login' class="mui-btn mui-btn-block" onclick="login()">登录</button>
 				<div class="link-area">
 					<!--<a id='reg' href="${ctx}/integral/miners!signup.action">注册</a>-->
-					<a id='forgetPassword' href="${ctx}/integral/miners!forgetpw.action">忘记密码</a>
+					<a style="color:#A4A4A4" id='forgetPassword' href="${ctx}/integral/miners!forgetpw.action">忘记密码</a>
 				</div>
 			</div>
 			<!--<div class="mui-content-padded">
