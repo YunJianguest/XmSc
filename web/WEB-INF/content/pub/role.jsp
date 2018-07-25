@@ -151,7 +151,7 @@
 			<%@include file="/webcom/header-headerbar.jsp"%>
 
 			<form id="custinfoForm" name="custinfoForm" method="post"
-				action="${contextPath}/pub/role.action?">
+				action="${contextPath}/pub/role.action">
 
 				<div class="pageheader">
 

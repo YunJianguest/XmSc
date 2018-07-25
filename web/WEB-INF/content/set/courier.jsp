@@ -78,7 +78,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/set/courier.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/set/courier.action">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i>系统配置<span>快递管理</span></h2>
 

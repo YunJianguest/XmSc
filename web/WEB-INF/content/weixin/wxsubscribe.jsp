@@ -138,18 +138,19 @@
                 $('#divpic').hide();
             }
         }
-        function page_submit(num) {
+      
+        function page_submit(num){
+         	
+         	if(num==-1){
+         		$("#fypage").val(0);	
+         	}else if(num==-2){
+         		$("#fypage").val($("#fypage").val()-1);	
+         	}else{
+         		$("#fypage").val(num);	
+         	}
 
-            if (num == -1) {
-                $("#fypage").val(0);
-            } else if (num == -2) {
-                $("#fypage").val($("#fypage").val() - 1);
-            } else {
-                $("#fypage").val(num);
-            }
-
-            $("#custinfoForm").submit();
-        }
+         	$("#custinfoForm").submit();
+         }
     </script>
     <style>
         .form-group-20 {
@@ -212,6 +213,7 @@
                                 </tr>
                             </c:forEach>
                         </table>
+                        <%@include file="/webcom/bracket-page.jsp" %>
                     </div>
                 </div>
             </div>
@@ -236,7 +238,7 @@
                         </div>
                     </a>
                 </div>
-                <form id="inscxForm" action="${ctx }/weixin/wxsubscribe!save.action"
+                <form id="inscxForm" action="${ctx }/weixin/wxsubscribe!save.action?fypage=${fypage}"
                       class="form-horizontal" method="post">
                     <input type="hidden" id="_id" name="_id"/>
                     <input type="hidden" id="type" name="type" value="${type}"/>
