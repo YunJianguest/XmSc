@@ -140,6 +140,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 				}
 				 
 			}
+			dbObject.put("vip_no",wwzService.getVipNo(dbObject.get("fromUserid").toString()));
 		}
 		Struts2Utils.getRequest().setAttribute("integralList", list);
 		
