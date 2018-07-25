@@ -664,6 +664,60 @@ public class MinersAction extends GeneralAction<Miner> {
 	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	    	
 	    }
+	    /**
+	     * 矿机转账
+	     */
+	    public void   ajaxtransferkj() {
+	    	getLscode();
+	    	Map<String,Object>sub_map = new HashMap<>();
+		  	sub_map.put("state", 1);
+	    	String toid=Struts2Utils.getParameter("toid");
+	    	String price=Struts2Utils.getParameter("price");
+	    	String remark=Struts2Utils.getParameter("remark");
+	    	if(StringUtils.isNotEmpty(price)) {
+	    		TransferOrder transferOrder=new TransferOrder();
+		    	// 四位随机数
+				String strRandom = TenpayUtil.buildRandom(4) + "";
+				// 10位序列号,可以自行调整。
+				String orderno = DateFormat.getDate() + strRandom + mongoSequence.currval(PubConstants.INTEGRAL_TRANSFERORDER);
+		    	transferOrder.set_id(orderno);
+		    	transferOrder.setCreatedate(new Date());
+		    	transferOrder.setCustid(custid);
+		    	transferOrder.setFromid(fromUserid);
+		    	transferOrder.setPrice(Double.parseDouble(price));
+		    	transferOrder.setToid(toid);
+		    	transferOrder.setRemark(remark);
+		    	transferOrder.setState(0);
+		    	baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    	
+		    	//开始转账 
+		    	if(wwzService.deljf(price, fromUserid, "kj_zz", custid, 0, 1, 0)) {  
+		    		String pro=BaseDecimal.subtract(price, BaseDecimal.multiplication(BaseDecimal.division(price, "100",6),"0.2"));
+		    		if(wwzService.addjf(pro, toid, "shop_zz", custid, 0, 1, 0)) {
+		    			sub_map.put("state", 0);
+		    			transferOrder.setState(1);
+		    			transferOrder.setUpdatedate(new Date());
+			    		baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    		}else {
+		    			//转账失败
+		    			transferOrder.setState(2);
+		    			transferOrder.setUpdatedate(new Date());
+			    		baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    			sub_map.put("state", 3);
+		    		} 
+		    	}else {
+		    		//余额不足
+		    		transferOrder.setState(2);
+		    		transferOrder.setUpdatedate(new Date());
+		    		baseDao.insert(PubConstants.INTEGRAL_TRANSFERORDER, transferOrder);
+		    		sub_map.put("state", 2);
+		    	}  
+	    	}
+	    
+	    	String json = JSONArray.fromObject(sub_map).toString();
+	  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	    	
+	    }
 	    
 	    public String wdmoney() throws Exception{
 	    	getLscode();
@@ -955,12 +1009,20 @@ public class MinersAction extends GeneralAction<Miner> {
 			return "exchangeweb"; 
 	    }
 	    /**
-	     * 转账
+	     * 转账（商城）
 	     * @return
 	     */
 	    public String  transferweb() {
 	    	getLscode();
 			return "transferweb"; 
+	    }
+	    /**
+	     * 转账（矿机）
+	     * @return
+	     */
+	    public String  transferkj() {
+	    	getLscode();
+			return "transferkj"; 
 	    }
 	    /**
 	     * 矿机盼盼币提现

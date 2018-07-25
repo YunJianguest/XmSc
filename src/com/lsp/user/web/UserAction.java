@@ -219,6 +219,7 @@ public class UserAction extends GeneralAction<UserInfo>
     try
     {   HashMap<String, Object>whereMap=new HashMap<String, Object>();
         whereMap.put("_id", _id);  
+        SpringSecurityUtils.getCurrentUser().getId();
         this.basedao.delete(PubConstants.USER_INFO,whereMap);
        
         addActionMessage("删除成功");
@@ -880,6 +881,13 @@ public class UserAction extends GeneralAction<UserInfo>
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
 		InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 		if(db!=null){
+			//验证重复开通
+			whereMap.clear();
+			whereMap.put("fromUserid",custid);
+			DBObject prost=basedao.getMessage(PubConstants.INTEGRAL_PROSTORE, whereMap);
+			if(prost!=null){
+				return;
+			}
 			//预付
 			InteProstore info = new InteProstore();
 			
@@ -947,15 +955,7 @@ public class UserAction extends GeneralAction<UserInfo>
 		}
 		
 	}
-   
-	public void deleteall(){
-		basedao.delete(PubConstants.INTEGRAL_INFO);
-		
-		basedao.delete(PubConstants.INTEGRAL_PROSTORE);
-	}
-	public void ceshi(){
-		System.out.println("---->"+DateUtil.getTimesnight());
-	}
+    
 	/**
 	 * 手动确认回本state（1.其他异常2.回本ID不存在3.回本账户为空0.冻结回本账户成功）
 	 */
