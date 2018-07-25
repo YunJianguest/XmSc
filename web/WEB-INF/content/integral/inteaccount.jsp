@@ -58,19 +58,6 @@
             ps_show('inszc');
         }
         function upd(id) {
-        	$.post('${ctx}/integral/inteaccount!selintecurrency.action',
-                    function (json) {
-		        		var mess=json.list;
-		        		 $("#cid").html('');
-		        		 var html='';  
-			        		for(var i=0;i<mess.length;i++){
-			        			html+="<option  value='"+ mess[i]['_id']+"'>"+ mess[i]['name']+"</option>";
-							}
-			        		
-		        		$("#cid").append(html); 
-
-              }, "json")
-              
             var submitData = {
                 _id: id
             };
@@ -79,7 +66,7 @@
                         $('#_id').val(json._id);
                         $('#account').val(json.account);
                         $('#remark').val(json.remark);
-                        $('#cid').val(json.cname);
+                        $('#cid').val(json.cid).trigger("change");
                     }, "json")
             ps_show('inszc');
         }
@@ -202,7 +189,9 @@
                                 <label class="control-label">币种：</label>
                                 <select id="cid" name="cid" class="select2 hang40"
                                         data-placeholder="请选择">
-                                    
+                                    <c:forEach items="${clist}" var="bean" varStatus="status">
+                                                <option value="${bean._id}">${bean.name}</option>
+                                    </c:forEach>
                                 </select>
                                 <label class="error" for="color"></label>
                             </div>

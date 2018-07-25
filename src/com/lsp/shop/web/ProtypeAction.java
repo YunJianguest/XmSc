@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -51,20 +52,37 @@ public class ProtypeAction extends GeneralAction<ProType> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("sort", 1);
 		 
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
+		//验证custid
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		} else {
+			whereMap.put("custid", custid);
+		}
 		String  parentid=Struts2Utils.getParameter("parentid");
 		if(StringUtils.isNotEmpty(parentid)){
 			whereMap.put("parentid", Long.parseLong(parentid));
 		}else {
 			whereMap.put("parentid",0L);
 		}
-		
-		List<DBObject> list = baseDao.getList(PubConstants.SHOP_PROTYPE,whereMap, sortMap);
-		Struts2Utils.getRequest().setAttribute("funcList", list); 
+		String title=Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title)){
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("name", pattern);
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.SHOP_PROTYPE,whereMap,fypage,10, sortMap);
+		Struts2Utils.getRequest().setAttribute("funcList", list);
+		fycount=baseDao.getCount(PubConstants.SHOP_PROTYPE,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount); 
 		return SUCCESS;
 	}
 
@@ -120,7 +138,11 @@ public class ProtypeAction extends GeneralAction<ProType> {
 				_id = mongoSequence.currval(PubConstants.SHOP_PROTYPE);
 			}
 			entity.set_id(_id);
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				return RELOAD;
+			}
 			entity.setType(entity.get_id()+"");
 			if (StringUtils.isEmpty(Struts2Utils.getParameter("parentid"))) {
 				entity.setParentid(0L);

@@ -22,6 +22,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.RoleInfo;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.Useraddress;
@@ -59,13 +60,17 @@ public class InteaccountAction extends GeneralAction<InteAccount> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
 		sortMap.put("sort", -1);   
-		whereMap.put("custid", custid);
-		
+		//验证custid
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		} else {
+			whereMap.put("custid", custid);
+		}
 		String  title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title))
 		{
@@ -97,18 +102,27 @@ public class InteaccountAction extends GeneralAction<InteAccount> {
 		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_INTEACCOUNT,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
 		
+		whereMap.clear();
+		sortMap.put("sort", -1);   
+		whereMap.put("custid", SysConfig.getProperty("custid"));
+		List<DBObject> clist = baseDao.getList(PubConstants.INTEGRAL_INTECURRENCY,whereMap, sortMap);
+		Struts2Utils.getRequest().setAttribute("clist", clist);
 		return SUCCESS;
 	}
 	
 	@Override
 	public String save() throws Exception {
-		
+		gsCustid();
 		try {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.INTEGRAL_INTEACCOUNT);
 			}
 			entity.set_id(_id); 
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				entity.setCustid(custid);
+			}
 			entity.setCreatedate(new Date());
 			baseDao.insert(PubConstants.INTEGRAL_INTEACCOUNT, entity); 
 			addActionMessage("成功添加!");
@@ -164,16 +178,13 @@ public class InteaccountAction extends GeneralAction<InteAccount> {
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-		System.out.println(custid);
+
 		sortMap.put("sort", -1);   
-		whereMap.put("custid", custid);
+		whereMap.put("custid", SysConfig.getProperty("custid"));
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INTECURRENCY,whereMap, sortMap);
 		sub_map.put("list", list);
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-    	System.out.println(json);
     }
 	
 

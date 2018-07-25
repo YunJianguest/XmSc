@@ -1,7 +1,10 @@
 package com.lsp.pub.web; 
 import com.lsp.jwt.filter.SignFilter;
+import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.entity.GetAllFunc;
+import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.WxToken;
+import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
 import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
@@ -239,7 +242,8 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 	public void setFilehttp(String filehttp) {
 		this.filehttp = filehttp;
 	}
-
+	@Autowired
+	private BaseDao baseDao;
 	public String getCodeFromUserid() { 
 		String code=Struts2Utils.getParameter("code"); 
 		if(StringUtils.isEmpty(code)){
@@ -438,6 +442,22 @@ public abstract class GeneralAction<T> extends ActionSupport implements ModelDri
 	public void  getFromid() throws IOException {
 		Claims claims=SignFilter.checkSign();
 		fromUserid=claims.getId(); 
+	}
+	
+	public void  gsCustid() {
+		custid = SpringSecurityUtils.getCurrentUser().getId();
+		DBObject dbObject =baseDao.getMessage(PubConstants.USER_INFO, custid);
+		if(dbObject != null){
+			if(dbObject.get("custid") != null 
+					&& !dbObject.get("_id").toString().equals(SysConfig.getProperty("custid")) 
+					&& !dbObject.get("_id").toString().equals(SysConfig.getProperty("gsid"))
+					&& dbObject.get("custid").toString().equals(SysConfig.getProperty("gsid"))){
+
+				custid = dbObject.get("custid").toString();
+			}
+		}
+		/*System.out.println("---->"+custid);
+		return custid;*/
 	}
  
 }

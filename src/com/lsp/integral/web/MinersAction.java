@@ -87,12 +87,17 @@ public class MinersAction extends GeneralAction<Miner> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		
-		sortMap.put("sort", -1);   
-		whereMap.put("custid", SysConfig.getProperty("custid"));
+		sortMap.put("sort", -1);  
 		
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		}else{
+			whereMap.put("custid", custid);
+		}
 		String  title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title))
 		{
@@ -106,7 +111,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
-		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_MINER,null,fypage,10,sortMap);
+		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_MINER,whereMap,fypage,10,sortMap);
 		Struts2Utils.getRequest().setAttribute("list", list);
 		
 		this.fycount = this.baseDao.getCount(PubConstants.INTEGRAL_MINER,whereMap);
@@ -116,14 +121,18 @@ public class MinersAction extends GeneralAction<Miner> {
 	
 	@Override
 	public String save() throws Exception {
-	
+		gsCustid();
 		try {
 			if (_id == null ) {
 				_id = mongoSequence.currval(PubConstants.INTEGRAL_MINER);
 			}
 			entity.set_id(_id); 
 			entity.setCreatedate(new Date());
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				return RELOAD;
+			}
 			baseDao.insert(PubConstants.INTEGRAL_MINER, entity); 
 			addActionMessage("成功添加!");
 		} catch (Exception e) {

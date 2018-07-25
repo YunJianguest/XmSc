@@ -58,12 +58,12 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
-		sortMap.put("createdate", -1);   
-		if(!custid.equals(SysConfig.getProperty("custid"))){
+		sortMap.put("createdate", -1);  
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+		}else{
 			whereMap.put("fromUserid", custid);
 		}
 		String  title=Struts2Utils.getParameter("title");
@@ -153,20 +153,7 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 	@Override
 	public String save() throws Exception {
 		
-		try {
-			if (_id == null) {
-				_id = mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE);
-			}
-			entity.set_id(_id); 
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
-			entity.setCreatedate(new Date());
-			
-			baseDao.insert(PubConstants.INTEGRAL_PROSTORE, entity); 
-			addActionMessage("成功添加!");
-		} catch (Exception e) {
-			e.printStackTrace();
-			addActionMessage("抱歉,添加过程中出现异常!");
-		}
+		
 		return RELOAD;
 	}
 	

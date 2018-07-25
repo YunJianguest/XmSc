@@ -101,6 +101,17 @@
                 $("#btboomvalue" + no).hide();
             }
         }
+        function page_submit(num) {
+
+            if (num == -1) {
+                $("#fypage").val(0);
+            } else if (num == -2) {
+                $("#fypage").val($("#fypage").val() - 1);
+            } else {
+                $("#fypage").val(num);
+            }
+            $("#custinfoForm").submit();
+        }
     </script>
 </head>
 <body>
@@ -108,7 +119,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/shop/shopmb.action">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${ctx}/shop/shopmb.action?">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i> 微网店 <span>网店列表</span></h2>
                   <div class="breadcrumb-wrapper1">
@@ -193,6 +204,7 @@
                                     </tr>
                                 </c:forEach>
                             </table>
+                            <%@include file="/webcom/bracket-page.jsp" %>
                         </div>
                     </div>
                 </div>

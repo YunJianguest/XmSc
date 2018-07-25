@@ -50,20 +50,27 @@ public class ShopmbAction extends GeneralAction<ShopMb> {
 
 	@Override
 	public String execute() throws Exception { 
-		 
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("_id", -1);  
 		//验证custid
-		if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))) {
-			whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-		} 
-		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPMB,whereMap, sortMap);
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			
+		} else {
+			whereMap.put("custid", custid);
+		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.SHOP_SHOPMB,whereMap,fypage,10, sortMap);
 		for (DBObject dbObject : list) {
 			dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
 		}
 		Struts2Utils.getRequest().setAttribute("shopmbList", list);
 		Struts2Utils.getRequest().setAttribute("custid", SpringSecurityUtils.getCurrentUser().getId()); 
+		fycount=baseDao.getCount(PubConstants.SHOP_SHOPMB,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", fycount); 
 		return SUCCESS;
 	}
 	

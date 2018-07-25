@@ -22,6 +22,7 @@ import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.RoleInfo;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.Useraddress;
@@ -59,12 +60,17 @@ public class IntecurrencyAction extends GeneralAction<InteCurrency> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		
-		custid=SpringSecurityUtils.getCurrentUser().getId();
+		//验证custid
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		} else {
+			whereMap.put("custid", custid);
+		}
 		sortMap.put("sort", -1);   
-		whereMap.put("custid", custid);
 		
 		String  title=Struts2Utils.getParameter("title");
 		if(StringUtils.isNotEmpty(title))
@@ -94,13 +100,18 @@ public class IntecurrencyAction extends GeneralAction<InteCurrency> {
 	
 	@Override
 	public String save() throws Exception {
-		
+		gsCustid();
 		try {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.INTEGRAL_INTECURRENCY);
 			}
 			entity.set_id(_id); 
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				return RELOAD;
+			}
+			System.out.println("--->"+entity.getCustid());
 			entity.setCreatedate(new Date());
 			baseDao.insert(PubConstants.INTEGRAL_INTECURRENCY, entity); 
 			addActionMessage("成功添加!");

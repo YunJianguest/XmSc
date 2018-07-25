@@ -79,6 +79,18 @@
 	function share(url) {
 		window.open("${contextPath}/weixin/share.action?method="+ encodeURIComponent(url));
 	}
+function page_submit(num){
+     	
+     	if(num==-1){
+     		$("#fypage").val(0);	
+     	}else if(num==-2){
+     		$("#fypage").val($("#fypage").val()-1);	
+     	}else{
+     		$("#fypage").val(num);	
+     	}
+
+     	$("#custinfoForm").submit();
+     }
 </script>
 </head>
 <body>
@@ -93,15 +105,27 @@
 						<i class="fa fa-user"></i> 微官网 <span>行业分类</span>
 					</h2>
 					<div class="breadcrumb-wrapper1">
-						<div class="input-group ">
-							<div style="border-radius:3px; height:40px;padding-left:10px;" class="btn-primary">
-								<a href="javascript:add();"style="color: #ffffff;line-height:25px;">
-									新增&nbsp;<i class="fa fa-plus"style="line-height:30px;font-size: 14px;"></i>
-								</a>
-							</div>
-						</div>
-					</div>
+                    <div class="input-group ">
+                        <div style="border-radius:3px; height:40px;padding-left:10px;" class="btn-primary">
+                            <a href="javascript:add();" style="color: #ffffff;line-height:25px;">
+                                新增&nbsp;<i class="fa fa-plus" style="line-height:30px;font-size: 14px;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+					<!--  -->
 				</div>
+				<div class="panelss ">
+			   <div class="panel-body fu10">
+			        <div class="row-pad-5">
+			            <div class="form-group col-sm-1d">
+			            <input type="text" name="title"  value="${title}" placeholder="名称"  class="form-control" />
+			            </div> 
+			            <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
+			
+			        </div>
+			    </div><!-- panel-body -->
+				</div><!-- panel -->
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-12">
@@ -148,6 +172,7 @@
 											</tr>
 										</c:forEach>
 								</table>
+								<%@include file="/webcom/bracket-page.jsp" %>
 							</div>
 						</div>
 					</div>
