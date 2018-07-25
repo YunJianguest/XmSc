@@ -41,7 +41,7 @@ function page_submit(num){
   <%@include file="/webcom/header-bracket.jsp"%>
   <div class="mainpanel">
 	<%@include file="/webcom/header-headerbar.jsp"%>
-	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/set/help.action?" >
+	<form  id="custinfoForm" name="custinfoForm" method="post"  action="${contextPath}/set/help.action" >
     <div class="pageheader">
       <h2><i class="fa fa-user"></i>系统配置<span>帮助中心</span></h2>
       <div class="breadcrumb-wrapper1">

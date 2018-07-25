@@ -119,7 +119,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${ctx}/shop/shopmb.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${ctx}/shop/shopmb.action">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i> 微网店 <span>网店列表</span></h2>
                   <div class="breadcrumb-wrapper1">
