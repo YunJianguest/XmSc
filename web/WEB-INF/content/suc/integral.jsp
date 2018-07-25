@@ -106,7 +106,7 @@ function exp() {
                     <div class="row-pad-5">
                        <div class="form-group col-sm-2">
 			            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择收入\支出 ">
-			            	                <option value="2">收入\支出</option>
+			            	                <option value="2">全部</option>
 			            	 				<option value="0">收入</option>
 			                    			<option value="1">支出</option>
 			                 </select>
