@@ -143,7 +143,7 @@ function exp() {
                 <table class="table table-primary mb30" >
                     <thead>
                       <tr>
-                        <th>id</th>
+                        <th>会员号</th>
                       	<th>状态</th>
                       	<th>类型</th>
                       	<th>时间</th>
@@ -153,7 +153,7 @@ function exp() {
                     <tbody>
                       <c:forEach items="${integralList}" var="bean">
                       <tr>
-                      	<td>${bean._id}</td>
+                      	<td>${bean.vip_no}</td>
                       	<c:if test="${bean.state==0}"><td><span style="color: red;">+${bean.value}</span></td>
                       	</c:if>
                       	<c:if test="${bean.state==1}"><td><span style="color:green;">-${bean.value}</span></td>
