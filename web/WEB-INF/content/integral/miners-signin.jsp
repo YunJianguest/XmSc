@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
+		<title>登录</title>
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/common.css" rel="stylesheet" />
 		<style>
@@ -169,13 +169,37 @@
 			.mui-input-group .mui-input-row {
  			    margin: 25px 0 !important;
 			}
+			
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			   color:#91c29c;
+			    opacity:0.8;
+			    font-size:12px;
+			}
+			
+			::-moz-placeholder { /* Mozilla Firefox 19+ */
+			   color: #91c29c;
+			    opacity:0.8;
+			    font-size:12px;
+			}
+			
+			input:-ms-input-placeholder{
+			   color: #91c29c;
+			    opacity:0.8;
+			    font-size:12px;
+			}
+			
+			input::-webkit-input-placeholder{
+			   color: #91c29c;
+			    opacity:0.8;
+			    font-size:12px;
+			}
 		</style>
 	</head>
 
 	<body>
-		 <header class="mui-bar mui-bar-nav">
+		 <!--<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
-		</header> 
+		</header> -->
 		<div class="mui-content">
 			<div class="login-logo">
 				<img src="${ctx}/xmMobile/img/icon/icon-login-logo.png"/>
