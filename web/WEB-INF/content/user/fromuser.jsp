@@ -141,7 +141,7 @@
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
         <form id="custinfoForm" name="custinfoForm" method="post"
-              action="${contextPath}/user/fromuser.action?">
+              action="${contextPath}/user/fromuser.action">
             <div class="pageheader">
                 <h2>
                     <i class="fa fa-user"></i>微管理 <span>用户管理</span>
