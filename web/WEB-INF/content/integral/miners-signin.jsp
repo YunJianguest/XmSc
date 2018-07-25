@@ -171,25 +171,25 @@
 			}
 			
 			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-			   color:#91c29c;
+			   color:#ccc;
 			    opacity:0.8;
 			    font-size:12px;
 			}
 			
 			::-moz-placeholder { /* Mozilla Firefox 19+ */
-			   color: #91c29c;
+			   color: #ccc;
 			    opacity:0.8;
 			    font-size:12px;
 			}
 			
 			input:-ms-input-placeholder{
-			   color: #91c29c;
+			   color: #ccc;
 			    opacity:0.8;
 			    font-size:12px;
 			}
 			
 			input::-webkit-input-placeholder{
-			   color: #91c29c;
+			   color: #ccc;
 			    opacity:0.8;
 			    font-size:12px;
 			}
