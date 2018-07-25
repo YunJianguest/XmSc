@@ -404,7 +404,7 @@ public class WwzService {
 		if(db!=null){
 			UserInfo info=(UserInfo) UniObject.DBObjectToObject(db, UserInfo.class);
 			info.set_id(fromUserid);
-			if(info.getRenumber()==0&&StringUtils.isNotEmpty(agid)&&!agid.equals("null")&&Long.parseLong(agid)>1000&&agid!=null){
+			if(info.getRenumber()==0&&StringUtils.isNotEmpty(agid)&&agid!=null&&!agid.equals("null")&&Long.parseLong(agid)>1000){
 				info.setRenumber(Long.parseLong(agid));
 				baseDao.insert(PubConstants.USER_INFO, info);
 				return true;

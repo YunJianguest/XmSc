@@ -6,7 +6,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title></title>
+		<title style="text-align: center;">登录</title>
 		<link href="${ctx}/xmMobile/css/mui.min.css" rel="stylesheet" />
 		<link href="${ctx}/xmMobile/css/common.css" rel="stylesheet" />
 		<style>
@@ -19,13 +19,15 @@
 			}
 			
 			.mui-content {
+				padding-top: 45px;
 				height: 100%;
 				background: #fff;
 			}
 			
 			.mui-input-group {
 				padding: 0 30px;
-				margin-bottom: 25px;
+				margin-bottom: 30px;
+				margin-top: 20px;
 			}
 			
 			.mui-input-group::after,
@@ -34,6 +36,7 @@
 			}
 			
 			.mui-input-group label {
+				line-height:1.4 !important;
 				width: 25%;
 				font-size: 14px;
 				color: #020202;
@@ -48,7 +51,7 @@
 			
 			.mui-content-padded {
 				padding: 0 28px;
-				margin: 0;
+				margin:50px 0 0;
 			}
 			
 			.mui-btn {
@@ -62,6 +65,7 @@
 			}
 			
 			.link-area {
+				text-align: center;
 				display: flex;
 				margin-top:0;
 				justify-content: space-between;
@@ -69,7 +73,9 @@
 			}
 			
 			.link-area a {
-				color: #000;
+				color: #A4A4A4 !important;
+				width: 100%;
+				margin-top: 18px;
 			}
 			
 			.oauth-area {
@@ -162,13 +168,40 @@
 			.mui-btn-block {
 			    margin-bottom: 0px !important;
 			}
+			.mui-input-group .mui-input-row {
+ 			    margin: 25px 0 !important;
+			}
+			
+			:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+			   color:#ccc;
+			    opacity:0.8;
+			    font-size:14px;
+			}
+			
+			::-moz-placeholder { /* Mozilla Firefox 19+ */
+			   color: #ccc;
+			    opacity:0.8;
+			    font-size:14px;
+			}
+			
+			input:-ms-input-placeholder{
+			   color: #ccc;
+			    opacity:0.8;
+			    font-size:14px;
+			}
+			
+			input::-webkit-input-placeholder{
+			   color: #ccc;
+			    opacity:0.8;
+			    font-size:14px;
+			}
 		</style>
 	</head>
 
 	<body>
-		 <header class="mui-bar mui-bar-nav">
+		 <!--<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">登录</h1>
-		</header> 
+		</header> -->
 		<div class="mui-content">
 			<div class="login-logo">
 				<img src="${ctx}/xmMobile/img/icon/icon-login-logo.png"/>
