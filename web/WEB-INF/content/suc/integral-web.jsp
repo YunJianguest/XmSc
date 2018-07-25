@@ -101,8 +101,8 @@
     <div class=" bg-hui-92 zi-bailine-height40 cmp640 line-bottom">
         <a href="#">
             <div class="zi-hei weight500 pl-15" style="overflow: hidden;">
-            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">佣金${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.value}'  pattern="0.00"/></i></font></div>            	
-				<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">矿产${setting.name}：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.uservalue}'  pattern="0.00"/></i></font></div>
+            	<div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">佣金：<i class="zi-cheng" style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.yjvalue}'  pattern="0.00"/></i></font></div>            	
+			
             	<%-- <div style="margin: 10px 0;border-bottom: 1px solid #ddd;line-height:20px;"><font size="2">可兑换${setting.name}：<i class="zi-cheng"  style="float: right;margin-right: 15px;"><fmt:formatNumber value='${jf.prostore}'  pattern="0.00"/></i></font></div> --%>
             </div>
         </a>

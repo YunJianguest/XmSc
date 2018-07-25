@@ -38,6 +38,7 @@ import com.lsp.parttime.entity.Mission;
 import com.lsp.parttime.entity.MissionInform;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
+import com.lsp.pub.entity.Exchangerate;
 import com.lsp.pub.entity.Fromusermb;
 import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.HttpClient;
@@ -3728,11 +3729,75 @@ public class WwzService {
     	if(StringUtils.isNotEmpty(str)){
     		JSONObject json=JSONObject.parseObject(str);
         	if(json.get("new_price")!=null) {
-        		return Double.parseDouble(json.get("new_price").toString());
+        		return Double.parseDouble(BaseDecimal.multiplication(getUSD_CNY(), json.get("new_price").toString()));
         	};
     	}
     	
-		return 0.5; 
+		return 0; 
+    } 
+    /**
+     * 获取美元兑换人民币的比例
+     * @return
+     */
+    public  String  getUSD_CNY(){
+    	HashMap<String, Object>whereMap=new HashMap<>();
+    	whereMap.put("type","USD_CNY");
+    	DBObject  db=baseDao.getMessage(PubConstants.PUB_EXCHANGERATE, whereMap);  
+    	if(db!=null&&DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))<=1800000){
+    		System.out.println(111);
+    		return db.get("value").toString();
+    	} else if(db!=null&&DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))>1800000){
+    		//更新汇率 
+    		String str=HttpClient.sendGet(SysConfig.getProperty("cny_price_api")); 
+    		if(StringUtils.isNotEmpty(str)){
+        		JSONObject json=JSONObject.parseObject(str);
+        		if(json.get("result")!=null){
+        			json=JSONObject.parseObject(json.get("result").toString());
+        		} 
+            	if(json.get("USD")!=null) { 
+            		JSONObject usd=JSONObject.parseObject(json.get("USD").toString());
+            		if(usd.get("BOC")!=null){ 
+            			JSONObject boc=JSONObject.parseObject(usd.get("BOC").toString());
+            			if(boc.get("middle")!=null){ 
+            				Exchangerate  exchangerate=(Exchangerate) UniObject.DBObjectToObject(db, Exchangerate.class);
+            	    		exchangerate.set_id(Long.parseLong(db.get("_id").toString())); 
+            	    		exchangerate.setValue(BaseDecimal.division(boc.get("se_buy").toString(), "100", 6));
+            	    		exchangerate.setUpddate(new Date());
+            	    		baseDao.insert(PubConstants.PUB_EXCHANGERATE, exchangerate);
+            	    		return BaseDecimal.division(boc.get("middle").toString(), "100", 6);
+            			}
+            		}
+            	};
+        	}
+    		
+    	}else{
+    		//更新汇率 
+    		String str=HttpClient.sendGet(SysConfig.getProperty("cny_price_api")); 
+    		if(StringUtils.isNotEmpty(str)){
+        		JSONObject json=JSONObject.parseObject(str);
+        		if(json.get("result")!=null){
+        			json=JSONObject.parseObject(json.get("result").toString());
+        		} 
+            	if(json.get("USD")!=null) { 
+            		JSONObject usd=JSONObject.parseObject(json.get("USD").toString());
+            		if(usd.get("BOC")!=null){ 
+            			JSONObject boc=JSONObject.parseObject(usd.get("BOC").toString());
+            			if(boc.get("middle")!=null){ 
+            				Exchangerate  exchangerate=new Exchangerate();
+            				exchangerate.set_id(mongoSequence.currval(PubConstants.PUB_EXCHANGERATE)); 
+            				exchangerate.setType("USD_CNY");
+            	    		exchangerate.setValue(BaseDecimal.division(boc.get("se_buy").toString(), "100", 6));
+            	    		exchangerate.setUpddate(new Date());
+            	    		baseDao.insert(PubConstants.PUB_EXCHANGERATE, exchangerate);
+            	    		return BaseDecimal.division(boc.get("middle").toString(), "100", 6);
+            			}
+            		}
+            	};
+        	}
+    		
+    	} 
+    	
+		return "6.5"; 
     }
 
 }

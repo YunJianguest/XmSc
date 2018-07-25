@@ -1,5 +1,6 @@
 package com.lsp.suc.web;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -392,43 +393,10 @@ public class AnswerAction extends GeneralAction<AnswerInfo> {
 		System.err.println(l);
 		System.err.println(l/60000);
 	    }
-	public void  cz() {
-		HashMap<String, Object>sub_map=new HashMap<>();
-		sub_map.put("state",1);
-		String id=Struts2Utils.getParameter("id");
-		HashMap<String,Object>whereMap=new HashMap<>();
-		whereMap.put("no",id);
-		DBObject db=baseDao.getMessage(PubConstants.USER_INFO, whereMap); 
-		if(db!=null) {
-			String value =Struts2Utils.getParameter("value");
-			if(wwzService.addjf(value, db.get("_id").toString(), "xtcz", SysConfig.getProperty("custid"), 1, 1, 0)) {
-				sub_map.put("state",0);
-			}
-		}
-		
-		String json = JSONArray.fromObject(sub_map).toString();
-		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-		
-	}
-	public void kjcz() throws Exception{
-		getLscode(); 
-		Map<String, Object> sub_map = new HashMap<String, Object>();
-		String id=Struts2Utils.getParameter("id");
-		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		whereMap.put("custid",SysConfig.getProperty("custid"));
-		whereMap.put("fromUserid", wwzService.getfromUseridVipNo(id));
-		DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
-        String kjvalue = Struts2Utils.getParameter("kjvalue");
-		if(dbObject != null){
-			IntegralRecord info=(IntegralRecord) UniObject.DBObjectToObject(dbObject, IntegralRecord.class);
-            info.setCustid(SysConfig.getProperty("custid"));
-			info.setKjvalue(kjvalue);
-            info.setKjlx(1);
-            baseDao.insert(PubConstants.SUC_INTEGRALRECORD, info);
-		}
-		String json = JSONArray.fromObject(sub_map).toString();
-		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-	}
+    public  void  sg() throws IOException{
+    	Struts2Utils.getResponse().getWriter().println(wwzService.getPPBSprice());
+    	 
+    }
 	
 }
 
