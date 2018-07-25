@@ -120,7 +120,7 @@ function exp() {
 			                    			<option value="shop_bmzt">利润提成</option>
 			                    			<option value="shop_jfdh">下单支出</option>
 			                    			<option value="jfcz">交易所转入</option>
-			                    			<option value="jf_withdraw">平台转出</option>
+			                    			<option value="kj_tx">盼盼币转出</option>
 			                 </select>
 			            </div>
 			            <div class="form-group col-sm-2">
@@ -167,7 +167,7 @@ function exp() {
                       	  <c:when test="${bean.type == 'shop_jfdh'}">下单支出</c:when>
                       	  <c:when test="${bean.type == 'shop_jfsr'}">订单收益</c:when>
                       	  <c:when test="${bean.type == 'jfcz'}">盼盼币充值</c:when>
-                      	  <c:when test="${bean.type == 'jf_withdraw'}">盼盼币提现</c:when>
+                      	  <c:when test="${bean.type == 'kj_tx'}">盼盼币转出</c:when>
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
