@@ -59,6 +59,7 @@ public class AreaAction extends GeneralAction<AgentArea>{
 	  }
 	  @Override
 	  public String execute() throws Exception {
+		gsCustid();
 	  	HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		sortMap.put("sort", 1);
@@ -81,6 +82,11 @@ public class AreaAction extends GeneralAction<AgentArea>{
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		} 
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		}else{
+			whereMap.put("custid", custid);
+		}
 		List<DBObject> list = basedao.getList(PubConstants.USER_AGENTAREA, whereMap,fypage,10,sortMap);
 		for (DBObject dbObject : list) {
 			if(dbObject.get("agentId") != null){
@@ -115,6 +121,7 @@ public class AreaAction extends GeneralAction<AgentArea>{
 	@Override
 	public String save() throws Exception {
 		// TODO Auto-generated method stub
+		gsCustid();
 		try {
 			if(_id==null){
 				_id=mongoSequence.currval(PubConstants.USER_AGENTAREA);
@@ -124,7 +131,11 @@ public class AreaAction extends GeneralAction<AgentArea>{
 				entity.setParentId(0L);
 			}
 			entity.setCreatedate(new Date());   
-			entity.setCustid(SysConfig.getProperty("custid"));
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				return RELOAD;
+			}
 			if(StringUtils.isEmpty(entity.getAgentId())){
 				entity.setAgentId("");
 			}

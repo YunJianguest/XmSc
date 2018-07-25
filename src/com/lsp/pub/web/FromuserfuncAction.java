@@ -2,6 +2,7 @@ package com.lsp.pub.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -18,6 +19,7 @@ import com.lsp.pub.entity.Fromuserfunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.ShopMb;
@@ -47,12 +49,28 @@ public class FromuserfuncAction extends GeneralAction<Fromuserfunc> {
 
 	@Override
 	public String execute() throws Exception {
+
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
-		custid=SpringSecurityUtils.getCurrentUser().getId();
+
+		String  title=Struts2Utils.getParameter("titles");
+		if(StringUtils.isNotEmpty(title))
+		{
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("title", pattern);
+			Struts2Utils.getRequest().setAttribute("titles",  title);
+		}
+		//分页
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
 		sortMap.put("sort", -1);   
-		List<DBObject> list = baseDao.getList(PubConstants.PUB_FROMUSERFUNC,whereMap, sortMap);
+		List<DBObject> list = baseDao.getList(PubConstants.PUB_FROMUSERFUNC,whereMap,fypage,10,sortMap);
 		Struts2Utils.getRequest().setAttribute("list", list); 
+		
+		this.fycount = this.baseDao.getCount(PubConstants.PUB_FROMUSERFUNC,whereMap);
+		Struts2Utils.getRequest().setAttribute("fycount", this.fycount);
 		return SUCCESS;
 	}
 
@@ -104,12 +122,18 @@ public class FromuserfuncAction extends GeneralAction<Fromuserfunc> {
 
 	@Override
 	public String save() throws Exception {
+		gsCustid();
 		// 注册业务逻辑
 		try {
 			if (_id == null) {
 				_id = mongoSequence.currval(PubConstants.PUB_FROMUSERFUNC);
 			}
 			entity.set_id(_id);
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				
+			}else{
+				return RELOAD;
+			}
 			baseDao.insert(PubConstants.PUB_FROMUSERFUNC, entity);
 			addActionMessage("成功添加!");
 		} catch (Exception e) {

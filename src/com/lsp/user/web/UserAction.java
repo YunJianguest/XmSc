@@ -1108,7 +1108,7 @@ public class UserAction extends GeneralAction<UserInfo>
 	
 	
 	public String link() throws Exception{
-        String custid = SpringSecurityUtils.getCurrentUser().getId();
+		gsCustid();
         HashMap<String, Object> sortMap = new HashMap<String, Object>();
         HashMap<String, Object> whereMap = new HashMap<String, Object>();
         List<DBObject> list = new ArrayList<>();
@@ -1122,7 +1122,7 @@ public class UserAction extends GeneralAction<UserInfo>
         if(StringUtils.isNotEmpty(id) && !id.equals("0")){
         	whereMap.put("parentId", Long.parseLong(id));
         }else{
-        	if(custid.equals(SysConfig.getProperty("custid"))){    
+        	if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))){    
         		whereMap.put("parentId", 0L);
             }else{
             	whereMap.put("agentId", custid);

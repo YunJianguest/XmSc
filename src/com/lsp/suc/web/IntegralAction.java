@@ -90,13 +90,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 		sortMap.put("createdate", -1);
-        if(!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("custid"))){
-        	whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
-        }
+        if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+		
+        }else{
+			whereMap.put("fromUserid", custid);
+		}
 		String state = Struts2Utils.getParameter("state");
 		if (StringUtils.isNotEmpty(state)) {
 			if (!state.equals("2")) {
@@ -155,12 +158,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	 * 
 	 */
 	public String profit() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 		String state = Struts2Utils.getParameter("state");
-		String custid = Struts2Utils.getParameter("custid");
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			
+        }else{
+			whereMap.put("fromUserid", custid);
+		}
 		if(StringUtils.isNotEmpty(state)){
 			if(state.equals("1")){
 				whereMap.put("fromUserid", custid);
@@ -209,11 +216,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	 * 
 	 */
 	public String pay() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			
+        }else{
+			whereMap.put("fromUserid", custid);
+		}
 		String title = Struts2Utils.getParameter("title");
 		if (StringUtils.isNotEmpty(title)) {
 			Pattern pattern = Pattern.compile("^.*" + title + ".*$", Pattern.CASE_INSENSITIVE);
@@ -259,11 +271,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	 * 
 	 */
 	public String recharge() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			
+        }else{
+			whereMap.put("fromUserid", custid);
+		}
 		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
 		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
 		BasicDBObject dateCondition = new BasicDBObject();
@@ -293,11 +310,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	 * 
 	 */
 	public String withdraw() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			
+        }else{
+			whereMap.put("fromUserid", custid);
+		}
 		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
 		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
 		BasicDBObject dateCondition = new BasicDBObject();
@@ -327,11 +349,16 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	 * 
 	 */
 	public String day() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		HashMap<String, Object> backMap = new HashMap<String, Object>();
 
-		whereMap.put("fromUserid", SpringSecurityUtils.getCurrentUser().getId());
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			
+        }else{
+			whereMap.put("fromUserid", custid);
+		}
 		String type = Struts2Utils.getParameter("type");
 		if (StringUtils.isNotEmpty(type)) {
 			whereMap.put("type", type);
@@ -812,7 +839,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	}
 
 	public void linkChart() throws Exception {
-		custid = SpringSecurityUtils.getCurrentUser().getId();
+		gsCustid();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<>();
 		BasicDBObject dateCondition = new BasicDBObject();
@@ -872,7 +899,7 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 	}
 
 	public void pieChart() throws Exception {
-		custid = SpringSecurityUtils.getCurrentUser().getId();
+		gsCustid();
 		Map<String, Object> sub_map = new HashMap<String, Object>();
 		String state = Struts2Utils.getParameter("state");
 		HashMap<String, Object> whereMap = new HashMap<>();

@@ -21,6 +21,7 @@ import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.set.entity.Blacklist;
@@ -37,7 +38,7 @@ import com.mongodb.util.JSON;
  * 
  */
 @Namespace("/set")
-@Results({ @Result(name = CourierAction.RELOAD, location = "courier.action", type = "redirect") })
+@Results({ @Result(name = CourierAction.RELOAD, location = "courier.action", params = {"fypage", "%{fypage}" },type = "redirect") })
 public class CourierAction extends GeneralAction<Courier>{
 	private static final long serialVersionUID = -6784469775589971579L;
 	@Autowired
@@ -54,6 +55,7 @@ public class CourierAction extends GeneralAction<Courier>{
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		String title=Struts2Utils.getParameter("title");
@@ -64,14 +66,21 @@ public class CourierAction extends GeneralAction<Courier>{
 			Struts2Utils.getRequest().setAttribute("title", title);
 		}
 		sortMap.put("createdate", -1);
-		whereMap.put("custid", SpringSecurityUtils.getCurrentUser().getId());
-		List<DBObject> list = baseDao.getList(PubConstants.SET_COURIER,whereMap, sortMap);
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		}else{
+			whereMap.put("custid", custid);
+		}
+		//分页
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		List<DBObject> list = baseDao.getList(PubConstants.SET_COURIER,whereMap,fypage,10,sortMap);
 		 for (DBObject dbObject : list) {
 				dbObject.put("nickname", wwzservice.getCustName(dbObject.get("custid").toString()));
 			}
 		Struts2Utils.getRequest().setAttribute("list", list);
 		fycount=baseDao.getCount(PubConstants.SET_COURIER, whereMap);
-		
 		return SUCCESS;
 	}
 
@@ -122,13 +131,18 @@ public class CourierAction extends GeneralAction<Courier>{
 
 	@Override
 	public String save() throws Exception {
+		gsCustid();
 		// 注册业务逻辑
 		try {
 			if(_id==null){
 				_id=mongoSequence.currval(PubConstants.SET_COURIER);
 			} 
 			entity.set_id(_id); 
-			entity.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+				entity.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				entity.setCustid(custid);
+			}
 			entity.setCreatedate(new Date());
 			baseDao.insert(PubConstants.SET_COURIER, entity); 
 			addActionMessage("成功添加!");

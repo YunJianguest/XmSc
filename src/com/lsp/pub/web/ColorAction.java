@@ -3,10 +3,12 @@ package com.lsp.pub.web;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -19,6 +21,7 @@ import com.lsp.pub.entity.Color;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.util.SpringSecurityUtils;
 import com.lsp.pub.util.Struts2Utils;
+import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.ShopType;
 import com.mongodb.DBObject;
@@ -48,8 +51,22 @@ public class ColorAction extends GeneralAction<Color> {
 
 	@Override
 	public String execute() throws Exception {
+		gsCustid();
 		HashMap<String, Object> sortMap = new HashMap<String, Object>();
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();  
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		}else{
+			whereMap.put("custid", custid);
+		}
+		String  title=Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title))
+		{
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("ptitle", pattern);
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
 		List<DBObject> list = baseDao.getList(PubConstants.PUB_COLOR,whereMap, sortMap);
 		Struts2Utils.getRequest().setAttribute("colorList", list); 
 		return SUCCESS;
