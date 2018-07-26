@@ -738,7 +738,7 @@ public class WwzService {
 		
 		DBObject db = getWxUser(whereMap);
 		if(db !=null){
-			if (db.get("fromUser").equals("notlogin") && StringUtils.isNotEmpty(fromUser)
+			if (db.get("fromUser") != null && db.get("fromUser").equals("notlogin") && StringUtils.isNotEmpty(fromUser)
 					&& StringUtils.isNotEmpty(custid)) {
 				// 注册新用户
 
@@ -746,6 +746,7 @@ public class WwzService {
 				return register(fromUser, token, custid);
 
 			}
+			
 		}
 		
 

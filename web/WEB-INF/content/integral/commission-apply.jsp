@@ -6,7 +6,7 @@
 <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>支付申请</title>
+		<title>提现申请</title>
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
 		 <link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
          <link href="${ctx }/app/css/font-awesome-ie7.min.css" rel="stylesheet"/>

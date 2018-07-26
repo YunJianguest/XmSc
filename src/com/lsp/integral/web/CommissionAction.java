@@ -91,7 +91,11 @@ public class CommissionAction extends GeneralAction<Commission> {
 		HashMap<String, Object> whereMap = new HashMap<String, Object>();
 		
 		sortMap.put("createdate", -1);   
-		
+		if(custid.equals(SysConfig.getProperty("gsid"))||custid.equals(SysConfig.getProperty("custid"))) {
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+		}else{
+			whereMap.put("custid", custid);
+		}
 		//分页
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
