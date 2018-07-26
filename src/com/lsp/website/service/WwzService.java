@@ -1324,7 +1324,7 @@ public class WwzService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public boolean delyfjf(String price, String fromUserid, String type, String custid,String jzprice) throws Exception {
+	public boolean delyfjf(String price, String fromUserid, String type, String custid,String jzprice,String oid) throws Exception {
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if(changeKjJf(custid, fromUserid, price, 1,jzprice)) {
@@ -1335,6 +1335,7 @@ public class WwzService {
 					info.setValue(price);
 					info.setType(type);
 					info.setState(1);
+					info.setOid(oid);
 					info.setCustid(custid); 
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 					return true;
