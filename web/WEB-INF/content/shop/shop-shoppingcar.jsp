@@ -298,7 +298,7 @@
 					         						alert("操作失败");
 					         						$(".sps-input-pwd").hide();
 					         					}else if(json.state == 2){
-					         						alert("PPB不足，请重新选择付款方式");
+					         						alert("PADA不足，请重新选择付款方式");
 					         						$(".sps-input-pwd").hide();
 					         					}else if(json.state == 3){
 					         						alert("库存不足");
@@ -377,7 +377,7 @@ function ajaxjz(){//加载
 	    		  }else{
 	    		  xszf+='<span class="zi-cheng">￥<span class="price moneys">'+v[i].price.toFixed(2)+'</span>元<i class="pl-10 zi-6 count" count='+v[i].count+'>';
 	    		  } 
-	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PPB:'+v[i].ppb_price+'</span></div></font></div>'
+	    		  xszf+='数量:'+v[i].count+'件</i></span><span style="display:block;color:#e4393c;">PADA:'+v[i].ppb_price+'</span></div></font></div>'
 	    		  /* +'<div class="border-radius3 pull-right overflow-hidden"><div class="pull-left txt-c btn-hui zi-hui img-wh30" onclick="numDec(this,'+v[i]._id+')">'
 	    		  +'<i class="fa fa-minus fa-1x line-height33"></i></div><div class="pull-left overflow-hidden img-wh30">'
                   +'<input class="size12 txt-c zi-hui gray_input weight500 width-10 button-kong quantity"  name="" type="text" onchange="keyup()" value="'+v[i].count+'" disabled="disabled"/>'
@@ -440,7 +440,7 @@ function ajaxjz(){//加载
                 /* $("#totalPrice").html(Num.toFixed(2)+"元<i>快递:￥"+kd+"</i>"); */ 
                 
                 var ppb='${ppb_price}';  
-                $(".virtualcoin").html("PPB:"+ppb*num_add);
+                $(".virtualcoin").html("PADA:"+ppb*num_add);
             /* }  */
             
         }
@@ -463,7 +463,7 @@ function ajaxjz(){//加载
                 /* $("#totalPrice").html(+Num.toFixed(2)+"元<i>快递:￥"+kd+"</i>"); */ 
                 
                 var ppb='${ppb_price}'; 
-                $(".virtualcoin").html("PPB:"+ppb*num_dec);
+                $(".virtualcoin").html("PADA:"+ppb*num_dec);
             }else{
               /* document.getElementById("quantity").value = num_dec+ 1; */
               $(v).siblings('div').find('.quantity').val(num_dec+1);
