@@ -59,8 +59,8 @@
 			height:80px;
 			/*display:-webkit-box;
 			display:-ms-flexbox;
-			display:flex;
-			padding-top:20px;*/
+			display:flex;*/
+			padding-top:17px;
 			overflow: hidden;
 		}
 		.tab-nav li{
