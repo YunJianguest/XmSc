@@ -835,7 +835,7 @@ function gwc(v,type) {
 		<div class="mask-cont-cont">
 			<button onclick="popcode(0)" class="currency" id="btbutton">比特币</button>
 			<button onclick="popcode(1)" class="currency" id="ytfbutton">以太坊</button>
-			<button onclick="popcode(2)" class="currency">盼盼币</button>
+			<button onclick="popcode(2)" class="currency">PADA</button>
 		</div>
 	</div>
 </div>
