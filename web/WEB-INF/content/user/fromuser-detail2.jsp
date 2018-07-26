@@ -282,10 +282,10 @@
                 </c:if>
                  
             	<c:if test="${not empty jf}">
-            	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">${jf}</i></span> 
+            	<span style="color: #FF0000;float:right">PADA:<i style="color: #000;">${jf}</i></span> 
             	</c:if> 
             	<c:if test="${empty jf}">
-            	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
+            	<span style="color: #FF0000;float:right">PADA:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
                
             </div>
