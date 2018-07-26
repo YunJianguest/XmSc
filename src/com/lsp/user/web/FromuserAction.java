@@ -60,6 +60,7 @@ import com.mongodb.DBObject;
 public class FromuserAction extends GeneralAction<WxUser>{
 	 private static final long serialVersionUID = -6784469775589971579L;
 
+	  private String results="0";
 	  @Autowired
 	  private BaseDao basedao;
 	  private String _id;
@@ -1138,8 +1139,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		String id=Struts2Utils.getParameter("id");
 		sub_Map.put("state", 1);
 		if(StringUtils.isNotEmpty(id)){
+			results="0";
 			String str=getResults(Long.parseLong(id));
-			sub_Map.put("state", 1);
+			sub_Map.put("state", 0);
 			sub_Map.put("value", str);
 		}
 	  	String json = JSONArray.fromObject(sub_Map).toString();
@@ -1151,13 +1153,14 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	 * @return
 	 */
 	public  String getResults(Long  vip_no){
-		String results="0";
 		HashMap<String,Object>whereMap=new HashMap<>();
 		whereMap.put("renumber", vip_no);
 		List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap, null);
+		System.out.println(list.size()); 
+		System.out.println("*************");
 		//统计自身业绩 
 		whereMap.clear();
-		whereMap.put("custid", SysConfig.getProperty("custid"));
+		whereMap.put("_id", SysConfig.getProperty("custid"));
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
 		InteSetting sett=null;
 		if(db!=null){
@@ -1171,8 +1174,10 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				Long number =Long.parseLong(dbObject.get("no").toString());//用户的编号
 				
 				if(dbObject.get("agentLevel")!=null){
+					System.out.println("////"+dbObject.get("agentLevel"));
 					int level=Integer.parseInt(dbObject.get("agentLevel").toString());
 					//统计本身业绩
+					System.out.println(sett);
 					if(sett!=null){
 						if(level==1){
 							//省
@@ -1180,6 +1185,8 @@ public class FromuserAction extends GeneralAction<WxUser>{
 						}else if(level==2){
 							//市
 							results=BaseDecimal.add(results, sett.getReturnCity()+"");
+							System.out.println(results);
+							System.out.println(sett.getReturnCity());
 						}else if(level==3){
 							//县
 							results=BaseDecimal.add(results, sett.getReturnCounty()+"");
@@ -1197,7 +1204,7 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					}
 					 
 					
-				}
+				} 
 				getResults(number);
 			}
 		} 
