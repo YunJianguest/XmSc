@@ -38,8 +38,15 @@
 				border-radius: 10px;
 				background: #fff;
 			}
-			.share-logo{
+			/*.share-logo{
 				margin-bottom: 14px;
+			}*/
+			.share-logo>p {
+			    font-size: 12px;
+			    margin-top: 10px;
+			    margin-bottom: 0 !important; 
+			    color: #fff;
+			    text-align: center;
 			}
 			.share-logo-box{
 				width: 150px;
@@ -132,6 +139,7 @@
 		    			<div class="share-logo-box">
 		    				<img src="${ctx}/xmMobile/img/icon/sharelogo.png"/>
 		    			</div>
+		    			<p>会员编号：<span>7788421</span></p>
 		    		</div>
 		    		<div class="share-canvas" id="qrcode"></div>
 		    		<div class="share-tit">
