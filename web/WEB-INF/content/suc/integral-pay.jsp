@@ -184,9 +184,9 @@ function exp() {
                       <c:forEach items="${integralList}" var="bean">
                       <tr>
                       	<td>${bean._id}</td>
-                      	<c:if test="${bean.value>0}"><td><span style="color: red;">+${bean.value}</span></td>
+                      	<c:if test="${bean.state==0}"><td><span style="color: red;">+${bean.value}</span></td>
                       	</c:if>
-                      	<c:if test="${bean.value<0}"><td><span style="color:green;">-${bean.value}</span></td>
+                      	<c:if test="${bean.state==1}"><td><span style="color:green;">-${bean.value}</span></td>
                       	</c:if>
                       	<td>
                       	<c:choose>
