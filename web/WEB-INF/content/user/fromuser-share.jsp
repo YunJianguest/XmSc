@@ -139,7 +139,7 @@
 		    			<div class="share-logo-box">
 		    				<img src="${ctx}/xmMobile/img/icon/sharelogo.png"/>
 		    			</div>
-		    			<p>会员编号：<span>7788421</span></p>
+		    			<p>会员编号：<span>${user.no}</span></p>
 		    		</div>
 		    		<div class="share-canvas" id="qrcode"></div>
 		    		<div class="share-tit">
