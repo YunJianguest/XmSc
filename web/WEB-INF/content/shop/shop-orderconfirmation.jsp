@@ -96,7 +96,7 @@
         	   total='${entity.kdprice}'; 
         	 $("#totalPrice").parent().html('<i id="totalPrice" class="fa fa-cny pl-5 weight500">'+totalPrice.toFixed(2)+'</i>平台币 快递'+parseFloat('${entity.kdprice}').toFixed(2)+'元');
         	}
-        		$("#PPBprice").html('PPB:'+$("#totalPrice").html());
+        		$("#PPBprice").html('PADA:'+$("#totalPrice").html());
         	});
   
          function moneypay(){
@@ -274,7 +274,7 @@
 						         						alert("操作失败");
 						         						$(".bmodal").hide();
 						         					}else if(json.state == 2){
-						         						alert("PPB不足，请重新选择付款方式");
+						         						alert("PADA不足，请重新选择付款方式");
 						         						$(".bmodal").hide();
 						         					}else if(json.state == 3){
 						         						alert("库存不足");
