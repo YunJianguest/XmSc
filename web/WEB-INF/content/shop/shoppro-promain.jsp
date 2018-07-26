@@ -169,7 +169,7 @@
                 						if(v[i].price!=null){
                 							html+='<span class="similar-product-price"><span>￥</span>'+ v[i].price.toFixed(2)+'</span>';
                 						} 
-                						html+='<span class="virtualcoin">PPB:'+v[i].ppb_price+'</span><span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
+                						html+='<span class="virtualcoin">PADA:'+v[i].ppb_price+'</span><span class="similar-product-shopCar" onclick="cart('+v[i]._id+','+v[i].num+','+v[i].price+')"></span>'			
                 						+'</div></div></div></li>';		
             		    	              
             					
