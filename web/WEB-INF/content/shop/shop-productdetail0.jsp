@@ -673,7 +673,7 @@
                 <div class="pt-10">
                     <font size="3">
                         <i class="zi-hong" style="display: block;">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/></i>
-                        <span class="virtualcoin">PADA:${ppb_price}</span>
+                        <!--<span class="virtualcoin">PADA:${ppb_price}</span>-->
                     </font>
                 </div>
                 <div class="clear pt-10 pb-5 zi-hui overflow-hidden">
