@@ -534,19 +534,19 @@ function ajaxcount() {
             function (json) { 
                 if (json.state == 0) {
                     if(json.dfkcount>0){
-                    	$("#dfkcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dfkcount+'</span>'); 
+                    	$("#dfkcount").html('<span style="display: inline-block;width: 16px;height: 16px;text-align: center;line-height: 16px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dfkcount+'</span>'); 
                     	
                     }
                     if(json.dfhcount>0){
-                    	$("#dfhcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dfhcount+'</span>'); 
+                    	$("#dfhcount").html('<span style="display: inline-block;width: 16px;height: 16px;text-align: center;line-height: 16px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dfhcount+'</span>'); 
                     	
                     }
                     if(json.dshcount>0){
-                    	$("#dshcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dshcount+'</span>'); 
+                    	$("#dshcount").html('<span style="display: inline-block;width: 16px;height: 16px;text-align: center;line-height: 16px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dshcount+'</span>'); 
                     	
                     }
                     if(json.dpjcount>0){
-                    	$("#dpjcount").html('<span style="padding: 2px 2px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dpjcount+'</span>'); 
+                    	$("#dpjcount").html('<span style="display: inline-block;width: 16px;height: 16px;text-align: center;line-height: 16px;position: absolute;top: 0;right: 0;font-size: 10px;background: #E4393C;color: #fff;border-radius: 50%;">'+json.dpjcount+'</span>'); 
                     	
                     }
                    }
