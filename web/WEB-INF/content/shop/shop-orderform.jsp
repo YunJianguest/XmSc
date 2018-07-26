@@ -408,7 +408,7 @@
 		    		      +'<div class="bg-bai border-radius5">'
 		    		      +'<div class="hang30 line-bottom-98 zi-hui-tq weight500 overflow-hidden line-height30 pl-5 pr-5 zi-353535">'
 		    		      +'<font size="1"><div class="col-8 sl">订单编号:<i class="pl-5">'+v[i]._id+'</i></div>'
-		    		      +'<span style="display:block;color:#e4393c;" class="col-3">PPB:'+(v[i].ppb_money+v[i].kdprice)+'</span>'
+		    		      +'<span style="display:block;color:#e4393c;" class="col-3">PADA:'+(v[i].ppb_money+v[i].kdprice)+'</span>'
 		    		      +'<div class="col-1 txt-r sl zi-cheng" onclick="del('+v[i]._id+')"><i class="fa fa-trash-o zi-hong line-height30"></i></div>'
 							/* if(v[i].state==1){
 		    		          	  xszf+='<div class="col-3 txt-r zi-bbbbbb">已下单</div>'
@@ -571,7 +571,7 @@ function del(id) {
 		     		    	
 		     		        	if(json.state==0){ 	 
 		     		        	   if(json.data.prostore>=3000){
-		     		        		   $("#ppbjf").html("您有"+json.data.prostore+"盼盼币，可兑换一个矿机！");
+		     		        		   $("#ppbjf").html("您有"+json.data.prostore+"PADA，可兑换一个矿机！");
 		     		        		  friedtx_show();
 		     		        	   }else{
 		     		        		   window.location.reload();
@@ -727,7 +727,7 @@ function del(id) {
 					   					}else if(json.state == 1){
 					 						alert("操作失败");
 					 					}else if(json.state == 2){
-					 						alert("PPB不足");
+					 						alert("PADA不足");
 					 					}else if(json.state == 3){
 					 						alert("库存不足");
 					 					}else if(json.state == 4){
