@@ -72,7 +72,7 @@
 			.similar-product-price{
 				color: #fd0707;
 				position: absolute;
-				top: 0;
+				top: 13.5px;
 				left: 0px;
 			}
 			.virtualcoin{
