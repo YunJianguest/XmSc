@@ -862,7 +862,7 @@ function del(id) {
                 <div class=" width-10 border-radius5 zi-hui-tq overflow-hidden">
                     <font size="2">
                         <div class="weight500">您好:</div>
-                        <div class="weight500 line-height25">&nbsp&nbsp&nbsp尊敬的：<i class="zi-green">${user.nickname}</i><i class="zi-green" id="ppbjf">您已消费${jf.prostore}盼盼币可兑换一个矿机 </i></div>
+                        <div class="weight500 line-height25">&nbsp&nbsp&nbsp尊敬的：<i class="zi-green">${user.nickname}</i><i class="zi-green" id="ppbjf">您已消费${jf.prostore}PADA可兑换一个矿机 </i></div>
                     </font>
                 </div>
 
@@ -892,7 +892,7 @@ function del(id) {
 		<div class="mask-cont-cont">
 			<button onclick="popcode(0)" class="currency" id="btbutton">比特币</button>
 			<button onclick="popcode(1)" class="currency" id="ytfbutton">以太坊</button>
-			<button onclick="popcode(2)" class="currency">盼盼币</button>
+			<button onclick="popcode(2)" class="currency">PADA</button>
 		</div>
 	</div>
 </div>
