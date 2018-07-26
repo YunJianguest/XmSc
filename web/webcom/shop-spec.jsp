@@ -85,7 +85,7 @@
                 $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}';  
-                $(".virtualcoin").html("PPB:"+ppb*num_add);
+                $(".virtualcoin").html("PADA:"+ppb*num_add);
             }
             
         }
