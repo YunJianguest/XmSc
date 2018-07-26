@@ -53,7 +53,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/pub/ioc.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/pub/ioc.action">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i>系统管理<span>图标管理</span></h2>
                 <div class="breadcrumb-wrapper1">

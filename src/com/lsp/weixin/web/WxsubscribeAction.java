@@ -76,10 +76,17 @@ public class WxsubscribeAction extends GeneralAction<WxSubscribe> {
 		whereMap.clear();
 		whereMap.put("wid",toUser+"-"+type);
 		sortMap.put("sort", 1);
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
+			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		}
+		fycount=baseDao.getCount(PubConstants.PUB_ZDYMESSAGE,whereMap);
 		List<DBObject> zdylist=baseDao.getList(PubConstants.PUB_ZDYMESSAGE,whereMap,0,100, sortMap);
 		Struts2Utils.getRequest().setAttribute("ZdyMessageList", zdylist);
 		//List<DBObject> funclist=GetAllFunc.wxFunc.get(toUser);
 		List<DBObject> refunclist=new ArrayList<DBObject>();
+		
+		
+		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		/**for(int i=0;i<funclist.size();i++){
 			if(funclist.get(i).get("type").toString().equals("link")){
 				

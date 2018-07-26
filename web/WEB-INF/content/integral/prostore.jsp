@@ -101,7 +101,7 @@
     <%@include file="/webcom/header-bracket.jsp" %>
     <div class="mainpanel">
         <%@include file="/webcom/header-headerbar.jsp" %>
-        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/prostore.action?">
+        <form id="custinfoForm" name="custinfoForm" method="post" action="${contextPath}/integral/prostore.action">
             <div class="pageheader">
                 <h2><i class="fa fa-user"></i> 账户管理 <span>账户列表</span></h2>
             </div>
