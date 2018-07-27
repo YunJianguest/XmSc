@@ -655,7 +655,7 @@
 							return;
 						}
 					}
-					mui($(this)).button('loading');
+					/* mui($(this)).button('loading'); */
 					if(status=='1'){//个人注册
 						$.ajax({
 							type:"post",
@@ -666,6 +666,12 @@
 								if(json){
 									if(json.state == 0){
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
+									}else if(json.state == 2){
+										mui.alert('该用户已存在或者该手机号已被绑定！')
+										mui($(this)).button('reset');
+									}else if(json.state == 3){
+										mui.alert('验证码错误！')
+										mui($(this)).button('reset');
 									}
 								}else{
 									mui($(this)).button('reset');
@@ -699,6 +705,12 @@
 									if(json.state == 0){
 										mui.alert('注册成功，请等待审核！')
 										location.href='${ctx}/shop/shop!index.action?lscode='+json.lscode;
+									}else if(json.state == 2){
+										mui.alert('该用户已存在或者该手机号已被绑定！')
+										mui($(this)).button('reset');
+									}else if(json.state == 3){
+										mui.alert('验证码错误！')
+										mui($(this)).button('reset');
 									}
 								}else{
 									mui($(this)).button('reset');

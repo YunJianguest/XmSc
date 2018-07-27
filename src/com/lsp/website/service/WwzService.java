@@ -70,6 +70,7 @@ import com.lsp.suc.entity.DatingMember;
 import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.suc.entity.IntegralLlInfo;
 import com.lsp.suc.entity.IntegralRecord;
+import com.lsp.suc.entity.IntegralYjInfo;
 import com.lsp.suc.entity.Taskresults;
 import com.lsp.suc.entity.Comunit;
 import com.lsp.user.entity.Authcode;
@@ -3328,8 +3329,8 @@ public class WwzService {
 				} else if (lx == 1) { 
 						//默认积分
 						if (jflx == 1) {
-							IntegralInfo info = new IntegralInfo();
-							info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+							IntegralYjInfo info = new IntegralYjInfo();
+							info.set_id(mongoSequence.currval(PubConstants.INTEGRALYJ_INFO));
 							info.setCreatedate(new Date());
 							info.setFromUserid(fromUserid);
 							info.setValue(price);
@@ -3338,7 +3339,7 @@ public class WwzService {
 							info.setOid(oid);
 							info.setCustid(custid);
 							info.setIsfreeze(isfreeze);
-							baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+							baseDao.insert(PubConstants.INTEGRALYJ_INFO, info);
 							if (changeYjJf(custid, fromUserid, price, 0,0)) { 
 								return true; 
 							} else {
@@ -3576,20 +3577,21 @@ public class WwzService {
 	 * @param isfreeze(0-未冻结   1-已冻结)
 	 * @return
 	 */
-	public boolean delYjjf(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze) {
+	public boolean delYjjf(String price, String fromUserid, String type, String custid, int lx, int jflx,int isfreeze,String oid) {
 		try {
 			//减少冻结积分
 			if(Double.parseDouble(price)>0) {
 				if(changeYjJf(custid, fromUserid, price,1,0)) {
-					IntegralInfo info = new IntegralInfo();
-					info.set_id(mongoSequence.currval(PubConstants.INTEGRAL_INFO));
+					IntegralYjInfo info = new IntegralYjInfo();
+					info.set_id(mongoSequence.currval(PubConstants.INTEGRALYJ_INFO));
 					info.setCreatedate(new Date());
 					info.setFromUserid(fromUserid);
 					info.setValue(price);
 					info.setType(type);
 					info.setState(1);
 					info.setCustid(custid);
-					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					info.setOid(oid);
+					baseDao.insert(PubConstants.INTEGRALYJ_INFO, info);
 					return true;
 				}
 			} 

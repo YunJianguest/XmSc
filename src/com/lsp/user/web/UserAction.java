@@ -73,7 +73,7 @@ public class UserAction extends GeneralAction<UserInfo>
     this._id = _id;
   }
   public String execute() throws Exception {
-	  
+	gsCustid();
     HashMap<String, Object> sortMap = new HashMap<String, Object>();
     HashMap<String, Object> whereMap = new HashMap<String, Object>();
     sortMap.put("createdate",-1);
@@ -131,7 +131,12 @@ public class UserAction extends GeneralAction<UserInfo>
     this.fycount = this.basedao.getCount(PubConstants.USER_INFO,whereMap);
     Struts2Utils.getRequest().setAttribute("fycount", Long.valueOf(this.fycount));
     whereMap.clear();
-    whereMap.put("custid",SpringSecurityUtils.getCurrentUser().getId());
+    if(custid.equals(SysConfig.getProperty("gsid"))&&!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("gsid"))){
+    	whereMap.put("custid", SysConfig.getProperty("custid"));
+    }else{
+    	whereMap.put("custid",SpringSecurityUtils.getCurrentUser().getId());
+    }
+    
     List<DBObject> rolelist = this.basedao.getList(PubConstants.ROLE_INFO, whereMap, sortMap);
     HashMap<Long, Object> map = new HashMap<Long,Object>();
     map.put(Long.valueOf(0L), "请选择");
@@ -271,6 +276,7 @@ public class UserAction extends GeneralAction<UserInfo>
  }
   
   public void  ajaxsave() throws Exception{
+	    gsCustid();
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
 		HashMap<String,Object>whereMap = new HashMap<>();
 		try {
@@ -419,7 +425,12 @@ public class UserAction extends GeneralAction<UserInfo>
 			user.setPassword(password);
 			user.setToUser(toUser);
 			user.setNickname(nickname);
-			user.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+		    if(custid.equals(SysConfig.getProperty("gsid"))&&!SpringSecurityUtils.getCurrentUser().getId().equals(SysConfig.getProperty("gsid"))){
+				 user.setCustid(SysConfig.getProperty("custid"));
+			}else{
+				 user.setCustid(SpringSecurityUtils.getCurrentUser().getId());
+			}
+			
 			user.setArea(area);
 			user.setProvince(province);
 			user.setCity(city);
@@ -563,6 +574,37 @@ public class UserAction extends GeneralAction<UserInfo>
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	  
 	}
+  /**
+   * 账号是否存在
+   * @throws Exception
+   */
+    public void isExist() throws Exception{
+    	Map<String, Object>sub_Map=new HashMap<String, Object>();
+    	sub_Map.put("state", 1);
+    	HashMap<String, Object>whereMap=new HashMap<String, Object>();
+    	String account = Struts2Utils.getParameter("account");
+    	String type = Struts2Utils.getParameter("type");
+    	String id = Struts2Utils.getParameter("id");
+    	if(StringUtils.isNotEmpty(type)){
+    		if(type.equals("1")){
+    			BasicDBObject dateCondition = new BasicDBObject();
+    			// 剔除当前修改用户的id
+    			dateCondition.append("$ne", id);
+    			whereMap.put("_id", dateCondition);
+    		}
+    	}
+    	whereMap.put("account", account);
+    	long count = basedao.getCount(PubConstants.USER_INFO, whereMap);
+    	if(count == 0){
+    		sub_Map.put("state", 0);//账号未注册
+    	}else{
+    		sub_Map.put("state", 2);//账号已注册
+    	}
+    	String json = JSONArray.fromObject(sub_Map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+    	
+    }
+  
 	/**
 	 * ajax保存
 	 */

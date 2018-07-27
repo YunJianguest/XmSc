@@ -72,6 +72,7 @@ function exp() {
 	location.href = "${ctx }/suc/integral!integeralfromexp.action?comid=${comid}&sel_state="+sel_state+"&sel_insdate="+sel_insdate+"&sel_enddate="+sel_enddate+"&sel_type="+sel_type;
 	
 }
+
 </script>
 </head>
 

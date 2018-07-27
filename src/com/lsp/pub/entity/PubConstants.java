@@ -90,6 +90,7 @@ public class PubConstants
   
   public static String INTEGRAL_INFO="integral_info";
   public static String INTEGRALLL_INFO="integralll_info";
+  public static String INTEGRALYJ_INFO="integralyj_info";
   public static String INTEGRALM="integrallm";
   public static String JF_TOTAL="jf_total";
   

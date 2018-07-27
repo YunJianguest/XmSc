@@ -12,107 +12,7 @@
 <script type="text/javascript" src="${ctx}/mvccol/js/jquery.form.js"></script>
 <script type="text/javascript">
 
-function del(id) {
-	if (confirm('确实要删除吗?')) {
-		location.href = "${contextPath}/shop/orderform!delete.action?_id="
-				+ id+"&fypage=${fypage}&comid=${comid}";
-	}
-}
-function exp() {
-	var sel_state=$("#sel_state").val();
-	var sel_insdate=$("#sel_insdate").val();
-	var sel_enddate=$("#sel_enddate").val(); 
-	location.href = "${ctx }/shop/orderform!orderfromexp.action?comid=${comid}&sel_state="+sel_state+"&sel_insdate="+sel_insdate+"&sel_enddate="+sel_enddate;
-	
-}
-function fh(id){
-	var submitData = {
-			_id:id
-	};
-	$.post('${ctx}/shop/orderform!upd.action', submitData,
-		function(json) {
-			$('#_id').val(json._id);
-			$('#state').val(json.state);
-			$('#kdno').val(json.kdno);
-			$('#kdcom').val(json.kdcom);
-				
-	},"json")
-	$('#insdd').modal({ 
-	    show:true
-	});
-}
-
-//商家回复
-function huifu(orderId){
-	   
-}
-
-
-function wxpay(id){
-	var submitData = {
-			payid:id
-	};
-	$.post('${ctx}/shop/orderform!wxpay.action', submitData,
-		function(json) {
-			$('#payname').val(json.name);
-			$('#price').val(json.price.tofixed(2));
-			$('#spbill_create_ip').val(json.spbill_create_ip);
-			
-				
-	},"json")
-	$('#paydiv').modal({ 
-	    show:true
-	});
-	
-} 
-/* function orderinfo(id){
-	var submitData = {
-			orderid:id
-	};
-	$.post('${ctx}/shop/orderform!orderinfo.action', submitData,
-		function(json) {
-			var xszf='';
-			var v = json.list;
-			
-			for(var i=0;i<v.length;i++){
-				xszf=xszf+'<div class="form-group"><label class="col-sm-12 control-label">'+v[i].title+'  价格 ：'+v[i].price+'  数量： '+v[i].num+'</label>'+
-				'</div>';
-			}
-			$('#orderxs').html(xszf);
-			
-				
-	},"json")
-	$('#orderdiv').modal({ 
-	    show:true
-	});
-	
-}  */
-
-function orderinfo(id){
-	var submitData = {
-			orderid:id,
-			comid:'${comid}'
-	};
-	$.post('${ctx}/shop/orderform!orderinfo.action', submitData,
-		function(json) {
-			var xszf='';
-			var v = json.list;
-			
-			for(var i=0;i<v.length;i++){
-				xszf=xszf+'<div class="form-group"><label class="col-sm-12 control-label">'+v[i].pro.ptitle+'  价格 ：'+v[i].pro.price+'  数量： '+v[i].count+'</label>'+
-				'</div>';
-			}
-			$('#orderxs').html(xszf);
-			
-				
-	},"json")
-	$('#orderdiv').modal({ 
-	    show:true
-	});
-	
-}
-
-function page_submit(num){
+ function page_submit(num){
 	
 	if(num==-1){
 		$("#fypage").val(0);	
@@ -124,37 +24,41 @@ function page_submit(num){
 
 	$("#custinfoForm").submit();
 }
- 
-  function change(){ 
-	  var submitData = {
-				orderid:$('#_id').val(),
-				comid:$('#scomid').val(),
-				goodstate:$('#state').val(),
-				kdno:$('#kdno').val(),
-				kdcom:$('#kdcom').val()
-		};
-		$.post('${ctx}/shop/orderform!changestate.action', submitData,
-			function(json) {	
-				if(json.state == 0){
-					alert('操作成功');
-				}else{
-					alert('操作失败');
-				}	
-				window.location.reload();
-		},"json")
-  }
+	//审批
+	function appro(id,state){ 
+		  var submitData = {
+				    id:id,
+				    state:state
+			};
+			$.post('${ctx}/integral/commission!appro.action', submitData,
+				function(json) {	
+					if(json.state == 0){
+						alert('审批成功');
+					}else if(json.state == 1){
+						alert('操作失败');
+					}else if(json.state == 2){
+						alert('该提现申请不存在');
+					}else if(json.state == 3){
+						alert('已审批请勿重复提交');
+					}		
+					window.location.reload();
+			},"json")
+	}
   //确认收款
   function resure(id){ 
 	  var submitData = {
-				orderid:id,
-				goodstate:2
+			  id:id
 		};
-		$.post('${ctx}/shop/orderform!changestate.action', submitData,
+		$.post('${ctx}/integral/commission!resureMoney.action', submitData,
 			function(json) {	
 				if(json.state == 0){
 					alert('操作成功');
-				}else{
+				}else if(json.state == 1){
 					alert('操作失败');
+				}else if(json.state == 2){
+					alert('该提现申请不存在');
+				}else if(json.state == 3){
+					alert('已确认，请勿重复提交');
 				}	
 				window.location.reload();
 		},"json")
@@ -182,24 +86,55 @@ function page_submit(num){
    <div class="panelss ">
    <div class="panel-body fu10">
         <div class="row-pad-5">
+        <div class="pt-25 clear">
+            <div class="form-group col-sm-2">
+            <input type="text" name="no"  value="${no}" placeholder="提现编号"  class="form-control" />
+            </div>
+            <div class="form-group col-sm-2">
+            <input type="text" name="no"  value="${no}" placeholder="提现账号"  class="form-control" />
+            </div> 
+           
+            <div class="form-group col-sm-2">
+            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择">
+            	                <option value="">请选择</option>
+            	 				<option value="0">未审核</option>
+                    			<option value="1">审核通过</option>
+                    			<option value="2">审核拒绝</option>
+                    			<option value="3">已打款</option>   			
+                 </select>
+            </div>
             
-            <div class="form-group col-sm-1d">
-            <input type="text" name="name"  value="${name }" placeholder="姓名"  class="form-control" />
-            </div> 
-            <div class="form-group col-sm-1d">
-            <input type="text" name="tel"  value="${tel }" placeholder="电话"  class="form-control" />
-            </div> 
-            <div class="form-group col-sm-1">
-            <input type="text" name="no"  value="${no}" placeholder="编号"  class="form-control" />
-            </div> 
-            <div class="form-group col-sm-1">
-                 <input type="text" id="sel_insdate" name="sel_insdate" value="${sel_insdate}" placeholder="开始日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+             <div class="form-group col-sm-2">
+            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择">
+            	                <option value="">请选择</option>
+                    			<option value="1">银行卡提现</option>
+                    			<option value="2">支付宝提现</option>  			
+                 </select>
             </div>
-             <div class="form-group col-sm-1">
-                 <input type="text" id="sel_enddate" name="sel_enddate" value="${sel_enddate}" placeholder="结束日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
             </div>
+           
+             <div class="form-group col-sm-2">
+                 <input type="text" id="sel_insdate" name="sel_insdate" value="${sel_insdate}" placeholder="开始申请日期检索"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+             <div class="form-group col-sm-2">
+                 <input type="text" id="sel_enddate" name="sel_enddate" value="${sel_enddate}" placeholder="结束申请日期检索"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+             <div class="pt-25 clear">
+            <div class="form-group col-sm-2">
+                 <input type="text" id="sel_insdate1" name="sel_insdate1" value="${sel_insdate1}" placeholder="开始审批日期检索"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+             <div class="form-group col-sm-2">
+                 <input type="text" id="sel_enddate1" name="sel_enddate1" value="${sel_enddate1}" placeholder="结束审批日期检索"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+             <div class="form-group col-sm-2">
+                 <input type="text" id="sel_insdate2" name="sel_insdate2" value="${sel_insdate2}" placeholder="开始打款日期检索"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+             <div class="form-group col-sm-2">
+                 <input type="text" id="sel_enddate2" name="sel_enddate2" value="${sel_enddate2}" placeholder="结束打款日期检索"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" class="form-control" />
+            </div>
+           
             <a href="javascript:page_submit(-1);" class="btn btn-primary">搜&nbsp;&nbsp;索</a>
-
+ </div>
         </div>
     </div><!-- panel-body -->
 	</div><!-- panel -->
@@ -254,16 +189,17 @@ function page_submit(num){
                                       <i class="fa fa-cog"></i>
                                   </a>
                                   <ul role="menu" class="dropdown-menu pull-right">
-                                     <%--  <c:if test="${bean.state<2}">
+                                       <c:if test="${bean.state==0}">
+                                      <li><a href="javascript:appro('${bean._id}',1);">
+                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;同意</a></li>
+                                 	  <li><a href="javascript:appro('${bean._id}',2);">
+                                 	  <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;拒绝</a></li>
+                                     </c:if>
+                                      <c:if test="${bean.state==1}">
                                       <li><a href="javascript:resure('${bean._id}');">
-                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;确认收款</a></li>
+                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;确认打款</a></li>
                                      </c:if>
-                                      <c:if test="${bean.state<3&&bean.state>=2}">
-                                      <li><a href="javascript:fh('${bean._id}');">
-                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;发货</a></li>
-                                     </c:if>
-                                      <li><a href="${ctx}/shop/orderform!orderDetailsById.action?orderId=${bean._id}&comid=${comid}">
-                                      		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;订单详情</a></li> --%>
+                         
                                   </ul>
                               </div>
                           </td>

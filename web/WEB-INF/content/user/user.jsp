@@ -161,7 +161,7 @@
                                          $("#agentcountyid").html(options); 
                                          
                                           $("#agentcountyid").val(json.agentcountyid).trigger("change"); 
-                                          $("#agentcountyid").html('<option  value="+json.agentcountyid+" >"+json.agentcounty+"</option>');           
+                                         
                                       }else{
 				                    	   $("#agentcountyid").val("").trigger("change"); 
 				                    	   $("#agentcountyid").html("<option  value=''>暂无数据</option>"); 
