@@ -1,5 +1,6 @@
 package com.lsp.user.web;
 
+import java.io.StringBufferInputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,12 +21,14 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.JsonObject;
+import com.lsp.integral.entity.InteSetting;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Code;
 import com.lsp.pub.entity.GetAllFunc;
 import com.lsp.pub.entity.PubConstants;
 import com.lsp.pub.entity.WxToken;
+import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateUtil;
 import com.lsp.pub.util.JmsService;
 import com.lsp.pub.util.PBKDF2Util;
@@ -57,6 +60,7 @@ import com.mongodb.DBObject;
 public class FromuserAction extends GeneralAction<WxUser>{
 	 private static final long serialVersionUID = -6784469775589971579L;
 
+	  private String results="0";
 	  @Autowired
 	  private BaseDao basedao;
 	  private String _id;
@@ -1128,63 +1132,84 @@ public class FromuserAction extends GeneralAction<WxUser>{
 	  	Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 		//Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	
-	/**
-	 * 用户关系n层
-	 */
-	public void ajaxnexus1()throws Exception{
+	 
+	public void testdg()throws Exception{
 		getLscode();
 		Map<String, Object>sub_Map=new HashMap<String, Object>();
-		HashMap<String, Object>sortMap = new HashMap<>();
-		sortMap.put("createdate", -1);
-		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
-			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
+		String id=Struts2Utils.getParameter("id");
+		sub_Map.put("state", 1);
+		if(StringUtils.isNotEmpty(id)){
+			results="0";
+			String str=getResults(Long.parseLong(id));
+			sub_Map.put("state", 0);
+			sub_Map.put("value", str);
 		}
-		Map<String, Object>sub_Map1=new HashMap<String, Object>();
-		List<Object> userInfoList = new ArrayList<Object>();
-		try {
-			    DBObject   user=wwzservice.getWxUser(fromUserid);
-			    HashMap<String, Object>whereMap=new HashMap<>(); 
+	  	String json = JSONArray.fromObject(sub_Map).toString();
+	  	Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]); 
+	}
+	/**
+	 * 统计业绩
+	 * @param fromid
+	 * @return
+	 */
+	public  String getResults(Long  vip_no){
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("renumber", vip_no);
+		List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap, null);
+		System.out.println(list.size()); 
+		System.out.println("*************");
+		//统计自身业绩 
+		whereMap.clear();
+		whereMap.put("_id", SysConfig.getProperty("custid"));
+		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+		InteSetting sett=null;
+		if(db!=null){
+			sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
+		}
+		
+		if(list.size()==0){
+			 
+		}else{
+			for (DBObject dbObject : list) {
+				Long number =Long.parseLong(dbObject.get("no").toString());//用户的编号
 				
-				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
-				Long number = info.getNumber();//用户的编号
-				
-				sub_Map1.put("user", info);
-				whereMap=new HashMap<>();
-				whereMap.put("renumber", number);
-				List<DBObject>list1=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
-				
-				
-				
-					List<Object> userInfoList1 = new ArrayList<Object>();
-					for(int j=0;j<list1.size();j++) {
-						Map<String, Object>sub_Map2=new HashMap<String, Object>();
-						UserInfo  info1=(UserInfo) UniObject.DBObjectToObject(list1.get(j), UserInfo.class);
-						Long number1 = info1.getNumber();//用户的编号
-						sub_Map2.put("user", info1);
-						whereMap=new HashMap<>();
-						whereMap.put("renumber", number1);
-						while(true){ 
-						List<DBObject>list2=basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap);
-						
-						sub_Map2.put("son", list2);
-						userInfoList1.add(sub_Map2);
+				if(dbObject.get("agentLevel")!=null){
+					System.out.println("////"+dbObject.get("agentLevel"));
+					int level=Integer.parseInt(dbObject.get("agentLevel").toString());
+					//统计本身业绩
+					System.out.println(sett);
+					if(sett!=null){
+						if(level==1){
+							//省
+							results=BaseDecimal.add(results, sett.getReturnProvince()+"");
+						}else if(level==2){
+							//市
+							results=BaseDecimal.add(results, sett.getReturnCity()+"");
+							System.out.println(results);
+							System.out.println(sett.getReturnCity());
+						}else if(level==3){
+							//县
+							results=BaseDecimal.add(results, sett.getReturnCounty()+"");
+						}else if(level==4){
+							//部门
+							results=BaseDecimal.add(results, sett.getReturnDept()+"");
 						}
 					}
-					sub_Map1.put("son", userInfoList1);
+					//统计订单业绩
+					whereMap.clear();
+					whereMap.put("fromUserid",dbObject.get("_id").toString());
+					List<DBObject>orderlist=basedao.getList(PubConstants.WX_ORDERFORM, whereMap,null);
+					for (DBObject dbObject2 : orderlist) {
+						results=BaseDecimal.add(results,dbObject2.get("zfmoney").toString());
+					}
+					 
 					
-					
-			
-				
-				//sub_Map.put("userinfo", sub_Map1);
-		 
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		userInfoList.add(sub_Map1);
-	  	String json = JSONArray.fromObject(userInfoList).toString();
-	  	Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
-		//Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+				} 
+				getResults(number);
+			}
+		} 
+		return results; 
 	}
+
+
 }

@@ -1,6 +1,4 @@
-package com.lsp.pub.entity;
-
-import com.lsp.hou.entity.HousewiferyInfo;
+package com.lsp.pub.entity; 
 import com.lsp.shop.entiy.ComMain;
 import com.lsp.suc.entity.Comunit;
 import com.lsp.user.entity.CustomerInfo;
@@ -53,7 +51,6 @@ public class GetAllFunc {
 	
 	public static HashMap<String,List<DBObject>>datingCustServicenum= new HashMap<String,List<DBObject>>();
 
-	public static HashMap<String, HousewiferyInfo> housewifery = new HashMap<String, HousewiferyInfo>();
     //短信验证码
 	public static HashMap<String, Code>telcode = new HashMap<String, Code>();
 }

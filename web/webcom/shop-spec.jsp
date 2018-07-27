@@ -85,7 +85,7 @@
                 $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}';  
-                $(".virtualcoin").html("PPB:"+ppb*num_add);
+                $(".virtualcoin").html("PADA:"+ppb*num_add);
             }
             
         }
@@ -104,7 +104,7 @@
                 $("#totalPrice").html("&yen;"+Num.toFixed(2)+"元"); 
                 
                 var ppb='${ppb_price}'; 
-                $(".virtualcoin").html("PPB:"+ppb*num_dec);
+                $(".virtualcoin").html("PADA:"+ppb*num_dec);
             }else{
               document.getElementById("quantity").value = num_dec+ 1;
               alert("商品数量不能小于1");
@@ -130,7 +130,7 @@
                             <div class=" pull-left weight500">
                                 <div class="sl" style="line-height:24px;">
                                     <span class="zi-cheng" id="totalPrice">￥<fmt:formatNumber value='${entity.price}' pattern="0.0#"/>元</span>
-                                    <span class="virtualcoin">PPB:${ppb_price}</span>
+                                    <span class="virtualcoin">PADA:${ppb_price}</span>
                                 </div>
                             </div>
                             <div class="border-radius3 pull-right overflow-hidden">

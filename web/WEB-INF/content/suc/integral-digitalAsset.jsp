@@ -37,7 +37,7 @@
 		<div class="zichan">
 			<p><span>资产名称</span><span>今日交易额</span><span style="padding-right:20px">方式</span></p>
 			<div  style="clear: both;"></div>
-			<p><span><img src="${ctx}/xmMobile/img/left2.png" alt="" />PPB</span><span>
+			<p><span><img src="${ctx}/xmMobile/img/left2.png" alt="" />PADA</span><span>
 			
 			<c:if test="${jf == null }">0.00</c:if>
 			<c:if test="${jf != null }">${jf.uservalue}</c:if>

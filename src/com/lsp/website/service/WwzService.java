@@ -31,11 +31,7 @@ import com.chuanglan.sms.request.SmsSendRequest;
 import com.chuanglan.sms.response.SmsSendResponse;
 import com.chuanglan.sms.util.ChuangLanSmsUtil;
 import com.lsp.integral.entity.InteProstore;
-import com.lsp.integral.entity.InteSetting;
-import com.lsp.parttime.entity.Assets;
-import com.lsp.parttime.entity.AssetsRecord;
-import com.lsp.parttime.entity.Mission;
-import com.lsp.parttime.entity.MissionInform;
+import com.lsp.integral.entity.InteSetting; 
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Exchangerate;
@@ -1325,7 +1321,7 @@ public class WwzService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public boolean delyfjf(String price, String fromUserid, String type, String custid,String jzprice) throws Exception {
+	public boolean delyfjf(String price, String fromUserid, String type, String custid,String jzprice,String oid) throws Exception {
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if(changeKjJf(custid, fromUserid, price, 1,jzprice)) {
@@ -1336,6 +1332,7 @@ public class WwzService {
 					info.setValue(price);
 					info.setType(type);
 					info.setState(1);
+					info.setOid(oid);
 					info.setCustid(custid); 
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 					return true;
@@ -2891,145 +2888,7 @@ public class WwzService {
 		}
 		return false;
 	}
-
-	/**
-	 * 兼职通知
-	 * 
-	 * @param custid
-	 * @param fromid
-	 * @param title
-	 * @param content
-	 * @param type
-	 * @param tid
-	 * @param oid
-	 * @param mid
-	 * @return
-	 */
-	public boolean InsMissionInform(String custid, String fromid, String title, String content, int type, String tid,
-			String oid, Long mid) {
-		try {
-			MissionInform inform = new MissionInform();
-			inform.set_id(mongoSequence.currval(PubConstants.PARTTIME_MISSIONINFORM));
-			inform.setContent(content);
-			inform.setCreatedate(new Date());
-			inform.setCustid(custid);
-			inform.setFromid(fromid);
-			inform.setMid(mid);
-			inform.setOid(oid);
-			inform.setTid(tid);
-			inform.setType(type);
-			baseDao.insert(PubConstants.PARTTIME_MISSIONINFORM, inform);
-			return true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	/**
-	 * 结算资金
-	 * 
-	 * @param custid
-	 * @param fromid
-	 * @param price
-	 * @param state
-	 * @return
-	 */
-	private boolean clearingMiss(String custid, String fromid, double price, int type) {
-
-		DBObject dbObject = getAssetMiss(custid, fromid);
-		Assets obj = new Assets();
-		if (dbObject != null) {
-			obj = (Assets) UniObject.DBObjectToObject(dbObject, Assets.class);
-		} else {
-			obj.set_id(mongoSequence.currval(PubConstants.PARTTIME_ASSETS));
-		}
-		if (type == 0) {
-			obj.setValue(obj.getValue() + price);
-			boolean bl = insAssMiss(custid, fromid, price, type);
-			if (bl) {
-				obj.setCustid(custid);
-				obj.setFromid(fromid);
-				obj.setUpdate(new Date());
-				baseDao.insert(PubConstants.PARTTIME_ASSETS, obj);
-				return true;
-			}
-
-		} else {
-			if (obj.getValue() - price >= 0) {
-				obj.setValue(obj.getValue() - price);
-				boolean bl = insAssMiss(custid, fromid, price, type);
-				if (bl) {
-					obj.setCustid(custid);
-					obj.setFromid(fromid);
-					obj.setUpdate(new Date());
-					baseDao.insert(PubConstants.PARTTIME_ASSETS, obj);
-					return true;
-				}
-			}
-
-		}
-
-		return false;
-	}
-
-	/**
-	 * 增加资金
-	 * 
-	 * @param custid
-	 * @param fromid
-	 * @param price
-	 * @return
-	 */
-	public boolean addAssMiss(String custid, String fromid, double price) {
-		clearingMiss(custid, fromid, price, 0);
-		return false;
-
-	}
-
-	/**
-	 * 减少资金
-	 * 
-	 * @param custid
-	 * @param fromid
-	 * @param price
-	 * @return
-	 */
-	public boolean reduceAssMiss(String custid, String fromid, double price) {
-		clearingMiss(custid, fromid, price, 1);
-		return false;
-
-	}
-
-	/**
-	 * 记录
-	 * 
-	 * @param custid
-	 * @param fromid
-	 * @param price
-	 * @param type
-	 * @return
-	 */
-	private boolean insAssMiss(String custid, String fromid, double price, int type) {
-		try {
-			AssetsRecord assetsRecord = new AssetsRecord();
-			Long idLong = mongoSequence.currval(PubConstants.PARTTIME_ASSETSRECORD);
-			assetsRecord.set_id(idLong);
-			assetsRecord.setCustid(custid);
-			assetsRecord.setFromid(fromid);
-			assetsRecord.setValue(price);
-			assetsRecord.setCreatedate(new Date());
-			assetsRecord.setType(type);
-			assetsRecord.setState(0);
-			baseDao.insert(PubConstants.PARTTIME_ASSETSRECORD, assetsRecord);
-			return true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-	}
+ 
 
 	/**
 	 * 获取资金

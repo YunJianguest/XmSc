@@ -1049,6 +1049,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		    	tx.setFromid(fromUserid);
 		    	tx.setPrice(Double.parseDouble(price));
 		    	tx.setRemark(remark);
+		    	tx.setEth(eth);
 		    	tx.setState(0);
 		    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
 		    	HashMap<String, Object>whereMap=new HashMap<>();
@@ -1071,7 +1072,7 @@ public class MinersAction extends GeneralAction<Miner> {
 					
 					if(ir.getKjlx()>=0){
 						//提现
-				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"),BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""))) {
+				    	if(wwzService.delyfjf(price, fromUserid, "kj_tx", SysConfig.getProperty("custid"),BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""),orderno)) {
 				    		parameters.put("eth", eth);
 					    	parameters.put("num",price);
 					    	parameters.put("username",wwzService.getWxUser(fromUserid).get("tel"));

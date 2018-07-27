@@ -35,6 +35,16 @@ public class WithdrawalOrder extends ReflectionDBObject{
 	 * 处理时间
 	 */
 	private Date updatedate;
+	/**
+	 * 钱包地址
+	 */
+	private String eth; 
+	public String getEth() {
+		return eth;
+	}
+	public void setEth(String eth) {
+		this.eth = eth;
+	}
 	public String getCustid() {
 		return custid;
 	}
