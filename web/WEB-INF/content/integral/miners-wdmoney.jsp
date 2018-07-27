@@ -20,13 +20,13 @@
 			}
 			
 			.mui-input-row label {
-				width: 40%;
+				width: 81px;
 				font-size: 14px;
 				text-align: justify;
 			}
 			.mui-input-row label::after{
 				display: inline-block ; 
-				content: ''; 
+				/*content: ''; */
 				padding-left: 100%; 
 			}
 			.mui-input-row label~input,
