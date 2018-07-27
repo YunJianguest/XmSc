@@ -132,7 +132,6 @@ public class UserAction extends GeneralAction<UserInfo>
 			DBObject dbObject2 =basedao.getMessage(PubConstants.ROLE_INFO, Long.parseLong(dbObject.get("roleid").toString()));
 		    if(dbObject2 != null){
 		    	if(dbObject2.get("rolename") != null){
-		    		System.out.println(dbObject2.get("rolename"));
 		    		dbObject.put("rolename", dbObject2.get("rolename").toString());
 		    	}
 		    }
