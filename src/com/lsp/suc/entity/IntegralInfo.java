@@ -27,6 +27,7 @@ public class IntegralInfo extends ReflectionDBObject {
 	 * shop_zz 转账
 	 * shop_tx 提现
 	 * kj_txfh矿机提现失败返还
+	 * kj_tx矿机提现
 	 */
 	private String type;
 	

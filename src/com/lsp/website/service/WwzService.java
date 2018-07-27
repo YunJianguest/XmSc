@@ -1282,7 +1282,11 @@ public class WwzService {
 					info.setCustid(custid);
 					info.setFid(fid);
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
-					if (jfstate == 2) {//
+					if (jfstate == 3) {//
+						if (changeKjJf(custid, fromUserid, price, 0,jzprice)) { 
+							return true; 
+						}
+					}if (jfstate == 2) {//
 						if (changeKjJf(custid, fromUserid, price, 0,jzprice)) {
 							if (updateTotalIntegral(1, price)) {
 								//判断是否已经返完

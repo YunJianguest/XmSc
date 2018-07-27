@@ -48,6 +48,12 @@
 	    		     if(v[i].type=='ps_recovery'){
 	    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">回本后待返</font></div>';
 	    		    }    
+	    		     if(v[i].type=='kj_txfh'){
+		    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">提币失败返回</font></div>';
+		    		    } 
+	    		     if(v[i].type=='kj_tx'){
+		    		     xszf+='<div class="width-9 maring-a clear sl"><font size="2">提币到交易所</font></div>';
+		    		    }  
 	    		    xszf+='</div><div class="col-7 pt-15 pb-10"><font size="2">'+Date.prototype.format(v[i].createdate)+'</font></div>';
 	    		   if(v[i].state==1){
 	    		    xszf+='<div class="col-2 pt-15 pb-10"><font size="2">-'+v[i].value+'</font></div></div></a>'; 
