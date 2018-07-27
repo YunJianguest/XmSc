@@ -165,6 +165,22 @@
 				background: #007AFF;
 				border-bottom-right-radius: 5px;
 			}
+			.mui-btn-block {
+			    padding: 9px 0 !important;
+			}
+			.mui-input-row>a{
+			    position: absolute;
+			    right: 0;
+			    top: 17px;
+			    height: 25px;
+			    width: 50px;
+			    text-align: center;
+			    line-height: 25px;
+			    font-size: 12px;
+			    color: #fff !important;
+			    border-radius: 3px;
+			    background: #007AFF;
+			}
 		</style>
 		<script type="text/javascript">
 		      function withdrawal(){
@@ -228,11 +244,12 @@
 			<a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1)"></a>
 			<h1 class="mui-title">交易所</h1>
 		</header>
-		<div class="mui-content" style="background: #fff;padding-left:10px ;padding-right: 10px;">
+		<div class="mui-content" style="background: #fff;padding-left:10px ;padding-right: 10px;padding-bottom: 15px;">
 			<div class="mui-row">
 				<div class="mui-input-row">
 					<label for="">USKD钱包地址</label>
 					<input type="text" id="eth" class="mui-input-clear" value="" />
+					<a href="http://www.uskdpro.com">去注册</a>
 				</div>
 				<div class="mui-input-row">
 					<label for="">金额</label>
