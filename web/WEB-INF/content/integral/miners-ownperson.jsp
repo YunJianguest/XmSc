@@ -270,7 +270,7 @@
                     </div> --%>
                 </font>
             </div>
-            <div style="padding:0 15px;font-size: 12px;margin-top: 25px;">
+            <div style="padding:0 15px;font-size: 12px;margin-top: 25px;height: auto;overflow: hidden;">
              
                 <c:if test="${not empty llb}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">${llb}</i></span> 
@@ -285,8 +285,8 @@
             	<c:if test="${empty jf}">
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
-               
             </div>
+            <div style="text-align: right;color: #FF0000;">冻结PPB：<i style="color: #000;">1000000.00000</i></div>
         </div>
     </div>
     <div class="clear hang10"></div> 
