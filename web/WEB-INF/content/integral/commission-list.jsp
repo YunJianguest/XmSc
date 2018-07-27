@@ -122,7 +122,7 @@
                 
             }; 
             issend = false;
-            $.post('${ctx}/integral/commission!ajaxlist.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
+            $.post('${ctx}/integral/commission!ajaxlist.action?custid=${custid}&lscode=${lscode}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
             	     loadings.hide();
                         var html = $('.water').html();

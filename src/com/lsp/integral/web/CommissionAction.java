@@ -212,7 +212,7 @@ public class CommissionAction extends GeneralAction<Commission> {
 	    		return ;
 	    	}
 	    	
-	    	 if(StringUtils.isEmpty(fromUserid) ){
+	    	 if(StringUtils.isEmpty(fromUserid)){
 		    		sub_map.put("state", 3);//登录过期
 		    		String json = JSONArray.fromObject(sub_map).toString();
 			  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
@@ -240,7 +240,7 @@ public class CommissionAction extends GeneralAction<Commission> {
 	    	commission.setFromid(fromUserid);
 	    	commission.setCustid(custid);
 	    	try {
-	    		if(wwzService.delYjjf(price, fromUserid, "shop_tx", custid, 1, 1, 0,orderno)){
+	    		if(wwzService.delYjjf(price, fromUserid, "yj_tx", custid, 1, 1, 0,orderno)){
 	    			baseDao.insert(PubConstants.INTEGRAL_COMMISSION, commission);
 					
 					sub_map.put("id", commission.get_id().toString());
@@ -263,12 +263,13 @@ public class CommissionAction extends GeneralAction<Commission> {
 	     */
 	    public void ajaxlist() throws Exception{
 	    	getLscode();
+	    	System.out.println(fromUserid);
 	    	HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			Map<String, Object> sub_map = new HashMap<String, Object>();
 			sub_map.put("state", 1);
 			sortMap.put("createdate", -1);   
-			whereMap.put("fromid", fromUserid);
+			//whereMap.put("fromid", fromUserid);
 			//分页
 			if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 				fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
