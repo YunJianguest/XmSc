@@ -1101,9 +1101,17 @@ public class FromuserAction extends GeneralAction<WxUser>{
 		}
 		List<Object> userInfoList = new ArrayList<Object>();
 		try {
+			
 			    DBObject   user=wwzservice.getWxUser(fromUserid);
 			    HashMap<String, Object>whereMap=new HashMap<>(); 
 				Map<String, Object>sub_Map1=new HashMap<String, Object>();
+				whereMap.clear();
+				whereMap.put("_id", SysConfig.getProperty("custid"));
+				DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+				InteSetting sett=null;
+				if(db!=null){
+					sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
+				}
 				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
 				Long number = info.getNumber();//用户的编号
 				results="0";
@@ -1119,7 +1127,23 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					UserInfo  info1=(UserInfo) UniObject.DBObjectToObject(list1.get(j), UserInfo.class);
 					Long number1 = info1.getNumber();//用户的编号
 					results="0";
-					list1.get(j).put("xsyj",getResults(number1)); 
+					String  dljg="0";
+					if(sett!=null){
+						if(info1.getAgentLevel()==1){
+							//省
+							dljg=BaseDecimal.add(dljg, sett.getReturnProvince()+"");
+						}else if(info1.getAgentLevel()==2){
+							//市
+							dljg=BaseDecimal.add(dljg, sett.getReturnCity()+""); 
+						}else if(info1.getAgentLevel()==3){
+							//县
+							dljg=BaseDecimal.add(dljg, sett.getReturnCounty()+"");
+						}else if(info1.getAgentLevel()==4){
+							//部门
+							dljg=BaseDecimal.add(dljg, sett.getReturnDept()+"");
+						}
+					}
+					list1.get(j).put("xsyj",BaseDecimal.add(getResults(number1),dljg)); 
 					sub_Map2.put("user", list1.get(j));
 					whereMap=new HashMap<>();
 					whereMap.put("renumber", number1);
