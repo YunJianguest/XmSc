@@ -107,6 +107,18 @@ public class UserAction extends GeneralAction<UserInfo>
       whereMap.put("renumber", Long.parseLong(renumber));
       Struts2Utils.getRequest().setAttribute("wxenumber", renumber);
     }
+    DBObject user =basedao.getMessage(PubConstants.USER_INFO, SpringSecurityUtils.getCurrentUser().getId());
+    if(user != null){
+    	if(user.get("roleid") != null && user.get("roleid").toString().equals(SysConfig.getProperty("sproleid"))){
+    		BasicDBList dblist = new BasicDBList();
+    		dblist.add(new BasicDBObject("agentLevel", 1));
+    		dblist.add(new BasicDBObject("agentLevel", 2));
+    		dblist.add(new BasicDBObject("agentLevel", 3));
+    		dblist.add(new BasicDBObject("agentLevel", 4));
+    		// ne判断
+    		whereMap.put("$ne", dblist);
+    	}
+    }
    // whereMap.put("custid",SpringSecurityUtils.getCurrentUser().getId());
     List<DBObject> list = this.basedao.getList(PubConstants.USER_INFO, whereMap,fypage,10, sortMap); 
     for (DBObject dbObject : list) {
