@@ -1106,8 +1106,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				Map<String, Object>sub_Map1=new HashMap<String, Object>();
 				UserInfo  info=(UserInfo) UniObject.DBObjectToObject(user, UserInfo.class);
 				Long number = info.getNumber();//用户的编号
-				
-				sub_Map1.put("user", info);
+				results="0";
+				user.put("xsyj",getResults(number));
+				sub_Map1.put("user", user);
 				whereMap=new HashMap<>();
 				whereMap.put("renumber", number);
 				
@@ -1117,7 +1118,9 @@ public class FromuserAction extends GeneralAction<WxUser>{
 					Map<String, Object>sub_Map2=new HashMap<String, Object>();
 					UserInfo  info1=(UserInfo) UniObject.DBObjectToObject(list1.get(j), UserInfo.class);
 					Long number1 = info1.getNumber();//用户的编号
-					sub_Map2.put("user", info1);
+					results="0";
+					list1.get(j).put("xsyj",getResults(number1)); 
+					sub_Map2.put("user", list1.get(j));
 					whereMap=new HashMap<>();
 					whereMap.put("renumber", number1);
 					

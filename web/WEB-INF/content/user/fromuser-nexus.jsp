@@ -92,7 +92,7 @@
 			    			 xszf+="<ul class='mui-table-view mui-collapse' id='accordion' style='display: block;'>"+
 								"<li class='mui-table-view-cell' style='padding-right: 15px;'>"+
 						 			"<a class='mui-navigate-right link'>"+
-										"<span style='font-size:22px;margin-right:5px;'>+</span>"+user.nickname+""+user.tel+
+										"<span style='font-size:22px;margin-right:5px;'>+</span>"+user.nickname+" tel:"+user.tel+" no:"+user.no+" 业绩:"+user.xsyj+ 
 									"</a>"+
 										"<ul class='mui-table-view mui-collapse'>";
 									for(var i=0;i<v.length;i++){ 
@@ -101,14 +101,14 @@
 										console.log(user1);
 										xszf+="<li class='mui-table-view-cell'>"+
 											"<a class='mui-navigate-right link'>"+
-												"<span style='font-size:22px;margin-right:5px;margin-left:10px;'>+</span>"+user1.nickname+""+user1.tel+
-											"</a>"+
+												"<span style='font-size:22px;margin-right:5px;margin-left:10px;'>+</span>"+user1.nickname+" tel:"+user1.tel+
+											" no:"+user1.no+" 业绩:"+user1.xsyj+"</a>"+
 											"<ul class='mui-table-view mui-collapse'>";
 											for(var j=0;j<v1.length;j++){ 
 												var user2 = v1[j];
 												xszf+="<li class='mui-table-view-cell'>"+
 													"<a class='mui-navigate-right link' style='padding-left:40px;'>"+
-														user2.nickname+""+user2.tel+
+														user2.nickname+" tel:"+user2.tel+" no:"+user2.no+
 													"</a>"+
 												"</li>";
 											}
