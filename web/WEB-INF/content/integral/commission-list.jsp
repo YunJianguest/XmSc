@@ -160,7 +160,7 @@
 	
 	</head>
 	<body>
-		<p class="record"><a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>提现记录</p>
+		<p class="record"><a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;margin-top: 8px !important;"></a>提现记录</p>
 		<div class="water">
 		
 		</div>
