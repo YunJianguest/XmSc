@@ -1101,7 +1101,7 @@ public class MinersAction extends GeneralAction<Miner> {
 				            	tx.setState(2);
 				            	tx.setUpdatedate(new Date());
 						    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-						    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
+						    	wwzService.addyfjf(price, fromUserid, "kj_txfh",SysConfig.getProperty("custid"),1,orderno,BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""));
 						    	sub_map.put("state", 3);
 				            }
 				    	}else {
