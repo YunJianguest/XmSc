@@ -286,7 +286,7 @@
             	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
             </div>
-            <div style="text-align: right;color: #FF0000;">冻结PPB：<i style="color: #000;">1000000.00000</i></div>
+            <!--<div style="text-align: right;color: #FF0000;">冻结PPB：<i style="color: #000;">1000000.00000</i></div>-->
         </div>
     </div>
     <div class="clear hang10"></div> 
