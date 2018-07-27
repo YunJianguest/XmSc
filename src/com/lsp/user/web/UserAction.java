@@ -918,8 +918,7 @@ public class UserAction extends GeneralAction<UserInfo>
 	public void commend(int type,String custid,Long number) throws Exception{
 		HashMap<String,Object> whereMap = new HashMap<>();
 		whereMap.put("number", number);
-		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
-		
+		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap); 
 		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, SysConfig.getProperty("custid"));
 		InteSetting sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 		if(db!=null){
@@ -943,6 +942,9 @@ public class UserAction extends GeneralAction<UserInfo>
 			if(db.get("any")!=null){
 				any = BaseDecimal.division(db.get("any").toString(), "100", 6);
 			}
+			System.out.println("any--------"+any);
+			System.out.println("type--------"+type);
+			System.out.println(user);
 			if(type == 1){
 				if(db.get("returnProvince")!=null){
 					info.setMoney(Float.valueOf(BaseDecimal.multiplication(db.get("returnProvince").toString(), "3")));
@@ -952,8 +954,9 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
+						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
 					}
+					 
 				}
 			}else if(type == 2){
 				if(db.get("returnCity")!=null){
@@ -963,7 +966,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCity").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
+						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
 					} 
 				}
 			}else if(type == 3){
@@ -974,7 +977,7 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCounty").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
+						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
 					}
 					
 				}
@@ -986,7 +989,8 @@ public class UserAction extends GeneralAction<UserInfo>
 					if(user!=null){
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
-						wwzservice.addjf(total, user.get("_id").toString(), "tj_account", custid, 1, 1, 0);
+						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
+						System.out.println("------增加部门收益");
 					}
 				}
 			}

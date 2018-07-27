@@ -265,16 +265,23 @@ public class FromuserAction extends GeneralAction<WxUser>{
 				  double bl= Double.parseDouble(wxUser.get("getExperience").toString())/Double.parseDouble(wxUser.get("needExperience").toString());   
 				  wxUser.put("expbl",new java.text.DecimalFormat("#").format(bl*100)); 
 			  } 
+			  DBObject jfobj=wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid);
+			  System.out.println(jfobj);
 			  //积分 
-			  if (wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
-				  Struts2Utils.getRequest().setAttribute("jf",wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("uservalue") );
-			  }
-			  System.out.println(wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid));
+			  if (jfobj!=null) {
+				  Struts2Utils.getRequest().setAttribute("jf",jfobj.get("uservalue") );
+			  } 
 			  //llb 
-			  if (wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid)!=null) {
-				  System.out.println(wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue"));
-				  Struts2Utils.getRequest().setAttribute("llb",wwzservice.getJfOBJ(SysConfig.getProperty("custid"), fromUserid).get("llkyvalue") );
+			  if (jfobj!=null) { 
+				  Struts2Utils.getRequest().setAttribute("llb",jfobj.get("llkyvalue") );
 			  }
+			  if (jfobj!=null) { 
+				  Struts2Utils.getRequest().setAttribute("yj",jfobj.get("yjvalue") );
+			  }
+			  if (jfobj!=null) { 
+				  Struts2Utils.getRequest().setAttribute("xfjl",jfobj.get("prostore") );
+			  }
+			 
 			
 			  Struts2Utils.getRequest().setAttribute("entity", wxUser);
 		  }else{

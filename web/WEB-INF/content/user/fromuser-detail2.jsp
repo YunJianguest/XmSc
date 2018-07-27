@@ -308,41 +308,7 @@
             </div>
         </div>
     </div>
-
-    
-
-    <c:if test="${not empty isAgent}">
-    <div class="clear hang10 bg-f5f5f9"></div>
-     <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-10" onclick="window.location.href='${ctx}/shop/shop!agenttx.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
-        <div class="hang30 width-6 maring-a">
-            <div class="pull-left txt-c img-wh30 bj-cheng border-radius5 zi-bai"><i
-                    class="fa fa-dollar  line-height30"></i></div>
-            <div class="pull-left pl-10">
-                <font size="2">
-                    <div class="hang20 zi-hei">佣金管理</div>
-                </font>
-                <font size="1">
-                    <div class="hang20 zi-hui-wx">佣金:<fmt:formatNumber value='${agent.price}' pattern="0.0#"/></div>
-                </font>
-            </div>
-        </div>
-    </div>
-     
-    <div class="col-6 line-right-dddddd line-bottom-dddddd hang70 pt-10" onclick="window.location.href='${ctx}/shop/shop!agentweb.action?custid=${custid}&lscode=${lscode}&agid=${agid}'">
-        <div class="hang30 width-6 maring-a">
-            <div class="pull-left txt-c img-wh30 bj-lan1 border-radius5 zi-bai"><i
-                    class="fa fa-bar-chart  line-height30"></i></div>
-            <div class="pull-left pl-10">
-                <font size="2">
-                    <div class="hang20 zi-hei">佣金记录</div>
-                </font>
-                <font size="1">
-                    <div class="hang20 zi-hui-wx">佣金排行:0</div>
-                </font>
-            </div>
-        </div>
-    </div>
-    </c:if>
+ 
   		<ul class="collector">
   		<li>
   			<a href="${ctx}/shop/productcollect!productcollectList.action?custid=${custid}&lscode=${lscode}">
