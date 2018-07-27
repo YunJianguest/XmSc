@@ -156,11 +156,11 @@
 					<label>电话</label>
 					<input id="tel" type="tel" value="${user.tel }" class="mui-input-clear" maxlength="11" placeholder="请输入电话">
 				</div>
-				<div class="mui-input-row" style="position: relative;">
+				<%-- <div class="mui-input-row" style="position: relative;">
 					<label>USKD账号</label>
 					<input id="uskd" type="text" value="${user.uskd }" class="mui-input-clear" value="" placeholder="请输入USKD账号/无账号请注册">
 					<a class="link" href="http://www.uskdpro.com">去注册</a>
-				</div>
+				</div> --%>
 			</form>
 			
 			<div class="line-bottom overflow-hidden">

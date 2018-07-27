@@ -58,6 +58,7 @@ public class UserAction extends GeneralAction<UserInfo>
 {
   private static final long serialVersionUID = -6784469775589971579L;
 
+  private String results="0"; 
   @Autowired
   private BaseDao basedao;
   private String _id;
@@ -1302,7 +1303,123 @@ public class UserAction extends GeneralAction<UserInfo>
 		String json = JSONArray.fromObject(sub_map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
-	
-	
-	
+	public String wt(){
+		SpringSecurityUtils.getCurrentUser().getId();
+		return "wt"; 
+	}
+	/**
+	 * 获取网体数据
+	 * @throws IOException 
+	 */
+	public void getwt() throws IOException{
+		//获取网体
+		String wtno=SysConfig.getProperty("wtno");
+		DBObject user=wwzservice.getWXuserVipNo(wtno);
+		if(user!=null){
+			List<Map<String, Object>> items = new ArrayList<Map<String, Object>>(); 
+			Map<String, Object> item = new HashMap<String, Object>();
+			item.put("id", user.get("_id"));
+	        item.put("name",user.get("nickname"));
+	        item.put("tel",user.get("tel"));
+	        item.put("isParent", Boolean.valueOf(true));
+	        item.put("children", getWtResults(user,null));
+	        items.add(item);
+	        JSONArray json = JSONArray.fromObject(items); 
+	        Struts2Utils.getResponse().getWriter().print(json.toString());
+		}
+		
+		
+	}
+	/**
+	 * 统计业绩
+	 * @param fromid
+	 * @return
+	 */
+	public  String getResults(Long  vip_no){
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("renumber", vip_no);
+		List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap, null);
+		System.out.println(list.size()); 
+		System.out.println("*************");
+		//统计自身业绩 
+		whereMap.clear();
+		whereMap.put("_id", SysConfig.getProperty("custid"));
+		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+		InteSetting sett=null;
+		if(db!=null){
+			sett = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
+		}
+		
+		if(list.size()==0){
+			 
+		}else{
+			for (DBObject dbObject : list) {
+				Long number =Long.parseLong(dbObject.get("no").toString());//用户的编号
+				
+				if(dbObject.get("agentLevel")!=null){
+					System.out.println("////"+dbObject.get("agentLevel"));
+					int level=Integer.parseInt(dbObject.get("agentLevel").toString());
+					//统计本身业绩
+					System.out.println(sett);
+					if(sett!=null){
+						if(level==1){
+							//省
+							results=BaseDecimal.add(results, sett.getReturnProvince()+"");
+						}else if(level==2){
+							//市
+							results=BaseDecimal.add(results, sett.getReturnCity()+"");
+							System.out.println(results);
+							System.out.println(sett.getReturnCity());
+						}else if(level==3){
+							//县
+							results=BaseDecimal.add(results, sett.getReturnCounty()+"");
+						}else if(level==4){
+							//部门
+							results=BaseDecimal.add(results, sett.getReturnDept()+"");
+						}
+					}
+					//统计订单业绩
+					whereMap.clear();
+					whereMap.put("fromUserid",dbObject.get("_id").toString());
+					List<DBObject>orderlist=basedao.getList(PubConstants.WX_ORDERFORM, whereMap,null);
+					for (DBObject dbObject2 : orderlist) {
+						results=BaseDecimal.add(results,dbObject2.get("zfmoney").toString());
+					}
+					 
+					
+				} 
+				getResults(number);
+			}
+		} 
+		return results; 
+	}
+	/**
+	 * 网体业绩
+	 * @param fromid
+	 * @return
+	 */
+	public  List<Map<String, Object>> getWtResults(DBObject  user,List<Map<String, Object>>ls){ 
+		List<Map<String, Object>> childitems = new ArrayList<Map<String, Object>>();
+		Map<String, Object> childitem = new HashMap<String, Object>();
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("renumber",Long.parseLong(user.get("no").toString()));
+		List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap, null);
+		if(ls!=null){
+			childitem.put("children", ls);
+		} 
+		childitem.put("id", user.get("_id"));
+		childitem.put("name",user.get("nickname"));
+		childitem.put("tel",user.get("tel"));
+		
+		if(list.size()==0){ 
+		}else{ 
+			childitem.put("isParent", Boolean.valueOf(true));
+			childitems.add(childitem);
+			
+			for (DBObject dbObject : list) { 
+				getWtResults(dbObject,childitems); 
+			}
+		} 
+		return childitems; 
+	}
 }
