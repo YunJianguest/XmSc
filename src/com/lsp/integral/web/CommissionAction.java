@@ -262,14 +262,13 @@ public class CommissionAction extends GeneralAction<Commission> {
 	     * @throws Exception
 	     */
 	    public void ajaxlist() throws Exception{
-	    	getLscode();
-	    	System.out.println(fromUserid);
+	    	getLscode(); 
 	    	HashMap<String, Object> sortMap = new HashMap<String, Object>();
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			Map<String, Object> sub_map = new HashMap<String, Object>();
 			sub_map.put("state", 1);
 			sortMap.put("createdate", -1);   
-			//whereMap.put("fromid", fromUserid);
+			whereMap.put("fromid", fromUserid);
 			//分页
 			if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 				fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));
