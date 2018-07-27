@@ -116,6 +116,9 @@
 			.mask-body::after{top: 0;}
 			.mask-body::before{bottom: 0;}
 			.mask-foot{width: 100%;height: 40px;text-align: right;}
+			.mui-popup {
+			    position: fixed !important;
+			}
 		</style>
 		
 		<script type="text/javascript">
