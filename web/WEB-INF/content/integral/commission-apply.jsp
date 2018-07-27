@@ -60,7 +60,7 @@
 				color:#333;
 				line-height: 29px;
 			}
-			.payment_money>p>input,.payment_money>div>p>input,.payment_money>div>p>slect{
+			.payment_money>p>input,.payment_money>div>p>input,.payment_money>div>p>select{
 				width: 65%;
 				height:30px;
 				outline: none;
