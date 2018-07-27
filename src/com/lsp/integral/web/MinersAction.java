@@ -368,6 +368,7 @@ public class MinersAction extends GeneralAction<Miner> {
 	  public String ownperson(){
 		  
 		  getLscode();  
+		  HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		  Struts2Utils.getRequest().setAttribute("custid",custid );
 		  //WxToken token=GetAllFunc.wxtoken.get(custid);
 		  WxToken token = null;
@@ -394,7 +395,7 @@ public class MinersAction extends GeneralAction<Miner> {
 		  //优先使用用户ID查询
 		  DBObject wxUser=new BasicDBObject();
 		  if(StringUtils.isNotEmpty(fromUserid)){
-			  HashMap<String, Object>whereMap=new HashMap<String, Object>();
+			  
 			  whereMap.put("_id", fromUserid);
 			  wxUser=wwzService.getWxUser(whereMap);
 			  whereMap.clear();
@@ -420,7 +421,8 @@ public class MinersAction extends GeneralAction<Miner> {
 				  return "fromlogin";  
 			  }else{
 				  //根据QQ登录信息查询  
-				  HashMap<String, Object>whereMap=new HashMap<String, Object>();
+				  whereMap.clear();
+				  
 				  whereMap.put("qqfromUser", qqfromUser);
 				  wxUser=wwzService.getWxUser(whereMap);
 				  whereMap.put("custid", custid);
@@ -453,7 +455,18 @@ public class MinersAction extends GeneralAction<Miner> {
 		  
 		  /*String backurl = Struts2Utils.getParameter("backurl");
 		  Struts2Utils.getRequest().setAttribute("backurl", backurl);*/
-		  
+		  whereMap.clear();
+		  whereMap.put("fromUserid", fromUserid);
+		  DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_MINER, whereMap);
+		  String ppb = wwzService.getPPBSprice()+"";
+		  if( dbObject != null){
+			  if(dbObject.get("kjvalue") != null){
+				  if(dbObject.get("kjjzvalue") != null){
+					  String kjjzvalue = BaseDecimal.multiplication(dbObject.get("kjjzvalue").toString(), ppb);
+					  Struts2Utils.getRequest().setAttribute("freezeppb", BaseDecimal.division(dbObject.get("kjvalue").toString(), kjjzvalue, 10));
+				  }
+			  } 
+		  }
 		  return "ownperson";
 	  }
 	  /***
@@ -1101,7 +1114,7 @@ public class MinersAction extends GeneralAction<Miner> {
 				            	tx.setState(2);
 				            	tx.setUpdatedate(new Date());
 						    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-						    	wwzService.addyfjf(price, fromUserid, "kj_txfh",SysConfig.getProperty("custid"),1,orderno,BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""));
+						    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
 						    	sub_map.put("state", 3);
 				            }
 				    	}else {

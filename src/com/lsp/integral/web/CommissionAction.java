@@ -99,6 +99,85 @@ public class CommissionAction extends GeneralAction<Commission> {
 		}else{
 			whereMap.put("fromid", custid);
 		}
+		
+		String  no=Struts2Utils.getParameter("no");
+		if(StringUtils.isNotEmpty(no))
+		{
+			Pattern pattern = Pattern.compile("^.*" + no + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("_id", pattern);
+			Struts2Utils.getRequest().setAttribute("no",  no);
+		}
+		
+		String  title=Struts2Utils.getParameter("title");
+		if(StringUtils.isNotEmpty(title))
+		{
+			Pattern pattern = Pattern.compile("^.*" + title + ".*$",
+					Pattern.CASE_INSENSITIVE);
+			whereMap.put("account", pattern);
+			Struts2Utils.getRequest().setAttribute("title",  title);
+		}
+		
+		String  sel_state=Struts2Utils.getParameter("sel_state");
+		if(StringUtils.isNotEmpty(sel_state))
+		{
+			whereMap.put("state", Integer.parseInt(sel_state));
+			Struts2Utils.getRequest().setAttribute("sel_state",  sel_state);
+		}
+		
+		String  sel_type=Struts2Utils.getParameter("sel_type");
+		if(StringUtils.isNotEmpty(sel_type))
+		{
+			whereMap.put("type", Integer.parseInt(sel_type));
+			Struts2Utils.getRequest().setAttribute("sel_type",  sel_type);
+		}
+		
+		//申请时间
+		String sel_insdate = Struts2Utils.getParameter("sel_insdate");
+		String sel_enddate = Struts2Utils.getParameter("sel_enddate");
+		BasicDBObject dateCondition = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate)) {
+			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_insdate", sel_insdate);
+		}
+		if (StringUtils.isNotEmpty(sel_enddate)) {
+			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate));
+			whereMap.put("createdate", dateCondition);
+			Struts2Utils.getRequest().setAttribute("sel_enddate", sel_enddate);
+		}
+		
+		//审批时间
+		String sel_insdate1 = Struts2Utils.getParameter("sel_insdate1");
+		String sel_enddate1 = Struts2Utils.getParameter("sel_enddate1");
+		BasicDBObject dateCondition1 = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate1)) {
+			dateCondition1.append("$gte", DateFormat.getFormat(sel_insdate1));
+			whereMap.put("updatedate", dateCondition1);
+			Struts2Utils.getRequest().setAttribute("sel_insdate1", sel_insdate1);
+		}
+		if (StringUtils.isNotEmpty(sel_enddate1)) {
+			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate1));
+			whereMap.put("updatedate", dateCondition1);
+			Struts2Utils.getRequest().setAttribute("sel_enddate1", sel_enddate1);
+		}
+		
+		//打款时间
+		String sel_insdate2 = Struts2Utils.getParameter("sel_insdate2");
+		String sel_enddate2 = Struts2Utils.getParameter("sel_enddate2");
+		BasicDBObject dateCondition2 = new BasicDBObject();
+		if (StringUtils.isNotEmpty(sel_insdate2)) {
+			dateCondition.append("$gte", DateFormat.getFormat(sel_insdate2));
+			whereMap.put("confirmdate", dateCondition2);
+			Struts2Utils.getRequest().setAttribute("sel_insdate2", sel_insdate2);
+		}
+		if (StringUtils.isNotEmpty(sel_enddate2)) {
+			dateCondition.append("$lte", DateFormat.getFormat(sel_enddate2));
+			whereMap.put("confirmdate", dateCondition2);
+			Struts2Utils.getRequest().setAttribute("sel_enddate2", sel_enddate2);
+		}
+		
+		
 		//分页
 		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))){
 			fypage=Integer.parseInt(Struts2Utils.getParameter("fypage"));

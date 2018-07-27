@@ -91,7 +91,7 @@
             <input type="text" name="no"  value="${no}" placeholder="提现编号"  class="form-control" />
             </div>
             <div class="form-group col-sm-2">
-            <input type="text" name="no"  value="${no}" placeholder="提现账号"  class="form-control" />
+            <input type="text" name="title"  value="${title}" placeholder="提现账号"  class="form-control" />
             </div> 
            
             <div class="form-group col-sm-2">
@@ -105,7 +105,7 @@
             </div>
             
              <div class="form-group col-sm-2">
-            	<select  id="sel_state"  name="state" class="form-control "  data-placeholder="请选择">
+            	<select  id="sel_type"  name="type" class="form-control "  data-placeholder="请选择">
             	                <option value="">请选择</option>
                     			<option value="1">银行卡提现</option>
                     			<option value="2">支付宝提现</option>  			
@@ -217,166 +217,11 @@
 	</form>
   </div><!-- mainpanel -->
 </section>
- <div id="paydiv" class="modal fade bs-example-modal-static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-automobile"></i> 查看支付信息</h4>
-            </div>
-            <div class="modal-body">
-                
-                	
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                        	<div class="form-group">
-                                <label class="col-sm-2 control-label">备注: <span class="asterisk">*</span></label>
-                                <div class="col-sm-9">
-                                   
-                                   <input type="text" id="payname" name="name" class="form-control" placeholder="请输入" />
-                                </div>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">支付金额: <span class="asterisk">*</span></label>
-                                <div class="col-sm-9">
-                                   
-                                   <input type="text" id="price" name="price" class="form-control" placeholder="请输入" />
-                                </div>
-                                
-                            </div>
-                             <div class="form-group">
-                                <label class="col-sm-2 control-label">IP: <span class="asterisk">*</span></label>
-                                <div class="col-sm-9">
-                                   
-                                   <input type="text" id="spbill_create_ip" name="spbill_create_ip" class="form-control" placeholder="请输入" />
-                                </div>
-                                
-                            </div>
-                           
-                            
-                        </div>
-                        <!-- panel-body -->
-
-                       
-
-                    </div>
-                    <!-- panel -->
-               
-
-
-            </div>
-            <!-- row -->
-        </div>
-    </div>
-</div>
- <div id="orderdiv" class="modal fade bs-example-modal-static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                <h4 class="modal-title"><i class="fa fa-automobile"></i> 查看商品信息</h4>
-            </div>
-            <div class="modal-body">
-                
-                	
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                        	<div id="orderxs"></div>
-                        	
-                            
-                            
-                        </div>
-                        <!-- panel-body -->
-
-                       
-
-                    </div>
-                    <!-- panel -->
-               
-
-
-            </div>
-            <!-- row -->
-        </div>
-    </div>
-</div>
-<div id="insdd" class="modal fade bs-example-modal-static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
-                <h4 class="modal-title">维护订单</h4>
-            </div>
-            <div class="modal-body">
-                	<input type="hidden" id="_id" name="_id" />
-                	<input type="hidden" id="scomid" name="scomid" value="${comid}" />
-
-                   
-                	<div class="form-group">
-                		<label class="col-sm-2 control-label">快递公司<span class="asterisk">*</span></label>
-                        <div class="col-sm-3">
-                        	
-                       		<select  id="kdcom"  name="kdcom" class="form-control "  data-placeholder="请选择">
-                       			<option value="">无</option>
-            	 				<c:forEach items="${lskd}" var="bean">
-            	 				<option value="${bean._id}">${bean.title}</option>
-            	 				</c:forEach>
-                    			
-                    			
-                 			</select>
-                        </div>
-                    	<label class="col-sm-2 control-label">快递单号 <span class="asterisk">*</span></label>
-                        <div class="col-sm-3">
-                        	
-                       		<input type="text" id="kdno" class="form-control" placeholder="运单号"  name="kdno" />      
-                        </div>
-                    </div>  
-                    <div class="form-group">    
-                         <label class="col-sm-2 control-label">状态 <span class="asterisk">*</span></label>
-                        <div class="col-sm-3">
-                        	<select  id="state"  name="state" class="form-control "  data-placeholder="请选择">
-            	 				<!-- <option value="1">订单</option> -->
-                    			<!-- <option value="2">已购买</option>  -->
-                    			<option value="3">已发货</option>
-                    			<!-- <option value="4">已收货</option> -->
-                    			<!-- <option value="5">退货</option> -->
-                 			</select>
-                        	
-                        </div>
-                	</div>
-                	 
-            	</div>
-            	
-            	 <div class="panel-footer">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <button class="btn btn-primary btn-block" onclick="change()">提&nbsp;&nbsp;交</button>
-                                </div>
-                            </div>
-                  </div>
-               </div>
-                       
-                    <!-- panel -->
-
-
-            </div>
-            <!-- row -->
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript"> 
-if('${state}'!=0){ 
-$('#sel_state').val('${state}'); 
+if('${sel_state}'!=0){ 
+$('#sel_state').val('${sel_state}'); 
 }
-$(function(){
-	var totals = 
-});
-$('#totals').html();
+$('#sel_type').val('${sel_type}'); 
 </script>
 
 </body>

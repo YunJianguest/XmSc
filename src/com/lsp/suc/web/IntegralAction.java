@@ -515,6 +515,11 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		if (Struts2Utils.getParameter("fypage") != null) {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
+		BasicDBList dblist = new BasicDBList();
+		dblist.add(new BasicDBObject("type", "ps_account"));
+		dblist.add(new BasicDBObject("type", "ps_recovery"));
+		// or判断
+		whereMap.put("$ne", dblist);
 		
 		List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap);
 		if (comList.size() > 0) {

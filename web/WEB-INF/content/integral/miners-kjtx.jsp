@@ -203,7 +203,7 @@
 										            		alert('交易失败，请重新提交');
 										            	}else if(json.state==2){
 										            		alert('余额不足');
-										            	}else {
+										            	}else if(json.state==3){
 										            		alert('交易失败');
 										            	}
 										            	

@@ -169,6 +169,7 @@ function exp() {
                       	  <c:when test="${bean.type == 'shop_jfsr'}">订单收益</c:when>
                       	  <c:when test="${bean.type == 'jfcz'}">盼盼币充值</c:when>
                       	  <c:when test="${bean.type == 'kj_tx'}">盼盼币转出</c:when>
+                      	  <%-- <c:when test="${bean.type == 'shop_tx'}">提现失败返回</c:when> --%>
                       	</c:choose>
                       	</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
