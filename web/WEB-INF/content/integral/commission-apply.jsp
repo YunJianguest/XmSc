@@ -158,9 +158,7 @@
 			<p><span class="Method" style="border-radius: 5px;">银行卡</span><span class="Method" style="float:right;border-radius: 5px;">支付宝</span></p>
 			<input id="mui_title" type="hidden" value="1"/>
 			<div class="money_box">
-				<p><span style="text-align: left;">提&nbsp;现&nbsp;金&nbsp;额：</span><input  type="text" placeholder="请输入提现金额" id="yprice"/></p>
-			    <p><span style="text-align: left;">银行卡卡号：</span><input type="text" placeholder="请输入银行卡号" id="ycode"/></p>
-			    <p><span style="text-align: left;width: 30%;">所&nbsp;属&nbsp;银&nbsp;行：</span>
+			 <p><span style="text-align: left;width: 30%;">所&nbsp;属&nbsp;银&nbsp;行：</span>
 			    	<select name="">
 			    	    <option value="">中国银行</option>
 			    	    <option value="">中国建设银行</option>
@@ -168,6 +166,8 @@
 			    	    <option value="">中国工商银行</option>
 			        </select>
 			    </p>
+			    <p><span style="text-align: left;">银行卡卡号：</span><input type="text" placeholder="请输入银行卡号" id="ycode"/></p>
+				<p><span style="text-align: left;">提&nbsp;现&nbsp;金&nbsp;额：</span><input  type="text" placeholder="请输入提现金额" id="yprice"/></p>
 			    <p><span style="text-align: left;width: 30%;">信&nbsp;息&nbsp;备&nbsp;注：</span><input type="text" placeholder="申请备注" id="yremark"/></p>
 			</div>
 			<div class="money_box">
