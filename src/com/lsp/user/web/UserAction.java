@@ -596,25 +596,29 @@ public class UserAction extends GeneralAction<UserInfo>
     	sub_Map.put("state", 1);
     	HashMap<String, Object>whereMap=new HashMap<String, Object>();
     	String account = Struts2Utils.getParameter("account");
-    	String type = Struts2Utils.getParameter("type");
-    	String id = Struts2Utils.getParameter("id");
-    	if(StringUtils.isNotEmpty(type)){
-    		if(type.equals("1")){
-    			if(StringUtils.isNotEmpty(id)){
-    				BasicDBObject dateCondition = new BasicDBObject();
-        			// 剔除当前修改用户的id
-        			dateCondition.append("$ne", id);
-        			whereMap.put("_id", dateCondition);
-    			}
-    		}
-    	}
-    	whereMap.put("account", account);
-    	long count = basedao.getCount(PubConstants.USER_INFO, whereMap);
-    	if(count == 0){
-    		sub_Map.put("state", 0);//账号未注册
-    	}else{
-    		sub_Map.put("state", 2);//账号已注册
-    	}
+        if(StringUtils.isNotEmpty(account)){
+        	String type = Struts2Utils.getParameter("type");
+        	String id = Struts2Utils.getParameter("id");
+        	if(StringUtils.isNotEmpty(type)){
+        		if(type.equals("1")){
+        			if(StringUtils.isNotEmpty(id)){
+        				BasicDBObject dateCondition = new BasicDBObject();
+            			// 剔除当前修改用户的id
+            			dateCondition.append("$ne", id);
+            			whereMap.put("_id", dateCondition);
+        			}
+        		}
+        	}
+        	whereMap.put("account", account);
+        	long count = basedao.getCount(PubConstants.USER_INFO, whereMap);
+        	if(count == 0){
+        		sub_Map.put("state", 0);//账号未注册
+        	}else{
+        		sub_Map.put("state", 2);//账号已注册
+        	}
+        }else{
+        	sub_Map.put("state", 0);
+        }
     	String json = JSONArray.fromObject(sub_Map).toString();
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
     	
@@ -1002,10 +1006,14 @@ public class UserAction extends GeneralAction<UserInfo>
 					info.setTime(sett.getDeptTime());
 					info.setEnddate(DateUtil.addDay(new Date(), Integer.parseInt(sett.getDeptTime()+"")));
 					if(user!=null){
-						//推荐收益
-						String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
-						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
-						System.out.println("------增加部门收益");
+						
+						if(user.get("agentLevel").toString().equals("4")){
+							wwzservice.addjfoid(BaseDecimal.multiplication(db.get("returnDept").toString(),"0.35"), user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
+						}else{
+							//推荐收益
+							String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
+							wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null); 
+						}
 					}
 				}
 			}

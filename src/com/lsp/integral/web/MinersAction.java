@@ -1114,7 +1114,7 @@ public class MinersAction extends GeneralAction<Miner> {
 				            	tx.setState(2);
 				            	tx.setUpdatedate(new Date());
 						    	baseDao.insert(PubConstants.INTEGRAL_WITHDRAWALORDER, tx);
-						    	wwzService.addjf(price, fromUserid, "shop_tx", custid, 0, 1, 0);
+						    	wwzService.addyfjf(price, fromUserid, "kj_txfh", SysConfig.getProperty("custid"),3,null, BaseDecimal.multiplication(price, wwzService.getPPBSprice()+""));
 						    	sub_map.put("state", 3);
 				            }
 				    	}else {
@@ -1214,6 +1214,8 @@ public class MinersAction extends GeneralAction<Miner> {
 			BasicDBList dblist = new BasicDBList();
 			dblist.add(new BasicDBObject("type", "ps_account"));
 			dblist.add(new BasicDBObject("type", "ps_recovery"));
+			dblist.add(new BasicDBObject("type", "kj_txfh"));
+			dblist.add(new BasicDBObject("type", "kj_tx"));
 			// or判断
 			whereMap.put("$or", dblist);
 			List<DBObject> comList = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 13, sortMap); 
