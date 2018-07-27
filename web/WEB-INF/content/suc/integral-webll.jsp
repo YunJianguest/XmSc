@@ -131,7 +131,7 @@
                     <div class="col-15 pt-15 pb-10"><font size="2">以上是您的LL币获得/消费明细</font></div>
                 </div>
             </a>
-             <a href="${ctx}/suc/integral!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}">返回PPB明细</a>
+             <a href="${ctx}/suc/integral!web.action?custid=${custid}&agid=${agid}&lscode=${lscode}">返回PADA明细</a>
         </div>
     </div>
 
