@@ -174,7 +174,7 @@
 			</div>
 			
 			<p><button class="Submission">申请提现</button></p>	
-			<p style="font-size:12px;color:#333;">本次提现收取10%的手续费。<a href="#" style="float:right;color:#E4393C">提现记录</a></p>
+			<p style="font-size:12px;color:#333;">本次提现收取10%的手续费。<a href="${ctx}/integral/commission!list.action?custid=${custid}&agid=${agid}&lscode=${lscode}" style="float:right;color:#E4393C">提现记录</a></p>
 		</div>
 		<!--确认申请提现弹框-->
 			<div class="Submission_box">
