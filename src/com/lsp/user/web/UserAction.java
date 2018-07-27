@@ -21,6 +21,7 @@ import com.lsp.pub.util.SysConfig;
 import com.lsp.pub.util.UniObject;
 import com.lsp.pub.util.UserUtil;
 import com.lsp.pub.web.GeneralAction;
+import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.user.entity.AgentArea;
 import com.lsp.user.entity.UserInfo;
 import com.lsp.website.service.WwzService;
@@ -587,10 +588,12 @@ public class UserAction extends GeneralAction<UserInfo>
     	String id = Struts2Utils.getParameter("id");
     	if(StringUtils.isNotEmpty(type)){
     		if(type.equals("1")){
-    			BasicDBObject dateCondition = new BasicDBObject();
-    			// 剔除当前修改用户的id
-    			dateCondition.append("$ne", id);
-    			whereMap.put("_id", dateCondition);
+    			if(StringUtils.isNotEmpty(id)){
+    				BasicDBObject dateCondition = new BasicDBObject();
+        			// 剔除当前修改用户的id
+        			dateCondition.append("$ne", id);
+        			whereMap.put("_id", dateCondition);
+    			}
     		}
     	}
     	whereMap.put("account", account);
@@ -1262,8 +1265,43 @@ public class UserAction extends GeneralAction<UserInfo>
 		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
 	}
 	
-	
-	
+	/**
+	 * 佣金增加
+	 * id 会员编号
+	 * yjvalue 佣金数量
+	 * @throws Exception
+	 */
+	public void addyj() throws Exception{
+		Map<String,Object>sub_map=new HashMap<>();
+		HashMap<String,Object>whereMap=new HashMap<>();
+		sub_map.put("state", 1);
+		String number = Struts2Utils.getParameter("id");
+		String yjvalue = Struts2Utils.getParameter("yjvalue");
+		whereMap.put("number", Long.parseLong(number));
+		DBObject dbObject = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+		if(dbObject != null){
+			whereMap.clear();
+			whereMap.put("custid", SysConfig.getProperty("custid"));
+			whereMap.put("fromUserid", dbObject.get("_id").toString());
+			DBObject dbObject2 = basedao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+			IntegralRecord info = new IntegralRecord();
+			if(dbObject2 != null){
+				info = (IntegralRecord) UniObject.DBObjectToObject(dbObject2, IntegralRecord.class);
+				info.setYjvalue(yjvalue);
+				
+			}else{
+				info.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
+				info.setCustid(SysConfig.getProperty("custid"));
+				info.setFromUserid(dbObject.get("_id").toString());
+				info.setYjvalue(yjvalue);
+			}
+			basedao.insert(PubConstants.SUC_INTEGRALRECORD, info);
+			sub_map.put("state", 0);
+			sub_map.put("info", basedao.getMessage(PubConstants.SUC_INTEGRALRECORD, Long.parseLong(info.get_id().toString())));
+		}
+		String json = JSONArray.fromObject(sub_map).toString();
+		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
+	}
 	
 	
 	

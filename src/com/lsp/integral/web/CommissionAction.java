@@ -240,7 +240,7 @@ public class CommissionAction extends GeneralAction<Commission> {
 	    	commission.setFromid(fromUserid);
 	    	commission.setCustid(custid);
 	    	try {
-	    		if(wwzService.delYjjf(price, fromUserid, "yj_tx", custid, 1, 1, 0,orderno)){
+	    		if(wwzService.delYjjf(commission.getPrice()+commission.getCost()+"", fromUserid, "yj_tx", custid, 1, 1, 0,orderno)){
 	    			baseDao.insert(PubConstants.INTEGRAL_COMMISSION, commission);
 					
 					sub_map.put("id", commission.get_id().toString());
@@ -299,7 +299,7 @@ public class CommissionAction extends GeneralAction<Commission> {
 					commission.setState(Integer.parseInt(state));
 					commission.setUpdatedate(new Date());
                     if(commission.getState() == 2){ //申请拒绝
-                    	boolean flag = wwzService.addjfoid(commission.getPrice()+"", commission.getFromid(), "fail_tx", commission.getCustid(), 1, 1,0,null);
+                    	boolean flag = wwzService.addjfoid(commission.getPrice()+commission.getCost()+"", commission.getFromid(), "fail_tx", commission.getCustid(), 1, 1,0,null);
 						if(!flag){
 							String json = JSONArray.fromObject(sub_map).toString();
 					  		Struts2Utils.renderJson(json.substring(1, json.length() - 1), new String[0]);
@@ -337,7 +337,7 @@ public class CommissionAction extends GeneralAction<Commission> {
 				Commission commission = (Commission) UniObject.DBObjectToObject(dbObject, Commission.class);
 				commission.set_id(id);
 				if(commission.getState() == 1){
-					commission.setState(4);
+					commission.setState(3);
 					commission.setConfirmdate(new Date());
                     try {
 						baseDao.insert(PubConstants.INTEGRAL_COMMISSION, commission);

@@ -83,9 +83,9 @@
 			<p>提现金额<span><fmt:formatNumber value='${dbObject.price}' pattern="0.00"/></span></p>
 			<p>手&nbsp;&nbsp;续&nbsp;&nbsp;费<span><fmt:formatNumber value='${dbObject.cost}' pattern="0.00"/></span></p>
 			<p>申请时间<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dbObject.createdate}" /></span></p>
-			<c:if test="${dbObject.state == 1||dbObject.state == 2}">
+			<c:if test="${dbObject.state <= 3 && dbObject.state >= 1}">
 			<p>审核时间<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dbObject.updatedate}" /></span></p>
-			</c:if>
+			</c:if>${dbObject.state}
 			<c:if test="${dbObject.state == 3}">
 			<p>打款时间<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dbObject.confirmdate}" /></span></p>
 			</c:if>

@@ -213,6 +213,20 @@
             });
         }
         
+        function isExist() {
+        	var submitData = {
+        			id: $('#_id').val(),
+                    account: $('#account').val(),
+                    userstype:1
+                };
+                $.post('${ctx}/user/user!isExist.action', submitData,
+                        function (json) {
+                            if (json.state==2) {
+                            	alert("账号已存在");
+                            }
+                        }, "json")
+        }
+        
         function submint() {
         	var agentLevel_show = '';
         	if($("#type").val() == 1){
@@ -220,48 +234,61 @@
         	}else{
         		agentLevel_show = 0;
         	}
-            var submitData = {
-                id: $('#_id').val(),
-                funcs: $('#funcs').val(),
-                account: $('#account').val(),
-                password: $('#password').val(),
-                toUser: $('#toUser').val(),
-                roleid: $('#roleid').val(),
-                type: $('#type').val(),
-                province: $('#province').val(),
-                city: $('#city').val(),
-                nickname: $('#nickname').val(),
-                mb: $('#mb').val(),
-                agentLevel: agentLevel_show,
-                number: $('#number').val(),
-                renumber: $('#renumber').val(),
-                upIds: $('#upIds').val(),
-                headimgurl: $('#headimgurl').val(),
-                fromUser: $('#fromUser').val(),
-                
-                agentprovinceid:$("#agentprovinceid").val(),
-                agentcityid:$("#agentcityid").val(),
-                agentcountyid:$("#agentcountyid").val(),
-                
-                agentprovince:$("#agentprovinceid").find("option:selected").text(),
-                agentcity:$("#agentprovinceid").find("option:selected").text(),
-                agentcounty:$("#agentcountyid").find("option:selected").text()
-                
-            };
-            $.post('${ctx}/user/user!ajaxsave.action', submitData,
-                    function (json) {
-                        if (json.state == 0) {
-                            alert("添加成功！");
-                            window.location.reload();
-                        }else if(json.state==2){
-                        	 alert("该代理已经被出售！");
-                        }else{
-                        	 alert("添加失败，请稍后再试！");
-                        }
-                    }, "json")
-            $('#inszc').modal({
-                show: true
-            });
+        	var submitData = {
+        			id: $('#_id').val(),
+                    account: $('#account').val(),
+                    userstype:1
+                };
+                $.post('${ctx}/user/user!isExist.action', submitData,
+                        function (json) {
+                            if (json.state==2) {
+                            	alert("账号已存在,请重新填写");
+                           }else{
+                            	var submitData = {
+                                        id: $('#_id').val(),
+                                        funcs: $('#funcs').val(),
+                                        account: $('#account').val(),
+                                        password: $('#password').val(),
+                                        toUser: $('#toUser').val(),
+                                        roleid: $('#roleid').val(),
+                                        type: $('#type').val(),
+                                        province: $('#province').val(),
+                                        city: $('#city').val(),
+                                        nickname: $('#nickname').val(),
+                                        mb: $('#mb').val(),
+                                        agentLevel: agentLevel_show,
+                                        number: $('#number').val(),
+                                        renumber: $('#renumber').val(),
+                                        upIds: $('#upIds').val(),
+                                        headimgurl: $('#headimgurl').val(),
+                                        fromUser: $('#fromUser').val(),
+                                        
+                                        agentprovinceid:$("#agentprovinceid").val(),
+                                        agentcityid:$("#agentcityid").val(),
+                                        agentcountyid:$("#agentcountyid").val(),
+                                        
+                                        agentprovince:$("#agentprovinceid").find("option:selected").text(),
+                                        agentcity:$("#agentprovinceid").find("option:selected").text(),
+                                        agentcounty:$("#agentcountyid").find("option:selected").text()
+                                        
+                                    };
+                                    $.post('${ctx}/user/user!ajaxsave.action', submitData,
+                                            function (json) {
+                                                if (json.state == 0) {
+                                                    alert("添加成功！");
+                                                    window.location.reload();
+                                                }else if(json.state==2){
+                                                	 alert("该代理已经被出售！");
+                                                }else{
+                                                	 alert("添加失败，请稍后再试！");
+                                                }
+                                            }, "json")
+                                    $('#inszc').modal({
+                                        show: true
+                                    });
+                            }
+                     }, "json")
+            
         }
         function page_submit(num) {
             if (num == -1) {
@@ -528,7 +555,7 @@
                             <div class="form-group-20">
                                 <label class="control-label">登录帐号</label>
                                 <input type="text" id="account" name="account"
-                                       class="form-control" placeholder="请输入"/>
+                                       class="form-control" placeholder="请输入" onchange="isExist()"/>
                             </div>
                         </div>
                         <div class="col-sm-2">

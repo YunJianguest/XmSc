@@ -144,7 +144,7 @@
                 ptitle: '${ptitle}'
             }; 
             issend = false;
-            $.post('${ctx}/shop/shoppro!prolist.action?custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
+            $.post('${ctx}/shop/shoppro!prolist.action?lscode=${lscode}&custid=${custid}&agid=${agid}&fypage=' + fypage, submitData,
                     function (json) {
             	     loadings.hide();
                         var html = $('.recomend').html();

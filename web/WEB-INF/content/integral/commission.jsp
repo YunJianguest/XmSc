@@ -177,7 +177,7 @@
 						<td>${bean.remark}</td>	
 						<td><c:if test="${bean.state == 0}">待审批</c:if>
                         	<c:if test="${bean.state == 1}">审批通过，等待打款</c:if>
-                        	<c:if test="${bean.state==2}">审批通过</c:if>
+                        	<c:if test="${bean.state==2}">审批拒绝</c:if>
 							<c:if test="${bean.state==3}"><span style="color:#F00">已打款</span></c:if>
 						</td>
                         <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bean.createdate}" /></td>
@@ -189,12 +189,12 @@
                                       <i class="fa fa-cog"></i>
                                   </a>
                                   <ul role="menu" class="dropdown-menu pull-right">
-                                       <c:if test="${bean.state==0}">
+                                      <c:if test="${bean.state==0}"> 
                                       <li><a href="javascript:appro('${bean._id}',1);">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;同意</a></li>
                                  	  <li><a href="javascript:appro('${bean._id}',2);">
                                  	  <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;拒绝</a></li>
-                                     </c:if>
+                                      </c:if> 
                                       <c:if test="${bean.state==1}">
                                       <li><a href="javascript:resure('${bean._id}');">
                                       		<i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;确认打款</a></li>
