@@ -7,6 +7,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>提现记录</title>
+		<link href="/xmMobile/css/mui.min.css" rel="stylesheet">
 		<link href="${ctx}/app/css/iosOverlay.css" rel="stylesheet"/>
 		<link href="${ctx}/app/css/YLui.css" rel="stylesheet" type="text/css"/>
 		<link href="${ctx }/app/css/font-awesome.min.css" rel="stylesheet"/>
@@ -159,7 +160,7 @@
 	
 	</head>
 	<body>
-		<p class="record">提现记录</p>
+		<p class="record"><a class=" mui-icon mui-icon-undo mui-pull-left" href="javascript:history.go(-1);" style="color: #000 !important;"></a>提现记录</p>
 		<div class="water">
 		
 		</div>
