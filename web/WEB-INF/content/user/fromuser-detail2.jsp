@@ -408,7 +408,7 @@
 				</span>
 			</a>
 	</div>
-    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="11">
+    <c:forEach items="${func.lsfunc}" var="bean" varStatus="1" begin="0" end="10">
         <c:choose>
           <c:when test="${fn:contains(bean.url,'http')}">
                <div class="col-3   pt-10 " onclick="window.location.href='${ctx}${bean.url}?custid=${custid}&lscode=${lscode}'">
