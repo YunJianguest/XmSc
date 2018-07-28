@@ -183,7 +183,18 @@ public class WxUser extends ReflectionDBObject{
 	/**
 	 * 推荐类型（0默认1推荐id为管理员id）
 	 */
-	private int    tjlx; 
+	private int    tjlx;
+	/**
+	 * 销售业绩
+	 */
+	private String sxyj;
+	
+	public String getSxyj() {
+		return sxyj;
+	}
+	public void setSxyj(String sxyj) {
+		this.sxyj = sxyj;
+	}
 	public int getReno() {
 		return reno;
 	}
