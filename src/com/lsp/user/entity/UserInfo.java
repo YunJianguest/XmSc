@@ -236,6 +236,19 @@ public class UserInfo extends ReflectionDBObject {
 	private  int isfull;//1-已补全  其余-未补全
 	
 	private String salt;
+	/**
+	 * 销售业绩
+	 */
+	private String xsyj;
+	
+
+	public String getXsyj() {
+		return xsyj;
+	}
+
+	public void setXsyj(String xsyj) {
+		this.xsyj = xsyj;
+	}
 
 	public Date getAgentedate() {
 		return agentedate;
