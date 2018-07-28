@@ -280,17 +280,17 @@
                 </c:if>
                  
             	<c:if test="${not empty jf}">
-            	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">${jf}</i></span> 
+            	<span style="color: #FF0000;float:right">PADA:<i style="color: #000;">${jf}</i></span> 
             	</c:if> 
             	<c:if test="${empty jf}">
-            	<span style="color: #FF0000;float:right">PPB:<i style="color: #000;">0.00</i></span> 
+            	<span style="color: #FF0000;float:right">PADA:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
             </div>
             <c:if test="${empty freezeppb }">
-                <div style="text-align: right;color: #FF0000;">冻结PPB：<i style="color: #000;">0.00</i></div>
+                <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">0.00</i></div>
             </c:if>
              <c:if test="${not empty freezeppb }">
-                <div style="text-align: right;color: #FF0000;">冻结PPB：<i style="color: #000;">${freezeppb}</i></div>
+                <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">${freezeppb}</i></div>
             </c:if>
         </div>
     </div>
