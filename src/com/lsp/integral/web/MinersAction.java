@@ -457,13 +457,13 @@ public class MinersAction extends GeneralAction<Miner> {
 		  Struts2Utils.getRequest().setAttribute("backurl", backurl);*/
 		  whereMap.clear();
 		  whereMap.put("fromUserid", fromUserid);
-		  DBObject dbObject = baseDao.getMessage(PubConstants.INTEGRAL_MINER, whereMap);
+		  DBObject dbObject = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
 		  String ppb = wwzService.getPPBSprice()+"";
 		  if( dbObject != null){
 			  if(dbObject.get("kjvalue") != null){
 				  if(dbObject.get("kjjzvalue") != null){
 					  String kjjzvalue = BaseDecimal.multiplication(dbObject.get("kjjzvalue").toString(), ppb);
-					  Struts2Utils.getRequest().setAttribute("freezeppb", BaseDecimal.division(dbObject.get("kjvalue").toString(), kjjzvalue, 10));
+					  Struts2Utils.getRequest().setAttribute("freezeppb", BaseDecimal.subtract(dbObject.get("kjvalue").toString(), kjjzvalue));
 				  }
 			  } 
 		  }

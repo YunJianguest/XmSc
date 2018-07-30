@@ -185,11 +185,14 @@
 		    	  var submitData = { 
 		    			  password:$('#password').val()
 		    	    }; 
+		    	  var eth = $('#eth').val();
+		    	  console.log('rth'+eth+'rth');
+		    	  console.log('rth'+$.trim(eth)+'rth');
 		    		 $.post('${ctx}/integral/miners!wdpassword.action?custid=${custid}&agid=${agid}&lscode=${lscode}', submitData,
 					        	function (json) {
 					            	if(json.state==0){ 
 					            		var submitData1 = { 
-							    				eth:$('#eth').val(),
+							    				eth:$.trim(eth),
 							    				price:$('#price').val(),
 							    				remark:$('#remark').val()
 							    	    }; 
@@ -197,15 +200,23 @@
 										        	function (json) {
 										            	if(json.state==0){
 										            		alert('交易成功');
-										            		window.location.reload();
 										            		//window.location.href="${ctx}/integral/miners!ownminer.action?custid=${custid}&agid=${agid}&lscode=${lscode}";
 										            	}else if(json.state==1){
 										            		alert('交易失败，请重新提交');
 										            	}else if(json.state==2){
 										            		alert('余额不足');
 										            	}else if(json.state==3){
-										            		alert('交易失败');
+										            		alert('交易失败，请查看信息是否输入正确');
+										            	}else if(json.state==4){
+										            		alert('矿机类型不匹配');
+										            	}else if(json.state==5){
+										            		alert('没有矿机');
+										            	}else if(json.state==6){
+										            		alert('提现余额不足');
+										            	}else if(json.state==7){
+										            		alert('请求失败');
 										            	}
+										            	window.location.reload();
 										            	
 										},"json")
 					            	}else if(json.state==1){

@@ -481,7 +481,7 @@
                                         <td>${bean.rolename}</td>
                                         </c:if>
                                         <c:if test="${bean.rolename==null}"> --%>
-                                        <td>${bean.rolename}</td>
+                                        <td>${bean.rolename}/${bean.paypassword}</td>
                                         <%-- </c:if> --%>
                                         <td>
                                         <c:choose>

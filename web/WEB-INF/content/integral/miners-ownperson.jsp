@@ -286,12 +286,12 @@
             	<span style="color: #FF0000;float:right">PADA:<i style="color: #000;">0.00</i></span> 
             	</c:if>   
             </div>
-            <c:if test="${empty freezeppb }">
+           <%--  <c:if test="${empty freezeppb }">
                 <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">0.00</i></div>
             </c:if>
              <c:if test="${not empty freezeppb }">
                 <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">${freezeppb}</i></div>
-            </c:if>
+            </c:if> --%>
         </div>
     </div>
     <div class="clear hang10"></div> 
