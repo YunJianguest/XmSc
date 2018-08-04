@@ -278,7 +278,12 @@
                 <c:if test="${empty llb}">
                 <span style="color: #FF0000;float:left">LLB:<i style="color: #000;">0.00</i></span> 
                 </c:if>
-                 
+                 <c:if test="${empty ktppb }">
+                <div style="text-align: left;color: #FF0000;">可提PADA：<i style="color: #000;">0.00</i></div>
+                </c:if>
+                <c:if test="${not empty ktppb }"> 
+                <div style="text-align: left;color: #FF0000;">可提PADA：<i style="color: #000;">${ktppb}</i></div>  
+                </c:if> 
             	<c:if test="${not empty jf}">
             	<span style="color: #FF0000;float:right">PADA:<i style="color: #000;">${jf}</i></span> 
             	</c:if> 
@@ -289,13 +294,8 @@
             <c:if test="${empty freezeppb }">
                 <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">0.00</i></div>
             </c:if>
-            <c:if test="${not empty freezeppb }">
-                <c:if test="${fn:indexOf(freezeppb,'-')!='-1'}">
-                <div style="text-align: right;color: #FF0000;">未提价值：<i style="color: #000;">${fn:substring(freezeppb,0,length(freezeppb))}</i></div> 
-                </c:if>
-                <c:if test="${fn:indexOf(freezeppb,'-')=='-1'}">
-                <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">${freezeppb}</i></div> 
-                </c:if> 
+            <c:if test="${not empty freezeppb }"> 
+                <div style="text-align: right;color: #FF0000;">冻结PADA：<i style="color: #000;">${freezeppb}</i></div>  
             </c:if>
         </div>
     </div>

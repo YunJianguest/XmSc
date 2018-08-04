@@ -463,10 +463,28 @@ public class MinersAction extends GeneralAction<Miner> {
 			  if(dbObject.get("kjvalue") != null){
 				  if(dbObject.get("kjjzvalue") != null){
 					  String kjjzvalue = BaseDecimal.multiplication(dbObject.get("kjjzvalue").toString(), ppb);
-					  Struts2Utils.getRequest().setAttribute("freezeppb", BaseDecimal.subtract(dbObject.get("kjvalue").toString(), kjjzvalue));
+					  String freezeppb=BaseDecimal.subtract(dbObject.get("kjvalue").toString(), kjjzvalue);
+					  if(Double.parseDouble(freezeppb)>0){
+						  //冻结币量
+						  Struts2Utils.getRequest().setAttribute("freezeppb", freezeppb);
+					  }else{
+						  //冻结币量
+						  Struts2Utils.getRequest().setAttribute("freezeppb", 0);
+					  }
+					  if(Double.parseDouble(kjjzvalue)>0){
+						  //可提币量
+						  Struts2Utils.getRequest().setAttribute("ktppb", kjjzvalue);
+					  }else{
+						  //冻结币量
+						  Struts2Utils.getRequest().setAttribute("ktppb", 0);
+					  }
+					  
+					 
 				  }
 			  }
 		  }
+		  //
+		  
 		  return "ownperson";
 	  }
 	  /***

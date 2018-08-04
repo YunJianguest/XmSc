@@ -31,7 +31,8 @@ import com.chuanglan.sms.request.SmsSendRequest;
 import com.chuanglan.sms.response.SmsSendResponse;
 import com.chuanglan.sms.util.ChuangLanSmsUtil;
 import com.lsp.integral.entity.InteProstore;
-import com.lsp.integral.entity.InteSetting; 
+import com.lsp.integral.entity.InteSetting;
+import com.lsp.integral.entity.InteTxjl;
 import com.lsp.pub.dao.BaseDao;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Exchangerate;
@@ -1907,7 +1908,7 @@ public class WwzService {
 				}
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
-			} else if (type == 1 && Double.parseDouble(ir.getValue()) >Double.parseDouble(value) ) {
+			} else if (type == 1 && Double.parseDouble(ir.getValue()) >=Double.parseDouble(value) ) {
 				ir.setValue(BaseDecimal.subtract(ir.getValue(), value));
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
@@ -2101,14 +2102,14 @@ public class WwzService {
 				if(lx==0) {
 					//PP盼盼币种计算
 					if(isfreeze == 1) {
-						if(Double.parseDouble(ir.getProstore())>Double.parseDouble(value)) {
+						if(Double.parseDouble(ir.getProstore())>=Double.parseDouble(value)) {
 							// 冻结减少
 							ir.setProstore(BaseDecimal.subtract(ir.getProstore(), value));
 						}else {
 							return false;
 						}
 					}else if(isfreeze == 0) {
-						if(Double.parseDouble(ir.getUservalue())>Double.parseDouble(value)) {
+						if(Double.parseDouble(ir.getUservalue())>=Double.parseDouble(value)) {
 							// 可以使用减少
 							ir.setUservalue(BaseDecimal.subtract(ir.getUservalue(), value));
 						}else {
@@ -2117,20 +2118,20 @@ public class WwzService {
 					}
 					
 					
-					if(Double.parseDouble(ir.getValue()) >Double.parseDouble(value)) {
+					if(Double.parseDouble(ir.getValue()) >=Double.parseDouble(value)) {
 						ir.setValue(BaseDecimal.subtract(ir.getValue(), value));
 					}
 				}else if(lx==1) {
 					//乐乐币种计算
 					if(isfreeze == 1) {
-						if(Double.parseDouble(ir.getLldjvalue())>Double.parseDouble(value)) {
+						if(Double.parseDouble(ir.getLldjvalue())>=Double.parseDouble(value)) {
 							// 冻结减少
 							ir.setLldjvalue(BaseDecimal.subtract(ir.getLldjvalue(), value));
 						}else {
 							return false;
 						}
 					}else if(isfreeze == 0) {
-						if(Double.parseDouble(ir.getLlkyvalue())>Double.parseDouble(value)) {
+						if(Double.parseDouble(ir.getLlkyvalue())>=Double.parseDouble(value)) {
 							// 可以使用减少
 							ir.setLlkyvalue(BaseDecimal.subtract(ir.getUservalue(), value));
 						}else {
@@ -2138,7 +2139,7 @@ public class WwzService {
 						}
 					}
 					 
-					if(Double.parseDouble(ir.getLlzvalue()) >Double.parseDouble(value)) {
+					if(Double.parseDouble(ir.getLlzvalue()) >=Double.parseDouble(value)) {
 						ir.setLlzvalue(BaseDecimal.subtract(ir.getLlzvalue(), value));
 					}
 				}
@@ -2228,7 +2229,7 @@ public class WwzService {
 				return true;
 				 
 			}else if (type == 1) { 
-				if(Double.parseDouble(ir.getYjvalue())>Double.parseDouble(value)) {
+				if(Double.parseDouble(ir.getYjvalue())>=Double.parseDouble(value)) {
 				   ir.setYjvalue(BaseDecimal.subtract(ir.getYjvalue(), value));
 				} 
 				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
@@ -3720,6 +3721,37 @@ public class WwzService {
     		}
     	}
     	return "0";
+    }
+    /**
+     * 添加提币记录
+     */
+    public boolean  addTbjl(String fromUserid){
+    	String date=DateFormat.getDate();
+    	DBObject db=baseDao.getMessage(PubConstants.INTE_TBJL, fromUserid+"-"+date);
+    	if(db!=null){
+    		InteTxjl inteTxjl=new InteTxjl();
+    		inteTxjl.set_id(fromUserid+"-"+date);
+    		inteTxjl.setCreatedate(new Date());
+    		inteTxjl.setState(1);
+    		inteTxjl.setFromUserid(fromUserid);
+    		baseDao.insert(PubConstants.INTE_TBJL, inteTxjl);
+    		return true;
+    	}
+    	
+		return false;
+    	
+    }
+    /**
+     * 获取当天是否提币
+     * @param id
+     * @return
+     */
+    public boolean  getTbjl(String id){
+    	DBObject db=baseDao.getMessage(PubConstants.INTE_TBJL,id);
+    	if(db!=null&&db.get("state").toString().equals("1")){ 
+    		return true;
+    	}
+		return false; 
     }
 
 

@@ -128,6 +128,10 @@ public class IntegralAction extends GeneralAction<IntegralInfo> {
 		if (StringUtils.isNotEmpty(Struts2Utils.getParameter("fypage"))) {
 			fypage = Integer.parseInt(Struts2Utils.getParameter("fypage"));
 		}
+		if(StringUtils.isNotEmpty(Struts2Utils.getParameter("vip_no"))){
+			whereMap.put("fromUserid", wwzService.getfromUseridVipNo(Struts2Utils.getParameter("vip_no")));
+			Struts2Utils.getRequest().setAttribute("vip_no", Struts2Utils.getParameter("vip_no"));
+		}
 
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, fypage, 10, sortMap, backMap);
 		fycount = baseDao.getCount(PubConstants.INTEGRAL_INFO,whereMap);

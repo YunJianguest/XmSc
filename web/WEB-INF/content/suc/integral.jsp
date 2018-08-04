@@ -125,6 +125,9 @@ function exp() {
 			                 </select>
 			            </div>
 			            <div class="form-group col-sm-2">
+			            	 <input id="vip_no" name="vip_no" value="${vip_no}"/>
+			            </div>
+			            <div class="form-group col-sm-2">
 			                 <input type="text" id="sel_insdate" name="sel_insdate" value="${sel_insdate}" placeholder="开始日期"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="form-control" />
 			            </div>
 			             <div class="form-group col-sm-2">
