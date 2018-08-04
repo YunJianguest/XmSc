@@ -1270,7 +1270,7 @@ public class WwzService {
 	 * @throws Exception 
 	 */
 	public boolean addyfjf(String price, String fromUserid, String type, String custid, int jfstate, String fid,
-			String jzprice) throws Exception {
+			String jzprice,String ppbprice) throws Exception {
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if(checkTotalIntegral(1, price)) {
@@ -1283,6 +1283,8 @@ public class WwzService {
 					info.setState(0);
 					info.setCustid(custid);
 					info.setFid(fid);
+					info.setPpbprice(ppbprice);
+					info.setInsdate(DateFormat.getDate());
 					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
 					if (jfstate == 3) {//
 						if (changeKjJf(custid, fromUserid, price, 0,jzprice)) { 

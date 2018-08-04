@@ -85,6 +85,18 @@ public class TimerService {
 		dateCondition.append("$gte",new Date());
 		whereMap.put("enddate", dateCondition);
 		whereMap.put("state", 0);
+		
+		String  pbno=SysConfig.getProperty("pbno");
+		if(pbno!=null){
+			 BasicDBList   dblist=new BasicDBList();  
+			 String[]lsno=pbno.split(",");
+			 for (String string : lsno) {
+				dblist.add(new BasicDBObject("fromUserid",new BasicDBObject().put("$ne",string))); 
+			}
+			whereMap.put("$and", dblist); 
+			 
+		}
+		
 		List<DBObject>list=mongoDbUtil.queryAll(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap).toArray(); 
 		System.out.println(list.size());
 		for (DBObject dbObject : list) {
@@ -109,34 +121,44 @@ public class TimerService {
 					
 				} 
 				String jzprice=price;
+				String bprice="0";
 				if(kjlx>=0){
 					if(kjlx==1){
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",10);
+						bprice=wwzservice.getPPBSprice()+"";
 					}else if(kjlx==2){
 						price=BaseDecimal.division(price,wwzservice.getBTCSprice()+"",20);
-						
+						bprice=wwzservice.getBTCSprice()+"";
 					}else if(kjlx==3){
 						price=BaseDecimal.division(price,wwzservice.getETHSprice()+"",20); 
+						bprice=wwzservice.getETHSprice()+"";
 					}else{
 						price=BaseDecimal.division(price,wwzservice.getPPBSprice()+"",10);
+						bprice=wwzservice.getPPBSprice()+"";
 					} 
 					System.out.println(price);
 					if(dbObject.get("fromUserid")!=null&&dbObject.get("type")!=null){
-						if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
-							//挖矿到矿机账号 
-							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), jzprice);
+						
+						//验证每日返
+						HashMap<String, Object>wherewMap=new HashMap<>();
+						wherewMap.put("fromUserid", dbObject.get("fromUserid").toString());
+						wherewMap.put("type", dbObject.get("type").toString());
+						wherewMap.put("insdate",DateFormat.getDate());
+						Long count=baseDao.getCount(PubConstants.INTEGRAL_INFO, wherewMap);
+						if(count==0){
+							if(dbObject.get("type").toString().equals("ps_account")||dbObject.get("type").toString().equals("ps_recovery")){
+								//挖矿到矿机账号 
+								wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), jzprice,bprice);
+								
+							}else{
+								wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), jzprice,bprice);
+							}  
+							DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
+						    if(user!=null&&user.get("renumber")!=null&&Double.parseDouble(dbObject.get("money").toString())<=10000&&StringUtils.isNotEmpty(wwzservice.getfromUseridVipNo(dbObject.get("renumber").toString()))) {
+						    	wwzservice.addyfjf(BaseDecimal.multiplication(price, "0.1"),wwzservice.getfromUseridVipNo(dbObject.get("renumber").toString()),"kj_tjsy", SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), BaseDecimal.multiplication(jzprice, "0.1"),bprice);
+						    }
 							
-						}else{
-							wwzservice.addyfjf(price, dbObject.get("fromUserid").toString(), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), jzprice);
-						}
-						
-						
-						
-						
-						DBObject user=wwzservice.getCustUser(dbObject.get("fromUserid").toString());
-					    if(user!=null&&user.get("renumber")!=null&&Double.parseDouble(dbObject.get("money").toString())<90000&&StringUtils.isNotEmpty(wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()))) {
-					    	wwzservice.addyfjf(BaseDecimal.multiplication(price, "0.1"),wwzservice.getfromUseridVipNo(dbObject.get("fromUserid").toString()), dbObject.get("type").toString(), SysConfig.getProperty("custid"),1,dbObject.get("_id").toString(), BaseDecimal.multiplication(jzprice, "0.1"));
-					    }
+						} 
 						
 					}
 				}
