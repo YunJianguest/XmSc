@@ -191,18 +191,16 @@
             		 	if (json.state == 0) {
             				alert("下单成功！请尽快付款！！！");
             				var orderno=json.orderno; 
-            				$('#orderno').val(json.orderno);
-            				if(confirm("是否支付?")){
-            					if(shoptype==4){
-            						$('#btbutton').hide();
-            				  		$('#ytfbutton').hide();
-            					}
-            					if(shoptype==3||shoptype==5){
-            						$('#btbutton').show();
-            						$('#ytfbutton').show();
-            					}
-            					$('.mask').css('display','block'); 
+            				$('#orderno').val(json.orderno); 
+            				if(shoptype==4){
+            					$('#btbutton').hide();
+            				  	$('#ytfbutton').hide();
             				}
+            				if(shoptype==3||shoptype==5){
+            					$('#btbutton').show();
+            					$('#ytfbutton').show();
+            				}
+            				$('.mask').css('display','block');  
             			}else if(json.state == 1) {
             				alert("该账号没有开通支付"); 
             			}else if(json.state == 3){

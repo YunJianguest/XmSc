@@ -187,9 +187,7 @@
                 		 		alert("下单成功！"); 
                 				var orderno=json.orderno; 
                 				$('#orderno').val(json.orderno);
-                				if(confirm("是否支付?")){
-                    				$('.mask').css('display','block'); 
-                    			}
+                    			$('.mask').css('display','block');  
                 			}else if(json.state == 1) {
                 				alert("该账号没有开通支付"); 
                 			}else if(json.state == 3){
