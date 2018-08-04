@@ -240,7 +240,7 @@ function page_submit(num){
                        	<th class="th5">昵称</th>
                         <th class="th5">编号</th>
 						<th class="th8">快递号</th> 
-				     	<th class="th2">大众区/特约区/会员区金额</th>
+				     	<th class="th2">总金额/大众区/特约区/会员区金额</th>
 				     	 
 				     	
 				        <th class="th8">姓名</th>
@@ -261,9 +261,9 @@ function page_submit(num){
                        <td>${bean.nickname}</td>
                       	<td>${bean._id}</td>
 						<td>${bean.kdno}</td> 
-						<td><%-- <c:if test="${bean.zfmoney>0.0}"> --%><fmt:formatNumber value='${bean.public_money }' pattern="0.0#"/>/
+						<td><fmt:formatNumber value='${bean.zfmoney}' pattern="0.0#"/>/<fmt:formatNumber value='${bean.public_money }' pattern="0.0#"/>/
 						<fmt:formatNumber value='${bean.contri_money}' pattern="0.0#"/>/
-						<fmt:formatNumber value='${bean.members_money}' pattern="0.0#"/><%-- </c:if> --%></td>
+						<fmt:formatNumber value='${bean.members_money}' pattern="0.0#"/></td>
 						 
 						
 						<td>${bean.name}</td>
