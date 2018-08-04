@@ -49,7 +49,7 @@ public class CustInfoDao
     {
       cust.set_id("chongzi");
       cust.setAccount("虫吃江湖");
-      cust.setPassword("chongzi");
+      cust.setPassword("xmsc@sdfwer234");
       cust.setNickname("超级管理员");
       cust.setToUser("chongchijianghu");
     }

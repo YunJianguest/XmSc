@@ -93,7 +93,27 @@
             }
             $("#custinfoForm").submit();
         }
-       
+       function saveState(){
+    	   var submitData = {
+                   _id: $('#updstate_id').val(),
+                   state: $('#updstate_state').val()
+           };
+               $.post('${ctx}/integral/prostore!saveState.action', submitData,
+                       function (json) {
+            	   page_submit(-2)
+                       }, "json")
+       }
+       function updState(id){
+    	   var submitData = {
+                   _id: id
+           };
+           $.post('${ctx}/integral/prostore!upd.action', submitData,
+            	function (json) {
+                	$('#updstate_id').val(json._id);
+                    $('#updstate_state').val(json.state);
+                    ps_show('ins_state');
+           }, "json")
+       }
     </script>
 </head>
 <body>
@@ -131,10 +151,10 @@
                                         <td>${bean.vip_no}</td>
                                         <td>${bean.money}</td>
                                         <td>
-				                      	<c:choose>
-				                      	  <c:when test="${bean.state == 0}">返额中</c:when>
-				                      	  <c:otherwise>已返完</c:otherwise>
-				                      	</c:choose>
+                                        	<c:if test="${bean.state==0 }">返金额中</c:if>
+                                        	<c:if test="${bean.state==1 }">已返完</c:if>
+                                        	<c:if test="${bean.state==2 }">冻结</c:if>
+				                      	
 				                      	</td>
                                         <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
                                          <td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.enddate}'/></td>
@@ -149,6 +169,9 @@
                                                     </li> --%> 
                                                     <li><a href="${ctx}/integral/miners!pcdetail.action?id=${bean._id}">
                                                         <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;矿机详情</a>
+                                                    </li>
+                                                    <li><a href="javascript:updState('${bean._id}');">
+                                                        <i class="fa fa-pencil "></i>&nbsp;&nbsp;&nbsp;&nbsp;修改状态</a>
                                                     </li> 
                                                 </ul>
                                             </div>
@@ -223,7 +246,50 @@
         </div>
     </div>
 </div>
+<div class="fullscreen bg-hei-8 display-none" id="ins_state" style="height: 100%;">
+    <div style="padding-top:2%">
+        <div class="pl-10 pr-10 maring-a cmp500"
+             style="width: 100%;max-width: 500px;min-width: 320px;margin: 0px auto;right: 0px;">
+            <div class=" bg-bai border-radius3 overflow-hidden">
+                <div class="overflow-hidden line-height40 bg-bai line-bottom">
+                    <div class="hang50 pull-left zi-hui-tq">
+                        <i class="weight500 size14 pl-10 line-height50">维护矿机状态</i>
+                    </div>
+                    <a href="javascript:ps_hide('ins_state')">
+                        <div class="hang40 pull-right zi-hui-tq">
+                            <i class="weight500 size14 pl-10 pr-10 fa-1dx fa fa-remove" style="line-height: 50px;"></i>
+                        </div>
+                    </a>
+                </div>
+                <form id="insStateForm" onsubmit="return false" class="form-horizontal" method="post">
+                    <input type="hidden" id="updstate_id" name="_id"/>
+                    <%--row--%>
 
+                    <div class="pt-15 pl-15 pr-15 overflow-auto" style="height:490px;">
+						
+                        <div class="col-sm-6">
+                            <div class="mb-20">
+                                <label class="control-label">状态：</label>
+                                <select id="updstate_state" name="state" class="select2 hang40"  data-placeholder="请选择">
+                                    <option value="0">返金额中</option>
+                                    <option value="1">已返完</option>
+                                    <option value="2">冻结</option>
+                                   
+                                </select>
+                                <label class="error" for="color"></label>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="div-group-10 line-top" style="padding-left: 40px; padding-right: 40px;">
+                        <button class="btn btn-primary width-10 maring-a clear weight500 hang40" onclick="saveState()"/>提 交
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <%@include file="/webcom/cut-img.jsp" %>
 <%@ include file="/webcom/preview.jsp" %>
 <script type="text/javascript">

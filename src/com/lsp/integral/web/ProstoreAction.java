@@ -196,4 +196,17 @@ public class ProstoreAction extends GeneralAction<InteProstore> {
 		String json = JSONObject.fromObject(db).toString();
 		Struts2Utils.renderJson(json, new String[0]);
 	}
+	public void saveState() throws Exception {
+		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, _id);
+		if(db==null){
+			Struts2Utils.renderJson(1, new String[0]);
+			return;
+		}
+		entity = ((InteProstore)UniObject.DBObjectToObject(db, InteProstore.class));
+		entity.set_id(_id);
+		entity.setState(Integer.parseInt(Struts2Utils.getParameter("state")));
+		baseDao.insert(PubConstants.INTEGRAL_PROSTORE, entity);
+		
+		Struts2Utils.renderJson(0, new String[0]);
+	}
 }

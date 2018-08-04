@@ -87,6 +87,7 @@ public class PubConstants
   public static String SUC_MOBLILESCENE="suc_moblilescene";
   public static String SUC_SCENE="suc_scene";
   public static String SUC_SPIRIT="suc_spirit";
+  public static String SUC_KJAREARECORD = "suc_kjarearecord";
   
   public static String INTEGRAL_INFO="integral_info";
   public static String INTEGRALLL_INFO="integralll_info";

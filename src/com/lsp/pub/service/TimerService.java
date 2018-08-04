@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lsp.integral.entity.InteProstore;
 import com.lsp.pub.dao.BaseDao;
+import com.lsp.pub.db.MongoDbUtil;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.PubConstants;
+import com.lsp.pub.util.BaseDate;
 import com.lsp.pub.util.BaseDecimal;
 import com.lsp.pub.util.DateFormat;
 import com.lsp.pub.util.DateUtil;
@@ -69,6 +71,10 @@ public class TimerService {
 	 */
 	public synchronized void updProstore() throws Exception{
 		System.out.println("进入这个方法1");
+		if(wwzservice==null){
+			wwzservice=new WwzService();
+		}
+		MongoDbUtil mongoDbUtil=new MongoDbUtil();
 		HashMap<String, Object>sortMap=new HashMap<String, Object>();
 		HashMap<String, Object>whereMap=new HashMap<String, Object>();
 		BasicDBObject dateCondition1 = new BasicDBObject();
@@ -79,9 +85,10 @@ public class TimerService {
 		dateCondition.append("$gte",new Date());
 		whereMap.put("enddate", dateCondition);
 		whereMap.put("state", 0);
-		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap); 
+		List<DBObject>list=mongoDbUtil.queryAll(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap).toArray(); 
 		System.out.println(list.size());
 		for (DBObject dbObject : list) {
+			System.out.println(dbObject.toString());
 			if(dbObject.get("money")!=null){
 				String price = "0"; 
 				
@@ -95,7 +102,7 @@ public class TimerService {
 	    		whereMap.put("custid",SysConfig.getProperty("custid"));
 	    		whereMap.put("fromUserid", dbObject.get("fromUserid").toString());
 	    		IntegralRecord ir = null;
-				DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, where1Map);
+				DBObject db = mongoDbUtil.findOne(PubConstants.SUC_INTEGRALRECORD, where1Map);
 				if(db!=null){
 					ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
 					kjlx=ir.getKjlx(); 
@@ -138,5 +145,8 @@ public class TimerService {
 		}
 	}
 	
-	 
+	 public static void main(String[] args) throws Exception {
+		 TimerService  timerService=new TimerService();
+		 timerService.updProstore();
+	    }
 }

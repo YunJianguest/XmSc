@@ -33,6 +33,7 @@ import com.chuanglan.sms.util.ChuangLanSmsUtil;
 import com.lsp.integral.entity.InteProstore;
 import com.lsp.integral.entity.InteSetting; 
 import com.lsp.pub.dao.BaseDao;
+import com.lsp.pub.db.MongoDbUtil;
 import com.lsp.pub.db.MongoSequence;
 import com.lsp.pub.entity.Exchangerate;
 import com.lsp.pub.entity.Fromusermb;
@@ -67,6 +68,7 @@ import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.suc.entity.IntegralLlInfo;
 import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.IntegralYjInfo;
+import com.lsp.suc.entity.KjAreaRecord;
 import com.lsp.suc.entity.Taskresults;
 import com.lsp.suc.entity.Comunit;
 import com.lsp.user.entity.Authcode;
@@ -681,10 +683,19 @@ public class WwzService {
 		if (StringUtils.isEmpty(custid)) {
 			return null;
 		}
-		DBObject db = baseDao.getMessage(PubConstants.USER_INFO, custid);
-		if (db != null) {
-			return db;
+		if(baseDao==null){
+			MongoDbUtil mongoDbUtil=new MongoDbUtil();
+			DBObject db = mongoDbUtil.findOneById(PubConstants.USER_INFO, custid);
+			if (db != null) {
+				return db;
+			}
+		}else{
+			DBObject db = baseDao.getMessage(PubConstants.USER_INFO, custid);
+			if (db != null) {
+				return db;
+			}
 		}
+		
 		return null;
 
 	}
@@ -1269,6 +1280,9 @@ public class WwzService {
 	 */
 	public boolean addyfjf(String price, String fromUserid, String type, String custid, int jfstate, String fid,
 			String jzprice) throws Exception {
+		if(mongoSequence==null){
+			mongoSequence=new MongoSequence();
+		}
 		try {
 			if (Double.parseDouble(price) > 0) {
 				if(checkTotalIntegral(1, price)) {
@@ -1281,7 +1295,13 @@ public class WwzService {
 					info.setState(0);
 					info.setCustid(custid);
 					info.setFid(fid);
-					baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					if(baseDao==null){
+						MongoDbUtil mongoDbUtil=new MongoDbUtil();
+						mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_INFO, info);
+					}else{
+						baseDao.insert(PubConstants.INTEGRAL_INFO, info);
+					}
+					
 					if (jfstate == 3) {//
 						if (changeKjJf(custid, fromUserid, price, 0,jzprice)) { 
 							return true; 
@@ -1365,9 +1385,10 @@ public class WwzService {
 		whereMap.put("fromUserid", fromid);
 		whereMap.put("custid", custid);
 		IntegralRecord ir = null;
-		DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
-		DBObject yf=baseDao.getMessage(PubConstants.INTEGRAL_PROSTORE, Long.parseLong(fid));
-		DBObject jfsz = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap); 
+		MongoDbUtil mongoDbUtil=new MongoDbUtil();
+		DBObject db = mongoDbUtil.findOne(PubConstants.SUC_INTEGRALRECORD, whereMap);
+		DBObject yf=mongoDbUtil.findOneById(PubConstants.INTEGRAL_PROSTORE, Long.parseLong(fid));
+		DBObject jfsz = mongoDbUtil.findOne(PubConstants.INTEGRAL_INTESETTING, whereMap); 
 		InteSetting sett = (InteSetting) UniObject.DBObjectToObject(jfsz, InteSetting.class);
 		//查询总返积分
 		if(db!=null) {
@@ -1376,7 +1397,7 @@ public class WwzService {
 			DBObject user=getCustUser(fromid);
 			HashMap<String, Object>whereUserMap=new HashMap<>();
 			whereUserMap.put("renumber", Long.parseLong(user.get("number").toString()));
-			Long count=baseDao.getCount(PubConstants.USER_INFO, whereUserMap);
+			Long count=mongoDbUtil.getCount(PubConstants.USER_INFO, whereUserMap);
 			double userprice=0;
 			if(user.get("agentLevel").toString().equals("1")) {
 				//省
@@ -1395,7 +1416,7 @@ public class WwzService {
 			whereMap.clear();
 			whereMap.put("fromUserid",fromid);
 			whereMap.put("type","shop_bmzt");
-			List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			List<DBObject>list=mongoDbUtil.queryAll(PubConstants.INTEGRAL_INFO, whereMap, null).toArray();
 			double orderprice=0;
 			for (DBObject dbObject : list) {
 				if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
@@ -1407,7 +1428,7 @@ public class WwzService {
 			whereMap.clear();
 			whereMap.put("fromUserid",fromid);
 			whereMap.put("type",type);
-			List<DBObject>kjlist=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+			List<DBObject>kjlist=mongoDbUtil.queryAll(PubConstants.INTEGRAL_INFO, whereMap, null).toArray();
 			double kjprice=0;
 			for (DBObject dbObject : kjlist) {
 				if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
@@ -1419,7 +1440,7 @@ public class WwzService {
 				//已经返完，开始解冻
 				InteProstore dd=(InteProstore) UniObject.DBObjectToObject(yf, InteProstore.class);
 				dd.setState(1);
-				baseDao.insert(PubConstants.INTEGRAL_PROSTORE, dd); 
+				mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_PROSTORE, dd); 
 				if(dd.getType().equals("ps_account")) {
 					changeFreezeJf(custid,fromid);
 					//创建新的预返账户
@@ -1431,7 +1452,7 @@ public class WwzService {
 							whereMap.clear();
 							whereMap.put("type", "ps_recovery");
 							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+							Long icount=mongoDbUtil.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
 							if(icount==0) {
 								InteProstore inteProstore=new InteProstore();
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
@@ -1441,7 +1462,7 @@ public class WwzService {
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_PROSTORE, inteProstore);
 							}
 							
 							
@@ -1450,7 +1471,7 @@ public class WwzService {
 							whereMap.clear();
 							whereMap.put("type", "ps_recovery");
 							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+							Long icount=mongoDbUtil.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
 							if(icount==0) {
 								InteProstore inteProstore=new InteProstore();
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
@@ -1460,7 +1481,7 @@ public class WwzService {
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_PROSTORE, inteProstore);
 							}
 							
 						}else if(user.get("agentLevel").equals("3")) {
@@ -1468,7 +1489,7 @@ public class WwzService {
 							whereMap.clear();
 							whereMap.put("type", "ps_recovery");
 							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+							Long icount=mongoDbUtil.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
 							if(icount==0) {
 								InteProstore inteProstore=new InteProstore();
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
@@ -1478,7 +1499,7 @@ public class WwzService {
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_PROSTORE, inteProstore);
 							}
 							
 						}else if(user.get("agentLevel").equals("4")) {
@@ -1486,7 +1507,7 @@ public class WwzService {
 							whereMap.clear();
 							whereMap.put("type", "ps_recovery");
 							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+							Long icount=mongoDbUtil.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
 							if(icount==0) {
 								InteProstore inteProstore=new InteProstore();
 								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
@@ -1496,7 +1517,7 @@ public class WwzService {
 								inteProstore.setTime(365*3);
 								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
 								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_PROSTORE, inteProstore);
 							}
 							
 						}
@@ -1938,11 +1959,16 @@ public class WwzService {
 	 */
 	public boolean changeKjJf(String custid, String fromUserid, String value, int type,String jzprice) {
 		try {
+			if(mongoSequence==null){
+				mongoSequence=new MongoSequence();
+			}
+			MongoDbUtil mongoDbUtil=new MongoDbUtil();
 			HashMap<String, Object> whereMap = new HashMap<String, Object>();
 			whereMap.put("custid", custid);
 			whereMap.put("fromUserid", fromUserid);
 			IntegralRecord ir = null;
-			DBObject db = baseDao.getMessage(PubConstants.SUC_INTEGRALRECORD, whereMap);
+			
+			DBObject db = mongoDbUtil.findOne(PubConstants.SUC_INTEGRALRECORD, whereMap);
 			if (db == null) {
 				ir = new IntegralRecord();
 				ir.set_id(mongoSequence.currval(PubConstants.SUC_INTEGRALRECORD));
@@ -1987,12 +2013,12 @@ public class WwzService {
 			if (type == 0) { 
 				ir.setKjvalue(BaseDecimal.add(ir.getKjvalue(), value));
 				ir.setKjjzvalue(BaseDecimal.add(ir.getKjjzvalue(),jzprice));
-				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				mongoDbUtil.insertUpdate(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
 			} else if (type == 1 &&Double.parseDouble(ir.getKjvalue())>=Double.parseDouble(value)&&Double.parseDouble(ir.getKjjzvalue())>=Double.parseDouble(jzprice)) {
 				ir.setKjvalue(BaseDecimal.subtract(ir.getKjvalue(), value));
 				ir.setKjjzvalue(BaseDecimal.subtract(ir.getKjjzvalue(), jzprice));
-				baseDao.insert(PubConstants.SUC_INTEGRALRECORD, ir);
+				mongoDbUtil.insertUpdate(PubConstants.SUC_INTEGRALRECORD, ir);
 				return true;
 			} else if (type == 2) { 
 				return false;
@@ -2971,7 +2997,8 @@ public class WwzService {
 	public boolean checkTotalIntegral(int type, String value) {
 		HashMap<String, Object> whereMap = new HashMap<>();
 		whereMap.put("_id",SysConfig.getProperty("custid"));
-		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING,SysConfig.getProperty("custid"));
+		MongoDbUtil mongoDbUtil=new MongoDbUtil();
+		DBObject db = mongoDbUtil.findOneById(PubConstants.INTEGRAL_INTESETTING,SysConfig.getProperty("custid"));
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 			 
@@ -3007,7 +3034,8 @@ public class WwzService {
 	 */
 	public boolean updateTotalIntegral(int type, String value) {
 		HashMap<String, Object> whereMap = new HashMap<>();
-		DBObject db = baseDao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+		MongoDbUtil mongoDbUtil=new MongoDbUtil();
+		DBObject db = mongoDbUtil.findOne(PubConstants.INTEGRAL_INTESETTING, whereMap);
 		if (db != null) {
 			InteSetting inteSetting = (InteSetting) UniObject.DBObjectToObject(db, InteSetting.class);
 			if (type == 1) {
@@ -3017,7 +3045,7 @@ public class WwzService {
 					inteSetting.setNownum(BaseDecimal.add(inteSetting.getNownum(), value));
 				}
 				
-				baseDao.insert(PubConstants.INTEGRAL_INTESETTING, inteSetting);
+				mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_INTESETTING, inteSetting);
 				return true;
 			} else if (type == 2) {
 				if(inteSetting.getNownums() == null){
@@ -3025,7 +3053,7 @@ public class WwzService {
 				}else{
 					inteSetting.setNownums(BaseDecimal.add(inteSetting.getNownums(), value));
 				} 
-				baseDao.insert(PubConstants.INTEGRAL_INTESETTING, inteSetting);
+				mongoDbUtil.insertUpdate(PubConstants.INTEGRAL_INTESETTING, inteSetting);
 				return true;
 			}
 
@@ -3608,7 +3636,8 @@ public class WwzService {
     public  String  getUSD_CNY(){
     	HashMap<String, Object>whereMap=new HashMap<>();
     	whereMap.put("type","USD_CNY");
-    	DBObject  db=baseDao.getMessage(PubConstants.PUB_EXCHANGERATE, whereMap);  
+    	MongoDbUtil mongoDbUtil=new MongoDbUtil();
+    	DBObject  db=mongoDbUtil.findOne(PubConstants.PUB_EXCHANGERATE, whereMap);  
     	if(db!=null&&DateUtil.getTimeDifference(new Date(),DateFormat.getFormat(db.get("upddate").toString()))<=1800000){
     		System.out.println(111);
     		return db.get("value").toString();
@@ -3629,7 +3658,7 @@ public class WwzService {
             	    		exchangerate.set_id(Long.parseLong(db.get("_id").toString())); 
             	    		exchangerate.setValue(BaseDecimal.division(boc.get("se_buy").toString(), "100", 6));
             	    		exchangerate.setUpddate(new Date());
-            	    		baseDao.insert(PubConstants.PUB_EXCHANGERATE, exchangerate);
+            	    		mongoDbUtil.insertUpdate(PubConstants.PUB_EXCHANGERATE, exchangerate);
             	    		return BaseDecimal.division(boc.get("middle").toString(), "100", 6);
             			}
             		}
@@ -3654,7 +3683,7 @@ public class WwzService {
             				exchangerate.setType("USD_CNY");
             	    		exchangerate.setValue(BaseDecimal.division(boc.get("se_buy").toString(), "100", 6));
             	    		exchangerate.setUpddate(new Date());
-            	    		baseDao.insert(PubConstants.PUB_EXCHANGERATE, exchangerate);
+            	    		mongoDbUtil.insertUpdate(PubConstants.PUB_EXCHANGERATE, exchangerate);
             	    		return BaseDecimal.division(boc.get("middle").toString(), "100", 6);
             			}
             		}
@@ -3664,6 +3693,62 @@ public class WwzService {
     	} 
     	
 		return "6.5"; 
+    }
+    
+    
+    /**
+     * 修改当前用户小区兑换矿机量
+     * @param custid
+     * @param fromUserid
+     * @param num
+     * @return
+     * @throws Exception
+     */
+    public boolean changeKjArea(String custid,String fromUserid,int num) throws Exception {
+    	if(num > 0){
+    		HashMap<String, Object>whereMap = new HashMap<>();
+        	whereMap.put("custid", custid);
+        	whereMap.put("fromUserid", fromUserid);
+        	DBObject dbObject = baseDao.getMessage(PubConstants.SUC_KJAREARECORD, whereMap);
+        	String total = BaseDecimal.multiplication(num+"", "200000");
+        	KjAreaRecord record = new KjAreaRecord();
+        	if(dbObject != null){
+        		record=(KjAreaRecord) UniObject.DBObjectToObject(dbObject, KjAreaRecord.class); 
+        		record.setValue(BaseDecimal.add(record.getValue(), total));
+        	}else{
+        		record.set_id(mongoSequence.currval(PubConstants.SUC_KJAREARECORD));
+        		record.setCustid(custid);
+        		record.setFromUserid(fromUserid);
+        		record.setValue(total);
+        	}
+        	try {
+				baseDao.insert(PubConstants.SUC_KJAREARECORD, record);
+				return true;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+		return false;
+    }
+    /**
+     * 查询当前小区已经兑换了多少矿机
+     * @param custid
+     * @param fromUserid
+     * @return
+     */
+    public String ownerKjAreaRecord(String custid,String fromUserid){
+    	HashMap<String, Object>whereMap = new HashMap<>();
+    	whereMap.put("custid", custid);
+    	whereMap.put("fromUserid", fromUserid);
+    	DBObject dbObject = baseDao.getMessage(PubConstants.SUC_KJAREARECORD, whereMap);
+    	if(dbObject != null){
+    		if(dbObject.get("value") != null){
+    			return dbObject.get("value").toString();
+    		}
+    	}
+    	return "0";
     }
 
 }
