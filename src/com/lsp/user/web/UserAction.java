@@ -974,6 +974,7 @@ public class UserAction extends GeneralAction<UserInfo>
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnProvince").toString(), any);
 						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
+						getParent(number);
 					}
 					 
 				}
@@ -986,6 +987,7 @@ public class UserAction extends GeneralAction<UserInfo>
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCity").toString(), any);
 						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
+						getParent(number);
 					} 
 				}
 			}else if(type == 3){
@@ -997,6 +999,7 @@ public class UserAction extends GeneralAction<UserInfo>
 						//推荐收益
 						String total = BaseDecimal.multiplication(db.get("returnCounty").toString(), any);
 						wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null);
+						getParent(number);
 					}
 					
 				}
@@ -1013,6 +1016,7 @@ public class UserAction extends GeneralAction<UserInfo>
 							//推荐收益
 							String total = BaseDecimal.multiplication(db.get("returnDept").toString(), any);
 							wwzservice.addjfoid(total, user.get("_id").toString(), "tj_account", SysConfig.getProperty("custid"), 1, 1, 0,null); 
+							getParent(number);
 						}
 					}
 				}
@@ -1441,4 +1445,112 @@ public class UserAction extends GeneralAction<UserInfo>
 		} 
 		return childitems; 
 	}
+
+	/**
+	 * 验证大小区
+	 * @param number
+	 */
+	public void updateKJArea(Long number,DBObject user) throws Exception{
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("_id", SysConfig.getProperty("custid"));
+		DBObject db = basedao.getMessage(PubConstants.INTEGRAL_INTESETTING, whereMap);
+		if( db != null && user != null){
+			whereMap.clear();
+			whereMap.put("renumber", number);
+			List<DBObject>list=basedao.getList(PubConstants.USER_INFO, whereMap, null);
+			double max = 0.0;
+			//大区唯一验证
+			List<String>numlist = new ArrayList<>();
+			for (DBObject dbObject : list) {
+				if(dbObject.get("no") != null){
+					
+					String  dljg="0";
+					results="0";
+					results = getResults(Long.parseLong(dbObject.get("no").toString()));
+					if(dbObject.get("agentLevel") != null && dbObject.get("returnProvince") != null){
+						if(dbObject.get("agentLevel").toString().equals("1")){
+							dljg=BaseDecimal.add(dljg, db.get("returnProvince").toString());
+						}
+					}
+					if(dbObject.get("agentLevel") != null && db.get("returnCity") != null){
+						if(dbObject.get("agentLevel").toString().equals("2")){
+							dljg=BaseDecimal.add(dljg, db.get("returnCity").toString());
+						}
+					}
+					if(dbObject.get("agentLevel") != null && db.get("returnCounty") != null){
+						if(dbObject.get("agentLevel").toString().equals("3")){
+							dljg=BaseDecimal.add(dljg, db.get("returnCounty").toString());
+						}
+					}
+					if(dbObject.get("agentLevel") != null && db.get("returnDept") != null){
+						if(dbObject.get("agentLevel").toString().equals("4")){
+							dljg=BaseDecimal.add(dljg, db.get("returnDept").toString());
+						}
+					}
+					results = BaseDecimal.add(results, dljg);
+					if(Double.parseDouble(results)>max){
+						max = Double.parseDouble(results);
+					}
+					numlist.add(results);
+					System.out.println("每个结果---->"+results);
+				}
+			}
+			int j = 0;
+			String sums = "0";
+			for (int i = 0; i < numlist.size(); i++) {
+				sums = BaseDecimal.add(sums, numlist.get(i));
+				if(numlist.get(i).equals(max+"")){
+					j++;
+				}
+			}
+			System.out.println("最大值数量---->"+j);
+			System.out.println("sums---->"+sums);
+			if(j == 1 && !sums.equals("0")){
+				String minowner = BaseDecimal.subtract(sums, max+"");
+				System.out.println("--->可兑换---》"+minowner);
+				String value = wwzservice.ownerKjAreaRecord(SysConfig.getProperty("custid"),user.get("_id").toString());
+				System.out.println("--->已兑换---》"+minowner);
+				if(Double.parseDouble(minowner) >= Double.parseDouble(BaseDecimal.add(value, "200000"))){
+					String overplus = BaseDecimal.subtract(minowner, value);
+					int num = (int) (Double.parseDouble(overplus)/200000);
+					System.out.println("--兑换数量-->"+num);
+					if(wwzservice.changeKjArea(SysConfig.getProperty("custid"),user.get("_id").toString(),num)){
+						for (int i = 1; i <= num; i++) {
+							//小区每满20万 送一个2年20万矿机
+							InteProstore prostore = new InteProstore();
+							prostore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+							prostore.setType("recommend_give");//推荐人  小区每满20万送矿机
+							prostore.setCreatedate(new Date()); 
+							prostore.setFromUserid(user.get("_id").toString());
+							prostore.setState(0); 
+							prostore.setMoney(200000);
+							prostore.setTime(730);
+							prostore.setEnddate(DateUtil.addDay(new Date(), 730));
+							basedao.insert(PubConstants.INTEGRAL_PROSTORE, prostore);
+						}
+						
+					}
+					
+				}
+			}
+		}
+	}
+	/**
+	 * 查找当前会员的父级会员编号
+	 * @param fromid
+	 * @return
+	 */
+	public  DBObject getParent(Long  vip_no) throws Exception{ 
+		HashMap<String,Object>whereMap=new HashMap<>();
+		whereMap.put("number", vip_no);
+		DBObject user = basedao.getMessage(PubConstants.USER_INFO, whereMap);
+		if(user!= null){
+			updateKJArea(vip_no,user);
+			if(user.get("renumber") != null){
+				getParent(Long.parseLong(user.get("renumber").toString()));
+			}
+		}
+		return user; 
+	}
+	
 }

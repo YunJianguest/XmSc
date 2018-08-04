@@ -67,6 +67,7 @@ import com.lsp.suc.entity.IntegralInfo;
 import com.lsp.suc.entity.IntegralLlInfo;
 import com.lsp.suc.entity.IntegralRecord;
 import com.lsp.suc.entity.IntegralYjInfo;
+import com.lsp.suc.entity.KjAreaRecord;
 import com.lsp.suc.entity.Taskresults;
 import com.lsp.suc.entity.Comunit;
 import com.lsp.user.entity.Authcode;
@@ -3665,5 +3666,61 @@ public class WwzService {
     	
 		return "6.5"; 
     }
+    
+    /**
+     * 修改当前用户小区兑换矿机量
+     * @param custid
+     * @param fromUserid
+     * @param num
+     * @return
+     * @throws Exception
+     */
+    public boolean changeKjArea(String custid,String fromUserid,int num) throws Exception {
+    	if(num > 0){
+    		HashMap<String, Object>whereMap = new HashMap<>();
+        	whereMap.put("custid", custid);
+        	whereMap.put("fromUserid", fromUserid);
+        	DBObject dbObject = baseDao.getMessage(PubConstants.SUC_KJAREARECORD, whereMap);
+        	String total = BaseDecimal.multiplication(num+"", "200000");
+        	KjAreaRecord record = new KjAreaRecord();
+        	if(dbObject != null){
+        		record=(KjAreaRecord) UniObject.DBObjectToObject(dbObject, KjAreaRecord.class); 
+        		record.setValue(BaseDecimal.add(record.getValue(), total));
+        	}else{
+        		record.set_id(mongoSequence.currval(PubConstants.SUC_KJAREARECORD));
+        		record.setCustid(custid);
+        		record.setFromUserid(fromUserid);
+        		record.setValue(total);
+        	}
+        	try {
+				baseDao.insert(PubConstants.SUC_KJAREARECORD, record);
+				return true;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+		return false;
+    }
+    /**
+     * 查询当前小区已经兑换了多少矿机
+     * @param custid
+     * @param fromUserid
+     * @return
+     */
+    public String ownerKjAreaRecord(String custid,String fromUserid){
+    	HashMap<String, Object>whereMap = new HashMap<>();
+    	whereMap.put("custid", custid);
+    	whereMap.put("fromUserid", fromUserid);
+    	DBObject dbObject = baseDao.getMessage(PubConstants.SUC_KJAREARECORD, whereMap);
+    	if(dbObject != null){
+    		if(dbObject.get("value") != null){
+    			return dbObject.get("value").toString();
+    		}
+    	}
+    	return "0";
+    }
+
 
 }

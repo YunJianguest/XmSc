@@ -465,7 +465,7 @@ public class MinersAction extends GeneralAction<Miner> {
 					  String kjjzvalue = BaseDecimal.multiplication(dbObject.get("kjjzvalue").toString(), ppb);
 					  Struts2Utils.getRequest().setAttribute("freezeppb", BaseDecimal.subtract(dbObject.get("kjvalue").toString(), kjjzvalue));
 				  }
-			  } 
+			  }
 		  }
 		  return "ownperson";
 	  }

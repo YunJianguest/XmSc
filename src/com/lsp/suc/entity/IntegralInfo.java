@@ -65,6 +65,31 @@ public class IntegralInfo extends ReflectionDBObject {
     private String oid;
     
     private String vipno;//会员编号
+    /**
+     * 实时币价
+     */
+    private String ppbprice;
+    /**
+     * 产币时间
+     */
+    private String insdate;
+    
+	public String getInsdate() {
+		return insdate;
+	}
+
+	public void setInsdate(String insdate) {
+		this.insdate = insdate;
+	}
+
+	public String getPpbprice() {
+		return ppbprice;
+	}
+
+	public void setPpbprice(String ppbprice) {
+		this.ppbprice = ppbprice;
+	}
+
 	public int getJflx() {
 		return jflx;
 	}
