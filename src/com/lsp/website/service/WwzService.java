@@ -1374,136 +1374,139 @@ public class WwzService {
 			ir=(IntegralRecord) UniObject.DBObjectToObject(db, IntegralRecord.class);
 			//获取下级代理数量
 			DBObject user=getCustUser(fromid);
-			HashMap<String, Object>whereUserMap=new HashMap<>();
-			whereUserMap.put("renumber", Long.parseLong(user.get("number").toString()));
-			Long count=baseDao.getCount(PubConstants.USER_INFO, whereUserMap);
-			double userprice=0;
-			if(user.get("agentLevel").toString().equals("1")) {
-				//省
-				userprice=count*(sett.getReturnCity()/3);
-			}else if(user.get("agentLevel").toString().equals("2")){
-				//市 
-				userprice=count*(sett.getReturnCounty()/3);
-			}else if(user.get("agentLevel").toString().equals("3")) {
-				//县 
-				userprice=count*(sett.getReturnDept()/3);
-			}else if(user.get("agentLevel").toString().equals("4")) {
-				//部 
-				userprice=count*(sett.getReturnDept()/3);
-			} 
-			//获取订单利润
-			whereMap.clear();
-			whereMap.put("fromUserid",fromid);
-			whereMap.put("type","shop_bmzt");
-			List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
-			double orderprice=0;
-			for (DBObject dbObject : list) {
-				if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
-					orderprice+=Double.parseDouble(dbObject.get("value").toString());
-				}
-			}
-			
-			//获取矿机利润
-			whereMap.clear();
-			whereMap.put("fromUserid",fromid);
-			whereMap.put("type",type);
-			List<DBObject>kjlist=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
-			double kjprice=0;
-			for (DBObject dbObject : kjlist) {
-				if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
-					kjprice+=Double.parseDouble(dbObject.get("value").toString());
-				}
-			}
-			
-			if(kjprice+userprice+orderprice>=Double.parseDouble(yf.get("money").toString())) { 
-				//已经返完，开始解冻
-				InteProstore dd=(InteProstore) UniObject.DBObjectToObject(yf, InteProstore.class);
-				dd.setState(1);
-				baseDao.insert(PubConstants.INTEGRAL_PROSTORE, dd); 
-				if(dd.getType().equals("ps_account")) {
-					changeFreezeJf(custid,fromid);
-					//创建新的预返账户
-					whereMap.clear();
-					
-					if(jfsz!=null) { 
-						if(user.get("agentLevel").equals("1")) {
-							//省
-							whereMap.clear();
-							whereMap.put("type", "ps_recovery");
-							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
-							if(icount==0) {
-								InteProstore inteProstore=new InteProstore();
-								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
-								inteProstore.setCreatedate(new Date());
-								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnProvince()*0.1);
-								inteProstore.setTime(365*3);
-								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
-								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
-							}
-							
-							
-						}else if(user.get("agentLevel").equals("2")) {
-							//市 
-							whereMap.clear();
-							whereMap.put("type", "ps_recovery");
-							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
-							if(icount==0) {
-								InteProstore inteProstore=new InteProstore();
-								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
-								inteProstore.setCreatedate(new Date());
-								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnCity()*0.1);
-								inteProstore.setTime(365*3);
-								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
-								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
-							}
-							
-						}else if(user.get("agentLevel").equals("3")) {
-							//县 
-							whereMap.clear();
-							whereMap.put("type", "ps_recovery");
-							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
-							if(icount==0) {
-								InteProstore inteProstore=new InteProstore();
-								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
-								inteProstore.setCreatedate(new Date());
-								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnCounty()*0.1);
-								inteProstore.setTime(365*3);
-								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
-								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
-							}
-							
-						}else if(user.get("agentLevel").equals("4")) {
-							//部 
-							whereMap.clear();
-							whereMap.put("type", "ps_recovery");
-							whereMap.put("fromUserid", fromid);
-							Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
-							if(icount==0) {
-								InteProstore inteProstore=new InteProstore();
-								inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
-								inteProstore.setCreatedate(new Date());
-								inteProstore.setFromUserid(fromid);
-								inteProstore.setMoney(sett.getReturnDept()*0.1);
-								inteProstore.setTime(365*3);
-								inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
-								inteProstore.setType("ps_recovery");
-								baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
-							}
-							
-						}
+			if(user!=null){
+				HashMap<String, Object>whereUserMap=new HashMap<>();
+				whereUserMap.put("renumber", Long.parseLong(user.get("number").toString()));
+				Long count=baseDao.getCount(PubConstants.USER_INFO, whereUserMap);
+				double userprice=0;
+				if(user.get("agentLevel").toString().equals("1")) {
+					//省
+					userprice=count*(sett.getReturnCity()/3);
+				}else if(user.get("agentLevel").toString().equals("2")){
+					//市 
+					userprice=count*(sett.getReturnCounty()/3);
+				}else if(user.get("agentLevel").toString().equals("3")) {
+					//县 
+					userprice=count*(sett.getReturnDept()/3);
+				}else if(user.get("agentLevel").toString().equals("4")) {
+					//部 
+					userprice=count*(sett.getReturnDept()/3);
+				} 
+				//获取订单利润
+				whereMap.clear();
+				whereMap.put("fromUserid",fromid);
+				whereMap.put("type","shop_bmzt");
+				List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				double orderprice=0;
+				for (DBObject dbObject : list) {
+					if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
+						orderprice+=Double.parseDouble(dbObject.get("value").toString());
 					}
 				}
 				
+				//获取矿机利润
+				whereMap.clear();
+				whereMap.put("fromUserid",fromid);
+				whereMap.put("type",type);
+				List<DBObject>kjlist=baseDao.getList(PubConstants.INTEGRAL_INFO, whereMap, null);
+				double kjprice=0;
+				for (DBObject dbObject : kjlist) {
+					if(Double.parseDouble(dbObject.get("value").toString())>0&&dbObject.get("state").toString().equals("0")) {
+						kjprice+=Double.parseDouble(dbObject.get("value").toString());
+					}
+				}
+				
+				if(kjprice+userprice+orderprice>=Double.parseDouble(yf.get("money").toString())) { 
+					//已经返完，开始解冻
+					InteProstore dd=(InteProstore) UniObject.DBObjectToObject(yf, InteProstore.class);
+					dd.setState(1);
+					baseDao.insert(PubConstants.INTEGRAL_PROSTORE, dd); 
+					if(dd.getType().equals("ps_account")) {
+						changeFreezeJf(custid,fromid);
+						//创建新的预返账户
+						whereMap.clear();
+						
+						if(jfsz!=null) { 
+							if(user.get("agentLevel").equals("1")) {
+								//省
+								whereMap.clear();
+								whereMap.put("type", "ps_recovery");
+								whereMap.put("fromUserid", fromid);
+								Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+								if(icount==0) {
+									InteProstore inteProstore=new InteProstore();
+									inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+									inteProstore.setCreatedate(new Date());
+									inteProstore.setFromUserid(fromid);
+									inteProstore.setMoney(sett.getReturnProvince()*0.1);
+									inteProstore.setTime(365*3);
+									inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+									inteProstore.setType("ps_recovery");
+									baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								}
+								
+								
+							}else if(user.get("agentLevel").equals("2")) {
+								//市 
+								whereMap.clear();
+								whereMap.put("type", "ps_recovery");
+								whereMap.put("fromUserid", fromid);
+								Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+								if(icount==0) {
+									InteProstore inteProstore=new InteProstore();
+									inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+									inteProstore.setCreatedate(new Date());
+									inteProstore.setFromUserid(fromid);
+									inteProstore.setMoney(sett.getReturnCity()*0.1);
+									inteProstore.setTime(365*3);
+									inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+									inteProstore.setType("ps_recovery");
+									baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								}
+								
+							}else if(user.get("agentLevel").equals("3")) {
+								//县 
+								whereMap.clear();
+								whereMap.put("type", "ps_recovery");
+								whereMap.put("fromUserid", fromid);
+								Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+								if(icount==0) {
+									InteProstore inteProstore=new InteProstore();
+									inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+									inteProstore.setCreatedate(new Date());
+									inteProstore.setFromUserid(fromid);
+									inteProstore.setMoney(sett.getReturnCounty()*0.1);
+									inteProstore.setTime(365*3);
+									inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+									inteProstore.setType("ps_recovery");
+									baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								}
+								
+							}else if(user.get("agentLevel").equals("4")) {
+								//部 
+								whereMap.clear();
+								whereMap.put("type", "ps_recovery");
+								whereMap.put("fromUserid", fromid);
+								Long icount=baseDao.getCount(PubConstants.INTEGRAL_PROSTORE,whereMap);
+								if(icount==0) {
+									InteProstore inteProstore=new InteProstore();
+									inteProstore.set_id(mongoSequence.currval(PubConstants.INTEGRAL_PROSTORE));
+									inteProstore.setCreatedate(new Date());
+									inteProstore.setFromUserid(fromid);
+									inteProstore.setMoney(sett.getReturnDept()*0.1);
+									inteProstore.setTime(365*3);
+									inteProstore.setEnddate(DateUtil.addDay(new Date(), 365*3));
+									inteProstore.setType("ps_recovery");
+									baseDao.insert(PubConstants.INTEGRAL_PROSTORE, inteProstore);
+								}
+								
+							}
+						}
+					}
+					
+				} 
 			} 
+			
 		}   
 		
 	}

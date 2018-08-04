@@ -79,6 +79,17 @@ public class TimerService {
 		dateCondition.append("$gte",new Date());
 		whereMap.put("enddate", dateCondition);
 		whereMap.put("state", 0);
+		BasicDBList dblist = new BasicDBList(); 
+		String no_kj=SysConfig.getProperty("no_kj");
+		if(StringUtils.isNotEmpty(no_kj)){
+			String[]lsnokj=no_kj.split(",");
+			for (String string : lsnokj) {
+				if(StringUtils.isNotEmpty(string)){
+					dblist.add(new BasicDBObject("fromUserid",new BasicDBObject("$ne",wwzservice.getfromUseridVipNo(string)))); 
+				}
+			}
+			whereMap.put("$and", dblist);
+		} 
 		List<DBObject>list=baseDao.getList(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap); 
 		System.out.println(list.size());
 		for (DBObject dbObject : list) {
