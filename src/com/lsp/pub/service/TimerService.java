@@ -91,12 +91,22 @@ public class TimerService {
 			 BasicDBList   dblist=new BasicDBList();  
 			 String[]lsno=pbno.split(",");
 			 for (String string : lsno) {
-				dblist.add(new BasicDBObject("fromUserid",new BasicDBObject().put("$ne",string))); 
+				 System.out.println(string);
+	            if(StringUtils.isNotEmpty(string)){
+	            	BasicDBObject dat=new BasicDBObject(); 
+	            	String noid=wwzservice.getfromUseridVipNo(string);
+	            	if(StringUtils.isNotEmpty(noid)){
+	            		dat.put("fromUserid",new BasicDBObject("$ne",noid));
+		            	dblist.add(dat);
+	            	}
+	            	
+	            }			 
+				
 			}
+			 System.out.println(dblist);
 			whereMap.put("$and", dblist); 
 			 
-		}
-		
+		} 
 		List<DBObject>list=mongoDbUtil.queryAll(PubConstants.INTEGRAL_PROSTORE,whereMap, sortMap).toArray(); 
 		System.out.println(list.size());
 		for (DBObject dbObject : list) {
