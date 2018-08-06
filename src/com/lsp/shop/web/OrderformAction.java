@@ -33,6 +33,7 @@ import com.lsp.pub.util.UniObject;
 import com.lsp.pub.web.GeneralAction;
 import com.lsp.shop.entiy.OrderForm;
 import com.lsp.shop.entiy.OrderFormpro;
+import com.lsp.shop.entiy.ShopRemind;
 import com.lsp.website.service.WwzService;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -696,6 +697,17 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 					orderFormpro.set_id(Long.parseLong(dbObject2.get("_id").toString()));
 					orderFormpro.setGoodstate(2);
 					baseDao.insert(PubConstants.SHOP_ODERFORMPRO, orderFormpro);
+				}
+				DBObject remind=baseDao.getMessage(PubConstants.SHOP_REMIND, SysConfig.getProperty("custid"));
+				if(remind!=null){
+					ShopRemind  tx=(ShopRemind) UniObject.DBObjectToObject(remind, ShopRemind.class);
+					if(StringUtils.isNotEmpty(tx.getFhtxTel())){ 
+						String content="您有一条新订单，请尽快发货！";
+						if(StringUtils.isNotEmpty(tx.getFhtxContent())){
+							content=tx.getFhtxContent();
+						}
+						wwzService.sendSMS(tx.getFhtxTel(),content);
+					}
 				}
 				sub_map.put("state",0);
 			}else{

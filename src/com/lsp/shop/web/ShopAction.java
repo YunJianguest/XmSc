@@ -63,6 +63,7 @@ import com.lsp.shop.entiy.ProductInfo;
 import com.lsp.shop.entiy.ShopAgent;
 import com.lsp.shop.entiy.ShopComments;
 import com.lsp.shop.entiy.ShopMb;
+import com.lsp.shop.entiy.ShopRemind;
 import com.lsp.shop.entiy.Shoppingcart;
 import com.lsp.shop.entiy.Useraddress;
 import com.lsp.suc.entity.Comunit;
@@ -4663,6 +4664,17 @@ public class ShopAction extends GeneralAction {
 						entity.setState(7);
 						System.out.println("----------------------订单状态"+entity.getState());
 						baseDao.insert(PubConstants.WX_ORDERFORM, entity);
+						DBObject remind=baseDao.getMessage(PubConstants.SHOP_REMIND, SysConfig.getProperty("custid"));
+						if(remind!=null){
+							ShopRemind  tx=(ShopRemind) UniObject.DBObjectToObject(remind, ShopRemind.class);
+							if(StringUtils.isNotEmpty(tx.getZftxTel())){ 
+								String content="您有一条新订单，请尽快确认收款！";
+								if(StringUtils.isNotEmpty(tx.getZftxContent())){
+									content=tx.getZftxContent();
+								}
+								wwzService.sendSMS(tx.getZftxTel(),content);
+							}
+						}
 						map.put("state", 0);
 						
 					}else{
