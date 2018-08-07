@@ -170,25 +170,27 @@ function exp() {
                 <table class="table table-primary mb30" >
                     <thead>
                       <tr>
-                        <th>id</th>
+                        <th>会员编号</th>
                       	<th>状态</th>
                       	<th>类型</th>
+                      	<th>订单</th>
                       	<th>时间</th>
                       </tr>
                     </thead>
                     <tbody>
                       <c:forEach items="${list}" var="bean">
                       <tr>
-                      	<td>${bean._id}</td>
+                      	<td>${bean.vip_no}</td>
                       	<c:if test="${bean.state==0}"><td><span style="color: red;">+${bean.value}</span></td>
                       	</c:if>
                       	<c:if test="${bean.state==1}"><td><span style="color:green;">-${bean.value}</span></td>
                       	</c:if>
                       	<td>
                       	<c:choose> 
-                      	  <c:when test="${bean.type == 'shop_bmzt'}">下单返还</c:when>
+                      	  <c:when test="${bean.type=='shop_bmzt'}">下单返还</c:when>
                       	</c:choose>
                       	</td>
+                      	<td>${bean.oid}</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
                        
                       </tr>

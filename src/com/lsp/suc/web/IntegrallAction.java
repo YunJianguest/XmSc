@@ -124,6 +124,16 @@ public class IntegrallAction extends GeneralAction<IntegralLlInfo> {
 		}
 
 		List<DBObject> list = baseDao.getList(PubConstants.INTEGRALLL_INFO, whereMap, fypage, 10, sortMap, backMap);
+		for (DBObject dbObject : list) {
+			if(dbObject.get("oid")!=null){
+				DBObject db=baseDao.getMessage(PubConstants.WX_ORDERFORM, dbObject.get("oid").toString());
+				if(db!=null){
+					dbObject.put("order", db);
+				}
+				 
+			}
+			dbObject.put("vip_no",wwzService.getVipNo(dbObject.get("fromUserid").toString()));
+		}
 		fycount = baseDao.getCount(PubConstants.INTEGRALLL_INFO,whereMap);
 		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("list", list);
