@@ -547,6 +547,11 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		}
 		fycount=baseDao.getCount(PubConstants.SHOP_ODERFORMPRO, whereMap);
 		List<DBObject> lists = baseDao.getList(PubConstants.SHOP_ODERFORMPRO,whereMap,fypage,10,sortsMap);
+		for (DBObject dbObject : lists) {
+			OrderFormpro orderFormpro=(OrderFormpro) UniObject.DBObjectToObject(dbObject, OrderFormpro.class);
+			DBObject  shop=baseDao.getMessage(PubConstants.SHOP_SHOPMB,Long.parseLong(orderFormpro.getPro().get("comid").toString()));
+			dbObject.put("shop", shop);
+		}
 		Struts2Utils.getRequest().setAttribute("fycount", fycount);
 		Struts2Utils.getRequest().setAttribute("list", lists);
 		

@@ -67,6 +67,7 @@
                                     <th class="table-action">规格</th>
                                     <th class="table-action">是否异常</th>
                                     <th class="table-action">订单详情状态</th>
+                                    <th class="table-action">所属店铺</th>
                                     <th class="table-action">操作</th>
                                 </tr>
                                 </thead>
@@ -88,6 +89,7 @@
                                         <c:if test="${bean.goodstate==4}">确认收货</c:if>
                                        <%--  <c:if test="${bean.state==5}"></c:if> --%>
                                         </td>
+                                        <td>${bean.shop.name}</td>
                                         <td class="table-action">
                                             <div class="btn-group1">
                                             <c:if test="${bean.state==0}">
