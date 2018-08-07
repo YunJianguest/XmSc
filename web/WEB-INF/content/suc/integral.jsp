@@ -120,7 +120,7 @@ function exp() {
 			                    			<option value="ps_recovery">回本后待返收益</option>
 			                    			<option value="shop_bmzt">利润提成</option>
 			                    			<option value="shop_jfdh">下单支出</option>
-			                    			<option value="jfcz">交易所转入</option>
+			                    			<option value="jyscz">交易所转入</option>
 			                    			<option value="kj_tx">盼盼币转出</option>
 			                 </select>
 			            </div>
@@ -173,6 +173,7 @@ function exp() {
                       	  <c:when test="${bean.type == 'jfcz'}">盼盼币充值</c:when>
                       	  <c:when test="${bean.type == 'kj_tx'}">盼盼币转出</c:when>
                       	  <c:when test="${bean.type == 'kj_txfh'}">提现失败返还</c:when>
+                      	  <c:when test="${bean.type == 'jyscz'}">交易所转入</c:when>
                       	 <%--  <c:when test="${bean.type == 'shop_tx'}"><c:if test="${bean.state==1}">商城转出</c:if><c:if test="${bean.state==0}">提现失败返还</c:if></c:when> --%>
                       	</c:choose> 
                       	</td>
