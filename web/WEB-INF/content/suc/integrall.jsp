@@ -173,7 +173,8 @@ function exp() {
                         <th>会员编号</th>
                       	<th>状态</th>
                       	<th>类型</th>
-                      	<th>订单</th>
+                      	<th>订单编号</th>
+                      	<th>订单金额</th>
                       	<th>时间</th>
                       </tr>
                     </thead>
@@ -191,6 +192,7 @@ function exp() {
                       	</c:choose>
                       	</td>
                       	<td>${bean.oid}</td>
+                      	<td>${bean.order.zfmoney}</td>
                       	<td><fmt:formatDate pattern='yyyy-MM-dd HH:mm' value='${bean.createdate}'/></td>
                        
                       </tr>
