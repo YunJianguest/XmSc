@@ -118,10 +118,10 @@ public class OrderformAction extends GeneralAction<OrderForm> {
 		for(DBObject db:list){
 			if(db.get("fromUserid")!=null){
 				 DBObject  user=wwzService.getWxUser(db.get("fromUserid").toString());
-				 if(user.get("nickname") != null){
-					 db.put("nickname", user.get("nickname"));
+				 if(user.get("no") != null){
+					 db.put("vip_no", user.get("no"));
 				 }else{
-					 db.put("nickname", user.get("tel")); 
+					 db.put("vip_no", user.get("no")); 
 				 }
 				 db.put("headimgurl", user.get("headimgurl"));
 			}

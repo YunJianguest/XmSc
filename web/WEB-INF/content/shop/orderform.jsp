@@ -99,7 +99,7 @@ function orderinfo(id){
 			var v = json.list;
 			
 			for(var i=0;i<v.length;i++){
-				xszf=xszf+'<div class="form-group"><label class="col-sm-12 control-label">'+v[i].pro.ptitle+'  价格 ：'+v[i].pro.price+'  数量： '+v[i].count+'</label>'+
+				xszf=xszf+'<div class="form-group"><label class="col-sm-12 control-label">'+v[i].pro.ptitle+'  价格 ：'+v[i].pro.price+'数量： '+v[i].count+'成本价： '+v[i].pro.cost+'快递费： '+v[i].pro.kdprice+'</label>'+
 				'</div>';
 			}
 			$('#orderxs').html(xszf);
@@ -237,7 +237,7 @@ function page_submit(num){
                 <table class="table table-striped table-primary mb30" >
                     <thead>
                       <tr> 
-                       	<th class="th5">昵称</th>
+                       	<th class="th5">会员编号</th>
                         <th class="th5">编号</th>
 						<th class="th8">快递号</th> 
 				     	<th class="th2">总金额/大众区/特约区/会员区金额</th>
@@ -258,7 +258,7 @@ function page_submit(num){
                     <tbody>
                       <c:forEach items="${OrderFormList}" var="bean">
                       <tr>  
-                       <td>${bean.nickname}</td>
+                       <td>${bean.vip_no}</td>
                       	<td>${bean._id}</td>
 						<td>${bean.kdno}</td> 
 						<td><fmt:formatNumber value='${bean.zfmoney}' pattern="0.0#"/>/<fmt:formatNumber value='${bean.public_money }' pattern="0.0#"/>/
